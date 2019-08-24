@@ -1,0 +1,19 @@
+# Networking
+github "Alamofire/Alamofire" "5.0.0-beta.5" 
+github "onevcat/Kingfisher" ~> 5.0 # Networking images caching
+
+# Persistence
+github "Tencent/WCDB" "v1.0.8.2"
+
+# UI
+github "gonzalonunez/Skeleton" ~> 0.3.1 # Loading placeholder
+github "hackiftekhar/IQKeyboardManager" # Keyboard managing
+github "SwipeCellKit/SwipeCellKit" # Swipable cell
+github "thii/FontAwesome.swift" # FontAwesome
+
+# Reactive programming
+github "ReactiveX/RxSwift" ~> 5.0
+github "mxcl/PromiseKit" ~> 6.8
+
+# Debugging
+github "flipboard/FLEX" ~> 3.0
