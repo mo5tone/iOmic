@@ -12,36 +12,24 @@ import RxSwift
     import FLEX
 #endif
 
-class Coordinator: NSObject {
-    // MARK: - Props.
+protocol CoordinatorProtocol {
+    var identifier: UUID { get }
+    var coordinators: [CoordinatorProtocol] { get }
+    func start()
+}
 
-    let identifier = UUID()
-    private(set) var children = [Coordinator]()
+// MARK: - Equatable
 
-    // MARK: - Public
-
-    func showFLEXExplorer() {
-        #if DEBUG
-            FLEXManager.shared()?.showExplorer()
-        #endif
+extension CoordinatorProtocol where Self: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.identifier == rhs.identifier
     }
+}
 
-    func hideFLEXExplorer() {
-        #if DEBUG
-            FLEXManager.shared()?.hideExplorer()
-        #endif
-    }
+protocol WindowCoordinatorProtocol: CoordinatorProtocol {
+    var window: UIWindow { get }
+}
 
-    func appendChildCoordinator(_ child: Coordinator) {
-        removeChildCoordinator(child)
-        children.append(child)
-    }
-
-    func removeChildCoordinator(_ child: Coordinator) {
-        children.removeAll(where: { $0.identifier == child.identifier })
-    }
-
-    func start() {
-        fatalError("`start` method should be implemented.")
-    }
+protocol ViewCoordinatorProtocol: CoordinatorProtocol {
+    var viewController: UIViewController { get }
 }

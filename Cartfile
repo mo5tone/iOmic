@@ -3,7 +3,13 @@ github "Alamofire/Alamofire" "5.0.0-beta.5"
 github "onevcat/Kingfisher" ~> 5.0 # Networking images caching
 
 # Persistence
-github "Tencent/WCDB" "v1.0.8.2"
+github "Tencent/WCDB" "v1.0.8.2" # ORM
+github "nvzqz/FileKit" # FileManager helper
+github "ZipArchive/ZipArchive" # zipping and unzipping files
+
+# Parsing
+github "SwiftyJSON/SwiftyJSON" ~> 5.0 # JSON
+github "tid-kijyun/Kanna" ~> 5.0.0 # HTML [In the project settings add $(SDKROOT)/usr/include/libxml2 to the "header search paths" field]
 
 # UI
 github "gonzalonunez/Skeleton" ~> 0.3.1 # Loading placeholder

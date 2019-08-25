@@ -7,25 +7,30 @@
 //
 
 import UIKit
+
 protocol SettingViewCoordinator: AnyObject {}
 
 class SettingViewController: UIViewController {
     // MARK: - Props.
 
-    weak var coordinator: SettingViewCoordinator?
-    var viewModel: SettingViewModel?
+    private weak var coordinator: SettingViewCoordinator?
+    private var viewModel: SettingViewModel
 
     // MARK: - Public
+
+    init(coordinator: SettingViewCoordinator, viewModel: SettingViewModel) {
+        self.coordinator = coordinator
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-}
-
-// MARK: - Storyboarded
-
-extension SettingViewController: Storyboarded {
-    static var storyboardName: String { return "Setting" }
 }

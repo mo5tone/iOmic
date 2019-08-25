@@ -7,6 +7,29 @@
 //
 
 import Foundation
-class DownloadCoordinator: Coordinator {}
+import UIKit
+
+class DownloadCoordinator: NSObject, ViewCoordinatorProtocol {
+    // MARK: - ViewCoordinatorProtocol
+
+    let identifier = UUID()
+    private(set) var coordinators: [CoordinatorProtocol] = []
+    var viewController: UIViewController { return navigationController }
+
+    func start() {
+        navigationController.pushViewController(DownloadViewController(coordinator: self, viewModel: DownloadViewModel()), animated: false)
+    }
+
+    // MARK: - Props.
+
+    private let navigationController: UINavigationController
+
+    // MARK: - Public
+
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
+        super.init()
+    }
+}
 
 extension DownloadCoordinator: DownloadViewCoordinator {}

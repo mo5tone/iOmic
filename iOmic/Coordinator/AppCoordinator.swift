@@ -9,11 +9,35 @@
 import Foundation
 import IQKeyboardManagerSwift
 import UIKit
+#if DEBUG
+    import FLEX
+#endif
 
-class AppCoordinator: Coordinator {
+protocol AppCoordinatorProtocol {
+    func showFlexExplorer()
+    func hideFlexExplorer()
+    func willResignActive()
+    func didEnterBackground()
+    func willEnterForeground()
+    func didBecomeActive()
+    func willTerminate()
+}
+
+class AppCoordinator: NSObject, WindowCoordinatorProtocol {
+    // MARK: - CoordinatorProtocol
+
+    let identifier = UUID()
+    private(set) var coordinators: [CoordinatorProtocol] = []
+    let window: UIWindow
+
+    func start() {
+        let mainCoordinator = MainCoordinator(window: window)
+        coordinators.append(mainCoordinator)
+        mainCoordinator.start()
+    }
+
     // MARK: - Props.
 
-    private let window: UIWindow
     private let launchOptions: [UIApplication.LaunchOptionsKey: Any]
 
     // MARK: - Public
@@ -25,16 +49,26 @@ class AppCoordinator: Coordinator {
         super.init()
         IQKeyboardManager.shared.enable = true
     }
+}
+
+// MARK: - AppCoordinatorProtocol
+
+extension AppCoordinator: AppCoordinatorProtocol {
+    func showFlexExplorer() {
+        #if DEBUG
+            FLEXManager.shared()?.showExplorer()
+        #endif
+    }
+
+    func hideFlexExplorer() {
+        #if DEBUG
+            FLEXManager.shared()?.hideExplorer()
+        #endif
+    }
 
     func willResignActive() {}
     func didEnterBackground() {}
     func willEnterForeground() {}
     func didBecomeActive() {}
     func willTerminate() {}
-
-    override func start() {
-        let mainCoordinator = MainCoordinator(window: window)
-        appendChildCoordinator(mainCoordinator)
-        mainCoordinator.start()
-    }
 }

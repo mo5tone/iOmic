@@ -10,10 +10,45 @@ import FontAwesome
 import Foundation
 import UIKit
 
-class MainCoordinator: Coordinator {
-    // MARK: - Props.
+class MainCoordinator: NSObject, WindowCoordinatorProtocol {
+    // MARK: - CoordinatorProtocol
 
-    private let window: UIWindow
+    let identifier = UUID()
+    let window: UIWindow
+    private(set) var coordinators: [CoordinatorProtocol] = []
+
+    func start() {
+        let iconSize = CGSize(width: 25, height: 25)
+        let tabBarController = UITabBarController()
+
+        let readingCoordinator = ReadingCoordinator(navigationController: UINavigationController())
+        readingCoordinator.start()
+        coordinators.append(readingCoordinator)
+        readingCoordinator.viewController.tabBarItem = UITabBarItem(title: "Reading", image: UIImage.fontAwesomeIcon(name: .bookReader, style: .solid, textColor: .tintColor, size: iconSize), tag: 0)
+
+        let exploreCoordinator = ExploreCoordinator(navigationController: UINavigationController())
+        exploreCoordinator.start()
+        coordinators.append(exploreCoordinator)
+        exploreCoordinator.viewController.tabBarItem = UITabBarItem(title: "Exploring", image: UIImage.fontAwesomeIcon(name: .compass, style: .solid, textColor: .tintColor, size: iconSize), tag: 1)
+
+        let downloadCoordinator = DownloadCoordinator(navigationController: UINavigationController())
+        downloadCoordinator.start()
+        coordinators.append(downloadCoordinator)
+        downloadCoordinator.viewController.tabBarItem = UITabBarItem(title: "Downloading", image: UIImage.fontAwesomeIcon(name: .cloudDownloadAlt, style: .solid, textColor: .tintColor, size: iconSize), tag: 2)
+
+        let settingCoordinator = SettingCoordinator(navigationController: UINavigationController())
+        settingCoordinator.start()
+        coordinators.append(settingCoordinator)
+        settingCoordinator.viewController.tabBarItem = UITabBarItem(title: "Setting", image: UIImage.fontAwesomeIcon(name: .cog, style: .solid, textColor: .tintColor, size: iconSize), tag: 3)
+
+        tabBarController.viewControllers = coordinators.compactMap { $0 as? ViewCoordinatorProtocol }.compactMap { $0.viewController }
+        tabBarController.delegate = self
+
+        window.rootViewController = tabBarController
+        window.makeKeyAndVisible()
+    }
+
+    // MARK: - Props.
 
     // MARK: - Public
 
@@ -21,42 +56,8 @@ class MainCoordinator: Coordinator {
         self.window = window
         super.init()
     }
-
-    override func start() {
-        let iconSize = CGSize(width: 25, height: 25)
-        let tabBarController = UITabBarController()
-
-        let readingCoordinator = ReadingCoordinator()
-        appendChildCoordinator(readingCoordinator)
-        let readingViewController = ReadingViewController.instantiate()
-        readingViewController.coordinator = readingCoordinator
-        readingViewController.viewModel = ReadingViewModel()
-        
-        readingViewController.tabBarItem = UITabBarItem(title: "Reading", image: UIImage.fontAwesomeIcon(name: .bookReader, style: .solid, textColor: .tintColor, size: iconSize), tag: 0)
-
-        let exploreCoordinator = ExploreCoordinator()
-        appendChildCoordinator(exploreCoordinator)
-        let exploreViewController = ExploreViewController.instantiate()
-        exploreViewController.coordinator = exploreCoordinator
-        exploreViewController.viewModel = ExploreViewModel()
-        exploreViewController.tabBarItem = UITabBarItem(title: "Explore", image: UIImage.fontAwesomeIcon(name: .compass, style: .solid, textColor: .tintColor, size: iconSize), tag: 1)
-
-        let downloadCoordinator = DownloadCoordinator()
-        appendChildCoordinator(downloadCoordinator)
-        let downloadViewController = DownloadViewController.instantiate()
-        downloadViewController.coordinator = downloadCoordinator
-        downloadViewController.viewModel = DownloadViewModel()
-        downloadViewController.tabBarItem = UITabBarItem(title: "Download", image: UIImage.fontAwesomeIcon(name: .cloudDownloadAlt, style: .solid, textColor: .tintColor, size: iconSize), tag: 2)
-
-        let settingCoordinator = SettingCoordinator()
-        appendChildCoordinator(settingCoordinator)
-        let settingViewController = SettingViewController.instantiate()
-        settingViewController.coordinator = settingCoordinator
-        settingViewController.viewModel = SettingViewModel()
-        settingViewController.tabBarItem = UITabBarItem(title: "Setting", image: UIImage.fontAwesomeIcon(name: .cog, style: .solid, textColor: .tintColor, size: iconSize), tag: 3)
-
-        tabBarController.viewControllers = [readingViewController, exploreViewController, downloadViewController, settingViewController]
-        window.rootViewController = tabBarController
-        window.makeKeyAndVisible()
-    }
 }
+
+// MARK: - UITabBarControllerDelegate
+
+extension MainCoordinator: UITabBarControllerDelegate {}

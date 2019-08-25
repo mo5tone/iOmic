@@ -7,6 +7,29 @@
 //
 
 import Foundation
-class ExploreCoordinator: Coordinator {}
+import UIKit
+
+class ExploreCoordinator: NSObject, ViewCoordinatorProtocol {
+    // MARK: - ViewCoordinatorProtocol
+
+    let identifier = UUID()
+    private(set) var coordinators: [CoordinatorProtocol] = []
+    var viewController: UIViewController { return navigationController }
+
+    func start() {
+        navigationController.pushViewController(ExploreViewController(coordinator: self, viewModel: ExploreViewModel()), animated: false)
+    }
+
+    // MARK: - Props.
+
+    private let navigationController: UINavigationController
+
+    // MARK: - Public
+
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
+        super.init()
+    }
+}
 
 extension ExploreCoordinator: ExploreViewCoordinator {}

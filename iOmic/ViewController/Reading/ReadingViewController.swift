@@ -13,21 +13,23 @@ protocol ReadingViewCoordinator: AnyObject {}
 class ReadingViewController: UIViewController {
     // MARK: - Props.
 
-    weak var coordinator: ReadingViewCoordinator?
-    var viewModel: ReadingViewModel?
+    private weak var coordinator: ReadingViewCoordinator?
+    private var viewModel: ReadingViewModel
 
     // MARK: - Public
+
+    init(coordinator: ReadingViewCoordinator, viewModel: ReadingViewModel) {
+        self.coordinator = coordinator
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        assert(coordinator != nil, "coordinator can not be nil!")
-        assert(viewModel != nil, "viewModel can not be nil!")
-    }
-}
-
-extension ReadingViewController: Storyboarded {
-    static var storyboardName: String {
-        return "Reading"
     }
 }

@@ -7,7 +7,29 @@
 //
 
 import Foundation
+import UIKit
 
-class SettingCoordinator: Coordinator {}
+class SettingCoordinator: NSObject, ViewCoordinatorProtocol {
+    // MARK: - ViewCoordinatorProtocol
+
+    let identifier = UUID()
+    private(set) var coordinators: [CoordinatorProtocol] = []
+    var viewController: UIViewController { return navigationController }
+
+    func start() {
+        navigationController.pushViewController(SettingViewController(coordinator: self, viewModel: SettingViewModel()), animated: false)
+    }
+
+    // MARK: - Props.
+
+    private let navigationController: UINavigationController
+
+    // MARK: - Public
+
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
+        super.init()
+    }
+}
 
 extension SettingCoordinator: SettingViewCoordinator {}
