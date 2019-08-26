@@ -8,16 +8,27 @@
 
 import Foundation
 
-class Filter<State: Hashable>: Equatable {
-    static func == (lhs: Filter<State>, rhs: Filter<State>) -> Bool {
-        return lhs.name == rhs.name && lhs.state.hashValue == rhs.state.hashValue
+class Filter {
+    // MARK: - instance
+
+    let title: String
+    let keyValues: [(key: String, value: String)]
+    private var _index: Int = 0
+    var index: Int {
+        get { return _index }
+        set { _index = max(0, min(newValue, keyValues.count - 1)) }
     }
 
-    let name: String
-    let state: State
+    var key: String { return keyValues[index].key }
+    var value: String { return keyValues[index].value }
 
-    init(name: String, state: State) {
-        self.name = name
-        self.state = state
+    // MARK: - public
+
+    init(title: String, keyValues: [(key: String, value: String)], index: Int = 0) {
+        assert(!title.isEmpty)
+        assert(!keyValues.isEmpty)
+        self.title = title
+        self.keyValues = keyValues
+        self.index = index
     }
 }

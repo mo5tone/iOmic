@@ -24,13 +24,13 @@ protocol SourceProtocol {
 }
 
 protocol OnlineSourceProtocol: SourceProtocol {
-    func fetchBooksWhere(page: Int, query: String, filters: [Filter<AnyHashable>]) -> [Book]
+    func fetchBooksWhere(page: Int, query: String, filters: [Filter]) -> [Book]
     func fetchChaptersIn(book: Book) -> (book: Book, chapters: [Chapter])
     func fetchPagesIn(chapter: Chapter) -> (chapter: Chapter, pages: [Page])
 }
 
 protocol LocalSourceProtocol: SourceProtocol {
-    func booksOrder(by filters: [Filter<AnyHashable>]) -> [Path]
+    func booksOrder(by filters: [Filter]) -> [Path]
     func markBooks(_ books: [Path], unread: Bool)
     func pagesIn(book: Path) -> [Path]
 }

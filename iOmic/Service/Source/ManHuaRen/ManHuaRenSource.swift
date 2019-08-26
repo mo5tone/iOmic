@@ -19,7 +19,7 @@ class ManHuaRenSource: NSObject, OnlineSourceProtocol {
 
     var name: String { return "动漫之家" }
 
-    func fetchBooksWhere(page _: Int, query _: String, filters _: [Filter<AnyHashable>]) -> [Book] {
+    func fetchBooksWhere(page _: Int, query _: String, filters _: [Filter]) -> [Book] {
         return []
     }
 
