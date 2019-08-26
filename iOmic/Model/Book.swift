@@ -8,4 +8,6 @@
 
 import Foundation
 
-class Book {}
+class Book {
+    let url: String = "Some URL"
+}

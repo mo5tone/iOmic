@@ -19,9 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        window = UIWindow()
-        coordinator = AppCoordinator(window: window, launchOptions: launchOptions)
-        coordinator?.start()
+        coordinator = AppCoordinator.shared
+        window = coordinator?.window
+        coordinator?.start(with: launchOptions)
         return true
     }
 

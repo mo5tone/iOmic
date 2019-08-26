@@ -8,28 +8,29 @@
 
 import Foundation
 import RxSwift
-#if DEBUG
-    import FLEX
-#endif
+import UIKit
 
-protocol CoordinatorProtocol {
-    var identifier: UUID { get }
-    var coordinators: [CoordinatorProtocol] { get }
-    func start()
-}
+class Coordinator: NSObject {
+    // MARK: - Props.
 
-// MARK: - Equatable
+    let window: UIWindow
 
-extension CoordinatorProtocol where Self: Equatable {
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.identifier == rhs.identifier
+    var viewController: UIViewController?
+
+    var coordinators: [Coordinator] = []
+
+    // MARK: - Public
+
+    init(window: UIWindow) {
+        self.window = window
+        super.init()
     }
-}
 
-protocol WindowCoordinatorProtocol: CoordinatorProtocol {
-    var window: UIWindow { get }
-}
-
-protocol ViewCoordinatorProtocol: CoordinatorProtocol {
-    var viewController: UIViewController { get }
+    func makeKeyAndVisible() {
+        guard let viewController = viewController else {
+            return
+        }
+        window.rootViewController = viewController
+        window.makeKeyAndVisible()
+    }
 }

@@ -9,26 +9,19 @@
 import Foundation
 import UIKit
 
-class DownloadCoordinator: NSObject, ViewCoordinatorProtocol {
-    // MARK: - ViewCoordinatorProtocol
-
-    let identifier = UUID()
-    private(set) var coordinators: [CoordinatorProtocol] = []
-    var viewController: UIViewController { return navigationController }
-
-    func start() {
-        navigationController.pushViewController(DownloadViewController(coordinator: self, viewModel: DownloadViewModel()), animated: false)
-    }
-
+class DownloadCoordinator: Coordinator {
     // MARK: - Props.
-
-    private let navigationController: UINavigationController
 
     // MARK: - Public
 
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-        super.init()
+    override init(window: UIWindow) {
+        super.init(window: window)
+        viewController = UINavigationController()
+    }
+
+    func start() {
+        guard let navigationController = viewController as? UINavigationController else { return }
+        navigationController.pushViewController(DownloadViewController(coordinator: self, viewModel: DownloadViewModel()), animated: false)
     }
 }
 

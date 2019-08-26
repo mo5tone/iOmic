@@ -23,30 +23,32 @@ protocol AppCoordinatorProtocol {
     func willTerminate()
 }
 
-class AppCoordinator: NSObject, WindowCoordinatorProtocol {
-    // MARK: - CoordinatorProtocol
+class AppCoordinator: Coordinator {
+    // MARK: - Static
 
-    let identifier = UUID()
-    private(set) var coordinators: [CoordinatorProtocol] = []
-    let window: UIWindow
+    static let shared = AppCoordinator()
 
-    func start() {
+    // MARK: - Props.
+
+    private var launchOptions: [UIApplication.LaunchOptionsKey: Any] = [:]
+
+    // MARK: - Public
+
+    func start(with launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+        self.launchOptions = launchOptions ?? [:]
         let mainCoordinator = MainCoordinator(window: window)
         coordinators.append(mainCoordinator)
         mainCoordinator.start()
     }
 
-    // MARK: - Props.
+    // MARK: - Private
 
-    private let launchOptions: [UIApplication.LaunchOptionsKey: Any]
+    private init() {
+        super.init(window: UIWindow(frame: UIScreen.main.bounds))
+        setupConfigurations()
+    }
 
-    // MARK: - Public
-
-    init(window: UIWindow?, launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
-        guard let window = window else { fatalError("`window` can not be nil!") }
-        self.window = window
-        self.launchOptions = launchOptions ?? [:]
-        super.init()
+    private func setupConfigurations() {
         IQKeyboardManager.shared.enable = true
     }
 }
@@ -56,13 +58,17 @@ class AppCoordinator: NSObject, WindowCoordinatorProtocol {
 extension AppCoordinator: AppCoordinatorProtocol {
     func showFlexExplorer() {
         #if DEBUG
-            FLEXManager.shared()?.showExplorer()
+            if FLEXManager.shared()?.isHidden ?? false {
+                FLEXManager.shared()?.showExplorer()
+            }
         #endif
     }
 
     func hideFlexExplorer() {
         #if DEBUG
-            FLEXManager.shared()?.hideExplorer()
+            if !(FLEXManager.shared()?.isHidden ?? false) {
+                FLEXManager.shared()?.hideExplorer()
+            }
         #endif
     }
 

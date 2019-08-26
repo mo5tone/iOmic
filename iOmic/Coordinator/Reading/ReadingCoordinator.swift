@@ -10,26 +10,19 @@ import FontAwesome
 import Foundation
 import UIKit
 
-class ReadingCoordinator: NSObject, ViewCoordinatorProtocol {
-    // MARK: - ViewCoordinatorProtocol
-
-    let identifier = UUID()
-    private(set) var coordinators: [CoordinatorProtocol] = []
-    var viewController: UIViewController { return navigationController }
-
-    func start() {
-        navigationController.pushViewController(ReadingViewController(coordinator: self, viewModel: ReadingViewModel()), animated: false)
-    }
-
+class ReadingCoordinator: Coordinator {
     // MARK: - Props.
-
-    private let navigationController: UINavigationController
 
     // MARK: - Public
 
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-        super.init()
+    override init(window: UIWindow) {
+        super.init(window: window)
+        viewController = UINavigationController()
+    }
+
+    func start() {
+        guard let navigationController = viewController as? UINavigationController else { return }
+        navigationController.pushViewController(ReadingViewController(coordinator: self, viewModel: ReadingViewModel()), animated: false)
     }
 }
 

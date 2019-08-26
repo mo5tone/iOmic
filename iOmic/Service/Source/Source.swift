@@ -11,7 +11,7 @@ import FileKit
 import Foundation
 
 enum SourceIdentifier {
-    static var values: [SourceIdentifier] = [local, dmzj, manhuaren]
+    static let values: [SourceIdentifier] = [local, dmzj, manhuaren]
     // local source
     case local
     // online source
@@ -24,13 +24,13 @@ protocol SourceProtocol {
 }
 
 protocol OnlineSourceProtocol: SourceProtocol {
-    func fetchBooksWhere(page: Int, query: String, filters: [Filter]) -> [Book]
+    func fetchBooksWhere(page: Int, query: String, filters: [Filter<AnyHashable>]) -> [Book]
     func fetchChaptersIn(book: Book) -> (book: Book, chapters: [Chapter])
     func fetchPagesIn(chapter: Chapter) -> (chapter: Chapter, pages: [Page])
 }
 
 protocol LocalSourceProtocol: SourceProtocol {
-    func booksOrder(by filters: [Filter]) -> [Path]
+    func booksOrder(by filters: [Filter<AnyHashable>]) -> [Path]
     func markBooks(_ books: [Path], unread: Bool)
     func pagesIn(book: Path) -> [Path]
 }

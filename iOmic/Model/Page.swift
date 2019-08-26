@@ -8,4 +8,7 @@
 
 import Foundation
 
-class Page {}
+class Page {
+    let url: String = "Some URL"
+    let imageURL: String = "Some URL"
+}

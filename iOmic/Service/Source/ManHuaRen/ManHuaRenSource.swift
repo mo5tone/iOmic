@@ -8,14 +8,18 @@
 
 import Foundation
 
-class ManHuaRenSource: OnlineSourceProtocol {
+class ManHuaRenSource: NSObject, OnlineSourceProtocol {
+    // MARK: - Static
+
+    static let shared = ManHuaRenSource()
+
     // MARK: - OnlineSourceProtocol
 
-    var identifier: SourceIdentifier = .dmzj
+    var identifier: SourceIdentifier { return .manhuaren }
 
     var name: String { return "动漫之家" }
 
-    func fetchBooksWhere(page _: Int, query _: String, filters _: [Filter]) -> [Book] {
+    func fetchBooksWhere(page _: Int, query _: String, filters _: [Filter<AnyHashable>]) -> [Book] {
         return []
     }
 
@@ -28,6 +32,10 @@ class ManHuaRenSource: OnlineSourceProtocol {
     }
 
     // MARK: - Private
+
+    private override init() {
+        super.init()
+    }
 
     // MARK: - Public
 }
