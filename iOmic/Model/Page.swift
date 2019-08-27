@@ -9,6 +9,16 @@
 import Foundation
 
 class Page {
-    let url: String = "Some URL"
-    let imageURL: String = "Some URL"
+    // MARK: - props.
+
+    let chapter: Chapter
+    var index: Int = 0
+    var url: String?
+    var imageURL: String?
+
+    // MARK: - public
+
+    init(chapter: Chapter) {
+        self.chapter = chapter
+    }
 }

@@ -9,5 +9,18 @@
 import Foundation
 
 class Chapter {
-    let url: String = "Some URL"
+    // MARK: - props.
+
+    let book: Book
+    let url: String
+    var name: String?
+    var updateAt: Date?
+    var chapterNumber: Double?
+
+    // MARK: - public
+
+    init(book: Book, url: String) {
+        self.book = book
+        self.url = url
+    }
 }

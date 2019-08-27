@@ -9,24 +9,32 @@
 import Alamofire
 import FileKit
 import Foundation
+import PromiseKit
 
-enum SourceIdentifier {
-    static let values: [SourceIdentifier] = [local, dmzj, manhuaren]
-    // local source
-    case local
-    // online source
-    case dmzj, manhuaren // JSON
+class Source: NSObject {
+    enum Identifier: Int {
+        // local
+        case local = 0
+        // online
+        case dmzj, manhuaren // JSON
+    }
+
+    private var _available = true
+    var available: Bool {
+        get { return _available }
+        set { _available = newValue }
+    }
 }
 
 protocol SourceProtocol {
-    var identifier: SourceIdentifier { get }
+    var identifier: Source.Identifier { get }
     var name: String { get }
 }
 
 protocol OnlineSourceProtocol: SourceProtocol {
-    func fetchBooksWhere(page: Int, query: String, filters: [Filter]) -> [Book]
-    func fetchChaptersIn(book: Book) -> (book: Book, chapters: [Chapter])
-    func fetchPagesIn(chapter: Chapter) -> (chapter: Chapter, pages: [Page])
+    func fetchBooks(page: Int, query: String, filters: [Filter]) -> Promise<[Book]>
+    func fetchChapters(book: Book) -> Promise<[Chapter]>
+    func fetchPages(chapter: Chapter) -> Promise<[Page]>
 }
 
 protocol LocalSourceProtocol: SourceProtocol {
