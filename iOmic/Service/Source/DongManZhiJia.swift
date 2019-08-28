@@ -83,7 +83,8 @@ extension DongManZhiJia: OnlineSourceProtocol {
                 return book
             }
         }
-        return AF.request(Router.books(page, query, filters)).validate().response()
+        let convertible = Router.books(page, query, filters)
+        return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
             .compactMap { response -> [Book] in
                 switch response.result {
                 case let .success(data):
@@ -102,7 +103,8 @@ extension DongManZhiJia: OnlineSourceProtocol {
     }
 
     func fetchChapters(book: Book) -> Promise<[Chapter]> {
-        return AF.request(Router.chapters(book)).validate().response()
+        let convertible = Router.chapters(book)
+        return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
             .compactMap { response -> [Chapter] in
                 switch response.result {
                 case let .success(data):
@@ -136,7 +138,8 @@ extension DongManZhiJia: OnlineSourceProtocol {
     }
 
     func fetchPages(chapter: Chapter) -> Promise<[Page]> {
-        return AF.request(Router.pages(chapter)).validate().response()
+        let convertible = Router.pages(chapter)
+        return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
             .compactMap { response -> [Page] in
                 switch response.result {
                 case let .success(data):
@@ -210,6 +213,8 @@ extension DongManZhiJia.Router: RequestConvertible {
     }
 
     var parameterEncoding: ParameterEncoding { return URLEncoding.default }
+
+    var interceptor: RequestInterceptor? { return nil }
 }
 
 // MARK: - Filters
