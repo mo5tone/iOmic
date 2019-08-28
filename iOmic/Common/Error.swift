@@ -9,8 +9,17 @@
 import Alamofire
 import Foundation
 
-enum Errors {
+enum Whoops {
     enum Networking: Error {
-        case responseNoData(DataResponse<Data?>)
+        case responseWithoutData(DataResponse<Data?>)
+    }
+
+    enum Codeing: Error {
+        case decodeFailed
+        case encodeFailed
+    }
+
+    enum JSON: Error {
+        case nilProperty(String)
     }
 }

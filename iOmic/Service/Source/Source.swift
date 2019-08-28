@@ -32,13 +32,21 @@ protocol SourceProtocol {
 }
 
 protocol OnlineSourceProtocol: SourceProtocol {
-    func fetchBooks(page: Int, query: String, filters: [Filter]) -> Promise<[Book]>
+    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Promise<[Book]>
     func fetchChapters(book: Book) -> Promise<[Chapter]>
     func fetchPages(chapter: Chapter) -> Promise<[Page]>
 }
 
 protocol LocalSourceProtocol: SourceProtocol {
-    func booksOrder(by filters: [Filter]) -> [Path]
+    func booksOrder(by filters: [FilterProrocol]) -> [Path]
     func markBooks(_ books: [Path], unread: Bool)
     func pagesIn(book: Path) -> [Path]
+}
+
+enum Sources {
+    enum Local {}
+    enum Online {
+        enum DMZJ {}
+        enum ManHuaRen {}
+    }
 }

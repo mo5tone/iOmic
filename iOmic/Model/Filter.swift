@@ -8,27 +8,31 @@
 
 import Foundation
 
-class Filter {
-    // MARK: - instance
+protocol FilterProrocol {
+    var title: String { get }
+}
 
+class ToggleFilter: FilterProrocol {
     let title: String
-    let keyValues: [(key: String, value: String)]
-    private var _index: Int = 0
-    var index: Int {
-        get { return _index }
-        set { _index = max(0, min(newValue, keyValues.count - 1)) }
-    }
+    var state: Bool
 
-    var key: String { return keyValues[index].key }
-    var value: String { return keyValues[index].value }
-
-    // MARK: - public
-
-    init(title: String, keyValues: [(key: String, value: String)], index: Int = 0) {
-        assert(!title.isEmpty)
-        assert(!keyValues.isEmpty)
+    init(title: String, state: Bool = false) {
         self.title = title
-        self.keyValues = keyValues
-        self.index = index
+        self.state = state
+    }
+}
+
+class PickFilter<ValueType>: FilterProrocol {
+    let title: String
+    var state: Int
+    let options: [(name: String, value: ValueType)]
+
+    var name: String { return options[state].name }
+    var value: ValueType { return options[state].value }
+
+    init(title: String, options: [(String, ValueType)], state: Int = 0) {
+        self.title = title
+        self.options = options
+        self.state = state
     }
 }

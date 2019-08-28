@@ -10,18 +10,18 @@ import Alamofire
 import Foundation
 import PromiseKit
 
-class MHRSource: Source {
+class ManHuaRen: Source {
     // MARK: - Types
 
     fileprivate enum Router {
-        case books(Int, String, [Filter])
+        case books(Int, String, [FilterProrocol])
         case chapters(Book)
         case pages(Chapter)
     }
 
     // MARK: - Static
 
-    static let shared = MHRSource()
+    static let shared = ManHuaRen()
 
     // MARK: - Private
 
@@ -32,6 +32,6 @@ class MHRSource: Source {
     // MARK: - Public
 }
 
-// extension MHRSource: OnlineSourceProtocol {}
+// extension ManHuaRen: OnlineSourceProtocol {}
 
 // extension MHRSource.Router: RequestConvertible {}

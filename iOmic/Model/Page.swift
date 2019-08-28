@@ -12,13 +12,14 @@ class Page {
     // MARK: - props.
 
     let chapter: Chapter
-    var index: Int = 0
+    let index: Int
     var url: String?
     var imageURL: String?
 
     // MARK: - public
 
-    init(chapter: Chapter) {
+    init(chapter: Chapter, index: Int) {
         self.chapter = chapter
+        self.index = index
     }
 }

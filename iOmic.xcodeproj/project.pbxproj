@@ -44,8 +44,8 @@
 		559302A02312B7270021C170 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5593029F2312B7270021C170 /* SwiftyJSON.framework */; };
 		559302A42312C1AE0021C170 /* FileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559302A32312C1AE0021C170 /* FileKit.framework */; };
 		559302A62312C1BF0021C170 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559302A52312C1BF0021C170 /* ZipArchive.framework */; };
-		559302A82312CE750021C170 /* DMZJSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A72312CE750021C170 /* DMZJSource.swift */; };
-		559302AA2312CF180021C170 /* MHRSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A92312CF180021C170 /* MHRSource.swift */; };
+		559302A82312CE750021C170 /* DongManZhiJia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A72312CE750021C170 /* DongManZhiJia.swift */; };
+		559302AA2312CF180021C170 /* ManHuaRen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A92312CF180021C170 /* ManHuaRen.swift */; };
 		55BEAA8E23122CD600A6A41D /* ReadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA8D23122CD600A6A41D /* ReadingViewController.xib */; };
 		55BEAA9023122DF000A6A41D /* ExploreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA8F23122DF000A6A41D /* ExploreViewController.xib */; };
 		55BEAA9223122E1600A6A41D /* DownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA9123122E1600A6A41D /* DownloadViewController.xib */; };
@@ -120,8 +120,8 @@
 		5593029F2312B7270021C170 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		559302A32312C1AE0021C170 /* FileKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FileKit.framework; path = Carthage/Build/iOS/FileKit.framework; sourceTree = "<group>"; };
 		559302A52312C1BF0021C170 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/iOS/ZipArchive.framework; sourceTree = "<group>"; };
-		559302A72312CE750021C170 /* DMZJSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMZJSource.swift; sourceTree = "<group>"; };
-		559302A92312CF180021C170 /* MHRSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MHRSource.swift; sourceTree = "<group>"; };
+		559302A72312CE750021C170 /* DongManZhiJia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DongManZhiJia.swift; sourceTree = "<group>"; };
+		559302A92312CF180021C170 /* ManHuaRen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManHuaRen.swift; sourceTree = "<group>"; };
 		55BEAA8D23122CD600A6A41D /* ReadingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReadingViewController.xib; sourceTree = "<group>"; };
 		55BEAA8F23122DF000A6A41D /* ExploreViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreViewController.xib; sourceTree = "<group>"; };
 		55BEAA9123122E1600A6A41D /* DownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadViewController.xib; sourceTree = "<group>"; };
@@ -412,9 +412,9 @@
 		5584B13023116835000D9309 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				559302A22312BA180021C170 /* ManHuaRen */,
-				559302A12312B9FC0021C170 /* DMZJ */,
 				5584B13123116849000D9309 /* Source.swift */,
+				559302A72312CE750021C170 /* DongManZhiJia.swift */,
+				559302A92312CF180021C170 /* ManHuaRen.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -424,22 +424,6 @@
 			children = (
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		559302A12312B9FC0021C170 /* DMZJ */ = {
-			isa = PBXGroup;
-			children = (
-				559302A72312CE750021C170 /* DMZJSource.swift */,
-			);
-			path = DMZJ;
-			sourceTree = "<group>";
-		};
-		559302A22312BA180021C170 /* ManHuaRen */ = {
-			isa = PBXGroup;
-			children = (
-				559302A92312CF180021C170 /* MHRSource.swift */,
-			);
-			path = ManHuaRen;
 			sourceTree = "<group>";
 		};
 		55BEAA9523124EDD00A6A41D /* Model */ = {
@@ -640,9 +624,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				559302AA2312CF180021C170 /* MHRSource.swift in Sources */,
+				559302AA2312CF180021C170 /* ManHuaRen.swift in Sources */,
 				5584B13223116849000D9309 /* Source.swift in Sources */,
-				559302A82312CE750021C170 /* DMZJSource.swift in Sources */,
+				559302A82312CE750021C170 /* DongManZhiJia.swift in Sources */,
 				5584B12C23115709000D9309 /* MainCoordinator.swift in Sources */,
 				5584B0E42310E6A7000D9309 /* AppCoordinator.swift in Sources */,
 				5584B0FE2311089F000D9309 /* ReadingCoordinator.swift in Sources */,
