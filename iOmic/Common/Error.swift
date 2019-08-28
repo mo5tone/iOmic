@@ -11,7 +11,7 @@ import Foundation
 
 enum Whoops {
     enum Networking: Error {
-        case responseWithoutData(DataResponse<Data?>)
+        case nilDataReponse(DataResponse<Data?>)
     }
 
     enum Codeing: Error {

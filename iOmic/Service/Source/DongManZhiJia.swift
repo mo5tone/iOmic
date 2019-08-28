@@ -57,7 +57,7 @@ extension DongManZhiJia: OnlineSourceProtocol {
 
     func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Promise<[Book]> {
         func jsonParser(json: JSON) -> [Book] {
-            return json.array?.compactMap { json -> Book? in
+            return (json.array ?? []).compactMap { json -> Book? in
                 guard let bookId = json["id"].string else { return nil }
                 let book = Book(identifier: identifier, url: "/comic/\(bookId).json")
                 book.title = json["title"].string
@@ -66,13 +66,13 @@ extension DongManZhiJia: OnlineSourceProtocol {
                 book.status = Book.Status(string: json["status"].string)
                 book.description = json["description"].string
                 return book
-            } ?? []
+            }
         }
         func stringParser(string: String) throws -> [Book] {
             let regEx = try NSRegularExpression(pattern: #"g_search_data = (.*);"#)
             let results = regEx.matches(in: string, range: NSRange(string.startIndex..., in: string))
             guard let result = results.first, result.numberOfRanges > 1, let range = Range(result.range(at: 1), in: string) else { return [] }
-            return JSON(parseJSON: String(string[range])).array?.compactMap { json -> Book? in
+            return (JSON(parseJSON: String(string[range])).array ?? []).compactMap { json -> Book? in
                 guard let bookId = json["id"].string else { return nil }
                 let book = Book(identifier: identifier, url: "/comic/\(bookId).json")
                 book.title = json["name"].string
@@ -81,98 +81,78 @@ extension DongManZhiJia: OnlineSourceProtocol {
                 book.status = Book.Status(string: json["status_tag_id"].string)
                 book.description = json["description"].string
                 return book
-            } ?? []
+            }
         }
-        return Promise { seal in
-            AF.request(Router.books(page, query, filters))
-                .validate()
-                .response { response in
-                    switch response.result {
-                    case let .success(data):
-                        do {
-                            guard let data = data else { throw Whoops.Networking.responseWithoutData(response) }
-                            if query.isEmpty {
-                                seal.fulfill(jsonParser(json: try JSON(data: data)))
-                            } else if let string = String(data: data, encoding: .utf8) {
-                                seal.fulfill(try stringParser(string: string))
-                            } else {
-                                throw Whoops.Codeing.decodeFailed
-                            }
-                        } catch {
-                            seal.reject(error)
-                        }
-                    case let .failure(error):
-                        seal.reject(error)
+        return AF.request(Router.books(page, query, filters)).validate().response()
+            .compactMap { response -> [Book] in
+                switch response.result {
+                case let .success(data):
+                    guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
+                    if query.isEmpty {
+                        return jsonParser(json: try JSON(data: data))
+                    } else if let string = String(data: data, encoding: .utf8) {
+                        return try stringParser(string: string)
+                    } else {
+                        throw Whoops.Codeing.decodeFailed
                     }
+                case let .failure(error):
+                    throw error
                 }
-        }
+            }
     }
 
     func fetchChapters(book: Book) -> Promise<[Chapter]> {
-        return Promise { seal in
-            AF.request(Router.chapters(book))
-                .validate()
-                .response { response in
-                    switch response.result {
-                    case let .success(data):
-                        do {
-                            guard let data = data else { throw Whoops.Networking.responseWithoutData(response) }
-                            let json = try JSON(data: data)
-                            book.title = json["title"].string
-                            book.thumbnailUrl = json["cover"].string?.fixScheme()
-                            book.author = (json["authors"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                            book.genre = (json["types"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                            if let intValue = json["status"][0]["tag_id"].int { book.status = Book.Status(string: "\(intValue)") }
-                            book.description = json["description"].string
-                            var chapters: [Chapter] = []
-                            if let bookId = json["id"].string {
-                                (json["chapters"].array ?? []).forEach { item in
-                                    let prefix = item["title"].stringValue
-                                    (item["data"].array ?? []).forEach { item1 in
-                                        guard let chapterId = item1["chapter_id"].string else { return }
-                                        let chapter = Chapter(book: book, url: "/chapter/\(bookId)/\(chapterId).json")
-                                        let chapterTitle = item1["chapter_title"].stringValue
-                                        chapter.name = "[\(prefix)]\(chapterTitle)"
-                                        chapter.updateAt = Date(timeIntervalSince1970: item1["updatetime"].doubleValue)
-                                        chapters.append(chapter)
-                                    }
-                                }
+        return AF.request(Router.chapters(book)).validate().response()
+            .compactMap { response -> [Chapter] in
+                switch response.result {
+                case let .success(data):
+                    guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
+                    let json = try JSON(data: data)
+                    book.title = json["title"].string
+                    book.thumbnailUrl = json["cover"].string?.fixScheme()
+                    book.author = (json["authors"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    book.genre = (json["types"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    if let intValue = json["status"][0]["tag_id"].int { book.status = Book.Status(string: "\(intValue)") }
+                    book.description = json["description"].string
+                    var chapters: [Chapter] = []
+                    if let bookId = json["id"].string {
+                        (json["chapters"].array ?? []).forEach { item in
+                            let prefix = item["title"].stringValue
+                            (item["data"].array ?? []).forEach { item1 in
+                                guard let chapterId = item1["chapter_id"].string else { return }
+                                let chapter = Chapter(book: book, url: "/chapter/\(bookId)/\(chapterId).json")
+                                let chapterTitle = item1["chapter_title"].stringValue
+                                chapter.name = "[\(prefix)]\(chapterTitle)"
+                                chapter.updateAt = Date(timeIntervalSince1970: item1["updatetime"].doubleValue)
+                                chapters.append(chapter)
                             }
-                            seal.fulfill(chapters)
-                        } catch {
-                            seal.reject(error)
                         }
-                    case let .failure(error):
-                        seal.reject(error)
                     }
+                    return chapters
+                case let .failure(error):
+                    throw error
                 }
-        }
+            }
     }
 
     func fetchPages(chapter: Chapter) -> Promise<[Page]> {
-        return Promise { seal in
-            AF.request(Router.pages(chapter))
-                .validate()
-                .response { response in
-                    switch response.result {
-                    case let .success(data):
-                        do {
-                            guard let data = data else { throw Whoops.Networking.responseWithoutData(response) }
-                            let json = try JSON(data: data)
-                            var pages = [Page]()
-                            (json["page_url"].array ?? []).enumerated().forEach { offset, element in
-                                let page = Page(chapter: chapter, index: offset)
-                                page.imageURL = element.string
-                                pages.append(page)
-                            }
-                        } catch {
-                            seal.reject(error)
-                        }
-                    case let .failure(error):
-                        seal.reject(error)
+        return AF.request(Router.pages(chapter)).validate().response()
+            .compactMap { response -> [Page] in
+                switch response.result {
+                case let .success(data):
+                    guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
+                    let json = try JSON(data: data)
+                    var pages = [Page]()
+                    (json["page_url"].array ?? []).enumerated().forEach { offset, element in
+                        let page = Page(chapter: chapter, index: offset)
+                        page.imageURL = element.string
+                        pages.append(page)
                     }
+                    return pages
+                case let .failure(error):
+                    throw error
                 }
-        }
+            }
     }
 }
 
