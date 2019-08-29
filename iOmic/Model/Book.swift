@@ -17,7 +17,7 @@ class Book {
 
     // MARK: - props.
 
-    let identifier: Source.Identifier
+    let source: OnlineSourceProtocol
     let url: String
     var thumbnailUrl: String?
     var title: String?
@@ -29,8 +29,8 @@ class Book {
 
     // MARK: - public
 
-    init(identifier: Source.Identifier, url: String) {
-        self.identifier = identifier
+    init(source: OnlineSourceProtocol, url: String) {
+        self.source = source
         self.url = url
     }
 }

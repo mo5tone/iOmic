@@ -3,7 +3,6 @@ $(SRCROOT)/Carthage/Build/iOS/FileKit.framework
 $(SRCROOT)/Carthage/Build/iOS/IQKeyboardManagerSwift.framework
 $(SRCROOT)/Carthage/Build/iOS/Kanna.framework
 $(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework
-$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework
 $(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework
 $(SRCROOT)/Carthage/Build/iOS/RxRelay.framework
 $(SRCROOT)/Carthage/Build/iOS/RxSwift.framework

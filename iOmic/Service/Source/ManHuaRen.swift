@@ -20,6 +20,30 @@ class ManHuaRen: Source {
         case pages(Chapter)
     }
 
+    fileprivate class Interceptor: RequestInterceptor {
+        func adapt(_ urlRequest: URLRequest, for _: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
+            var request = urlRequest
+            if let url = request.url, let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+                let cipher = "4e0a48e1c0b54041bce9c8f0e036124d"
+                var key = cipher + "GET"
+                let queryItems = components.queryItems ?? []
+                queryItems.filter { $0.name != "gsn" }.sorted(by: { $0.name < $1.name }).forEach {
+                    guard let value = $0.value?.addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed) else { return }
+                    key += $0.name
+                    key += value
+                }
+                key += cipher
+                do {
+                    completion(.success(try URLEncoding.default.encode(request, with: ["gsn": key.md5String()])))
+                } catch {
+                    completion(.failure(error))
+                }
+            } else {
+                completion(.success(request))
+            }
+        }
+    }
+
     // MARK: - Static
 
     static let shared = ManHuaRen()
@@ -68,7 +92,7 @@ extension ManHuaRen: OnlineSourceProtocol {
                     let json = try JSON(data: data)
                     return json["response", "mangas"].arrayValue.compactMap { ele -> Book? in
                         let bookId = ele["mangaId"].intValue
-                        let book = Book(identifier: strongSelf.identifier, url: "/v1/manga/getDetail?mangaId=\(bookId)")
+                        let book = Book(source: strongSelf, url: "/v1/manga/getDetail?mangaId=\(bookId)")
                         book.title = ele["mangaName"].string
                         book.thumbnailUrl = ele["mangaCoverimageUrl"].string
                         book.author = ele["mangaAuthor"].string
@@ -89,7 +113,7 @@ extension ManHuaRen: OnlineSourceProtocol {
                 case let .success(data):
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     let json = try JSON(data: data)["response"]
-                    let book = Book(identifier: book.identifier, url: book.url)
+                    let book = Book(source: book.source, url: book.url)
                     book.title = json["mangaName"].string
                     if let thumbnailUrl = json["mangaCoverimageUrl"].string, !thumbnailUrl.isEmpty {
                         book.thumbnailUrl = thumbnailUrl
@@ -146,30 +170,6 @@ extension ManHuaRen: OnlineSourceProtocol {
 }
 
 extension ManHuaRen.Router: RequestConvertible {
-    fileprivate class Interceptor: RequestInterceptor {
-        func adapt(_ urlRequest: URLRequest, for _: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
-            var request = urlRequest
-            if let url = request.url, let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
-                let cipher = "4e0a48e1c0b54041bce9c8f0e036124d"
-                var key = cipher + "GET"
-                let queryItems = components.queryItems ?? []
-                queryItems.filter { $0.name != "gsn" }.sorted(by: { $0.name < $1.name }).forEach {
-                    guard let value = $0.value else { return }
-                    key += $0.name
-                    key += value
-                }
-                key += cipher
-                do {
-                    completion(.success(try URLEncoding.default.encode(request, with: ["gsn": key.md5String()])))
-                } catch {
-                    completion(.failure(error))
-                }
-            } else {
-                completion(.success(request))
-            }
-        }
-    }
-
     var baseURLString: URLConvertible { return "http://mangaapi.manhuaren.com" }
 
     var path: String {
@@ -223,7 +223,7 @@ extension ManHuaRen.Router: RequestConvertible {
 
     var parameterEncoding: ParameterEncoding { return URLEncoding.default }
 
-    var interceptor: RequestInterceptor? { return Interceptor() }
+    var interceptor: RequestInterceptor? { return ManHuaRen.Interceptor() }
 }
 
 extension ManHuaRen {

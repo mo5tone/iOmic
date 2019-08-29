@@ -10,7 +10,6 @@
 		55191F4A2310D22D007D1454 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F492310D22D007D1454 /* Alamofire.framework */; };
 		55191F4C2310D244007D1454 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F4B2310D244007D1454 /* IQKeyboardManagerSwift.framework */; };
 		55191F4E2310D24C007D1454 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F4D2310D24C007D1454 /* Kingfisher.framework */; };
-		55191F502310D24F007D1454 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F4F2310D24F007D1454 /* PromiseKit.framework */; };
 		55191F522310D25A007D1454 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F512310D25A007D1454 /* RxCocoa.framework */; };
 		55191F542310D25F007D1454 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F532310D25F007D1454 /* RxRelay.framework */; };
 		55191F562310D264007D1454 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F552310D264007D1454 /* RxSwift.framework */; };
@@ -153,7 +152,6 @@
 				55191F4C2310D244007D1454 /* IQKeyboardManagerSwift.framework in Frameworks */,
 				5593029E2312B7150021C170 /* Kanna.framework in Frameworks */,
 				55191F4E2310D24C007D1454 /* Kingfisher.framework in Frameworks */,
-				55191F502310D24F007D1454 /* PromiseKit.framework in Frameworks */,
 				55191F522310D25A007D1454 /* RxCocoa.framework in Frameworks */,
 				55191F542310D25F007D1454 /* RxRelay.framework in Frameworks */,
 				55191F562310D264007D1454 /* RxSwift.framework in Frameworks */,
