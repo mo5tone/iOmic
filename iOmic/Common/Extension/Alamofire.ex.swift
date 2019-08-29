@@ -28,23 +28,3 @@ extension URLRequestConvertible where Self: RequestConvertible {
         return try parameterEncoding.encode(request, with: parameters)
     }
 }
-
-// MARK: - PromiseKit
-
-extension DataRequest {
-    func response(queue: DispatchQueue = .main) -> Promise<DataResponse<Data?>> {
-        return Promise { seal in response(queue: queue) { seal.fulfill($0) } }
-    }
-
-    func responseData(queue: DispatchQueue = .main) -> Promise<DataResponse<Data>> {
-        return Promise { seal in responseData(queue: queue) { seal.fulfill($0) } }
-    }
-
-    func responseString(queue: DispatchQueue = .main, encoding: String.Encoding? = nil) -> Promise<DataResponse<String>> {
-        return Promise { seal in responseString(queue: queue, encoding: encoding) { seal.fulfill($0) } }
-    }
-
-    func responseJSON(queue: DispatchQueue = .main, options: JSONSerialization.ReadingOptions = .allowFragments) -> Promise<DataResponse<Any>> {
-        return Promise { seal in responseJSON(queue: queue, options: options) { seal.fulfill($0) } }
-    }
-}

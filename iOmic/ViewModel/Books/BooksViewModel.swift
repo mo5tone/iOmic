@@ -1,5 +1,5 @@
 //
-//  ExploreViewModel.swift
+//  BooksViewModel.swift
 //  iOmic
 //
 //  Created by 门捷夫 on 2019/8/24.
@@ -7,4 +7,5 @@
 //
 
 import Foundation
-class ExploreViewModel: NSObject {}
+
+class BooksViewModel: NSObject {}

@@ -9,10 +9,11 @@
 import Alamofire
 import FileKit
 import Foundation
-import PromiseKit
+import RxSwift
 
 class Source: NSObject {
     enum Identifier: Int {
+        static var values: [Identifier] = [.local, .dmzj, .manhuaren]
         // local
         case local = 0
         // online
@@ -29,24 +30,17 @@ class Source: NSObject {
 protocol SourceProtocol {
     var identifier: Source.Identifier { get }
     var name: String { get }
+    var defaultFilters: [FilterProrocol] { get }
 }
 
 protocol OnlineSourceProtocol: SourceProtocol {
-    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Promise<[Book]>
-    func fetchChapters(book: Book) -> Promise<[Chapter]>
-    func fetchPages(chapter: Chapter) -> Promise<[Page]>
+    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Observable<[Book]>
+    func fetchChapters(book: Book) -> Observable<[Chapter]>
+    func fetchPages(chapter: Chapter) -> Observable<[Page]>
 }
 
 protocol LocalSourceProtocol: SourceProtocol {
     func booksOrder(by filters: [FilterProrocol]) -> [Path]
     func markBooks(_ books: [Path], unread: Bool)
     func pagesIn(book: Path) -> [Path]
-}
-
-enum Sources {
-    enum Local {}
-    enum Online {
-        enum DMZJ {}
-        enum ManHuaRen {}
-    }
 }

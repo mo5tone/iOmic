@@ -24,17 +24,16 @@
 		55342F772310B6BC00FA141B /* iOmicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55342F762310B6BC00FA141B /* iOmicTests.swift */; };
 		55342F822310B6BC00FA141B /* iOmicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55342F812310B6BC00FA141B /* iOmicUITests.swift */; };
 		5584B0E42310E6A7000D9309 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0E32310E6A7000D9309 /* AppCoordinator.swift */; };
-		5584B0EB2310EC4F000D9309 /* ReadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0E92310EC4F000D9309 /* ReadingViewController.swift */; };
-		5584B0EF2310EE29000D9309 /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0ED2310EE29000D9309 /* ExploreViewController.swift */; };
+		5584B0EB2310EC4F000D9309 /* BooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0E92310EC4F000D9309 /* BooksViewController.swift */; };
+		5584B0EF2310EE29000D9309 /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0ED2310EE29000D9309 /* DiscoveryViewController.swift */; };
 		5584B0F32310EE5E000D9309 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0F12310EE5E000D9309 /* DownloadViewController.swift */; };
 		5584B0F72310EE85000D9309 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0F52310EE85000D9309 /* SettingViewController.swift */; };
-		5584B0FE2311089F000D9309 /* ReadingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0FD2311089F000D9309 /* ReadingCoordinator.swift */; };
-		5584B10623114A6A000D9309 /* FontAwesome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5584B10523114A6A000D9309 /* FontAwesome.framework */; };
-		5584B10C23114E01000D9309 /* ReadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B10B23114E01000D9309 /* ReadingViewModel.swift */; };
+		5584B0FE2311089F000D9309 /* BooksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0FD2311089F000D9309 /* BooksCoordinator.swift */; };
+		5584B10C23114E01000D9309 /* BooksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B10B23114E01000D9309 /* BooksViewModel.swift */; };
 		5584B11D2311533D000D9309 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B11C2311533D000D9309 /* SettingViewModel.swift */; };
 		5584B11F23115349000D9309 /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B11E23115349000D9309 /* DownloadViewModel.swift */; };
-		5584B12123115358000D9309 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B12023115358000D9309 /* ExploreViewModel.swift */; };
-		5584B126231153FB000D9309 /* ExploreCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B125231153FB000D9309 /* ExploreCoordinator.swift */; };
+		5584B12123115358000D9309 /* DiscoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B12023115358000D9309 /* DiscoveryViewModel.swift */; };
+		5584B126231153FB000D9309 /* DiscoveryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B125231153FB000D9309 /* DiscoveryCoordinator.swift */; };
 		5584B12823115405000D9309 /* DownloadCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B12723115405000D9309 /* DownloadCoordinator.swift */; };
 		5584B12A2311540F000D9309 /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B1292311540F000D9309 /* SettingCoordinator.swift */; };
 		5584B12C23115709000D9309 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B12B23115709000D9309 /* MainCoordinator.swift */; };
@@ -46,8 +45,8 @@
 		559302A62312C1BF0021C170 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559302A52312C1BF0021C170 /* ZipArchive.framework */; };
 		559302A82312CE750021C170 /* DongManZhiJia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A72312CE750021C170 /* DongManZhiJia.swift */; };
 		559302AA2312CF180021C170 /* ManHuaRen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A92312CF180021C170 /* ManHuaRen.swift */; };
-		55BEAA8E23122CD600A6A41D /* ReadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA8D23122CD600A6A41D /* ReadingViewController.xib */; };
-		55BEAA9023122DF000A6A41D /* ExploreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA8F23122DF000A6A41D /* ExploreViewController.xib */; };
+		55BEAA8E23122CD600A6A41D /* BooksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA8D23122CD600A6A41D /* BooksViewController.xib */; };
+		55BEAA9023122DF000A6A41D /* DiscoveryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA8F23122DF000A6A41D /* DiscoveryViewController.xib */; };
 		55BEAA9223122E1600A6A41D /* DownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA9123122E1600A6A41D /* DownloadViewController.xib */; };
 		55BEAA9423122E3B00A6A41D /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA9323122E3B00A6A41D /* SettingViewController.xib */; };
 		55BEAA9823124EF700A6A41D /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BEAA9723124EF700A6A41D /* Book.swift */; };
@@ -55,6 +54,9 @@
 		55BEAA9C23124F0600A6A41D /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BEAA9B23124F0600A6A41D /* Page.swift */; };
 		55BEAA9E23124F1500A6A41D /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BEAA9D23124F1500A6A41D /* Filter.swift */; };
 		9F423D492316834E006B950F /* Date.ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F423D482316834E006B950F /* Date.ex.swift */; };
+		9F423D5023178019006B950F /* Alamofire+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F423D4F23178019006B950F /* Alamofire+RxSwift.swift */; };
+		9F8418FD2317B35300A503BE /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8418FB2317B35300A503BE /* BookCollectionViewCell.swift */; };
+		9F8418FE2317B35300A503BE /* BookCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F8418FC2317B35300A503BE /* BookCollectionViewCell.xib */; };
 		9FA947242314F4E80028A60D /* Alamofire.ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA947232314F4E80028A60D /* Alamofire.ex.swift */; };
 		9FA947262314FBE90028A60D /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA947252314FBE90028A60D /* Error.swift */; };
 		9FA9472823152C960028A60D /* String.ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA9472723152C960028A60D /* String.ex.swift */; };
@@ -101,17 +103,17 @@
 		55342F812310B6BC00FA141B /* iOmicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOmicUITests.swift; sourceTree = "<group>"; };
 		55342F832310B6BC00FA141B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5584B0E32310E6A7000D9309 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		5584B0E92310EC4F000D9309 /* ReadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingViewController.swift; sourceTree = "<group>"; };
-		5584B0ED2310EE29000D9309 /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
+		5584B0E92310EC4F000D9309 /* BooksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksViewController.swift; sourceTree = "<group>"; };
+		5584B0ED2310EE29000D9309 /* DiscoveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryViewController.swift; sourceTree = "<group>"; };
 		5584B0F12310EE5E000D9309 /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		5584B0F52310EE85000D9309 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		5584B0FD2311089F000D9309 /* ReadingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingCoordinator.swift; sourceTree = "<group>"; };
+		5584B0FD2311089F000D9309 /* BooksCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksCoordinator.swift; sourceTree = "<group>"; };
 		5584B10523114A6A000D9309 /* FontAwesome.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesome.framework; path = Carthage/Build/iOS/FontAwesome.framework; sourceTree = "<group>"; };
-		5584B10B23114E01000D9309 /* ReadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingViewModel.swift; sourceTree = "<group>"; };
+		5584B10B23114E01000D9309 /* BooksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksViewModel.swift; sourceTree = "<group>"; };
 		5584B11C2311533D000D9309 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		5584B11E23115349000D9309 /* DownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewModel.swift; sourceTree = "<group>"; };
-		5584B12023115358000D9309 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
-		5584B125231153FB000D9309 /* ExploreCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreCoordinator.swift; sourceTree = "<group>"; };
+		5584B12023115358000D9309 /* DiscoveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryViewModel.swift; sourceTree = "<group>"; };
+		5584B125231153FB000D9309 /* DiscoveryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryCoordinator.swift; sourceTree = "<group>"; };
 		5584B12723115405000D9309 /* DownloadCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadCoordinator.swift; sourceTree = "<group>"; };
 		5584B1292311540F000D9309 /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
 		5584B12B23115709000D9309 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -123,8 +125,8 @@
 		559302A52312C1BF0021C170 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/iOS/ZipArchive.framework; sourceTree = "<group>"; };
 		559302A72312CE750021C170 /* DongManZhiJia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DongManZhiJia.swift; sourceTree = "<group>"; };
 		559302A92312CF180021C170 /* ManHuaRen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManHuaRen.swift; sourceTree = "<group>"; };
-		55BEAA8D23122CD600A6A41D /* ReadingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReadingViewController.xib; sourceTree = "<group>"; };
-		55BEAA8F23122DF000A6A41D /* ExploreViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExploreViewController.xib; sourceTree = "<group>"; };
+		55BEAA8D23122CD600A6A41D /* BooksViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BooksViewController.xib; sourceTree = "<group>"; };
+		55BEAA8F23122DF000A6A41D /* DiscoveryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiscoveryViewController.xib; sourceTree = "<group>"; };
 		55BEAA9123122E1600A6A41D /* DownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadViewController.xib; sourceTree = "<group>"; };
 		55BEAA9323122E3B00A6A41D /* SettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
 		55BEAA9723124EF700A6A41D /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
@@ -132,6 +134,10 @@
 		55BEAA9B23124F0600A6A41D /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		55BEAA9D23124F1500A6A41D /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		9F423D482316834E006B950F /* Date.ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.ex.swift; sourceTree = "<group>"; };
+		9F423D4B23175B35006B950F /* iOmic-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOmic-Bridging-Header.h"; sourceTree = "<group>"; };
+		9F423D4F23178019006B950F /* Alamofire+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alamofire+RxSwift.swift"; sourceTree = "<group>"; };
+		9F8418FB2317B35300A503BE /* BookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionViewCell.swift; sourceTree = "<group>"; };
+		9F8418FC2317B35300A503BE /* BookCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BookCollectionViewCell.xib; sourceTree = "<group>"; };
 		9FA947232314F4E80028A60D /* Alamofire.ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alamofire.ex.swift; sourceTree = "<group>"; };
 		9FA947252314FBE90028A60D /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		9FA9472723152C960028A60D /* String.ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.ex.swift; sourceTree = "<group>"; };
@@ -144,7 +150,6 @@
 			files = (
 				55191F4A2310D22D007D1454 /* Alamofire.framework in Frameworks */,
 				559302A42312C1AE0021C170 /* FileKit.framework in Frameworks */,
-				5584B10623114A6A000D9309 /* FontAwesome.framework in Frameworks */,
 				55191F4C2310D244007D1454 /* IQKeyboardManagerSwift.framework in Frameworks */,
 				5593029E2312B7150021C170 /* Kanna.framework in Frameworks */,
 				55191F4E2310D24C007D1454 /* Kingfisher.framework in Frameworks */,
@@ -204,8 +209,8 @@
 			children = (
 				5584B124231153DF000D9309 /* Setting */,
 				5584B123231153D9000D9309 /* Download */,
-				5584B122231153D1000D9309 /* Explore */,
-				5584B0FC23110886000D9309 /* Reading */,
+				5584B122231153D1000D9309 /* Discovery */,
+				5584B0FC23110886000D9309 /* Books */,
 				55191F622310E047007D1454 /* Coordinator.swift */,
 				5584B0E32310E6A7000D9309 /* AppCoordinator.swift */,
 				5584B12B23115709000D9309 /* MainCoordinator.swift */,
@@ -218,8 +223,8 @@
 			children = (
 				5584B0E82310EBD2000D9309 /* Setting */,
 				5584B0E72310EB54000D9309 /* Download */,
-				5584B0E62310EB4B000D9309 /* Explore */,
-				5584B0E52310EB3D000D9309 /* Reading */,
+				5584B0E62310EB4B000D9309 /* Discovery */,
+				5584B0E52310EB3D000D9309 /* Books */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -229,8 +234,8 @@
 			children = (
 				5584B11B2311532B000D9309 /* Setting */,
 				5584B11A23115325000D9309 /* Download */,
-				5584B11923115319000D9309 /* Explore */,
-				5584B1182311530D000D9309 /* Reading */,
+				5584B11923115319000D9309 /* Discovery */,
+				5584B1182311530D000D9309 /* Books */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				55342F682310B6BC00FA141B /* Assets.xcassets */,
 				55342F6A2310B6BC00FA141B /* LaunchScreen.storyboard */,
 				55342F6D2310B6BC00FA141B /* Info.plist */,
+				9F423D4B23175B35006B950F /* iOmic-Bridging-Header.h */,
 			);
 			path = iOmic;
 			sourceTree = "<group>";
@@ -292,22 +298,22 @@
 			path = iOmicUITests;
 			sourceTree = "<group>";
 		};
-		5584B0E52310EB3D000D9309 /* Reading */ = {
+		5584B0E52310EB3D000D9309 /* Books */ = {
 			isa = PBXGroup;
 			children = (
-				5584B0E92310EC4F000D9309 /* ReadingViewController.swift */,
-				55BEAA8D23122CD600A6A41D /* ReadingViewController.xib */,
+				5584B0E92310EC4F000D9309 /* BooksViewController.swift */,
+				55BEAA8D23122CD600A6A41D /* BooksViewController.xib */,
 			);
-			path = Reading;
+			path = Books;
 			sourceTree = "<group>";
 		};
-		5584B0E62310EB4B000D9309 /* Explore */ = {
+		5584B0E62310EB4B000D9309 /* Discovery */ = {
 			isa = PBXGroup;
 			children = (
-				5584B0ED2310EE29000D9309 /* ExploreViewController.swift */,
-				55BEAA8F23122DF000A6A41D /* ExploreViewController.xib */,
+				5584B0ED2310EE29000D9309 /* DiscoveryViewController.swift */,
+				55BEAA8F23122DF000A6A41D /* DiscoveryViewController.xib */,
 			);
-			path = Explore;
+			path = Discovery;
 			sourceTree = "<group>";
 		};
 		5584B0E72310EB54000D9309 /* Download */ = {
@@ -328,12 +334,12 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
-		5584B0FC23110886000D9309 /* Reading */ = {
+		5584B0FC23110886000D9309 /* Books */ = {
 			isa = PBXGroup;
 			children = (
-				5584B0FD2311089F000D9309 /* ReadingCoordinator.swift */,
+				5584B0FD2311089F000D9309 /* BooksCoordinator.swift */,
 			);
-			path = Reading;
+			path = Books;
 			sourceTree = "<group>";
 		};
 		5584B10D23114F3F000D9309 /* Common */ = {
@@ -345,20 +351,20 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		5584B1182311530D000D9309 /* Reading */ = {
+		5584B1182311530D000D9309 /* Books */ = {
 			isa = PBXGroup;
 			children = (
-				5584B10B23114E01000D9309 /* ReadingViewModel.swift */,
+				5584B10B23114E01000D9309 /* BooksViewModel.swift */,
 			);
-			path = Reading;
+			path = Books;
 			sourceTree = "<group>";
 		};
-		5584B11923115319000D9309 /* Explore */ = {
+		5584B11923115319000D9309 /* Discovery */ = {
 			isa = PBXGroup;
 			children = (
-				5584B12023115358000D9309 /* ExploreViewModel.swift */,
+				5584B12023115358000D9309 /* DiscoveryViewModel.swift */,
 			);
-			path = Explore;
+			path = Discovery;
 			sourceTree = "<group>";
 		};
 		5584B11A23115325000D9309 /* Download */ = {
@@ -377,12 +383,12 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
-		5584B122231153D1000D9309 /* Explore */ = {
+		5584B122231153D1000D9309 /* Discovery */ = {
 			isa = PBXGroup;
 			children = (
-				5584B125231153FB000D9309 /* ExploreCoordinator.swift */,
+				5584B125231153FB000D9309 /* DiscoveryCoordinator.swift */,
 			);
-			path = Explore;
+			path = Discovery;
 			sourceTree = "<group>";
 		};
 		5584B123231153D9000D9309 /* Download */ = {
@@ -408,6 +414,7 @@
 				9FA947232314F4E80028A60D /* Alamofire.ex.swift */,
 				9FA9472723152C960028A60D /* String.ex.swift */,
 				9F423D482316834E006B950F /* Date.ex.swift */,
+				9F423D4F23178019006B950F /* Alamofire+RxSwift.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -425,6 +432,8 @@
 		5584B13323116BE6000D9309 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9F8418FB2317B35300A503BE /* BookCollectionViewCell.swift */,
+				9F8418FC2317B35300A503BE /* BookCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -460,6 +469,7 @@
 				55342F5C2310B6BB00FA141B /* Resources */,
 				55191F5D2310D4B4007D1454 /* Carthage Copy */,
 				55191F5E2310D8A9007D1454 /* Carthage Copy [DEBUG] */,
+				9F423D4A231753BB006B950F /* Swift Lint */,
 			);
 			buildRules = (
 			);
@@ -518,6 +528,7 @@
 				TargetAttributes = {
 					55342F5D2310B6BB00FA141B = {
 						CreatedOnToolsVersion = 10.3;
+						LastSwiftMigration = 1030;
 					};
 					55342F712310B6BC00FA141B = {
 						CreatedOnToolsVersion = 10.3;
@@ -556,10 +567,11 @@
 			files = (
 				55BEAA9423122E3B00A6A41D /* SettingViewController.xib in Resources */,
 				55342F6C2310B6BC00FA141B /* LaunchScreen.storyboard in Resources */,
-				55BEAA8E23122CD600A6A41D /* ReadingViewController.xib in Resources */,
+				55BEAA8E23122CD600A6A41D /* BooksViewController.xib in Resources */,
 				55342F692310B6BC00FA141B /* Assets.xcassets in Resources */,
-				55BEAA9023122DF000A6A41D /* ExploreViewController.xib in Resources */,
+				55BEAA9023122DF000A6A41D /* DiscoveryViewController.xib in Resources */,
 				55BEAA9223122E1600A6A41D /* DownloadViewController.xib in Resources */,
+				9F8418FE2317B35300A503BE /* BookCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,6 +632,24 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n/usr/local/bin/carthage copy-frameworks\nfi\n";
 		};
+		9F423D4A231753BB006B950F /* Swift Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -630,14 +660,15 @@
 				559302AA2312CF180021C170 /* ManHuaRen.swift in Sources */,
 				5584B13223116849000D9309 /* Source.swift in Sources */,
 				559302A82312CE750021C170 /* DongManZhiJia.swift in Sources */,
+				9F8418FD2317B35300A503BE /* BookCollectionViewCell.swift in Sources */,
 				5584B12C23115709000D9309 /* MainCoordinator.swift in Sources */,
 				5584B0E42310E6A7000D9309 /* AppCoordinator.swift in Sources */,
-				5584B0FE2311089F000D9309 /* ReadingCoordinator.swift in Sources */,
+				5584B0FE2311089F000D9309 /* BooksCoordinator.swift in Sources */,
 				5584B11F23115349000D9309 /* DownloadViewModel.swift in Sources */,
-				5584B10C23114E01000D9309 /* ReadingViewModel.swift in Sources */,
+				5584B10C23114E01000D9309 /* BooksViewModel.swift in Sources */,
 				55191F632310E047007D1454 /* Coordinator.swift in Sources */,
 				5584B12A2311540F000D9309 /* SettingCoordinator.swift in Sources */,
-				5584B0EF2310EE29000D9309 /* ExploreViewController.swift in Sources */,
+				5584B0EF2310EE29000D9309 /* DiscoveryViewController.swift in Sources */,
 				5584B12823115405000D9309 /* DownloadCoordinator.swift in Sources */,
 				55342F622310B6BB00FA141B /* AppDelegate.swift in Sources */,
 				9FA9472823152C960028A60D /* String.ex.swift in Sources */,
@@ -645,16 +676,17 @@
 				55BEAA9A23124EFF00A6A41D /* Chapter.swift in Sources */,
 				55BEAA9E23124F1500A6A41D /* Filter.swift in Sources */,
 				55BEAA9823124EF700A6A41D /* Book.swift in Sources */,
-				5584B12123115358000D9309 /* ExploreViewModel.swift in Sources */,
+				5584B12123115358000D9309 /* DiscoveryViewModel.swift in Sources */,
 				5584B0F32310EE5E000D9309 /* DownloadViewController.swift in Sources */,
 				5584B12F23116213000D9309 /* UIColor.ex.swift in Sources */,
 				9FA947262314FBE90028A60D /* Error.swift in Sources */,
 				5584B11D2311533D000D9309 /* SettingViewModel.swift in Sources */,
 				9F423D492316834E006B950F /* Date.ex.swift in Sources */,
 				9FA947242314F4E80028A60D /* Alamofire.ex.swift in Sources */,
+				9F423D5023178019006B950F /* Alamofire+RxSwift.swift in Sources */,
 				5584B0F72310EE85000D9309 /* SettingViewController.swift in Sources */,
-				5584B126231153FB000D9309 /* ExploreCoordinator.swift in Sources */,
-				5584B0EB2310EC4F000D9309 /* ReadingViewController.swift in Sources */,
+				5584B126231153FB000D9309 /* DiscoveryCoordinator.swift in Sources */,
+				5584B0EB2310EC4F000D9309 /* BooksViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,6 +853,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8ZATFQ33TG;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
@@ -833,6 +866,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.mo5tone.iOmic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iOmic/iOmic-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -842,6 +877,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8ZATFQ33TG;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
@@ -854,6 +890,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.mo5tone.iOmic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iOmic/iOmic-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

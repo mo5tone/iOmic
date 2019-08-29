@@ -1,5 +1,5 @@
 //
-//  ReadingViewController.swift
+//  BooksViewController.swift
 //  iOmic
 //
 //  Created by 门捷夫 on 2019/8/24.
@@ -8,17 +8,17 @@
 
 import UIKit
 
-protocol ReadingViewCoordinator: AnyObject {}
+protocol BooksViewCoordinator: AnyObject {}
 
-class ReadingViewController: UIViewController {
+class BooksViewController: UIViewController {
     // MARK: - Props.
 
-    private weak var coordinator: ReadingViewCoordinator?
-    private var viewModel: ReadingViewModel
+    private weak var coordinator: BooksViewCoordinator?
+    private var viewModel: BooksViewModel
 
     // MARK: - Public
 
-    init(coordinator: ReadingViewCoordinator, viewModel: ReadingViewModel) {
+    init(coordinator: BooksViewCoordinator, viewModel: BooksViewModel) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)

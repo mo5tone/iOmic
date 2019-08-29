@@ -8,7 +8,7 @@
 
 import Alamofire
 import Foundation
-import PromiseKit
+import RxSwift
 import SwiftyJSON
 
 class ManHuaRen: Source {
@@ -53,7 +53,11 @@ extension ManHuaRen: OnlineSourceProtocol {
 
     var name: String { return "漫画人" }
 
-    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Promise<[Book]> {
+    var defaultFilters: [FilterProrocol] {
+        return [ManHuaRen.SortFilter(), ManHuaRen.CategoryFilter()]
+    }
+
+    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Observable<[Book]> {
         let convertible = Router.books(page, query, filters)
         return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
             .compactMap { [weak self] response -> [Book] in
@@ -77,7 +81,7 @@ extension ManHuaRen: OnlineSourceProtocol {
             }
     }
 
-    func fetchChapters(book: Book) -> Promise<[Chapter]> {
+    func fetchChapters(book: Book) -> Observable<[Chapter]> {
         let convertible = Router.chapters(book)
         return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
             .compactMap { response -> [Chapter] in
@@ -118,7 +122,7 @@ extension ManHuaRen: OnlineSourceProtocol {
             }
     }
 
-    func fetchPages(chapter: Chapter) -> Promise<[Page]> {
+    func fetchPages(chapter: Chapter) -> Observable<[Page]> {
         let convertible = Router.pages(chapter)
         return AF.request(convertible).validate().response()
             .compactMap { response -> [Page] in

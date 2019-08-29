@@ -8,7 +8,7 @@
 
 import Alamofire
 import Foundation
-import PromiseKit
+import RxSwift
 import SwiftyJSON
 
 class DongManZhiJia: Source {
@@ -55,7 +55,11 @@ extension DongManZhiJia: OnlineSourceProtocol {
 
     var name: String { return "动漫之家" }
 
-    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Promise<[Book]> {
+    var defaultFilters: [FilterProrocol] {
+        return [DongManZhiJia.SortFilter(), DongManZhiJia.GenreFilter(), DongManZhiJia.StatusFilter(), DongManZhiJia.TypeFilter(), DongManZhiJia.ReaderFilter()]
+    }
+
+    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Observable<[Book]> {
         func jsonParser(json: JSON) -> [Book] {
             return (json.array ?? []).compactMap { json -> Book? in
                 guard let bookId = json["id"].string else { return nil }
@@ -102,7 +106,7 @@ extension DongManZhiJia: OnlineSourceProtocol {
             }
     }
 
-    func fetchChapters(book: Book) -> Promise<[Chapter]> {
+    func fetchChapters(book: Book) -> Observable<[Chapter]> {
         let convertible = Router.chapters(book)
         return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
             .compactMap { response -> [Chapter] in
@@ -137,7 +141,7 @@ extension DongManZhiJia: OnlineSourceProtocol {
             }
     }
 
-    func fetchPages(chapter: Chapter) -> Promise<[Page]> {
+    func fetchPages(chapter: Chapter) -> Observable<[Page]> {
         let convertible = Router.pages(chapter)
         return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
             .compactMap { response -> [Page] in
@@ -172,8 +176,6 @@ extension DongManZhiJia.Router: RequestConvertible {
     var path: String {
         switch self {
         case let .books(page, query, filters):
-            var ff = filters
-            ff.append(DongManZhiJia.GenreFilter())
             var types = filters.filter { !($0 is DongManZhiJia.SortFilter) }
                 .compactMap { $0 as? PickFilter<String> }
                 .compactMap { $0.value.isEmpty ? nil : $0.value }

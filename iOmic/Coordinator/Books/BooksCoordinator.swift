@@ -1,5 +1,5 @@
 //
-//  ExploreCoordinator.swift
+//  BooksCoordinator.swift
 //  iOmic
 //
 //  Created by 门捷夫 on 2019/8/24.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ExploreCoordinator: Coordinator {
+class BooksCoordinator: Coordinator {
     // MARK: - Props.
 
     // MARK: - Public
@@ -21,8 +21,10 @@ class ExploreCoordinator: Coordinator {
 
     func start() {
         guard let navigationController = viewController as? UINavigationController else { return }
-        navigationController.pushViewController(ExploreViewController(coordinator: self, viewModel: ExploreViewModel()), animated: false)
+        navigationController.pushViewController(BooksViewController(coordinator: self, viewModel: BooksViewModel()), animated: false)
     }
 }
 
-extension ExploreCoordinator: ExploreViewCoordinator {}
+// MARK: - BooksViewCoordinator
+
+extension BooksCoordinator: BooksViewCoordinator {}

@@ -1,16 +1,15 @@
 //
-//  ReadingCoordinator.swift
+//  DiscoveryCoordinator.swift
 //  iOmic
 //
 //  Created by 门捷夫 on 2019/8/24.
 //  Copyright © 2019 门捷夫. All rights reserved.
 //
 
-import FontAwesome
 import Foundation
 import UIKit
 
-class ReadingCoordinator: Coordinator {
+class DiscoveryCoordinator: Coordinator {
     // MARK: - Props.
 
     // MARK: - Public
@@ -22,10 +21,8 @@ class ReadingCoordinator: Coordinator {
 
     func start() {
         guard let navigationController = viewController as? UINavigationController else { return }
-        navigationController.pushViewController(ReadingViewController(coordinator: self, viewModel: ReadingViewModel()), animated: false)
+        navigationController.pushViewController(DiscoveryViewController(coordinator: self, viewModel: DiscoveryViewModel(source: ManHuaRen.shared)), animated: false)
     }
 }
 
-// MARK: - ReadingViewCoordinator
-
-extension ReadingCoordinator: ReadingViewCoordinator {}
+extension DiscoveryCoordinator: DiscoveryViewCoordinator {}
