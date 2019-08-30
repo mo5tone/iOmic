@@ -29,12 +29,8 @@ class DiscoveryViewController: UIViewController {
 
     private func setupBinding() {
         viewModel.title.bind(to: navigationItem.rx.title).disposed(by: disposeBag)
-        refreshControl.rx.controlEvent(.valueChanged).bind(to: viewModel.loadMore).disposed(by: disposeBag)
-        viewModel.elements.delay(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe { [weak self] in
-                guard case .next = $0 else { return }
-                self?.refreshControl.endRefreshing()
-            }.disposed(by: disposeBag)
+        refreshControl.rx.controlEvent(.valueChanged).bind(to: viewModel.load).disposed(by: disposeBag)
+//        viewModel.books.bind(to: collectionView.rx.items).disposed(by: disposeBag)
     }
 
     // MARK: - Public methods

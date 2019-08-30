@@ -1,5 +1,5 @@
 //
-//  ManHuaRenSource.swift
+//  ManHuaRen.swift
 //  iOmic
 //
 //  Created by 门捷夫 on 2019/8/25.
@@ -8,6 +8,7 @@
 
 import Alamofire
 import Foundation
+import Kingfisher
 import RxSwift
 import SwiftyJSON
 
@@ -79,6 +80,16 @@ extension ManHuaRen: OnlineSourceProtocol {
 
     var defaultFilters: [FilterProrocol] {
         return [ManHuaRen.SortFilter(), ManHuaRen.CategoryFilter()]
+    }
+
+    var modifier: AnyModifier {
+        return AnyModifier { request -> URLRequest? in
+            var req = request
+            req.addValue(#"{"le": "zh"}"#, forHTTPHeaderField: "X-Yq-Yqci")
+            req.addValue("http://www.dm5.com/dm5api/", forHTTPHeaderField: "Referer")
+            req.addValue("http://mangaapi.manhuaren.com/", forHTTPHeaderField: "clubReferer")
+            return req
+        }
     }
 
     func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Observable<[Book]> {

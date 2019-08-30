@@ -36,3 +36,22 @@ class PickFilter<ValueType>: FilterProrocol {
         self.state = state
     }
 }
+
+class MultiplePickFilter<ValueType>: FilterProrocol {
+    let title: String
+    var state: [Int]
+    let options: [(name: String, value: ValueType)]
+
+    var values: [ValueType] {
+        return state.compactMap { index -> ValueType? in
+            guard index < options.count else { return nil }
+            return options[index].value
+        }
+    }
+
+    init(title: String, options: [(String, ValueType)], state: [Int] = []) {
+        self.title = title
+        self.options = options
+        self.state = state
+    }
+}

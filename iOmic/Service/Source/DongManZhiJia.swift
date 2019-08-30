@@ -8,6 +8,7 @@
 
 import Alamofire
 import Foundation
+import Kingfisher
 import RxSwift
 import SwiftyJSON
 
@@ -51,12 +52,20 @@ extension Book.Status {
 // MARK: - OnlineSourceProtocol
 
 extension DongManZhiJia: OnlineSourceProtocol {
-    var identifier: Source.Identifier { return .dmzj }
+    var identifier: Source.Identifier { return .dongmanzhijia }
 
     var name: String { return "动漫之家" }
 
     var defaultFilters: [FilterProrocol] {
         return [DongManZhiJia.SortFilter(), DongManZhiJia.GenreFilter(), DongManZhiJia.StatusFilter(), DongManZhiJia.TypeFilter(), DongManZhiJia.ReaderFilter()]
+    }
+
+    var modifier: AnyModifier {
+        return AnyModifier { request -> URLRequest? in
+            var req = request
+            req.addValue("http://www.dmzj.com/", forHTTPHeaderField: "Referer")
+            return req
+        }
     }
 
     func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Observable<[Book]> {
