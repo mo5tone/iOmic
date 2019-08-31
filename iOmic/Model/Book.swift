@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 class Book {
     enum Status {
@@ -47,5 +48,24 @@ extension Book.Status: CustomStringConvertible {
         case .unknown:
             return "unknown"
         }
+    }
+}
+
+extension Book: Equatable, IdentifiableType {
+    typealias Identity = Int
+    var identity: Int {
+        return "\(source.identifier.rawValue)#\(url)".hashValue
+    }
+
+    static func == (lhs: Book, rhs: Book) -> Bool {
+        return lhs.source.identifier == rhs.source.identifier
+            && lhs.url == rhs.url
+            && lhs.thumbnailUrl == rhs.thumbnailUrl
+            && lhs.title == rhs.title
+            && lhs.artist == rhs.artist
+            && lhs.author == rhs.author
+            && lhs.genre == rhs.genre
+            && lhs.description == rhs.description
+            && lhs.status == rhs.status
     }
 }

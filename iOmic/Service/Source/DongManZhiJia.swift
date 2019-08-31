@@ -71,7 +71,7 @@ extension DongManZhiJia: OnlineSourceProtocol {
     func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Observable<[Book]> {
         func jsonParser(json: JSON) -> [Book] {
             return (json.array ?? []).compactMap { json -> Book? in
-                guard let bookId = json["id"].string else { return nil }
+                guard let bookId = json["id"].int else { return nil }
                 let book = Book(source: self, url: "/comic/\(bookId).json")
                 book.title = json["title"].string
                 book.author = json["authors"].string

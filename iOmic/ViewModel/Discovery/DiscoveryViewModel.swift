@@ -27,12 +27,12 @@ class DiscoveryViewModel: NSObject {
         Observable.merge(source.map { _ in }, load).subscribe { [weak self] in if case .next = $0 { self?.page = 0 } }.disposed(by: disposeBag)
         loadMore.subscribe { [weak self] in if case .next = $0 { self?.page += 1 } }.disposed(by: disposeBag)
         Observable.merge(source.map { _ in }, load, loadMore)
-            .withLatestFrom(Observable.combineLatest(source, query, filters))
+            .withLatestFrom(Observable.combineLatest(source, query.debug("query"), filters))
             .debug("load")
             .flatMapLatest { [weak self] (source, query, filters) -> Observable<[Book]> in
                 guard let self = self else { throw Whoops.nilWeakSelf }
                 if let online = source as? OnlineSourceProtocol {
-                    return online.fetchBooks(page: self.page, query: query ?? "", filters: filters)
+                    return online.fetchBooks(page: self.page, query: query ?? "", filters: filters).catchErrorJustReturn([])
                 } else {
                     throw Whoops.rawString("local source has not be implmented.")
                 }

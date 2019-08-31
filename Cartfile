@@ -16,6 +16,7 @@ github "gonzalonunez/Skeleton" ~> 0.3.1 # Loading placeholder
 github "hackiftekhar/IQKeyboardManager" # Keyboard managing
 github "SwipeCellKit/SwipeCellKit" # Swipable cell
 github "thii/FontAwesome.swift" # FontAwesome
+github "RxSwiftCommunity/RxDataSources" ~> 4.0
 
 # Reactive programming
 github "ReactiveX/RxSwift" ~> 5.0

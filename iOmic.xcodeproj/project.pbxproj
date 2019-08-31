@@ -22,6 +22,11 @@
 		55342F6C2310B6BC00FA141B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55342F6A2310B6BC00FA141B /* LaunchScreen.storyboard */; };
 		55342F772310B6BC00FA141B /* iOmicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55342F762310B6BC00FA141B /* iOmicTests.swift */; };
 		55342F822310B6BC00FA141B /* iOmicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55342F812310B6BC00FA141B /* iOmicUITests.swift */; };
+		555C1CCE2319582900E388D6 /* ReusableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555C1CCD2319582900E388D6 /* ReusableIdentifier.swift */; };
+		555C1CD1231A034200E388D6 /* Differentiator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C1CD0231A034200E388D6 /* Differentiator.framework */; };
+		555C1CD3231A035C00E388D6 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C1CD2231A035C00E388D6 /* RxDataSources.framework */; };
+		555C1CD6231A352600E388D6 /* DownloadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555C1CD4231A352600E388D6 /* DownloadTableViewCell.swift */; };
+		555C1CD7231A352600E388D6 /* DownloadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 555C1CD5231A352600E388D6 /* DownloadTableViewCell.xib */; };
 		5584B0E42310E6A7000D9309 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0E32310E6A7000D9309 /* AppCoordinator.swift */; };
 		5584B0EB2310EC4F000D9309 /* BooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0E92310EC4F000D9309 /* BooksViewController.swift */; };
 		5584B0EF2310EE29000D9309 /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0ED2310EE29000D9309 /* DiscoveryViewController.swift */; };
@@ -102,6 +107,11 @@
 		55342F7D2310B6BC00FA141B /* iOmicUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOmicUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		55342F812310B6BC00FA141B /* iOmicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOmicUITests.swift; sourceTree = "<group>"; };
 		55342F832310B6BC00FA141B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		555C1CCD2319582900E388D6 /* ReusableIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableIdentifier.swift; sourceTree = "<group>"; };
+		555C1CD0231A034200E388D6 /* Differentiator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differentiator.framework; path = Carthage/Build/iOS/Differentiator.framework; sourceTree = "<group>"; };
+		555C1CD2231A035C00E388D6 /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
+		555C1CD4231A352600E388D6 /* DownloadTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTableViewCell.swift; sourceTree = "<group>"; };
+		555C1CD5231A352600E388D6 /* DownloadTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadTableViewCell.xib; sourceTree = "<group>"; };
 		5584B0E32310E6A7000D9309 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		5584B0E92310EC4F000D9309 /* BooksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksViewController.swift; sourceTree = "<group>"; };
 		5584B0ED2310EE29000D9309 /* DiscoveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryViewController.swift; sourceTree = "<group>"; };
@@ -150,11 +160,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				55191F4A2310D22D007D1454 /* Alamofire.framework in Frameworks */,
+				555C1CD1231A034200E388D6 /* Differentiator.framework in Frameworks */,
 				559302A42312C1AE0021C170 /* FileKit.framework in Frameworks */,
 				55191F4C2310D244007D1454 /* IQKeyboardManagerSwift.framework in Frameworks */,
 				5593029E2312B7150021C170 /* Kanna.framework in Frameworks */,
 				55191F4E2310D24C007D1454 /* Kingfisher.framework in Frameworks */,
 				55191F522310D25A007D1454 /* RxCocoa.framework in Frameworks */,
+				555C1CD3231A035C00E388D6 /* RxDataSources.framework in Frameworks */,
 				55191F542310D25F007D1454 /* RxRelay.framework in Frameworks */,
 				55191F562310D264007D1454 /* RxSwift.framework in Frameworks */,
 				55191F582310D472007D1454 /* Skeleton.framework in Frameworks */,
@@ -185,6 +197,8 @@
 		55191F482310D22D007D1454 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				555C1CD2231A035C00E388D6 /* RxDataSources.framework */,
+				555C1CD0231A034200E388D6 /* Differentiator.framework */,
 				559302A52312C1BF0021C170 /* ZipArchive.framework */,
 				559302A32312C1AE0021C170 /* FileKit.framework */,
 				5593029F2312B7270021C170 /* SwiftyJSON.framework */,
@@ -298,6 +312,14 @@
 			path = iOmicUITests;
 			sourceTree = "<group>";
 		};
+		555C1CCF2319587600E388D6 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				555C1CCD2319582900E388D6 /* ReusableIdentifier.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		5584B0E52310EB3D000D9309 /* Books */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,6 +367,7 @@
 		5584B10D23114F3F000D9309 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				555C1CCF2319587600E388D6 /* Protocol */,
 				5584B12D23116206000D9309 /* Extension */,
 				9FA947252314FBE90028A60D /* Error.swift */,
 			);
@@ -435,6 +458,8 @@
 			children = (
 				9F8418FB2317B35300A503BE /* BookCollectionViewCell.swift */,
 				9F8418FC2317B35300A503BE /* BookCollectionViewCell.xib */,
+				555C1CD4231A352600E388D6 /* DownloadTableViewCell.swift */,
+				555C1CD5231A352600E388D6 /* DownloadTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -571,6 +596,7 @@
 				55BEAA8E23122CD600A6A41D /* BooksViewController.xib in Resources */,
 				55342F692310B6BC00FA141B /* Assets.xcassets in Resources */,
 				55BEAA9023122DF000A6A41D /* DiscoveryViewController.xib in Resources */,
+				555C1CD7231A352600E388D6 /* DownloadTableViewCell.xib in Resources */,
 				55BEAA9223122E1600A6A41D /* DownloadViewController.xib in Resources */,
 				9F8418FE2317B35300A503BE /* BookCollectionViewCell.xib in Resources */,
 			);
@@ -666,11 +692,13 @@
 				5584B0E42310E6A7000D9309 /* AppCoordinator.swift in Sources */,
 				5584B0FE2311089F000D9309 /* BooksCoordinator.swift in Sources */,
 				5584B11F23115349000D9309 /* DownloadViewModel.swift in Sources */,
+				555C1CCE2319582900E388D6 /* ReusableIdentifier.swift in Sources */,
 				5584B10C23114E01000D9309 /* BooksViewModel.swift in Sources */,
 				55191F632310E047007D1454 /* Coordinator.swift in Sources */,
 				5584B12A2311540F000D9309 /* SettingCoordinator.swift in Sources */,
 				5584B0EF2310EE29000D9309 /* DiscoveryViewController.swift in Sources */,
 				5584B12823115405000D9309 /* DownloadCoordinator.swift in Sources */,
+				555C1CD6231A352600E388D6 /* DownloadTableViewCell.swift in Sources */,
 				55342F622310B6BB00FA141B /* AppDelegate.swift in Sources */,
 				9FA9472823152C960028A60D /* String.ex.swift in Sources */,
 				55BEAA9C23124F0600A6A41D /* Page.swift in Sources */,

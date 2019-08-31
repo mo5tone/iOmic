@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DiscoveryViewController" customModule="iOmic" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="8cg-Dm-kPL" id="tTI-gg-HHn"/>
+                <outlet property="searchDisplayController" destination="tSd-0d-cFq" id="bdz-No-HA6"/>
                 <outlet property="view" destination="iN0-l3-epB" id="VbR-D6-b9P"/>
             </connections>
         </placeholder>
@@ -41,5 +42,13 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
         </view>
+        <searchDisplayController id="tSd-0d-cFq">
+            <connections>
+                <outlet property="delegate" destination="-1" id="ELp-2k-exN"/>
+                <outlet property="searchContentsController" destination="-1" id="t9h-h4-Fh0"/>
+                <outlet property="searchResultsDataSource" destination="-1" id="NrO-iM-RSY"/>
+                <outlet property="searchResultsDelegate" destination="-1" id="yAo-Q2-cLI"/>
+            </connections>
+        </searchDisplayController>
     </objects>
 </document>

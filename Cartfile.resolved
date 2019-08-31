@@ -1,5 +1,6 @@
 github "Alamofire/Alamofire" "5.0.0-beta.5"
 github "ReactiveX/RxSwift" "5.0.1"
+github "RxSwiftCommunity/RxDataSources" "4.0.1"
 github "SwiftyJSON/SwiftyJSON" "5.0.0"
 github "SwipeCellKit/SwipeCellKit" "2.6.0"
 github "Tencent/WCDB" "v1.0.8.2"
