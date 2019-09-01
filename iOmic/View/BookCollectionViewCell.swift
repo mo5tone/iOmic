@@ -22,11 +22,10 @@ class BookCollectionViewCell: UICollectionViewCell {
     private var processor: ImageProcessor {
         let imageViewsize = imageView.frame.size
         return DownsamplingImageProcessor(size: imageViewsize)
-            >> RoundCornerImageProcessor(cornerRadius: 8, targetSize: imageViewsize, roundingCorners: [.topLeft, .topRight])
     }
 
     private var options: [KingfisherOptionsInfoItem] {
-        return [.transition(.fade(0.2)), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage]
+        return [.transition(.fade(0.2)), .processor(processor), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage]
     }
 
     // MARK: - Public
@@ -45,7 +44,7 @@ class BookCollectionViewCell: UICollectionViewCell {
     func setup(book: Book, displaySource _: Bool = false) {
         var options = self.options
         options.append(.requestModifier(book.source.modifier))
-        imageView.kf.setImage(with: URL(string: book.thumbnailUrl ?? ""), options: options)
+        imageView.kf.setImage(with: URL(string: book.thumbnailUrl ?? ""), placeholder: #imageLiteral(resourceName: "ic_ghost_sad"), options: options)
         titlteLabel.text = book.title
         authorLabel.text = book.author
         statusLabel.text = "\(book.status)"

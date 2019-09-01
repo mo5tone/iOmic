@@ -49,6 +49,10 @@
 		559302A62312C1BF0021C170 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559302A52312C1BF0021C170 /* ZipArchive.framework */; };
 		559302A82312CE750021C170 /* DongManZhiJia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A72312CE750021C170 /* DongManZhiJia.swift */; };
 		559302AA2312CF180021C170 /* ManHuaRen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A92312CF180021C170 /* ManHuaRen.swift */; };
+		55B19F6E231AA09A00CFBB02 /* SourceFiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B19F6C231AA09A00CFBB02 /* SourceFiltersViewController.swift */; };
+		55B19F6F231AA09A00CFBB02 /* SourceFiltersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B19F6D231AA09A00CFBB02 /* SourceFiltersViewController.xib */; };
+		55B19F71231AB3A500CFBB02 /* QuickLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B19F70231AB3A500CFBB02 /* QuickLayout.framework */; };
+		55B19F73231AB3B600CFBB02 /* SwiftEntryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B19F72231AB3B600CFBB02 /* SwiftEntryKit.framework */; };
 		55BEAA8E23122CD600A6A41D /* BooksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA8D23122CD600A6A41D /* BooksViewController.xib */; };
 		55BEAA9023122DF000A6A41D /* DiscoveryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA8F23122DF000A6A41D /* DiscoveryViewController.xib */; };
 		55BEAA9223122E1600A6A41D /* DownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA9123122E1600A6A41D /* DownloadViewController.xib */; };
@@ -135,6 +139,10 @@
 		559302A52312C1BF0021C170 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/iOS/ZipArchive.framework; sourceTree = "<group>"; };
 		559302A72312CE750021C170 /* DongManZhiJia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DongManZhiJia.swift; sourceTree = "<group>"; };
 		559302A92312CF180021C170 /* ManHuaRen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManHuaRen.swift; sourceTree = "<group>"; };
+		55B19F6C231AA09A00CFBB02 /* SourceFiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFiltersViewController.swift; sourceTree = "<group>"; };
+		55B19F6D231AA09A00CFBB02 /* SourceFiltersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SourceFiltersViewController.xib; sourceTree = "<group>"; };
+		55B19F70231AB3A500CFBB02 /* QuickLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLayout.framework; path = Carthage/Build/iOS/QuickLayout.framework; sourceTree = "<group>"; };
+		55B19F72231AB3B600CFBB02 /* SwiftEntryKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftEntryKit.framework; path = Carthage/Build/iOS/SwiftEntryKit.framework; sourceTree = "<group>"; };
 		55BEAA8D23122CD600A6A41D /* BooksViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BooksViewController.xib; sourceTree = "<group>"; };
 		55BEAA8F23122DF000A6A41D /* DiscoveryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiscoveryViewController.xib; sourceTree = "<group>"; };
 		55BEAA9123122E1600A6A41D /* DownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadViewController.xib; sourceTree = "<group>"; };
@@ -165,11 +173,13 @@
 				55191F4C2310D244007D1454 /* IQKeyboardManagerSwift.framework in Frameworks */,
 				5593029E2312B7150021C170 /* Kanna.framework in Frameworks */,
 				55191F4E2310D24C007D1454 /* Kingfisher.framework in Frameworks */,
+				55B19F71231AB3A500CFBB02 /* QuickLayout.framework in Frameworks */,
 				55191F522310D25A007D1454 /* RxCocoa.framework in Frameworks */,
 				555C1CD3231A035C00E388D6 /* RxDataSources.framework in Frameworks */,
 				55191F542310D25F007D1454 /* RxRelay.framework in Frameworks */,
 				55191F562310D264007D1454 /* RxSwift.framework in Frameworks */,
 				55191F582310D472007D1454 /* Skeleton.framework in Frameworks */,
+				55B19F73231AB3B600CFBB02 /* SwiftEntryKit.framework in Frameworks */,
 				559302A02312B7270021C170 /* SwiftyJSON.framework in Frameworks */,
 				55191F5A2310D477007D1454 /* SwipeCellKit.framework in Frameworks */,
 				55191F5C2310D47D007D1454 /* WCDBSwift.framework in Frameworks */,
@@ -197,6 +207,8 @@
 		55191F482310D22D007D1454 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55B19F72231AB3B600CFBB02 /* SwiftEntryKit.framework */,
+				55B19F70231AB3A500CFBB02 /* QuickLayout.framework */,
 				555C1CD2231A035C00E388D6 /* RxDataSources.framework */,
 				555C1CD0231A034200E388D6 /* Differentiator.framework */,
 				559302A52312C1BF0021C170 /* ZipArchive.framework */,
@@ -334,6 +346,8 @@
 			children = (
 				5584B0ED2310EE29000D9309 /* DiscoveryViewController.swift */,
 				55BEAA8F23122DF000A6A41D /* DiscoveryViewController.xib */,
+				55B19F6C231AA09A00CFBB02 /* SourceFiltersViewController.swift */,
+				55B19F6D231AA09A00CFBB02 /* SourceFiltersViewController.xib */,
 			);
 			path = Discovery;
 			sourceTree = "<group>";
@@ -592,6 +606,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55BEAA9423122E3B00A6A41D /* SettingViewController.xib in Resources */,
+				55B19F6F231AA09A00CFBB02 /* SourceFiltersViewController.xib in Resources */,
 				55342F6C2310B6BC00FA141B /* LaunchScreen.storyboard in Resources */,
 				55BEAA8E23122CD600A6A41D /* BooksViewController.xib in Resources */,
 				55342F692310B6BC00FA141B /* Assets.xcassets in Resources */,
@@ -685,6 +700,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				559302AA2312CF180021C170 /* ManHuaRen.swift in Sources */,
+				55B19F6E231AA09A00CFBB02 /* SourceFiltersViewController.swift in Sources */,
 				5584B13223116849000D9309 /* Source.swift in Sources */,
 				559302A82312CE750021C170 /* DongManZhiJia.swift in Sources */,
 				9F8418FD2317B35300A503BE /* BookCollectionViewCell.swift in Sources */,

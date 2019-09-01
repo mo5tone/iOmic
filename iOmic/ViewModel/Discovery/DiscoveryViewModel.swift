@@ -11,7 +11,7 @@ import RxSwift
 
 class DiscoveryViewModel: NSObject {
     private let disposeBag = DisposeBag()
-    private var page = 0
+    private let page = BehaviorSubject<Int>(value: 0)
     let source = PublishSubject<SourceProtocol>()
     let title = BehaviorSubject<String>(value: "Discovery")
     let load = PublishSubject<Void>()
@@ -24,15 +24,19 @@ class DiscoveryViewModel: NSObject {
         super.init()
         source.map { $0.name }.bind(to: title).disposed(by: disposeBag)
         source.map { $0.defaultFilters }.bind(to: filters).disposed(by: disposeBag)
-        Observable.merge(source.map { _ in }, load).subscribe { [weak self] in if case .next = $0 { self?.page = 0 } }.disposed(by: disposeBag)
-        loadMore.subscribe { [weak self] in if case .next = $0 { self?.page += 1 } }.disposed(by: disposeBag)
+        Observable.merge(source.map { _ in }, load).map { _ in 0 }.bind(to: page).disposed(by: disposeBag)
+        loadMore.withLatestFrom(page, resultSelector: { $1 + 1 }).bind(to: page).disposed(by: disposeBag)
         Observable.merge(source.map { _ in }, load, loadMore)
-            .withLatestFrom(Observable.combineLatest(source, query.debug("query"), filters))
+            .withLatestFrom(Observable.combineLatest(source, page, query, filters, books))
             .debug("load")
-            .flatMapLatest { [weak self] (source, query, filters) -> Observable<[Book]> in
-                guard let self = self else { throw Whoops.nilWeakSelf }
+            .flatMapLatest { (source, page, query, filters, books) -> Observable<[Book]> in
                 if let online = source as? OnlineSourceProtocol {
-                    return online.fetchBooks(page: self.page, query: query ?? "", filters: filters).catchErrorJustReturn([])
+                    return online.fetchBooks(page: page, query: query ?? "", filters: filters).catchErrorJustReturn([]).map {
+                        if page == 0 { return $0 }
+                        var array = Array(books)
+                        array.append(contentsOf: $0)
+                        return array
+                    }
                 } else {
                     throw Whoops.rawString("local source has not be implmented.")
                 }

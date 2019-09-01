@@ -22,7 +22,7 @@ class DiscoveryCoordinator: Coordinator {
     func start() {
         guard let navigationController = viewController as? UINavigationController else { return }
         navigationController.navigationBar.prefersLargeTitles = true
-        navigationController.pushViewController(DiscoveryViewController(coordinator: self, viewModel: DiscoveryViewModel(sourceProtocol: DongManZhiJia.shared)), animated: false)
+        navigationController.pushViewController(DiscoveryViewController(coordinator: self, viewModel: DiscoveryViewModel(sourceProtocol: ManHuaRen.shared)), animated: false)
     }
 }
 

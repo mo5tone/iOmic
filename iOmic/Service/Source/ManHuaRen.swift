@@ -101,7 +101,7 @@ extension ManHuaRen: OnlineSourceProtocol {
                 case let .success(data):
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     let json = try JSON(data: data)
-                    return json["response", "mangas"].arrayValue.compactMap { ele -> Book? in
+                    return (json["response", "result"].array ?? json["response", "mangas"].arrayValue).compactMap { ele -> Book? in
                         let bookId = ele["mangaId"].intValue
                         let book = Book(source: strongSelf, url: "/v1/manga/getDetail?mangaId=\(bookId)")
                         book.title = ele["mangaName"].string
