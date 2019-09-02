@@ -26,6 +26,14 @@ class LocalSource: Source {
 // MARK: - LocalSourceProtocol
 
 extension LocalSource: LocalSourceProtocol {
+    var name: String {
+        return "本地"
+    }
+
+    var defaultFilters: [FilterProrocol] {
+        return [SortFilter()]
+    }
+
     func booksOrder(by _: [FilterProrocol]) -> [Path] {
         // TODO: -
         return []
@@ -42,14 +50,6 @@ extension LocalSource: LocalSourceProtocol {
 
     var identifier: Source.Identifier {
         return .local
-    }
-
-    var name: String {
-        return "本地"
-    }
-
-    var defaultFilters: [FilterProrocol] {
-        return [SortFilter()]
     }
 }
 

@@ -32,7 +32,7 @@ class Source: NSObject {
         }
     }
 
-    static var sources: [SourceProtocol] { return Source.Identifier.values.map { $0.source } }
+    static var all: [SourceProtocol] { return Source.Identifier.values.map { $0.source } }
 
     private var _available = true
     var available: Bool {

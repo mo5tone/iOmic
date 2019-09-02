@@ -12,7 +12,10 @@ import RxSwift
 import SwiftEntryKit
 import UIKit
 
-protocol DiscoveryViewCoordinator: AnyObject {}
+protocol DiscoveryViewCoordinator: AnyObject {
+    func popupSourcesSwitcher(current: SourceProtocol)
+    func popupFiltersPicker(current: [FilterProrocol])
+}
 
 class DiscoveryViewController: UIViewController {
     // MARK: - props.
@@ -32,8 +35,8 @@ class DiscoveryViewController: UIViewController {
     // MARK: - Private methods
 
     private func setupView() {
-        navigationItem.leftBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_tune"), style: .plain, target: self, action: #selector(popupSources))
-        navigationItem.rightBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_filter"), style: .plain, target: self, action: #selector(popupFiltersView))
+        navigationItem.leftBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_tune"), style: .plain, target: nil, action: nil)
+        navigationItem.rightBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_filter"), style: .plain, target: nil, action: nil)
         navigationItem.searchController = searchController
 
         searchController.obscuresBackgroundDuringPresentation = false
@@ -48,6 +51,16 @@ class DiscoveryViewController: UIViewController {
 
     private func setupBinding() {
         viewModel.title.bind(to: navigationItem.rx.title).disposed(by: disposeBag)
+        navigationItem.leftBarButtonItem?.rx.tap
+            .debug("tap")
+            .withLatestFrom(viewModel.source.debug("source"))
+            .debug("popupSourcesSwitcher")
+            .subscribe(onNext: { [weak self] in self?.coordinator?.popupSourcesSwitcher(current: $0) })
+            .disposed(by: disposeBag)
+        navigationItem.rightBarButtonItem?.rx.tap
+            .withLatestFrom(viewModel.filters)
+            .subscribe(onNext: { [weak self] in self?.coordinator?.popupFiltersPicker(current: $0) })
+            .disposed(by: disposeBag)
 
         searchController.searchBar.rx.text.bind(to: viewModel.query).disposed(by: disposeBag)
         searchController.searchBar.rx.cancelButtonClicked.map { _ in nil }.bind(to: viewModel.query).disposed(by: disposeBag)
@@ -70,40 +83,10 @@ class DiscoveryViewController: UIViewController {
             cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
         }).disposed(by: disposeBag)
         collectionView.rx.willDisplayCell.map { $1 }.withLatestFrom(viewModel.books.map { $0.count }) { $0.item == $1 - 1 }.filter { $0 }.map { _ in () }.bind(to: viewModel.loadMore).disposed(by: disposeBag)
-        collectionView.rx.didEndDisplayingCell.subscribe(onNext: { cell, _ in (cell as? BookCollectionViewCell)?.imageView?.kf.cancelDownloadTask() }).disposed(by: disposeBag)
+        collectionView.rx.didEndDisplayingCell.compactMap { $0.cell as? BookCollectionViewCell }.subscribe(onNext: { $0.imageView?.kf.cancelDownloadTask() }).disposed(by: disposeBag)
 
         viewModel.books.subscribe { [weak self] _ in self?.refreshControl.endRefreshing() }.disposed(by: disposeBag)
         viewModel.books.map { [AnimatableSectionModel<Int, Book>(model: 0, items: $0)] }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
-    }
-
-    @objc private func popupSources() {
-        let controller = SourceFiltersViewController()
-        var attributes = EKAttributes.topFloat
-        attributes.displayDuration = .infinity
-        attributes.positionConstraints.safeArea = .empty(fillSafeArea: false)
-        attributes.positionConstraints.size = .init(width: .offset(value: 8), height: .ratio(value: 0.25))
-        attributes.screenInteraction = .dismiss
-        attributes.scroll = .enabled(swipeable: true, pullbackAnimation: .jolt)
-        attributes.entryBackground = .color(color: .init(.white))
-        attributes.screenBackground = .visualEffect(style: .extra)
-        attributes.shadow = .active(with: .init(color: .black, opacity: 0.3, radius: 10, offset: .zero))
-        attributes.roundCorners = .all(radius: 16)
-        SwiftEntryKit.display(entry: controller, using: attributes)
-    }
-
-    @objc private func popupFiltersView() {
-        let controller = SourceFiltersViewController()
-        var attributes = EKAttributes.bottomFloat
-        attributes.displayDuration = .infinity
-        attributes.positionConstraints.safeArea = .empty(fillSafeArea: false)
-        attributes.positionConstraints.size = .init(width: .offset(value: 8), height: .ratio(value: 0.75))
-        attributes.screenInteraction = .dismiss
-        attributes.scroll = .enabled(swipeable: true, pullbackAnimation: .jolt)
-        attributes.entryBackground = .color(color: .init(.white))
-        attributes.screenBackground = .visualEffect(style: .extra)
-        attributes.shadow = .active(with: .init(color: .black, opacity: 0.3, radius: 10, offset: .zero))
-        attributes.roundCorners = .all(radius: 16)
-        SwiftEntryKit.display(entry: controller, using: attributes)
     }
 
     // MARK: - Public methods

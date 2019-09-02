@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftEntryKit
 import UIKit
 
 class DiscoveryCoordinator: Coordinator {
@@ -22,8 +23,40 @@ class DiscoveryCoordinator: Coordinator {
     func start() {
         guard let navigationController = viewController as? UINavigationController else { return }
         navigationController.navigationBar.prefersLargeTitles = true
-        navigationController.pushViewController(DiscoveryViewController(coordinator: self, viewModel: DiscoveryViewModel(sourceProtocol: ManHuaRen.shared)), animated: false)
+        navigationController.pushViewController(DiscoveryViewController(coordinator: self, viewModel: .init()), animated: false)
     }
 }
 
-extension DiscoveryCoordinator: DiscoveryViewCoordinator {}
+extension DiscoveryCoordinator: DiscoveryViewCoordinator {
+    func popupSourcesSwitcher(current _: SourceProtocol) {
+        // TODO: -
+        let controller = SourceFiltersViewController()
+        var attributes: EKAttributes = .topFloat
+        attributes.displayDuration = .infinity
+        attributes.positionConstraints.safeArea = .empty(fillSafeArea: false)
+        attributes.positionConstraints.size = .init(width: .offset(value: 8), height: .ratio(value: 0.25))
+        attributes.screenInteraction = .dismiss
+        attributes.scroll = .enabled(swipeable: true, pullbackAnimation: .jolt)
+        attributes.entryBackground = .color(color: .init(.white))
+        attributes.screenBackground = .visualEffect(style: .extra)
+        attributes.shadow = .active(with: .init(color: .black, opacity: 0.3, radius: 10, offset: .zero))
+        attributes.roundCorners = .all(radius: 16)
+        SwiftEntryKit.display(entry: controller, using: attributes)
+    }
+
+    func popupFiltersPicker(current _: [FilterProrocol]) {
+        // TODO: -
+        let controller = SourceFiltersViewController()
+        var attributes: EKAttributes = .bottomFloat
+        attributes.displayDuration = .infinity
+        attributes.positionConstraints.safeArea = .empty(fillSafeArea: false)
+        attributes.positionConstraints.size = .init(width: .offset(value: 8), height: .ratio(value: 0.75))
+        attributes.screenInteraction = .dismiss
+        attributes.scroll = .enabled(swipeable: true, pullbackAnimation: .jolt)
+        attributes.entryBackground = .color(color: .init(.white))
+        attributes.screenBackground = .visualEffect(style: .extra)
+        attributes.shadow = .active(with: .init(color: .black, opacity: 0.3, radius: 10, offset: .zero))
+        attributes.roundCorners = .all(radius: 16)
+        SwiftEntryKit.display(entry: controller, using: attributes)
+    }
+}
