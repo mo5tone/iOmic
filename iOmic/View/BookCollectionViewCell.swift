@@ -36,9 +36,12 @@ class BookCollectionViewCell: UICollectionViewCell {
 //        contentView.subviews.forEach { $0.backgroundColor = .clear }
         imageView.contentMode = .scaleAspectFill
         imageView.kf.indicatorType = .activity
-        titlteLabel.font = .preferredFont(forTextStyle: .title3)
-        authorLabel.font = .preferredFont(forTextStyle: .subheadline)
-        statusLabel.font = .preferredFont(forTextStyle: .caption1)
+        titlteLabel.font = .preferredFont(forTextStyle: .headline)
+        titlteLabel.textColor = .darkText
+        authorLabel.font = .preferredFont(forTextStyle: .caption1)
+        authorLabel.textColor = .darkText
+        statusLabel.font = .preferredFont(forTextStyle: .caption2)
+        statusLabel.textColor = .darkText
     }
 
     func setup(book: Book, displaySource _: Bool = false) {

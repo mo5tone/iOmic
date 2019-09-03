@@ -28,10 +28,14 @@ class DiscoveryCoordinator: NavigationCoordinator {
 }
 
 extension DiscoveryCoordinator: DiscoveryViewCoordinator {
-    func popupSourcesSwitcher(current _: SourceProtocol, observer: AnyObserver<SourceProtocol>) {
+    func popupSourcesSwitcher(current: SourceProtocol, observer: AnyObserver<SourceProtocol>) {
         let alertController: UIAlertController = .init(title: nil, message: nil, preferredStyle: .actionSheet)
         Source.all.forEach { source in
-            alertController.addAction(.init(title: source.name, style: .default, handler: { _ in observer.on(.next(source)) }))
+            let action: UIAlertAction = .init(title: source.name, style: .default, handler: { _ in observer.on(.next(source)) })
+            if source.identifier == current.identifier {
+                action.leadingImage = #imageLiteral(resourceName: "ic_tick")
+            }
+            alertController.addAction(action)
         }
         alertController.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         // FIXME: - https://stackoverflow.com/questions/55653187/swift-default-alertviewcontroller-breaking-constraints

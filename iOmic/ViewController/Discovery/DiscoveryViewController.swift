@@ -43,8 +43,8 @@ class DiscoveryViewController: UIViewController {
         searchController.searchBar.placeholder = "Keywords here"
         definesPresentationContext = true
 
+        collectionView.backgroundColor = .groupTableViewBackground
         collectionView.refreshControl = refreshControl
-        collectionView.backgroundColor = .black
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
         collectionView.registerCell(BookCollectionViewCell.self)
     }
@@ -114,7 +114,7 @@ class DiscoveryViewController: UIViewController {
 
 extension DiscoveryViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let numberOfCellsPerRow: CGFloat = 2
+        let numberOfCellsPerRow: CGFloat = 3
         let minimumInteritemSpacing = self.collectionView(collectionView, layout: collectionViewLayout, minimumInteritemSpacingForSectionAt: indexPath.section)
         let aspect: CGFloat = 26 / 15
         let width = (collectionView.frame.size.width - collectionView.contentInset.left - collectionView.contentInset.right - (numberOfCellsPerRow - 1) * minimumInteritemSpacing) / numberOfCellsPerRow

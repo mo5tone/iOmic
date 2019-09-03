@@ -64,9 +64,9 @@ extension Book.Status {
     fileprivate init(mangaIsOver: Int?) {
         switch mangaIsOver {
         case 0:
-            self = .inProgress
+            self = .ongoing
         case 1:
-            self = .complete
+            self = .completed
         default:
             self = .unknown
         }

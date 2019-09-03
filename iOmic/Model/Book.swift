@@ -11,8 +11,8 @@ import RxDataSources
 
 class Book {
     enum Status {
-        case inProgress
-        case complete
+        case ongoing
+        case completed
         case unknown
     }
 
@@ -41,12 +41,12 @@ class Book {
 extension Book.Status: CustomStringConvertible {
     var description: String {
         switch self {
-        case .inProgress:
-            return "in progress"
-        case .complete:
-            return "complete"
+        case .ongoing:
+            return "Ongoing"
+        case .completed:
+            return "Completed"
         case .unknown:
-            return "unknown"
+            return "Unknown"
         }
     }
 }

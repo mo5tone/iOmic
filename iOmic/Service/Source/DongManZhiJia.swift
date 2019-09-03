@@ -40,9 +40,9 @@ extension Book.Status {
     fileprivate init(string: String?) {
         switch string {
         case "2310", "已完结":
-            self = .complete
+            self = .completed
         case "2309", "连载中":
-            self = .inProgress
+            self = .ongoing
         default:
             self = .unknown
         }
