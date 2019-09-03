@@ -15,8 +15,6 @@ class Coordinator: NSObject {
 
     let window: UIWindow
 
-    var viewController: UIViewController?
-
     var coordinators: [Coordinator] = []
 
     // MARK: - Public
@@ -26,11 +24,31 @@ class Coordinator: NSObject {
         super.init()
     }
 
-    func makeKeyAndVisible() {
-        guard let viewController = viewController else {
-            return
-        }
+    func makeKeyAndVisible(_ viewController: UIViewController) {
         window.rootViewController = viewController
         window.makeKeyAndVisible()
     }
+}
+
+class NavigationCoordinator: Coordinator {
+    var navigationController: UINavigationController
+    var rootViewController: UIViewController?
+
+    override init(window: UIWindow) {
+        navigationController = .init()
+        super.init(window: window)
+    }
+}
+
+class TabBarCoordinator: Coordinator {
+    let tabBarController: UITabBarController
+
+    init(window: UIWindow, tabBarController: UITabBarController) {
+        self.tabBarController = tabBarController
+        super.init(window: window)
+    }
+}
+
+class ViewCoordinator: Coordinator {
+    var viewController: UIViewController?
 }

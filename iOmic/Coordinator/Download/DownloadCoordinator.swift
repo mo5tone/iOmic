@@ -9,19 +9,17 @@
 import Foundation
 import UIKit
 
-class DownloadCoordinator: Coordinator {
+class DownloadCoordinator: NavigationCoordinator {
     // MARK: - Props.
 
     // MARK: - Public
 
     override init(window: UIWindow) {
         super.init(window: window)
-        viewController = UINavigationController()
-    }
-
-    func start() {
-        guard let navigationController = viewController as? UINavigationController else { return }
-        navigationController.pushViewController(DownloadViewController(coordinator: self, viewModel: DownloadViewModel()), animated: false)
+        let rootViewController = DownloadViewController(coordinator: self, viewModel: DownloadViewModel())
+        self.rootViewController = rootViewController
+        navigationController = .init(rootViewController: rootViewController)
+        navigationController.navigationBar.prefersLargeTitles = true
     }
 }
 

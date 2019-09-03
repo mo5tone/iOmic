@@ -66,6 +66,8 @@
 		9F8418FD2317B35300A503BE /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8418FB2317B35300A503BE /* BookCollectionViewCell.swift */; };
 		9F8418FE2317B35300A503BE /* BookCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F8418FC2317B35300A503BE /* BookCollectionViewCell.xib */; };
 		9F8419002318EA4F00A503BE /* LocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8418FF2318EA4F00A503BE /* LocalSource.swift */; };
+		9F860CA8231E53DC001052EE /* Hue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F860CA7231E53DC001052EE /* Hue.framework */; };
+		9F860CAA231E6E79001052EE /* UIAlertAction.ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F860CA9231E6E79001052EE /* UIAlertAction.ex.swift */; };
 		9FA947242314F4E80028A60D /* Alamofire.ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA947232314F4E80028A60D /* Alamofire.ex.swift */; };
 		9FA947262314FBE90028A60D /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA947252314FBE90028A60D /* Error.swift */; };
 		9FA9472823152C960028A60D /* String.ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA9472723152C960028A60D /* String.ex.swift */; };
@@ -157,6 +159,8 @@
 		9F8418FB2317B35300A503BE /* BookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionViewCell.swift; sourceTree = "<group>"; };
 		9F8418FC2317B35300A503BE /* BookCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BookCollectionViewCell.xib; sourceTree = "<group>"; };
 		9F8418FF2318EA4F00A503BE /* LocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSource.swift; sourceTree = "<group>"; };
+		9F860CA7231E53DC001052EE /* Hue.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Hue.framework; path = Carthage/Build/iOS/Hue.framework; sourceTree = "<group>"; };
+		9F860CA9231E6E79001052EE /* UIAlertAction.ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertAction.ex.swift; sourceTree = "<group>"; };
 		9FA947232314F4E80028A60D /* Alamofire.ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alamofire.ex.swift; sourceTree = "<group>"; };
 		9FA947252314FBE90028A60D /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		9FA9472723152C960028A60D /* String.ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.ex.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 				55191F4A2310D22D007D1454 /* Alamofire.framework in Frameworks */,
 				555C1CD1231A034200E388D6 /* Differentiator.framework in Frameworks */,
 				559302A42312C1AE0021C170 /* FileKit.framework in Frameworks */,
+				9F860CA8231E53DC001052EE /* Hue.framework in Frameworks */,
 				55191F4C2310D244007D1454 /* IQKeyboardManagerSwift.framework in Frameworks */,
 				5593029E2312B7150021C170 /* Kanna.framework in Frameworks */,
 				55191F4E2310D24C007D1454 /* Kingfisher.framework in Frameworks */,
@@ -207,6 +212,7 @@
 		55191F482310D22D007D1454 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9F860CA7231E53DC001052EE /* Hue.framework */,
 				55B19F72231AB3B600CFBB02 /* SwiftEntryKit.framework */,
 				55B19F70231AB3A500CFBB02 /* QuickLayout.framework */,
 				555C1CD2231A035C00E388D6 /* RxDataSources.framework */,
@@ -452,6 +458,7 @@
 				9FA9472723152C960028A60D /* String.ex.swift */,
 				9F423D482316834E006B950F /* Date.ex.swift */,
 				9F423D4F23178019006B950F /* Alamofire+RxSwift.swift */,
+				9F860CA9231E6E79001052EE /* UIAlertAction.ex.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -724,6 +731,7 @@
 				9F8419002318EA4F00A503BE /* LocalSource.swift in Sources */,
 				5584B12123115358000D9309 /* DiscoveryViewModel.swift in Sources */,
 				5584B0F32310EE5E000D9309 /* DownloadViewController.swift in Sources */,
+				9F860CAA231E6E79001052EE /* UIAlertAction.ex.swift in Sources */,
 				5584B12F23116213000D9309 /* UIColor.ex.swift in Sources */,
 				9FA947262314FBE90028A60D /* Error.swift in Sources */,
 				5584B11D2311533D000D9309 /* SettingViewModel.swift in Sources */,

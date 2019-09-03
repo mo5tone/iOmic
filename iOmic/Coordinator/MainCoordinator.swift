@@ -9,37 +9,30 @@
 import Foundation
 import UIKit
 
-class MainCoordinator: Coordinator {
+class MainCoordinator: TabBarCoordinator {
     // MARK: - Public
 
     func start() {
-        let tabBarController = UITabBarController()
-
         let booksCoordinator = BooksCoordinator(window: window)
-        booksCoordinator.start()
         coordinators.append(booksCoordinator)
-        booksCoordinator.viewController?.tabBarItem = UITabBarItem(title: "Books", image: #imageLiteral(resourceName: "ic_books"), tag: 0)
+        booksCoordinator.navigationController.tabBarItem = UITabBarItem(title: "Books", image: #imageLiteral(resourceName: "ic_books"), tag: 0)
 
         let discoveryCoordinator = DiscoveryCoordinator(window: window)
-        discoveryCoordinator.start()
         coordinators.append(discoveryCoordinator)
-        discoveryCoordinator.viewController?.tabBarItem = UITabBarItem(title: "Discovery", image: #imageLiteral(resourceName: "ic_discovery"), tag: 1)
+        discoveryCoordinator.navigationController.tabBarItem = UITabBarItem(title: "Discovery", image: #imageLiteral(resourceName: "ic_discovery"), tag: 1)
 
         let downloadCoordinator = DownloadCoordinator(window: window)
-        downloadCoordinator.start()
         coordinators.append(downloadCoordinator)
-        downloadCoordinator.viewController?.tabBarItem = UITabBarItem(title: "Download", image: #imageLiteral(resourceName: "ic_download"), tag: 2)
+        downloadCoordinator.navigationController.tabBarItem = UITabBarItem(title: "Download", image: #imageLiteral(resourceName: "ic_download"), tag: 2)
 
         let settingCoordinator = SettingCoordinator(window: window)
-        settingCoordinator.start()
         coordinators.append(settingCoordinator)
-        settingCoordinator.viewController?.tabBarItem = UITabBarItem(title: "Setting", image: #imageLiteral(resourceName: "ic_setting"), tag: 3)
+        settingCoordinator.navigationController.tabBarItem = UITabBarItem(title: "Setting", image: #imageLiteral(resourceName: "ic_setting"), tag: 3)
 
-        tabBarController.viewControllers = coordinators.compactMap { $0.viewController }
+        tabBarController.viewControllers = coordinators.compactMap { ($0 as? NavigationCoordinator)?.navigationController }
         tabBarController.delegate = self
 
-        viewController = tabBarController
-        makeKeyAndVisible()
+        makeKeyAndVisible(tabBarController)
     }
 }
 

@@ -36,7 +36,7 @@ class AppCoordinator: Coordinator {
 
     func start(with launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         self.launchOptions = launchOptions ?? [:]
-        let mainCoordinator = MainCoordinator(window: window)
+        let mainCoordinator = MainCoordinator(window: window, tabBarController: .init())
         coordinators.append(mainCoordinator)
         mainCoordinator.start()
     }

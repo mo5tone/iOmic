@@ -13,7 +13,7 @@ import SwiftEntryKit
 import UIKit
 
 protocol DiscoveryViewCoordinator: AnyObject {
-    func popupSourcesSwitcher(current: SourceProtocol)
+    func popupSourcesSwitcher(current: SourceProtocol, observer: AnyObserver<SourceProtocol>)
     func popupFiltersPicker(current: [FilterProrocol])
 }
 
@@ -22,10 +22,10 @@ class DiscoveryViewController: UIViewController {
 
     private weak var coordinator: DiscoveryViewCoordinator?
     private var viewModel: DiscoveryViewModel
-    private let disposeBag = DisposeBag()
-    private lazy var refreshControl = UIRefreshControl()
-    private let searchController = UISearchController(searchResultsController: nil)
-    private let dataSource = RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<Int, Book>>(configureCell: { _, collectionView, indexPath, book in
+    private let bag: DisposeBag = .init()
+    private lazy var refreshControl: UIRefreshControl = .init()
+    private let searchController: UISearchController = .init(searchResultsController: nil)
+    private let dataSource: RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<Int, Book>> = .init(configureCell: { _, collectionView, indexPath, book in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.reusableIdentifier, for: indexPath)
         if let cell = cell as? BookCollectionViewCell { cell.setup(book: book) }
         return cell
@@ -50,25 +50,26 @@ class DiscoveryViewController: UIViewController {
     }
 
     private func setupBinding() {
-        viewModel.title.bind(to: navigationItem.rx.title).disposed(by: disposeBag)
+        viewModel.title.bind(to: navigationItem.rx.title).disposed(by: bag)
         navigationItem.leftBarButtonItem?.rx.tap
-            .debug("tap")
-            .withLatestFrom(viewModel.source.debug("source"))
-            .debug("popupSourcesSwitcher")
-            .subscribe(onNext: { [weak self] in self?.coordinator?.popupSourcesSwitcher(current: $0) })
-            .disposed(by: disposeBag)
+            .withLatestFrom(viewModel.source)
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.coordinator?.popupSourcesSwitcher(current: $0, observer: self.viewModel.source.asObserver())
+            })
+            .disposed(by: bag)
         navigationItem.rightBarButtonItem?.rx.tap
             .withLatestFrom(viewModel.filters)
             .subscribe(onNext: { [weak self] in self?.coordinator?.popupFiltersPicker(current: $0) })
-            .disposed(by: disposeBag)
+            .disposed(by: bag)
 
-        searchController.searchBar.rx.text.bind(to: viewModel.query).disposed(by: disposeBag)
-        searchController.searchBar.rx.cancelButtonClicked.map { _ in nil }.bind(to: viewModel.query).disposed(by: disposeBag)
+        searchController.searchBar.rx.text.bind(to: viewModel.query).disposed(by: bag)
+        searchController.searchBar.rx.cancelButtonClicked.map { _ in nil }.bind(to: viewModel.query).disposed(by: bag)
 
         let loadControlEvents = [refreshControl.rx.controlEvent(.valueChanged), searchController.searchBar.rx.searchButtonClicked, searchController.searchBar.rx.cancelButtonClicked]
-        Observable.merge(loadControlEvents.map { $0.asObservable() }).bind(to: viewModel.load).disposed(by: disposeBag)
+        Observable.merge(loadControlEvents.map { $0.asObservable() }).bind(to: viewModel.load).disposed(by: bag)
 
-        collectionView.rx.setDelegate(self).disposed(by: disposeBag)
+        collectionView.rx.setDelegate(self).disposed(by: bag)
         collectionView.rx.willDisplayCell.subscribe(onNext: { cell, _ in
             cell.contentView.layer.cornerRadius = 4.0
             cell.contentView.layer.borderWidth = 1.0
@@ -81,12 +82,12 @@ class DiscoveryViewController: UIViewController {
             cell.layer.shadowOpacity = 1.0
             cell.layer.masksToBounds = false
             cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
-        }).disposed(by: disposeBag)
-        collectionView.rx.willDisplayCell.map { $1 }.withLatestFrom(viewModel.books.map { $0.count }) { $0.item == $1 - 1 }.filter { $0 }.map { _ in () }.bind(to: viewModel.loadMore).disposed(by: disposeBag)
-        collectionView.rx.didEndDisplayingCell.compactMap { $0.cell as? BookCollectionViewCell }.subscribe(onNext: { $0.imageView?.kf.cancelDownloadTask() }).disposed(by: disposeBag)
+        }).disposed(by: bag)
+        collectionView.rx.willDisplayCell.map { $1 }.withLatestFrom(viewModel.books.map { $0.count }) { $0.item == $1 - 1 }.filter { $0 }.map { _ in () }.bind(to: viewModel.loadMore).disposed(by: bag)
+        collectionView.rx.didEndDisplayingCell.compactMap { $0.cell as? BookCollectionViewCell }.subscribe(onNext: { $0.imageView?.kf.cancelDownloadTask() }).disposed(by: bag)
 
-        viewModel.books.subscribe { [weak self] _ in self?.refreshControl.endRefreshing() }.disposed(by: disposeBag)
-        viewModel.books.map { [AnimatableSectionModel<Int, Book>(model: 0, items: $0)] }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
+        viewModel.books.subscribe { [weak self] _ in self?.refreshControl.endRefreshing() }.disposed(by: bag)
+        viewModel.books.map { [AnimatableSectionModel<Int, Book>(model: 0, items: $0)] }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
     }
 
     // MARK: - Public methods

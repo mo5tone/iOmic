@@ -6,14 +6,19 @@
 //  Copyright © 2019 门捷夫. All rights reserved.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 
 class SourceFiltersViewController: UIViewController {
+    @IBOutlet var button: UIButton!
+    private let disposeBag: DisposeBag = .init()
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         view.backgroundColor = .clear
+        button.rx.tap.subscribe(onNext: { print("hello there!") }).disposed(by: disposeBag)
     }
 
     /*

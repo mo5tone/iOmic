@@ -10,22 +10,29 @@ import Foundation
 import RxSwift
 
 class DiscoveryViewModel: NSObject {
-    private let disposeBag: DisposeBag = .init()
+    private let bag: DisposeBag = .init()
     private let page: BehaviorSubject<Int> = .init(value: 0)
-    let source: PublishSubject<SourceProtocol> = .init()
+    let source: BehaviorSubject<SourceProtocol> = .init(value: Source.all[0])
     let title: BehaviorSubject<String> = .init(value: "Discovery")
     let load: PublishSubject<Void> = .init()
     let loadMore: PublishSubject<Void> = .init()
     let query: BehaviorSubject<String?> = .init(value: nil)
     let filters: BehaviorSubject<[FilterProrocol]> = .init(value: [])
     let books: BehaviorSubject<[Book]> = .init(value: [])
+    var sharedSource: Observable<SourceProtocol> {
+        return source.share(replay: 1, scope: .forever)
+    }
 
-    init(_ sourceProtocol: SourceProtocol = Source.all[0]) {
+    init(_ sourceProtocol: SourceProtocol? = nil) {
         super.init()
-        source.map { $0.name }.bind(to: title).disposed(by: disposeBag)
-        source.map { $0.defaultFilters }.bind(to: filters).disposed(by: disposeBag)
-        Observable.merge(source.map { _ in }, load).map { _ in 0 }.bind(to: page).disposed(by: disposeBag)
-        loadMore.withLatestFrom(page) { $1 + 1 }.bind(to: page).disposed(by: disposeBag)
+        if let sourceProtocol = sourceProtocol {
+            source.on(.next(sourceProtocol))
+        }
+        source.map { _ in [] }.bind(to: books).disposed(by: bag)
+        source.map { $0.name }.bind(to: title).disposed(by: bag)
+        source.map { $0.defaultFilters }.bind(to: filters).disposed(by: bag)
+        Observable.merge(source.map { _ in }, load).map { _ in 0 }.bind(to: page).disposed(by: bag)
+        loadMore.withLatestFrom(page) { $1 + 1 }.bind(to: page).disposed(by: bag)
         Observable.merge(source.map { _ in }, load, loadMore)
             .withLatestFrom(Observable.combineLatest(source, page, query, filters, books))
             .flatMapLatest { (source, page, query, filters, books) -> Observable<[Book]> in
@@ -40,8 +47,7 @@ class DiscoveryViewModel: NSObject {
                 } else {
                     return .just([])
                 }
-            }.catchErrorJustReturn([]).bind(to: books).disposed(by: disposeBag)
-        source.on(.next(sourceProtocol))
+            }.catchErrorJustReturn([]).bind(to: books).disposed(by: bag)
     }
 
     func reset() {}

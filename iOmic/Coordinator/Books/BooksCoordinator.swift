@@ -9,19 +9,17 @@
 import Foundation
 import UIKit
 
-class BooksCoordinator: Coordinator {
+class BooksCoordinator: NavigationCoordinator {
     // MARK: - Props.
 
     // MARK: - Public
 
     override init(window: UIWindow) {
         super.init(window: window)
-        viewController = UINavigationController()
-    }
-
-    func start() {
-        guard let navigationController = viewController as? UINavigationController else { return }
-        navigationController.pushViewController(BooksViewController(coordinator: self, viewModel: BooksViewModel()), animated: false)
+        let rootViewController = BooksViewController(coordinator: self, viewModel: .init())
+        self.rootViewController = rootViewController
+        navigationController = .init(rootViewController: rootViewController)
+        navigationController.navigationBar.prefersLargeTitles = true
     }
 }
 

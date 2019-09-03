@@ -44,6 +44,7 @@ class Source: NSObject {
 protocol SourceProtocol {
     var identifier: Source.Identifier { get }
     var name: String { get }
+    var available: Bool { get }
     var defaultFilters: [FilterProrocol] { get }
 }
 
