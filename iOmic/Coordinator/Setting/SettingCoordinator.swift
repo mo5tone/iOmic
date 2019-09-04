@@ -16,9 +16,8 @@ class SettingCoordinator: NavigationCoordinator {
 
     override init(window: UIWindow) {
         super.init(window: window)
-        let rootViewController = SettingViewController(coordinator: self, viewModel: SettingViewModel())
-        self.rootViewController = rootViewController
-        navigationController = .init(rootViewController: rootViewController)
+        viewController = SettingViewController(coordinator: self, viewModel: .init())
+        navigationController = .init(rootViewController: viewController)
         navigationController.navigationBar.prefersLargeTitles = true
     }
 }

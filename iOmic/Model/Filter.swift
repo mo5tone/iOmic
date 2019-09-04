@@ -22,36 +22,42 @@ class ToggleFilter: FilterProrocol {
     }
 }
 
-class PickFilter<ValueType>: FilterProrocol {
+class PickFilter: FilterProrocol {
     let title: String
-    var state: Int
-    let options: [(name: String, value: ValueType)]
+    let options: [(name: String, value: [String])]
 
-    var name: String { return options[state].name }
-    var value: ValueType { return options[state].value }
-
-    init(title: String, options: [(String, ValueType)], state: Int = 0) {
+    init(title: String, options: [(String, [String])]) {
         self.title = title
         self.options = options
-        self.state = state
+    }
+
+    init(title: String, options: [(String, String)]) {
+        self.title = title
+        self.options = options.map { ($0, [$1]) }
     }
 }
 
-class MultiplePickFilter<ValueType>: FilterProrocol {
-    let title: String
-    var state: [Int]
-    let options: [(name: String, value: ValueType)]
+class SinglePickFilter: PickFilter {
+    var state: Int = 0
 
-    var values: [ValueType] {
-        return state.compactMap { index -> ValueType? in
+    var name: String { return options[state].name }
+    var value: [String] { return options[state].value }
+}
+
+class MultiplePickFilter: PickFilter {
+    var state: [Int] = []
+
+    var names: [String] {
+        return state.compactMap { index -> String? in
             guard index < options.count else { return nil }
-            return options[index].value
+            return options[index].name
         }
     }
 
-    init(title: String, options: [(String, ValueType)], state: [Int] = []) {
-        self.title = title
-        self.options = options
-        self.state = state
+    var values: [[String]] {
+        return state.compactMap { index -> [String]? in
+            guard index < options.count else { return nil }
+            return options[index].value
+        }
     }
 }

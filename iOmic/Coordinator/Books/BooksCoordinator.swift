@@ -16,9 +16,8 @@ class BooksCoordinator: NavigationCoordinator {
 
     override init(window: UIWindow) {
         super.init(window: window)
-        let rootViewController = BooksViewController(coordinator: self, viewModel: .init())
-        self.rootViewController = rootViewController
-        navigationController = .init(rootViewController: rootViewController)
+        viewController = BooksViewController(coordinator: self, viewModel: .init())
+        navigationController = .init(rootViewController: viewController)
         navigationController.navigationBar.prefersLargeTitles = true
     }
 }

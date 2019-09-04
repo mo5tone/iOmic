@@ -13,18 +13,18 @@ import SwiftEntryKit
 import UIKit
 
 protocol DiscoveryViewCoordinator: AnyObject {
-    func popupSourcesSwitcher(current: SourceProtocol, observer: AnyObserver<SourceProtocol>)
+    func popupSourcesSwitcher(current: SourceProtocol) -> Observable<SourceProtocol>
     func popupFiltersPicker(current: [FilterProrocol])
 }
 
 class DiscoveryViewController: UIViewController {
-    // MARK: - props.
+    // MARK: - instance props.
 
     private weak var coordinator: DiscoveryViewCoordinator?
-    private var viewModel: DiscoveryViewModel
+    private let viewModel: DiscoveryViewModel
     private let bag: DisposeBag = .init()
     private lazy var refreshControl: UIRefreshControl = .init()
-    private let searchController: UISearchController = .init(searchResultsController: nil)
+    private lazy var searchController: UISearchController = .init(searchResultsController: nil)
     private let dataSource: RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<Int, Book>> = .init(configureCell: { _, collectionView, indexPath, book in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.reusableIdentifier, for: indexPath)
         if let cell = cell as? BookCollectionViewCell { cell.setup(book: book) }
@@ -32,7 +32,7 @@ class DiscoveryViewController: UIViewController {
     })
     @IBOutlet var collectionView: UICollectionView!
 
-    // MARK: - Private methods
+    // MARK: - Private instance methods
 
     private func setupView() {
         navigationItem.leftBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_tune"), style: .plain, target: nil, action: nil)
@@ -53,10 +53,8 @@ class DiscoveryViewController: UIViewController {
         viewModel.title.bind(to: navigationItem.rx.title).disposed(by: bag)
         navigationItem.leftBarButtonItem?.rx.tap
             .withLatestFrom(viewModel.source)
-            .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.coordinator?.popupSourcesSwitcher(current: $0, observer: self.viewModel.source.asObserver())
-            })
+            .flatMapLatest { [weak self] in self?.coordinator?.popupSourcesSwitcher(current: $0) ?? Observable.empty() }
+            .bind(to: viewModel.source)
             .disposed(by: bag)
         navigationItem.rightBarButtonItem?.rx.tap
             .withLatestFrom(viewModel.filters)
@@ -90,7 +88,7 @@ class DiscoveryViewController: UIViewController {
         viewModel.books.map { [AnimatableSectionModel<Int, Book>(model: 0, items: $0)] }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
     }
 
-    // MARK: - Public methods
+    // MARK: - Public instance methods
 
     init(coordinator: DiscoveryViewCoordinator, viewModel: DiscoveryViewModel) {
         self.coordinator = coordinator

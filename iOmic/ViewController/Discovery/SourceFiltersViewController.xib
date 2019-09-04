@@ -12,7 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SourceFiltersViewController" customModule="iOmic" customModuleProvider="target">
             <connections>
-                <outlet property="button" destination="EXr-0F-jZS" id="gVV-VI-m4o"/>
+                <outlet property="cancelButton" destination="7AO-aZ-RBm" id="t4k-VQ-UoT"/>
+                <outlet property="collectionView" destination="Ufp-cR-Vzh" id="l7s-bx-y6o"/>
+                <outlet property="okButton" destination="uS9-Aq-R4X" id="3Di-Zy-U4n"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,15 +23,39 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EXr-0F-jZS">
-                    <rect key="frame" x="184" y="438" width="46" height="30"/>
-                    <state key="normal" title="Button"/>
-                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="mSd-cz-ICe">
+                    <rect key="frame" x="8" y="52" width="398" height="30"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AO-aZ-RBm">
+                            <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
+                            <state key="normal" title="Button"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uS9-Aq-R4X">
+                            <rect key="frame" x="352" y="0.0" width="46" height="30"/>
+                            <state key="normal" title="Button"/>
+                        </button>
+                    </subviews>
+                </stackView>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Ufp-cR-Vzh">
+                    <rect key="frame" x="0.0" y="90" width="414" height="756"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eIb-hN-ACE">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="EXr-0F-jZS" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="YIs-Ev-Lkx"/>
-                <constraint firstItem="EXr-0F-jZS" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="e2s-4x-fw1"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Ufp-cR-Vzh" secondAttribute="trailing" id="2OF-Nq-xKr"/>
+                <constraint firstItem="mSd-cz-ICe" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="Mia-Xn-ru7"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Ufp-cR-Vzh" secondAttribute="bottom" constant="16" id="NFp-5n-lCy"/>
+                <constraint firstItem="mSd-cz-ICe" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="TYU-cd-sqj"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="mSd-cz-ICe" secondAttribute="trailing" constant="8" id="YEf-Kz-cmh"/>
+                <constraint firstItem="Ufp-cR-Vzh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="b17-a5-pEm"/>
+                <constraint firstItem="Ufp-cR-Vzh" firstAttribute="top" secondItem="mSd-cz-ICe" secondAttribute="bottom" constant="8" id="vBS-4z-JcO"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>

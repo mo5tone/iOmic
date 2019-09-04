@@ -16,9 +16,8 @@ class DownloadCoordinator: NavigationCoordinator {
 
     override init(window: UIWindow) {
         super.init(window: window)
-        let rootViewController = DownloadViewController(coordinator: self, viewModel: DownloadViewModel())
-        self.rootViewController = rootViewController
-        navigationController = .init(rootViewController: rootViewController)
+        viewController = DownloadViewController(coordinator: self, viewModel: .init())
+        navigationController = .init(rootViewController: viewController)
         navigationController.navigationBar.prefersLargeTitles = true
     }
 }

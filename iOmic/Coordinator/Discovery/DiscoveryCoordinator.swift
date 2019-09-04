@@ -20,43 +20,33 @@ class DiscoveryCoordinator: NavigationCoordinator {
 
     override init(window: UIWindow) {
         super.init(window: window)
-        let rootViewController = DiscoveryViewController(coordinator: self, viewModel: .init(DongManZhiJia.shared))
-        self.rootViewController = rootViewController
-        navigationController = .init(rootViewController: rootViewController)
+        viewController = DiscoveryViewController(coordinator: self, viewModel: .init())
+        navigationController = .init(rootViewController: viewController)
         navigationController.navigationBar.prefersLargeTitles = true
     }
 }
 
+// MARK: - DiscoveryViewCoordinator
+
 extension DiscoveryCoordinator: DiscoveryViewCoordinator {
-    func popupSourcesSwitcher(current: SourceProtocol, observer: AnyObserver<SourceProtocol>) {
+    func popupSourcesSwitcher(current: SourceProtocol) -> Observable<SourceProtocol> {
         let alertController: UIAlertController = .init(title: nil, message: nil, preferredStyle: .actionSheet)
-        Source.all.forEach { source in
-            let action: UIAlertAction = .init(title: source.name, style: .default, handler: { _ in observer.on(.next(source)) })
-            if source.identifier == current.identifier {
-                action.leadingImage = #imageLiteral(resourceName: "ic_tick")
-            }
-            alertController.addAction(action)
-        }
+        let subject: PublishSubject<SourceProtocol> = .init()
+        Source.all.map { source -> UIAlertAction in
+            let action: UIAlertAction = .init(title: source.name, style: .default, handler: { _ in subject.on(.next(source)) })
+            if source.identifier == current.identifier { action.leadingImage = #imageLiteral(resourceName: "ic_tick") }
+            return action
+        }.forEach { alertController.addAction($0) }
         alertController.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         // FIXME: - https://stackoverflow.com/questions/55653187/swift-default-alertviewcontroller-breaking-constraints
         alertController.view.addSubview(UIView())
-        rootViewController?.present(alertController, animated: false, completion: {})
+        viewController.present(alertController, animated: false, completion: {})
+        return subject
     }
 
-    func popupFiltersPicker(current _: [FilterProrocol]) {
-        // TODO: -
-        let controller = SourceFiltersViewController()
-        var attributes: EKAttributes = .bottomFloat
-        attributes.displayDuration = .infinity
-        attributes.positionConstraints.safeArea = .empty(fillSafeArea: false)
-        attributes.positionConstraints.size = .init(width: .offset(value: 8), height: .ratio(value: 0.75))
-        attributes.entryInteraction = .absorbTouches
-        attributes.screenInteraction = .dismiss
-        attributes.scroll = .enabled(swipeable: true, pullbackAnimation: .jolt)
-        attributes.entryBackground = .color(color: .init(.white))
-        attributes.screenBackground = .clear
-        attributes.shadow = .active(with: .init(color: .black, opacity: 0.3, radius: 10, offset: .zero))
-        attributes.roundCorners = .all(radius: 16)
-        SwiftEntryKit.display(entry: controller, using: attributes)
+    func popupFiltersPicker(current: [FilterProrocol]) {
+        let coordinator: SourceFiltersCoordiantor = .init(window: window, filters: current)
+        append(coordinator: coordinator)
+        coordinator.start()
     }
 }

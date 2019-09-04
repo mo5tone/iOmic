@@ -216,8 +216,8 @@ extension ManHuaRen.Router: RequestConvertible {
                     parameters["sort"] = sortFilter.value
                 }
                 if let categoryFilter = filters.first(where: { $0 is ManHuaRen.CategoryFilter }) as? ManHuaRen.CategoryFilter {
-                    parameters["subCategoryType"] = categoryFilter.value.0
-                    parameters["subCategoryId"] = categoryFilter.value.1
+                    parameters["subCategoryType"] = categoryFilter.categoryType
+                    parameters["subCategoryId"] = categoryFilter.categoryId
                 }
             } else {
                 parameters["keywords"] = query
@@ -238,15 +238,23 @@ extension ManHuaRen.Router: RequestConvertible {
 }
 
 extension ManHuaRen {
-    class SortFilter: PickFilter<String> {
+    class SortFilter: SinglePickFilter {
         init() {
             super.init(title: "状态", options: [("热门", "0"), ("更新", "1"), ("新作", "2"), ("完结", "3")])
         }
     }
 
-    class CategoryFilter: PickFilter<(String, String)> {
+    class CategoryFilter: SinglePickFilter {
         init() {
-            super.init(title: "分类", options: [("全部", ("0", "0")), ("热血", ("0", "31")), ("恋爱", ("0", "26")), ("校园", ("0", "1")), ("百合", ("0", "3")), ("耽美", ("0", "27")), ("伪娘", ("0", "5")), ("冒险", ("0", "2")), ("职场", ("0", "6")), ("后宫", ("0", "8")), ("治愈", ("0", "9")), ("科幻", ("0", "25")), ("励志", ("0", "10")), ("生活", ("0", "11")), ("战争", ("0", "12")), ("悬疑", ("0", "17")), ("推理", ("0", "33")), ("搞笑", ("0", "37")), ("奇幻", ("0", "14")), ("魔法", ("0", "15")), ("恐怖", ("0", "29")), ("神鬼", ("0", "20")), ("萌系", ("0", "21")), ("历史", ("0", "4")), ("美食", ("0", "7")), ("同人", ("0", "30")), ("运动", ("0", "34")), ("绅士", ("0", "36")), ("机甲", ("0", "40")), ("限制级", ("0", "61")), ("少年向", ("1", "1")), ("少女向", ("1", "2")), ("青年向", ("1", "3")), ("港台", ("2", "35")), ("日韩", ("2", "36")), ("大陆", ("2", "37")), ("欧美", ("2", "52"))])
+            super.init(title: "分类", options: [("全部", ["0", "0"]), ("热血", ["0", "31"]), ("恋爱", ["0", "26"]), ("校园", ["0", "1"]), ("百合", ["0", "3"]), ("耽美", ["0", "27"]), ("伪娘", ["0", "5"]), ("冒险", ["0", "2"]), ("职场", ["0", "6"]), ("后宫", ["0", "8"]), ("治愈", ["0", "9"]), ("科幻", ["0", "25"]), ("励志", ["0", "10"]), ("生活", ["0", "11"]), ("战争", ["0", "12"]), ("悬疑", ["0", "17"]), ("推理", ["0", "33"]), ("搞笑", ["0", "37"]), ("奇幻", ["0", "14"]), ("魔法", ["0", "15"]), ("恐怖", ["0", "29"]), ("神鬼", ["0", "20"]), ("萌系", ["0", "21"]), ("历史", ["0", "4"]), ("美食", ["0", "7"]), ("同人", ["0", "30"]), ("运动", ["0", "34"]), ("绅士", ["0", "36"]), ("机甲", ["0", "40"]), ("限制级", ["0", "61"]), ("少年向", ["1", "1"]), ("少女向", ["1", "2"]), ("青年向", ["1", "3"]), ("港台", ["2", "35"]), ("日韩", ["2", "36"]), ("大陆", ["2", "37"]), ("欧美", ["2", "52"])])
+        }
+
+        var categoryType: String {
+            return value[0]
+        }
+
+        var categoryId: String {
+            return value[1]
         }
     }
 }

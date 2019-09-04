@@ -71,6 +71,10 @@
 		9FA947242314F4E80028A60D /* Alamofire.ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA947232314F4E80028A60D /* Alamofire.ex.swift */; };
 		9FA947262314FBE90028A60D /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA947252314FBE90028A60D /* Error.swift */; };
 		9FA9472823152C960028A60D /* String.ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA9472723152C960028A60D /* String.ex.swift */; };
+		9FD786F9231F7A0900E1C03C /* SourceFiltersCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD786F8231F7A0900E1C03C /* SourceFiltersCoordinator.swift */; };
+		9FD786FC231F7D5F00E1C03C /* SourceFiltersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD786FB231F7D5F00E1C03C /* SourceFiltersViewModel.swift */; };
+		9FD786FF231FA37B00E1C03C /* SinglePickFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD786FD231FA37B00E1C03C /* SinglePickFilterCollectionViewCell.swift */; };
+		9FD78700231FA37B00E1C03C /* SinglePickFilterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FD786FE231FA37B00E1C03C /* SinglePickFilterCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +168,10 @@
 		9FA947232314F4E80028A60D /* Alamofire.ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alamofire.ex.swift; sourceTree = "<group>"; };
 		9FA947252314FBE90028A60D /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		9FA9472723152C960028A60D /* String.ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.ex.swift; sourceTree = "<group>"; };
+		9FD786F8231F7A0900E1C03C /* SourceFiltersCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFiltersCoordinator.swift; sourceTree = "<group>"; };
+		9FD786FB231F7D5F00E1C03C /* SourceFiltersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFiltersViewModel.swift; sourceTree = "<group>"; };
+		9FD786FD231FA37B00E1C03C /* SinglePickFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePickFilterCollectionViewCell.swift; sourceTree = "<group>"; };
+		9FD786FE231FA37B00E1C03C /* SinglePickFilterCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SinglePickFilterCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -406,6 +414,7 @@
 			isa = PBXGroup;
 			children = (
 				5584B12023115358000D9309 /* DiscoveryViewModel.swift */,
+				9FD786FB231F7D5F00E1C03C /* SourceFiltersViewModel.swift */,
 			);
 			path = Discovery;
 			sourceTree = "<group>";
@@ -430,6 +439,7 @@
 			isa = PBXGroup;
 			children = (
 				5584B125231153FB000D9309 /* DiscoveryCoordinator.swift */,
+				9FD786F8231F7A0900E1C03C /* SourceFiltersCoordinator.swift */,
 			);
 			path = Discovery;
 			sourceTree = "<group>";
@@ -481,6 +491,8 @@
 				9F8418FC2317B35300A503BE /* BookCollectionViewCell.xib */,
 				555C1CD4231A352600E388D6 /* DownloadTableViewCell.swift */,
 				555C1CD5231A352600E388D6 /* DownloadTableViewCell.xib */,
+				9FD786FD231FA37B00E1C03C /* SinglePickFilterCollectionViewCell.swift */,
+				9FD786FE231FA37B00E1C03C /* SinglePickFilterCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -516,6 +528,7 @@
 				55342F5C2310B6BB00FA141B /* Resources */,
 				55191F5D2310D4B4007D1454 /* Carthage Copy */,
 				55191F5E2310D8A9007D1454 /* Carthage Copy [DEBUG] */,
+				9FD786FA231F7AE600E1C03C /* Swift Format */,
 				9F423D4A231753BB006B950F /* Swift Lint */,
 			);
 			buildRules = (
@@ -617,6 +630,7 @@
 				55342F6C2310B6BC00FA141B /* LaunchScreen.storyboard in Resources */,
 				55BEAA8E23122CD600A6A41D /* BooksViewController.xib in Resources */,
 				55342F692310B6BC00FA141B /* Assets.xcassets in Resources */,
+				9FD78700231FA37B00E1C03C /* SinglePickFilterCollectionViewCell.xib in Resources */,
 				55BEAA9023122DF000A6A41D /* DiscoveryViewController.xib in Resources */,
 				555C1CD7231A352600E388D6 /* DownloadTableViewCell.xib in Resources */,
 				55BEAA9223122E1600A6A41D /* DownloadViewController.xib in Resources */,
@@ -699,6 +713,24 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
+		9FD786FA231F7AE600E1C03C /* Swift Format */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Format";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftformat >/dev/null; then\nswiftformat iOmic/\nelse\necho \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -714,9 +746,12 @@
 				5584B12C23115709000D9309 /* MainCoordinator.swift in Sources */,
 				5584B0E42310E6A7000D9309 /* AppCoordinator.swift in Sources */,
 				5584B0FE2311089F000D9309 /* BooksCoordinator.swift in Sources */,
+				9FD786FC231F7D5F00E1C03C /* SourceFiltersViewModel.swift in Sources */,
+				9FD786FF231FA37B00E1C03C /* SinglePickFilterCollectionViewCell.swift in Sources */,
 				5584B11F23115349000D9309 /* DownloadViewModel.swift in Sources */,
 				555C1CCE2319582900E388D6 /* ReusableIdentifier.swift in Sources */,
 				5584B10C23114E01000D9309 /* BooksViewModel.swift in Sources */,
+				9FD786F9231F7A0900E1C03C /* SourceFiltersCoordinator.swift in Sources */,
 				55191F632310E047007D1454 /* Coordinator.swift in Sources */,
 				5584B12A2311540F000D9309 /* SettingCoordinator.swift in Sources */,
 				5584B0EF2310EE29000D9309 /* DiscoveryViewController.swift in Sources */,

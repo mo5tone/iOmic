@@ -10,32 +10,25 @@ import Foundation
 import UIKit
 
 class MainCoordinator: TabBarCoordinator {
-    // MARK: - Public
+    // MARK: - Public instance methods
 
     func start() {
-        let booksCoordinator = BooksCoordinator(window: window)
-        coordinators.append(booksCoordinator)
-        booksCoordinator.navigationController.tabBarItem = UITabBarItem(title: "Books", image: #imageLiteral(resourceName: "ic_books"), tag: 0)
+        let booksCoordinator: BooksCoordinator = .init(window: window)
+        append(coordinator: booksCoordinator)
+        booksCoordinator.navigationController.tabBarItem = .init(title: "Books", image: #imageLiteral(resourceName: "ic_books"), tag: 0)
 
-        let discoveryCoordinator = DiscoveryCoordinator(window: window)
-        coordinators.append(discoveryCoordinator)
-        discoveryCoordinator.navigationController.tabBarItem = UITabBarItem(title: "Discovery", image: #imageLiteral(resourceName: "ic_discovery"), tag: 1)
+        let discoveryCoordinator: DiscoveryCoordinator = .init(window: window)
+        append(coordinator: discoveryCoordinator)
+        discoveryCoordinator.navigationController.tabBarItem = .init(title: "Discovery", image: #imageLiteral(resourceName: "ic_discovery"), tag: 1)
 
-        let downloadCoordinator = DownloadCoordinator(window: window)
-        coordinators.append(downloadCoordinator)
-        downloadCoordinator.navigationController.tabBarItem = UITabBarItem(title: "Download", image: #imageLiteral(resourceName: "ic_download"), tag: 2)
+        let downloadCoordinator: DownloadCoordinator = .init(window: window)
+        append(coordinator: downloadCoordinator)
+        downloadCoordinator.navigationController.tabBarItem = .init(title: "Download", image: #imageLiteral(resourceName: "ic_download"), tag: 2)
 
-        let settingCoordinator = SettingCoordinator(window: window)
-        coordinators.append(settingCoordinator)
-        settingCoordinator.navigationController.tabBarItem = UITabBarItem(title: "Setting", image: #imageLiteral(resourceName: "ic_setting"), tag: 3)
+        let settingCoordinator: SettingCoordinator = .init(window: window)
+        append(coordinator: settingCoordinator)
+        settingCoordinator.navigationController.tabBarItem = .init(title: "Setting", image: #imageLiteral(resourceName: "ic_setting"), tag: 3)
 
         tabBarController.viewControllers = coordinators.compactMap { ($0 as? NavigationCoordinator)?.navigationController }
-        tabBarController.delegate = self
-
-        makeKeyAndVisible(tabBarController)
     }
 }
-
-// MARK: - UITabBarControllerDelegate
-
-extension MainCoordinator: UITabBarControllerDelegate {}

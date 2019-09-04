@@ -54,7 +54,7 @@ extension LocalSource: LocalSourceProtocol {
 }
 
 extension LocalSource {
-    class SortFilter: PickFilter<String> {
+    class SortFilter: SinglePickFilter {
         init() {
             super.init(title: "排序", options: [("名称", "0"), ("大小", "1"), ("时间", "2")])
         }
