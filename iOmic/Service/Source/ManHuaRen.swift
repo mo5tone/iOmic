@@ -213,7 +213,7 @@ extension ManHuaRen.Router: RequestConvertible {
             parameters["limit"] = "\(pageSize)"
             if query.isEmpty {
                 if let sortFilter = filters.first(where: { $0 is ManHuaRen.SortFilter }) as? ManHuaRen.SortFilter {
-                    parameters["sort"] = sortFilter.value
+                    parameters["sort"] = sortFilter.value[0]
                 }
                 if let categoryFilter = filters.first(where: { $0 is ManHuaRen.CategoryFilter }) as? ManHuaRen.CategoryFilter {
                     parameters["subCategoryType"] = categoryFilter.categoryType

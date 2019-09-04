@@ -13,19 +13,19 @@ class MainCoordinator: TabBarCoordinator {
     // MARK: - Public instance methods
 
     func start() {
-        let booksCoordinator: BooksCoordinator = .init(window: window)
+        let booksCoordinator: BooksCoordinator = .init(window: window, flowDelegate: self)
         append(coordinator: booksCoordinator)
         booksCoordinator.navigationController.tabBarItem = .init(title: "Books", image: #imageLiteral(resourceName: "ic_books"), tag: 0)
 
-        let discoveryCoordinator: DiscoveryCoordinator = .init(window: window)
+        let discoveryCoordinator: DiscoveryCoordinator = .init(window: window, flowDelegate: self)
         append(coordinator: discoveryCoordinator)
         discoveryCoordinator.navigationController.tabBarItem = .init(title: "Discovery", image: #imageLiteral(resourceName: "ic_discovery"), tag: 1)
 
-        let downloadCoordinator: DownloadCoordinator = .init(window: window)
+        let downloadCoordinator: DownloadCoordinator = .init(window: window, flowDelegate: self)
         append(coordinator: downloadCoordinator)
         downloadCoordinator.navigationController.tabBarItem = .init(title: "Download", image: #imageLiteral(resourceName: "ic_download"), tag: 2)
 
-        let settingCoordinator: SettingCoordinator = .init(window: window)
+        let settingCoordinator: SettingCoordinator = .init(window: window, flowDelegate: self)
         append(coordinator: settingCoordinator)
         settingCoordinator.navigationController.tabBarItem = .init(title: "Setting", image: #imageLiteral(resourceName: "ic_setting"), tag: 3)
 

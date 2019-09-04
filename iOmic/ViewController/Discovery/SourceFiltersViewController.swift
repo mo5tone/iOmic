@@ -11,7 +11,9 @@ import RxSwift
 import SwiftEntryKit
 import UIKit
 
-protocol SourceFiltersViewCoordinator: AnyObject {}
+protocol SourceFiltersViewCoordinator: AnyObject {
+    func dismiss()
+}
 
 class SourceFiltersViewController: UIViewController {
     // MARK: - instance props.
@@ -32,7 +34,10 @@ class SourceFiltersViewController: UIViewController {
         okButton.setTitle("OK", for: .normal)
 
         collectionView.backgroundColor = .groupTableViewBackground
-        collectionView.registerCell(SinglePickFilterCollectionViewCell.self)
+        collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
+        collectionView.registerHeaderFooterView(PickFilterTitleCollectionReusableView.self, supplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
+        collectionView.registerCell(PickFilterCollectionViewCell.self)
+        collectionView.allowsMultipleSelection = true
         collectionView.dataSource = self
         collectionView.delegate = self
     }
@@ -40,7 +45,7 @@ class SourceFiltersViewController: UIViewController {
     private func setupBinding() {
         Observable.merge(cancelButton.rx.tap.asObservable(), okButton.rx.tap.asObservable())
             .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { SwiftEntryKit.dismiss(.specific(entryName: String(describing: SourceFiltersViewController.self)), with: nil) })
+            .subscribe(onNext: { [weak self] in self?.coordinator?.dismiss() })
             .disposed(by: bag)
     }
 
@@ -63,6 +68,19 @@ class SourceFiltersViewController: UIViewController {
         setupView()
         setupBinding()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.filters.compactMap { $0 as? PickFilter }.enumerated().forEach { offset, filter in
+            if let filter = filter as? SinglePickFilter {
+                let indexPath: IndexPath = .init(item: filter.state, section: offset)
+                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+            } else if let filter = filter as? MultiplePickFilter {
+                let indexPaths: [IndexPath] = filter.state.map { .init(item: $0, section: offset) }
+                indexPaths.forEach { collectionView.selectItem(at: $0, animated: true, scrollPosition: .centeredHorizontally) }
+            }
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
@@ -82,28 +100,66 @@ extension SourceFiltersViewController: UICollectionViewDataSource, UICollectionV
         return 0
     }
 
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let identifier = PickFilterTitleCollectionReusableView.reusableIdentifier
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: identifier, for: indexPath)
+        if let view = view as? PickFilterTitleCollectionReusableView {
+            view.titleLabel.text = viewModel.filters[indexPath.section].title
+        }
+        return view
+    }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let identifier = SinglePickFilterCollectionViewCell.reusableIdentifier
+        let identifier = PickFilterCollectionViewCell.reusableIdentifier
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
-        if let cell = cell as? SinglePickFilterCollectionViewCell, let filter = viewModel.filters[indexPath.section] as? PickFilter {
+        if let cell = cell as? PickFilterCollectionViewCell, let filter = viewModel.filters[indexPath.section] as? PickFilter {
             cell.nameLabel.text = filter.options[indexPath.item].name
-            if let filter = filter as? SinglePickFilter {
-                cell.isSelected = filter.state == indexPath.item
-            } else if let filter = filter as? MultiplePickFilter {
-                cell.isSelected = filter.state.contains(indexPath.item)
-            }
         }
         return cell
     }
 
+    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, referenceSizeForHeaderInSection _: Int) -> CGSize {
+        let height: CGFloat = {
+            let label: UILabel = .init()
+            label.font = .preferredFont(forTextStyle: .body)
+            label.text = "Ay"
+            return label.intrinsicContentSize.height + 16
+        }()
+        return .init(width: collectionView.frame.width, height: height)
+    }
+
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if let filter = viewModel.filters[indexPath.section] as? PickFilter {
-            let label: UILabel = .init(frame: .init(origin: .zero, size: .init(width: Double.infinity, height: Double.infinity)))
+            let label: UILabel = .init()
             label.font = .preferredFont(forTextStyle: .body)
             label.text = filter.options[indexPath.item].name
             let size = label.intrinsicContentSize
             return .init(width: size.width + 16, height: size.height + 16)
         }
         return .zero
+    }
+
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumLineSpacingForSectionAt _: Int) -> CGFloat {
+        return 8
+    }
+
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
+        return 8
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let filter = viewModel.filters[indexPath.section] as? SinglePickFilter {
+            filter.state = indexPath.item
+            let selectedItems = collectionView.indexPathsForSelectedItems?.filter { $0.section == indexPath.section } ?? []
+            selectedItems.filter { $0.item != indexPath.item }.forEach { collectionView.deselectItem(at: $0, animated: true) }
+        } else if let filter = viewModel.filters[indexPath.section] as? MultiplePickFilter {
+            filter.state.append(indexPath.item)
+        }
+    }
+
+    func collectionView(_: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let filter = viewModel.filters[indexPath.section] as? MultiplePickFilter {
+            filter.state.removeAll(where: { $0 == indexPath.item })
+        }
     }
 }

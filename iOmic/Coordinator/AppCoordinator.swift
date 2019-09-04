@@ -36,7 +36,7 @@ class AppCoordinator: Coordinator {
 
     func start(with launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         self.launchOptions = launchOptions ?? [:]
-        let mainCoordinator: MainCoordinator = .init(window: window, tabBarController: .init())
+        let mainCoordinator: MainCoordinator = .init(window: window, flowDelegate: self)
         append(coordinator: mainCoordinator)
         mainCoordinator.start()
         makeKeyAndVisible(mainCoordinator.tabBarController)

@@ -18,8 +18,8 @@ class DiscoveryCoordinator: NavigationCoordinator {
 
     // MARK: - Public
 
-    override init(window: UIWindow) {
-        super.init(window: window)
+    override init(window: UIWindow, flowDelegate: CoordinatorFlowDelegate? = nil) {
+        super.init(window: window, flowDelegate: flowDelegate)
         viewController = DiscoveryViewController(coordinator: self, viewModel: .init())
         navigationController = .init(rootViewController: viewController)
         navigationController.navigationBar.prefersLargeTitles = true
@@ -29,14 +29,10 @@ class DiscoveryCoordinator: NavigationCoordinator {
 // MARK: - DiscoveryViewCoordinator
 
 extension DiscoveryCoordinator: DiscoveryViewCoordinator {
-    func popupSourcesSwitcher(current: SourceProtocol) -> Observable<SourceProtocol> {
+    func popupSourcesSwitcher(current _: SourceProtocol) -> Observable<SourceProtocol> {
         let alertController: UIAlertController = .init(title: nil, message: nil, preferredStyle: .actionSheet)
         let subject: PublishSubject<SourceProtocol> = .init()
-        Source.all.map { source -> UIAlertAction in
-            let action: UIAlertAction = .init(title: source.name, style: .default, handler: { _ in subject.on(.next(source)) })
-            if source.identifier == current.identifier { action.leadingImage = #imageLiteral(resourceName: "ic_tick") }
-            return action
-        }.forEach { alertController.addAction($0) }
+        Source.all.map { source in .init(title: source.name, style: .default, handler: { _ in subject.on(.next(source)) }) }.forEach { alertController.addAction($0) }
         alertController.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         // FIXME: - https://stackoverflow.com/questions/55653187/swift-default-alertviewcontroller-breaking-constraints
         alertController.view.addSubview(UIView())
@@ -45,7 +41,7 @@ extension DiscoveryCoordinator: DiscoveryViewCoordinator {
     }
 
     func popupFiltersPicker(current: [FilterProrocol]) {
-        let coordinator: SourceFiltersCoordiantor = .init(window: window, filters: current)
+        let coordinator: SourceFiltersCoordiantor = .init(window: window, flowDelegate: self, filters: current)
         append(coordinator: coordinator)
         coordinator.start()
     }

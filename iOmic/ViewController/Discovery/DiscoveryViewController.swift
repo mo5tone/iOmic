@@ -57,7 +57,7 @@ class DiscoveryViewController: UIViewController {
             .bind(to: viewModel.source)
             .disposed(by: bag)
         navigationItem.rightBarButtonItem?.rx.tap
-            .withLatestFrom(viewModel.filters)
+            .withLatestFrom(viewModel.filters) // TODO: - Check out just an issue of RxSwift? We can change value of BehaviorSubject value derictly?
             .subscribe(onNext: { [weak self] in self?.coordinator?.popupFiltersPicker(current: $0) })
             .disposed(by: bag)
 
@@ -69,7 +69,7 @@ class DiscoveryViewController: UIViewController {
 
         collectionView.rx.setDelegate(self).disposed(by: bag)
         collectionView.rx.willDisplayCell.subscribe(onNext: { cell, _ in
-            cell.contentView.layer.cornerRadius = 4.0
+            cell.contentView.layer.cornerRadius = 8.0
             cell.contentView.layer.borderWidth = 1.0
             cell.contentView.layer.borderColor = UIColor.clear.cgColor
             cell.contentView.layer.masksToBounds = true

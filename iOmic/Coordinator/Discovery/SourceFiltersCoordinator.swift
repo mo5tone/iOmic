@@ -12,9 +12,9 @@ import UIKit
 
 class SourceFiltersCoordiantor: ViewCoordinator {
     private var filters: [FilterProrocol]
-    init(window: UIWindow, filters: [FilterProrocol]) {
+    init(window: UIWindow, flowDelegate: CoordinatorFlowDelegate? = nil, filters: [FilterProrocol]) {
         self.filters = filters
-        super.init(window: window)
+        super.init(window: window, flowDelegate: flowDelegate)
         viewController = SourceFiltersViewController(coordinator: self, viewModel: .init(filters: filters))
     }
 
@@ -24,7 +24,8 @@ class SourceFiltersCoordiantor: ViewCoordinator {
         attributes.displayDuration = .infinity
         attributes.positionConstraints.safeArea = .empty(fillSafeArea: false)
         attributes.positionConstraints.size = .init(width: .offset(value: 8), height: .ratio(value: 0.7))
-        attributes.screenInteraction = .dismiss
+        let action: EKAttributes.UserInteraction.Action = { [weak self] in self?.dismiss() }
+        attributes.screenInteraction = .init(defaultAction: .absorbTouches, customTapActions: [action])
         attributes.entryBackground = .color(color: .init(.groupTableViewBackground))
         attributes.screenBackground = .visualEffect(style: .standard)
         attributes.shadow = .active(with: .init(color: .black, opacity: 0.3, radius: 10, offset: .zero))
@@ -35,4 +36,9 @@ class SourceFiltersCoordiantor: ViewCoordinator {
 
 // MARK: - SourceFiltersViewCoordinator
 
-extension SourceFiltersCoordiantor: SourceFiltersViewCoordinator {}
+extension SourceFiltersCoordiantor: SourceFiltersViewCoordinator {
+    func dismiss() {
+        SwiftEntryKit.dismiss(.specific(entryName: String(describing: SourceFiltersViewController.self)), with: nil)
+        flowDelegate?.coordinatorDidFinish(self)
+    }
+}

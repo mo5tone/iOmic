@@ -14,8 +14,8 @@ class DownloadCoordinator: NavigationCoordinator {
 
     // MARK: - Public
 
-    override init(window: UIWindow) {
-        super.init(window: window)
+    override init(window: UIWindow, flowDelegate: CoordinatorFlowDelegate? = nil) {
+        super.init(window: window, flowDelegate: flowDelegate)
         viewController = DownloadViewController(coordinator: self, viewModel: .init())
         navigationController = .init(rootViewController: viewController)
         navigationController.navigationBar.prefersLargeTitles = true
