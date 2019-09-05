@@ -45,4 +45,8 @@ extension DiscoveryCoordinator: DiscoveryViewCoordinator {
         append(coordinator: coordinator)
         return coordinator.start()
     }
+
+    func showBookDetail(_: Book) {
+        // TODO: -
+    }
 }

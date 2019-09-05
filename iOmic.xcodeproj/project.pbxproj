@@ -77,6 +77,7 @@
 		9FD786FC231F7D5F00E1C03C /* SourceFiltersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD786FB231F7D5F00E1C03C /* SourceFiltersViewModel.swift */; };
 		9FD786FF231FA37B00E1C03C /* PickFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD786FD231FA37B00E1C03C /* PickFilterCollectionViewCell.swift */; };
 		9FD78700231FA37B00E1C03C /* PickFilterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FD786FE231FA37B00E1C03C /* PickFilterCollectionViewCell.xib */; };
+		9FD787022320B69000E1C03C /* UIFont.ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD787012320B69000E1C03C /* UIFont.ex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,6 +177,7 @@
 		9FD786FB231F7D5F00E1C03C /* SourceFiltersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceFiltersViewModel.swift; sourceTree = "<group>"; };
 		9FD786FD231FA37B00E1C03C /* PickFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		9FD786FE231FA37B00E1C03C /* PickFilterCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickFilterCollectionViewCell.xib; sourceTree = "<group>"; };
+		9FD787012320B69000E1C03C /* UIFont.ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.ex.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -473,6 +475,7 @@
 				9F423D482316834E006B950F /* Date.ex.swift */,
 				9F423D4F23178019006B950F /* Alamofire+RxSwift.swift */,
 				9F860CA9231E6E79001052EE /* UIAlertAction.ex.swift */,
+				9FD787012320B69000E1C03C /* UIFont.ex.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -771,6 +774,7 @@
 				55BEAA9A23124EFF00A6A41D /* Chapter.swift in Sources */,
 				55BEAA9E23124F1500A6A41D /* Filter.swift in Sources */,
 				55BEAA9823124EF700A6A41D /* Book.swift in Sources */,
+				9FD787022320B69000E1C03C /* UIFont.ex.swift in Sources */,
 				9F8419002318EA4F00A503BE /* LocalSource.swift in Sources */,
 				5584B12123115358000D9309 /* DiscoveryViewModel.swift in Sources */,
 				5584B0F32310EE5E000D9309 /* DownloadViewController.swift in Sources */,

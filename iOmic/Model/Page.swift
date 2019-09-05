@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Page {
+struct Page {
     // MARK: - props.
 
     let chapter: Chapter

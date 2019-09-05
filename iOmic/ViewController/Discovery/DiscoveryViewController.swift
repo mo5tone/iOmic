@@ -15,6 +15,7 @@ import UIKit
 protocol DiscoveryViewCoordinator: AnyObject {
     func popupSourcesSwitcher(current: SourceProtocol) -> Observable<SourceProtocol>
     func popupFiltersPicker(current: [FilterProrocol]) -> Observable<[FilterProrocol]>
+    func showBookDetail(_ book: Book)
 }
 
 class DiscoveryViewController: UIViewController {

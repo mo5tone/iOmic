@@ -9,7 +9,7 @@
 import Foundation
 import RxDataSources
 
-class Book {
+struct Book {
     enum Status {
         case ongoing
         case completed
@@ -52,9 +52,9 @@ extension Book.Status: CustomStringConvertible {
 }
 
 extension Book: Equatable, IdentifiableType {
-    typealias Identity = Int
-    var identity: Int {
-        return "\(source.identifier.rawValue)#\(url)".hashValue
+    typealias Identity = String
+    var identity: Identity {
+        return "\(source.identifier.rawValue)#\(url)"
     }
 
     static func == (lhs: Book, rhs: Book) -> Bool {

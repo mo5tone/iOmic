@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import RxDataSources
 
-class Chapter {
+struct Chapter {
     // MARK: - props.
 
     let book: Book
@@ -22,5 +23,18 @@ class Chapter {
     init(book: Book, url: String) {
         self.book = book
         self.url = url
+    }
+}
+
+extension Chapter: Equatable, IdentifiableType {
+    typealias Identity = String
+    var identity: Identity { return "\(book.identity)#\(url)" }
+
+    static func == (lhs: Chapter, rhs: Chapter) -> Bool {
+        return lhs.book == rhs.book
+            && lhs.url == rhs.url
+            && lhs.name == rhs.name
+            && lhs.updateAt == rhs.updateAt
+            && lhs.chapterNumber == rhs.chapterNumber
     }
 }

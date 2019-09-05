@@ -103,7 +103,7 @@ extension ManHuaRen: OnlineSourceProtocol {
                     let json = try JSON(data: data)
                     return (json["response", "result"].array ?? json["response", "mangas"].arrayValue).compactMap { ele -> Book? in
                         let bookId = ele["mangaId"].intValue
-                        let book = Book(source: strongSelf, url: "/v1/manga/getDetail?mangaId=\(bookId)")
+                        var book = Book(source: strongSelf, url: "/v1/manga/getDetail?mangaId=\(bookId)")
                         book.title = ele["mangaName"].string
                         book.thumbnailUrl = ele["mangaCoverimageUrl"].string
                         book.author = ele["mangaAuthor"].string
@@ -125,25 +125,26 @@ extension ManHuaRen: OnlineSourceProtocol {
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     let json = try JSON(data: data)["response"]
                     let book = Book(source: book.source, url: book.url)
-                    book.title = json["mangaName"].string
+                    var detail = book
+                    detail.title = json["mangaName"].string
                     if let thumbnailUrl = json["mangaCoverimageUrl"].string, !thumbnailUrl.isEmpty {
-                        book.thumbnailUrl = thumbnailUrl
+                        detail.thumbnailUrl = thumbnailUrl
                     } else if let thumbnailUrl = json["mangaPicimageUrl"].string, !thumbnailUrl.isEmpty {
-                        book.thumbnailUrl = thumbnailUrl
+                        detail.thumbnailUrl = thumbnailUrl
                     } else if let thumbnailUrl = json["shareIcon"].string, !thumbnailUrl.isEmpty {
-                        book.thumbnailUrl = thumbnailUrl
+                        detail.thumbnailUrl = thumbnailUrl
                     }
-                    book.author = json["mangaAuthors"].arrayValue.compactMap({ $0.string }).joined(separator: ", ")
-                    book.genre = json["mangaTheme"].string?.replacingOccurrences(of: " ", with: ", ")
-                    book.status = Book.Status(mangaIsOver: json["mangaIsOver"].int)
-                    book.description = json["mangaIntro"].string
+                    detail.author = json["mangaAuthors"].arrayValue.compactMap({ $0.string }).joined(separator: ", ")
+                    detail.genre = json["mangaTheme"].string?.replacingOccurrences(of: " ", with: ", ")
+                    detail.status = Book.Status(mangaIsOver: json["mangaIsOver"].int)
+                    detail.description = json["mangaIntro"].string
                     // chapters
                     var chapters: [Chapter] = []
                     ["mangaEpisode", "mangaWords", "mangaRolls"].forEach { type in
                         guard let array = json[type].array else { return }
                         array.forEach { ele in
                             guard let sectionId = ele["sectionId"].int else { return }
-                            let chapter = Chapter(book: book, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
+                            var chapter = Chapter(book: detail, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
                             chapter.name = "\(type == "mangaEpisode" ? "[番外] " : "")\(ele["sectionName"].stringValue)\(ele["sectionTitle"].stringValue == "" ? "" : ": \(ele["sectionTitle"].stringValue)")"
                             chapter.updateAt = ele["releaseTime"].string?.convert2Date(dateFormat: "yyyy-MM-dd")
                             chapter.chapterNumber = ele["sectionSort"].double
@@ -169,7 +170,7 @@ extension ManHuaRen: OnlineSourceProtocol {
                     let array = json["mangaSectionImages"].arrayValue
                     let query = json["query"].stringValue
                     return array.enumerated().compactMap { offset, ele -> Page? in
-                        let page = Page(chapter: chapter, index: offset)
+                        var page = Page(chapter: chapter, index: offset)
                         page.imageURL = "\(host)\(ele.stringValue)\(query)"
                         return page
                     }

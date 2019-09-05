@@ -72,7 +72,7 @@ extension DongManZhiJia: OnlineSourceProtocol {
         func jsonParser(json: JSON) -> [Book] {
             return (json.array ?? []).compactMap { json -> Book? in
                 guard let bookId = json["id"].int else { return nil }
-                let book = Book(source: self, url: "/comic/\(bookId).json")
+                var book = Book(source: self, url: "/comic/\(bookId).json")
                 book.title = json["title"].string
                 book.author = json["authors"].string
                 book.thumbnailUrl = json["cover"].string?.fixScheme()
@@ -87,7 +87,7 @@ extension DongManZhiJia: OnlineSourceProtocol {
             guard let result = results.first, result.numberOfRanges > 1, let range = Range(result.range(at: 1), in: string) else { return [] }
             return (JSON(parseJSON: String(string[range])).array ?? []).compactMap { json -> Book? in
                 guard let bookId = json["id"].string else { return nil }
-                let book = Book(source: self, url: "/comic/\(bookId).json")
+                var book = Book(source: self, url: "/comic/\(bookId).json")
                 book.title = json["name"].string
                 book.author = json["authors"].string
                 book.thumbnailUrl = json["cover"].string?.fixScheme()
@@ -123,19 +123,20 @@ extension DongManZhiJia: OnlineSourceProtocol {
                 case let .success(data):
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     let json = try JSON(data: data)
-                    book.title = json["title"].string
-                    book.thumbnailUrl = json["cover"].string?.fixScheme()
-                    book.author = (json["authors"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                    book.genre = (json["types"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                    if let intValue = json["status"][0]["tag_id"].int { book.status = Book.Status(string: "\(intValue)") }
-                    book.description = json["description"].string
+                    var detail = book
+                    detail.title = json["title"].string
+                    detail.thumbnailUrl = json["cover"].string?.fixScheme()
+                    detail.author = (json["authors"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    detail.genre = (json["types"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    if let intValue = json["status"][0]["tag_id"].int { detail.status = Book.Status(string: "\(intValue)") }
+                    detail.description = json["description"].string
                     var chapters: [Chapter] = []
                     if let bookId = json["id"].string {
                         (json["chapters"].array ?? []).forEach { item in
                             let prefix = item["title"].stringValue
                             (item["data"].array ?? []).forEach { item1 in
                                 guard let chapterId = item1["chapter_id"].string else { return }
-                                let chapter = Chapter(book: book, url: "/chapter/\(bookId)/\(chapterId).json")
+                                var chapter = Chapter(book: detail, url: "/chapter/\(bookId)/\(chapterId).json")
                                 let chapterTitle = item1["chapter_title"].stringValue
                                 chapter.name = "[\(prefix)]\(chapterTitle)"
                                 chapter.updateAt = Date(timeIntervalSince1970: item1["updatetime"].doubleValue)
@@ -160,7 +161,7 @@ extension DongManZhiJia: OnlineSourceProtocol {
                     let json = try JSON(data: data)
                     var pages = [Page]()
                     (json["page_url"].array ?? []).enumerated().forEach { offset, element in
-                        let page = Page(chapter: chapter, index: offset)
+                        var page = Page(chapter: chapter, index: offset)
                         page.imageURL = element.string
                         pages.append(page)
                     }

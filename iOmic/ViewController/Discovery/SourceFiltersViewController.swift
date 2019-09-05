@@ -121,21 +121,13 @@ extension SourceFiltersViewController: UICollectionViewDataSource, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, referenceSizeForHeaderInSection _: Int) -> CGSize {
-        let height: CGFloat = {
-            let label: UILabel = .init()
-            label.font = .preferredFont(forTextStyle: .body)
-            label.text = "Ay"
-            return label.intrinsicContentSize.height + 16
-        }()
-        return .init(width: collectionView.frame.width, height: height)
+        let height = UIFont.preferredFont(forTextStyle: .body).textSize().height
+        return .init(width: collectionView.frame.width, height: height + 16)
     }
 
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if let filter = viewModel.filters[indexPath.section] as? PickFilter {
-            let label: UILabel = .init()
-            label.font = .preferredFont(forTextStyle: .body)
-            label.text = filter.options[indexPath.item].name
-            let size = label.intrinsicContentSize
+            let size = UIFont.preferredFont(forTextStyle: .body).textSize(with: filter.options[indexPath.item].name)
             return .init(width: size.width + 16, height: size.height + 16)
         }
         return .zero
