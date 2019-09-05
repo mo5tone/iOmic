@@ -13,6 +13,7 @@ import UIKit
 
 protocol SourceFiltersViewCoordinator: AnyObject {
     func dismiss()
+    func applyFilters(_ filters: [FilterProrocol])
 }
 
 class SourceFiltersViewController: UIViewController {
@@ -43,6 +44,7 @@ class SourceFiltersViewController: UIViewController {
     }
 
     private func setupBinding() {
+        okButton.rx.tap.subscribe(onNext: { [weak self] in self?.coordinator?.applyFilters(self?.viewModel.filters ?? []) }).disposed(by: bag)
         Observable.merge(cancelButton.rx.tap.asObservable(), okButton.rx.tap.asObservable())
             .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in self?.coordinator?.dismiss() })

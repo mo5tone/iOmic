@@ -12,7 +12,7 @@ class SourceFiltersViewModel: NSObject {
     let filters: [FilterProrocol]
 
     init(filters: [FilterProrocol]) {
-        self.filters = filters
+        self.filters = filters.compactMap { $0.copy() as? FilterProrocol }
         super.init()
     }
 }

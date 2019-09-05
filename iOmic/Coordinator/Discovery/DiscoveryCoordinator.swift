@@ -40,9 +40,9 @@ extension DiscoveryCoordinator: DiscoveryViewCoordinator {
         return subject
     }
 
-    func popupFiltersPicker(current: [FilterProrocol]) {
+    func popupFiltersPicker(current: [FilterProrocol]) -> Observable<[FilterProrocol]> {
         let coordinator: SourceFiltersCoordiantor = .init(window: window, flowDelegate: self, filters: current)
         append(coordinator: coordinator)
-        coordinator.start()
+        return coordinator.start()
     }
 }

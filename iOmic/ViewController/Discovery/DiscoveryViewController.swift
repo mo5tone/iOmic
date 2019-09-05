@@ -14,7 +14,7 @@ import UIKit
 
 protocol DiscoveryViewCoordinator: AnyObject {
     func popupSourcesSwitcher(current: SourceProtocol) -> Observable<SourceProtocol>
-    func popupFiltersPicker(current: [FilterProrocol])
+    func popupFiltersPicker(current: [FilterProrocol]) -> Observable<[FilterProrocol]>
 }
 
 class DiscoveryViewController: UIViewController {
@@ -56,11 +56,12 @@ class DiscoveryViewController: UIViewController {
             .flatMapLatest { [weak self] in self?.coordinator?.popupSourcesSwitcher(current: $0) ?? Observable.empty() }
             .bind(to: viewModel.source)
             .disposed(by: bag)
-        navigationItem.rightBarButtonItem?.rx.tap
-            .withLatestFrom(viewModel.filters) // TODO: - Check out just an issue of RxSwift? We can change value of BehaviorSubject value derictly?
-            .subscribe(onNext: { [weak self] in self?.coordinator?.popupFiltersPicker(current: $0) })
-            .disposed(by: bag)
-
+        let filtersChanged = navigationItem.rightBarButtonItem?.rx.tap
+            .withLatestFrom(viewModel.filters)
+            .flatMapLatest { [weak self] in self?.coordinator?.popupFiltersPicker(current: $0) ?? Observable.empty() }
+            .share()
+        filtersChanged?.bind(to: viewModel.filters).disposed(by: bag)
+        filtersChanged?.map { _ in }.bind(to: viewModel.load).disposed(by: bag)
         searchController.searchBar.rx.text.bind(to: viewModel.query).disposed(by: bag)
         searchController.searchBar.rx.cancelButtonClicked.map { _ in nil }.bind(to: viewModel.query).disposed(by: bag)
 

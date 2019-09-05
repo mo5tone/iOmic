@@ -7,18 +7,19 @@
 //
 
 import Foundation
+import RxSwift
 import SwiftEntryKit
 import UIKit
 
 class SourceFiltersCoordiantor: ViewCoordinator {
-    private var filters: [FilterProrocol]
+    private let filters: PublishSubject<[FilterProrocol]> = .init()
+
     init(window: UIWindow, flowDelegate: CoordinatorFlowDelegate? = nil, filters: [FilterProrocol]) {
-        self.filters = filters
         super.init(window: window, flowDelegate: flowDelegate)
         viewController = SourceFiltersViewController(coordinator: self, viewModel: .init(filters: filters))
     }
 
-    func start() {
+    func start() -> Observable<[FilterProrocol]> {
         var attributes: EKAttributes = .bottomNote
         attributes.name = String(describing: SourceFiltersViewController.self)
         attributes.displayDuration = .infinity
@@ -31,6 +32,7 @@ class SourceFiltersCoordiantor: ViewCoordinator {
         attributes.shadow = .active(with: .init(color: .black, opacity: 0.3, radius: 10, offset: .zero))
         attributes.roundCorners = .all(radius: 16)
         SwiftEntryKit.display(entry: viewController, using: attributes)
+        return filters
     }
 }
 
@@ -38,7 +40,13 @@ class SourceFiltersCoordiantor: ViewCoordinator {
 
 extension SourceFiltersCoordiantor: SourceFiltersViewCoordinator {
     func dismiss() {
-        SwiftEntryKit.dismiss(.specific(entryName: String(describing: SourceFiltersViewController.self)), with: nil)
-        flowDelegate?.coordinatorDidFinish(self)
+        SwiftEntryKit.dismiss(.specific(entryName: String(describing: SourceFiltersViewController.self))) { [weak self] in
+            guard let self = self else { return }
+            self.flowDelegate?.coordinatorDidFinish(self)
+        }
+    }
+
+    func applyFilters(_ filters: [FilterProrocol]) {
+        self.filters.on(.next(filters))
     }
 }

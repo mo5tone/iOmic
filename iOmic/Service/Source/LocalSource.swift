@@ -31,7 +31,7 @@ extension LocalSource: LocalSourceProtocol {
     }
 
     var defaultFilters: [FilterProrocol] {
-        return [SortFilter()]
+        return [SortFilter(title: "排序", options: [("名称", "0"), ("大小", "1"), ("时间", "2")])]
     }
 
     func booksOrder(by _: [FilterProrocol]) -> [Path] {
@@ -54,9 +54,5 @@ extension LocalSource: LocalSourceProtocol {
 }
 
 extension LocalSource {
-    class SortFilter: SinglePickFilter {
-        init() {
-            super.init(title: "排序", options: [("名称", "0"), ("大小", "1"), ("时间", "2")])
-        }
-    }
+    class SortFilter: SinglePickFilter {}
 }

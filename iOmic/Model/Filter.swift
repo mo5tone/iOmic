@@ -8,17 +8,24 @@
 
 import Foundation
 
-protocol FilterProrocol {
+protocol FilterProrocol: NSCopying {
     var title: String { get }
 }
 
 class ToggleFilter: FilterProrocol {
     let title: String
-    var state: Bool
+    var state: Bool = false
 
-    init(title: String, state: Bool = false) {
+    required init(title: String) {
         self.title = title
-        self.state = state
+    }
+
+    // MARK: - NSCopying
+
+    func copy(with _: NSZone? = nil) -> Any {
+        let copy = type(of: self).init(title: title)
+        copy.state = state
+        return copy
     }
 }
 
@@ -26,14 +33,20 @@ class PickFilter: FilterProrocol {
     let title: String
     let options: [(name: String, value: [String])]
 
-    init(title: String, options: [(String, [String])]) {
+    required init(title: String, options: [(String, [String])]) {
         self.title = title
         self.options = options
     }
 
-    init(title: String, options: [(String, String)]) {
-        self.title = title
-        self.options = options.map { ($0, [$1]) }
+    convenience init(title: String, options: [(String, String)]) {
+        self.init(title: title, options: options.map { ($0, [$1]) })
+    }
+
+    // MARK: - NSCopying
+
+    func copy(with _: NSZone? = nil) -> Any {
+        let copy = type(of: self).init(title: title, options: options)
+        return copy
     }
 }
 
@@ -42,6 +55,14 @@ class SinglePickFilter: PickFilter {
 
     var name: String { return options[state].name }
     var value: [String] { return options[state].value }
+
+    // MARK: - NSCopying
+
+    override func copy(with zone: NSZone? = nil) -> Any {
+        let copy = super.copy(with: zone) as? SinglePickFilter
+        copy?.state = state
+        return copy ?? self
+    }
 }
 
 class MultiplePickFilter: PickFilter {
@@ -59,5 +80,13 @@ class MultiplePickFilter: PickFilter {
             guard index < options.count else { return nil }
             return options[index].value
         }
+    }
+
+    // MARK: - NSCopying
+
+    override func copy(with zone: NSZone? = nil) -> Any {
+        let copy = super.copy(with: zone) as? MultiplePickFilter
+        copy?.state = state
+        return copy ?? self
     }
 }

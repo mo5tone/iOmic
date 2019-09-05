@@ -18,7 +18,7 @@ class Coordinator: NSObject {
     // MARK: - instance props.
 
     let window: UIWindow
-    weak var flowDelegate: CoordinatorFlowDelegate?
+    private(set) weak var flowDelegate: CoordinatorFlowDelegate?
     private(set) var coordinators: [Coordinator] = []
     private(set) var viewControllers: [UIViewController] = []
 
