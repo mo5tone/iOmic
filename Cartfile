@@ -17,6 +17,7 @@ github "hackiftekhar/IQKeyboardManager" # Keyboard managing
 github "SwipeCellKit/SwipeCellKit" # Swipable cell
 github "huri000/SwiftEntryKit" ~> 1.1.3 # Pop-ups helper
 github "hyperoslo/Hue" # Color helper
+github "cbpowell/MarqueeLabel" # adds a scrolling marquee effect when the label's text does not fit inside the specified frame
 
 # Reactive programming
 github "ReactiveX/RxSwift" ~> 5.0 # [RxCocoa, RxRelay, RxSwift]

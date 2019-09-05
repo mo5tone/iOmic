@@ -51,7 +51,8 @@ extension DiscoveryCoordinator: DiscoveryViewCoordinator {
     }
 
     func showBook(_ book: Book) {
-        let coordinator: BookCoordinator = .init(window: window, delegate: self, navigationController: navigationController, book: book)
+        let coordinator: ChaptersCoordinator = .init(window: window, delegate: self, navigationController: navigationController, book: book)
+        append(coordinator: coordinator)
         navigationController.pushViewController(coordinator.viewController, animated: true)
     }
 }
@@ -60,6 +61,6 @@ extension DiscoveryCoordinator: DiscoveryViewCoordinator {
 
 extension DiscoveryCoordinator: SourceFiltersCoordiantorDelegate {}
 
-// MARK: - BookCoordinatorDelegate
+// MARK: - ChaptersCoordinatorDelegate
 
-extension DiscoveryCoordinator: BookCoordinatorDelegate {}
+extension DiscoveryCoordinator: ChaptersCoordinatorDelegate {}

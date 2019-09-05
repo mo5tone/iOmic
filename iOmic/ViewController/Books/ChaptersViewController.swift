@@ -1,5 +1,5 @@
 //
-//  BookViewController.swift
+//  ChaptersViewController.swift
 //  iOmic
 //
 //  Created by Jeff Men (CN) on 2019/9/5.
@@ -11,14 +11,14 @@ import RxDataSources
 import RxSwift
 import UIKit
 
-protocol BookViewCoordinator: AnyObject {}
+protocol ChaptersViewCoordinator: AnyObject {}
 
-class BookViewController: UIViewController {
+class ChaptersViewController: UIViewController {
     // MARK: - instance props.
 
     private let bag: DisposeBag = .init()
-    private weak var coordinator: BookViewCoordinator?
-    private let viewModel: BookViewModel
+    private weak var coordinator: ChaptersViewCoordinator?
+    private let viewModel: ChaptersViewModel
     private lazy var refreshControl: UIRefreshControl = .init()
     private let dataSource: RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<Int, Chapter>> = .init(configureCell: { _, collectionView, indexPath, chapter in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChapterCollectionViewCell.reusableIdentifier, for: indexPath)
@@ -29,7 +29,7 @@ class BookViewController: UIViewController {
 
     // MARK: - public instance methods
 
-    init(coordinator: BookViewCoordinator, viewModel: BookViewModel) {
+    init(coordinator: ChaptersViewCoordinator, viewModel: ChaptersViewModel) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -52,15 +52,30 @@ class BookViewController: UIViewController {
     private func setupView() {
         collectionView.contentInset = .init(top: UIScreen.main.bounds.size.width, left: 8, bottom: 8, right: 8)
         collectionView.refreshControl = refreshControl
-        collectionView.collectionViewLayout = {
-            let layout = UICollectionViewFlowLayout()
-            layout.estimatedItemSize = .init(width: 80, height: 30)
-            return layout
-        }()
+        collectionView.rx.setDelegate(self)
         collectionView.registerCell(ChapterCollectionViewCell.self)
     }
 
     private func setupBinding() {
         viewModel.chapters.map { [AnimatableSectionModel<Int, Chapter>(model: 0, items: $0)] }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension ChaptersViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumLineSpacingForSectionAt _: Int) -> CGFloat {
+        return 8
+    }
+
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
+        return 8
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemCountPerRow = 4
+        let width = (collectionView.frame.size.width - collectionView.contentInset.left - collectionView.contentInset.right - CGFloat(itemCountPerRow - 1) * self.collectionView(collectionView, layout: collectionViewLayout, minimumInteritemSpacingForSectionAt: indexPath.section)) / CGFloat(itemCountPerRow)
+        let height = UIFont.preferredFont(forTextStyle: .caption1).textSize().height + 8
+        return .init(width: width, height: height)
     }
 }

@@ -28,12 +28,12 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ap5-aL-G4C" secondAttribute="bottom" constant="8" id="Hui-AJ-8uR"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ap5-aL-G4C" secondAttribute="bottom" constant="4" id="Hui-AJ-8uR"/>
                 <constraint firstItem="ap5-aL-G4C" firstAttribute="centerY" secondItem="ZTg-uK-7eu" secondAttribute="centerY" id="Isu-Mc-UbA"/>
                 <constraint firstItem="ap5-aL-G4C" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="RRG-rw-mH1"/>
-                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ap5-aL-G4C" secondAttribute="trailing" constant="8" id="YGw-pM-qjy"/>
-                <constraint firstItem="ap5-aL-G4C" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="8" id="Yxh-W4-dnK"/>
-                <constraint firstItem="ap5-aL-G4C" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZTg-uK-7eu" secondAttribute="top" constant="8" id="lyb-Gd-fMj"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ap5-aL-G4C" secondAttribute="trailing" constant="4" id="YGw-pM-qjy"/>
+                <constraint firstItem="ap5-aL-G4C" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="4" id="Yxh-W4-dnK"/>
+                <constraint firstItem="ap5-aL-G4C" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZTg-uK-7eu" secondAttribute="top" constant="4" id="lyb-Gd-fMj"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="319" height="133"/>

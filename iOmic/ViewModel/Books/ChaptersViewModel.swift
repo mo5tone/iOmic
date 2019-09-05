@@ -1,5 +1,5 @@
 //
-//  BookViewModel.swift
+//  ChaptersViewModel.swift
 //  iOmic
 //
 //  Created by Jeff Men (CN) on 2019/9/5.
@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class BookViewModel: NSObject {
+class ChaptersViewModel: NSObject {
     private let bag: DisposeBag = .init()
     let load: PublishSubject<Void> = .init()
     let toggleFavorite: PublishSubject<Void> = .init()
@@ -23,8 +23,8 @@ class BookViewModel: NSObject {
         let results = load.withLatestFrom(self.book)
             .flatMapLatest { book -> Observable<[Chapter]> in book.source.fetchChapters(book: book) }
             .share()
-        results.debug("chapters").bind(to: chapters).disposed(by: bag)
-        results.compactMap { $0.first?.book }.debug("book").bind(to: self.book).disposed(by: bag)
+        results.bind(to: chapters).disposed(by: bag)
+        results.compactMap { $0.first?.book }.bind(to: self.book).disposed(by: bag)
         load.on(.next(()))
     }
 }

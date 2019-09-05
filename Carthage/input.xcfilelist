@@ -6,6 +6,7 @@ $(SRCROOT)/Carthage/Build/iOS/Hue.framework
 $(SRCROOT)/Carthage/Build/iOS/IQKeyboardManagerSwift.framework
 $(SRCROOT)/Carthage/Build/iOS/Kanna.framework
 $(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework
+$(SRCROOT)/Carthage/Build/iOS/MarqueeLabel.framework
 $(SRCROOT)/Carthage/Build/iOS/QuickLayout.framework
 $(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework
 $(SRCROOT)/Carthage/Build/iOS/RxDataSources.framework
