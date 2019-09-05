@@ -38,4 +38,11 @@ extension DataRequest {
             return Disposables.create { self?.cancel() }
         }
     }
+
+    func responseDecodable<T>(queue: DispatchQueue = .main, decoder: DataDecoder = JSONDecoder()) -> Observable<DataResponse<T>> where T: Decodable {
+        return Observable<DataResponse<T>>.create { [weak self] observer -> Disposable in
+            self?.responseDecodable(queue: queue, decoder: decoder) { (response: DataResponse<T>) in observer.on(.next(response)); observer.on(.completed) }
+            return Disposables.create { self?.cancel() }
+        }
+    }
 }
