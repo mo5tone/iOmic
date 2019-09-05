@@ -189,9 +189,9 @@ extension ManHuaRen.Router: RequestConvertible {
         case let .books(_, query, _):
             return query.isEmpty ? "/v2/manga/getCategoryMangas" : "/v1/search/getSearchManga"
         case let .chapters(book):
-            return book.url
+            return URLComponents(string: book.url)?.path ?? book.url
         case let .pages(chapter):
-            return chapter.url
+            return URLComponents(string: chapter.url)?.path ?? chapter.url
         }
     }
 
@@ -223,12 +223,13 @@ extension ManHuaRen.Router: RequestConvertible {
             } else {
                 parameters["keywords"] = query
             }
-        case .chapters:
-            break
-        case .pages:
+        case let .chapters(book):
+            URLComponents(string: book.url)?.queryItems?.forEach { parameters[$0.name] = $0.value }
+        case let .pages(chapter):
             parameters["netType"] = "4"
             parameters["loadreal"] = "1"
             parameters["imageQuality"] = "2"
+            URLComponents(string: chapter.url)?.queryItems?.forEach { parameters[$0.name] = $0.value }
         }
         return parameters
     }

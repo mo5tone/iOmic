@@ -9,13 +9,18 @@
 import Foundation
 import UIKit
 
+protocol BooksCoordinatorDelegate: CoordinatorDelegate {}
+
 class BooksCoordinator: NavigationCoordinator {
     // MARK: - Props.
 
+    private weak var delegate: BooksCoordinatorDelegate?
+
     // MARK: - Public
 
-    override init(window: UIWindow, flowDelegate: CoordinatorFlowDelegate? = nil) {
-        super.init(window: window, flowDelegate: flowDelegate)
+    init(window: UIWindow, delegate: BooksCoordinatorDelegate?) {
+        super.init(window: window)
+        self.delegate = delegate
         viewController = BooksViewController(coordinator: self, viewModel: .init())
         navigationController = .init(rootViewController: viewController)
         navigationController.navigationBar.prefersLargeTitles = true

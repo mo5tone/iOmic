@@ -22,5 +22,8 @@ github "hyperoslo/Hue" # Color helper
 github "ReactiveX/RxSwift" ~> 5.0 # [RxCocoa, RxRelay, RxSwift]
 github "RxSwiftCommunity/RxDataSources" ~> 4.0 # RxSwift helper for UITableView and UICollectionView [RxDataSources, Differentiator]
 
+# Device
+github "devicekit/DeviceKit" ~> 2.0 # a value-type replacement of UIDevice.
+
 # Debugging
 github "flipboard/FLEX" ~> 3.0

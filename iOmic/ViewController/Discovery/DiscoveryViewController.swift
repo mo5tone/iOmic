@@ -15,7 +15,7 @@ import UIKit
 protocol DiscoveryViewCoordinator: AnyObject {
     func popupSourcesSwitcher(current: SourceProtocol) -> Observable<SourceProtocol>
     func popupFiltersPicker(current: [FilterProrocol]) -> Observable<[FilterProrocol]>
-    func showBookDetail(_ book: Book)
+    func showBook(_ book: Book)
 }
 
 class DiscoveryViewController: UIViewController {
@@ -70,6 +70,10 @@ class DiscoveryViewController: UIViewController {
         Observable.merge(loadControlEvents.map { $0.asObservable() }).bind(to: viewModel.load).disposed(by: bag)
 
         collectionView.rx.setDelegate(self).disposed(by: bag)
+        collectionView.rx.itemSelected
+            .withLatestFrom(viewModel.books, resultSelector: { $1[$0.item] })
+            .subscribe(onNext: { [weak self] in self?.coordinator?.showBook($0) })
+            .disposed(by: bag)
         collectionView.rx.willDisplayCell.subscribe(onNext: { cell, _ in
             cell.contentView.layer.cornerRadius = 8.0
             cell.contentView.layer.borderWidth = 1.0

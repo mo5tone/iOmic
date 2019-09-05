@@ -9,17 +9,24 @@
 import Foundation
 import UIKit
 
+protocol SettingCoordinatorDelegate: CoordinatorDelegate {}
+
 class SettingCoordinator: NavigationCoordinator {
     // MARK: - Props.
 
+    private weak var delegate: SettingCoordinatorDelegate?
+
     // MARK: - Public
 
-    override init(window: UIWindow, flowDelegate: CoordinatorFlowDelegate? = nil) {
-        super.init(window: window, flowDelegate: flowDelegate)
+    init(window: UIWindow, delegate: SettingCoordinatorDelegate?) {
+        super.init(window: window)
+        self.delegate = delegate
         viewController = SettingViewController(coordinator: self, viewModel: .init())
         navigationController = .init(rootViewController: viewController)
         navigationController.navigationBar.prefersLargeTitles = true
     }
 }
+
+// MARK: - SettingViewCoordinator
 
 extension SettingCoordinator: SettingViewCoordinator {}

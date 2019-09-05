@@ -36,7 +36,7 @@ class AppCoordinator: Coordinator {
 
     func start(with launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         self.launchOptions = launchOptions ?? [:]
-        let mainCoordinator: MainCoordinator = .init(window: window, flowDelegate: self)
+        let mainCoordinator: MainCoordinator = .init(window: window, delegate: self)
         append(coordinator: mainCoordinator)
         mainCoordinator.start()
         makeKeyAndVisible(mainCoordinator.tabBarController)
@@ -79,3 +79,7 @@ extension AppCoordinator: AppCoordinatorProtocol {
     func didBecomeActive() {}
     func willTerminate() {}
 }
+
+// MARK: - MainCoordinatorDelegate
+
+extension AppCoordinator: MainCoordinatorDelegate {}

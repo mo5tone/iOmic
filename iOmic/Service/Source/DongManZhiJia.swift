@@ -131,11 +131,11 @@ extension DongManZhiJia: OnlineSourceProtocol {
                     if let intValue = json["status"][0]["tag_id"].int { detail.status = Book.Status(string: "\(intValue)") }
                     detail.description = json["description"].string
                     var chapters: [Chapter] = []
-                    if let bookId = json["id"].string {
-                        (json["chapters"].array ?? []).forEach { item in
+                    if let bookId = json["id"].int {
+                        json["chapters"].array?.forEach { item in
                             let prefix = item["title"].stringValue
-                            (item["data"].array ?? []).forEach { item1 in
-                                guard let chapterId = item1["chapter_id"].string else { return }
+                            item["data"].array?.forEach { item1 in
+                                guard let chapterId = item1["chapter_id"].int else { return }
                                 var chapter = Chapter(book: detail, url: "/chapter/\(bookId)/\(chapterId).json")
                                 let chapterTitle = item1["chapter_title"].stringValue
                                 chapter.name = "[\(prefix)]\(chapterTitle)"
@@ -201,7 +201,7 @@ extension DongManZhiJia.Router: RequestConvertible {
                 return ""
             }
         case let .chapters(book):
-            return book.url
+            return URLComponents(string: book.url)?.path ?? book.url
         case let .pages(chapter):
             return chapter.url
         }
@@ -217,10 +217,16 @@ extension DongManZhiJia.Router: RequestConvertible {
     var method: HTTPMethod { return .get }
 
     var parameters: Parameters {
-        if case let .books(_, query, _) = self, !query.isEmpty {
-            return ["s": query]
+        var parameters: Parameters = [:]
+        switch self {
+        case let .books(_, query, _):
+            parameters["s"] = query
+        case let .chapters(book):
+            URLComponents(string: book.url)?.queryItems?.forEach { parameters[$0.name] = $0.value }
+        case .pages:
+            break
         }
-        return [:]
+        return parameters
     }
 
     var parameterEncoding: ParameterEncoding { return URLEncoding.default }

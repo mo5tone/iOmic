@@ -11,11 +11,15 @@ import RxSwift
 import SwiftEntryKit
 import UIKit
 
+protocol SourceFiltersCoordiantorDelegate: CoordinatorDelegate {}
+
 class SourceFiltersCoordiantor: ViewCoordinator {
     private let filters: PublishSubject<[FilterProrocol]> = .init()
+    private weak var delegate: SourceFiltersCoordiantorDelegate?
 
-    init(window: UIWindow, flowDelegate: CoordinatorFlowDelegate? = nil, filters: [FilterProrocol]) {
-        super.init(window: window, flowDelegate: flowDelegate)
+    init(window: UIWindow, delegate: SourceFiltersCoordiantorDelegate?, filters: [FilterProrocol]) {
+        super.init(window: window)
+        self.delegate = delegate
         viewController = SourceFiltersViewController(coordinator: self, viewModel: .init(filters: filters))
     }
 
@@ -42,7 +46,7 @@ extension SourceFiltersCoordiantor: SourceFiltersViewCoordinator {
     func dismiss() {
         SwiftEntryKit.dismiss(.specific(entryName: String(describing: SourceFiltersViewController.self))) { [weak self] in
             guard let self = self else { return }
-            self.flowDelegate?.coordinatorDidFinish(self)
+            self.delegate?.coordinatorDidEnd(self)
         }
     }
 

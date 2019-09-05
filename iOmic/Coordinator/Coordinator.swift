@@ -10,40 +10,38 @@ import Foundation
 import RxSwift
 import UIKit
 
-protocol CoordinatorFlowDelegate: AnyObject {
-    func coordinatorDidFinish(_ coordinator: Coordinator)
+protocol CoordinatorDelegate: AnyObject {
+    func coordinatorDidEnd(_ coordinator: Coordinator)
 }
 
 class Coordinator: NSObject {
     // MARK: - instance props.
 
     let window: UIWindow
-    private(set) weak var flowDelegate: CoordinatorFlowDelegate?
     private(set) var coordinators: [Coordinator] = []
     private(set) var viewControllers: [UIViewController] = []
 
     // MARK: - Public instance methods
 
-    init(window: UIWindow, flowDelegate: CoordinatorFlowDelegate? = nil) {
+    init(window: UIWindow) {
         self.window = window
-        self.flowDelegate = flowDelegate
         super.init()
     }
 
     func append(coordinator: Coordinator) {
-        coordinators.append(coordinator)
+        guard !coordinators.contains(coordinator) else { return }
         if let view = coordinator as? ViewCoordinator {
+            guard !viewControllers.contains(view.viewController) else { return }
             viewControllers.append(view.viewController)
         }
+        coordinators.append(coordinator)
     }
 
     func remove(coordinator: Coordinator) {
-        if let view = coordinator as? ViewCoordinator {
-            while let index = viewControllers.firstIndex(of: view.viewController) {
-                viewControllers.remove(at: index)
-            }
+        if let view = coordinator as? ViewCoordinator, let index = viewControllers.firstIndex(of: view.viewController) {
+            viewControllers.remove(at: index)
         }
-        while let index = coordinators.firstIndex(of: coordinator) {
+        if let index = coordinators.firstIndex(of: coordinator) {
             coordinators.remove(at: index)
         }
     }
@@ -54,27 +52,23 @@ class Coordinator: NSObject {
     }
 }
 
-// MARK: - CoordinatorFlowDelegate
+// MARK: - CoordinatorDelegate
 
-extension Coordinator: CoordinatorFlowDelegate {
-    func coordinatorDidFinish(_ coordinator: Coordinator) {
+extension Coordinator: CoordinatorDelegate {
+    func coordinatorDidEnd(_ coordinator: Coordinator) {
         remove(coordinator: coordinator)
     }
 }
 
-class TabBarCoordinator: Coordinator {
+class TabBarCoordinator: Coordinator, UITabBarControllerDelegate {
     let tabBarController: UITabBarController
 
-    override init(window: UIWindow, flowDelegate: CoordinatorFlowDelegate? = nil) {
+    override init(window: UIWindow) {
         tabBarController = .init()
-        super.init(window: window, flowDelegate: flowDelegate)
+        super.init(window: window)
         tabBarController.delegate = self
     }
 }
-
-// MARK: - UITabBarControllerDelegate
-
-extension TabBarCoordinator: UITabBarControllerDelegate {}
 
 class ViewCoordinator: Coordinator {
     var viewController: UIViewController!

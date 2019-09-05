@@ -9,17 +9,24 @@
 import Foundation
 import UIKit
 
+protocol DownloadCoordinatorDelegate: CoordinatorDelegate {}
+
 class DownloadCoordinator: NavigationCoordinator {
     // MARK: - Props.
 
+    private weak var delegate: DownloadCoordinatorDelegate?
+
     // MARK: - Public
 
-    override init(window: UIWindow, flowDelegate: CoordinatorFlowDelegate? = nil) {
-        super.init(window: window, flowDelegate: flowDelegate)
+    init(window: UIWindow, delegate: DownloadCoordinatorDelegate?) {
+        super.init(window: window)
+        self.delegate = delegate
         viewController = DownloadViewController(coordinator: self, viewModel: .init())
         navigationController = .init(rootViewController: viewController)
         navigationController.navigationBar.prefersLargeTitles = true
     }
 }
+
+// MARK: - DownloadViewCoordinator
 
 extension DownloadCoordinator: DownloadViewCoordinator {}

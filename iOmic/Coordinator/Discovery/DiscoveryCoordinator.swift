@@ -11,15 +11,19 @@ import RxSwift
 import SwiftEntryKit
 import UIKit
 
+protocol DiscoveryCoordinatorDelegate: CoordinatorDelegate {}
+
 class DiscoveryCoordinator: NavigationCoordinator {
     // MARK: - Props.
 
+    private weak var delegate: DiscoveryCoordinatorDelegate?
     private let bag: DisposeBag = .init()
 
     // MARK: - Public
 
-    override init(window: UIWindow, flowDelegate: CoordinatorFlowDelegate? = nil) {
-        super.init(window: window, flowDelegate: flowDelegate)
+    init(window: UIWindow, delegate: DiscoveryCoordinatorDelegate?) {
+        super.init(window: window)
+        self.delegate = delegate
         viewController = DiscoveryViewController(coordinator: self, viewModel: .init())
         navigationController = .init(rootViewController: viewController)
         navigationController.navigationBar.prefersLargeTitles = true
@@ -41,12 +45,21 @@ extension DiscoveryCoordinator: DiscoveryViewCoordinator {
     }
 
     func popupFiltersPicker(current: [FilterProrocol]) -> Observable<[FilterProrocol]> {
-        let coordinator: SourceFiltersCoordiantor = .init(window: window, flowDelegate: self, filters: current)
+        let coordinator: SourceFiltersCoordiantor = .init(window: window, delegate: self, filters: current)
         append(coordinator: coordinator)
         return coordinator.start()
     }
 
-    func showBookDetail(_: Book) {
-        // TODO: -
+    func showBook(_ book: Book) {
+        let coordinator: BookCoordinator = .init(window: window, delegate: self, navigationController: navigationController, book: book)
+        navigationController.pushViewController(coordinator.viewController, animated: true)
     }
 }
+
+// MARK: - SourceFiltersCoordiantorDelegate
+
+extension DiscoveryCoordinator: SourceFiltersCoordiantorDelegate {}
+
+// MARK: - BookCoordinatorDelegate
+
+extension DiscoveryCoordinator: BookCoordinatorDelegate {}
