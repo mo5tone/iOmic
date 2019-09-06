@@ -29,11 +29,11 @@
             </view>
             <constraints>
                 <constraint firstItem="SF0-We-l29" firstAttribute="centerY" secondItem="ZTg-uK-7eu" secondAttribute="centerY" id="4K1-aR-DI0"/>
-                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SF0-We-l29" secondAttribute="trailing" constant="4" id="IP6-sf-paU"/>
-                <constraint firstItem="SF0-We-l29" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="4" id="dOu-pZ-W95"/>
-                <constraint firstItem="SF0-We-l29" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZTg-uK-7eu" secondAttribute="top" constant="4" id="e1i-lM-7N8"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SF0-We-l29" secondAttribute="trailing" constant="8" id="IP6-sf-paU"/>
+                <constraint firstItem="SF0-We-l29" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="8" id="dOu-pZ-W95"/>
+                <constraint firstItem="SF0-We-l29" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZTg-uK-7eu" secondAttribute="top" constant="8" id="e1i-lM-7N8"/>
                 <constraint firstItem="SF0-We-l29" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="ffz-RD-hmd"/>
-                <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="SF0-We-l29" secondAttribute="bottom" constant="4" id="u34-82-s8w"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="SF0-We-l29" secondAttribute="bottom" constant="8" id="u34-82-s8w"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="319" height="133"/>

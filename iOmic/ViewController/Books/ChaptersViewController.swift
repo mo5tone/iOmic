@@ -6,6 +6,7 @@
 //  Copyright © 2019 门捷夫. All rights reserved.
 //
 
+import Kingfisher
 import MarqueeLabel
 import RxCocoa
 import RxDataSources
@@ -21,10 +22,10 @@ class ChaptersViewController: UIViewController {
     private weak var coordinator: ChaptersViewCoordinator?
     private let viewModel: ChaptersViewModel
     private lazy var titleLabel: MarqueeLabel = .init()
+    private lazy var coverImageView: UIImageView = .init()
+    private let coverImageViewAspectRatio: CGFloat = 16 / 16
     private lazy var refreshControl: UIRefreshControl = .init()
     @IBOutlet var collectionView: UICollectionView!
-    private lazy var coverImageView: UIImageView = .init()
-    private let coverImageViewAspectRatio: CGFloat = 16 / 9
     private let dataSource: RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<Int, Chapter>> = .init(configureCell: { _, collectionView, indexPath, chapter in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChapterCollectionViewCell.reusableIdentifier, for: indexPath)
         if let cell = cell as? ChapterCollectionViewCell { cell.titleLabel.text = chapter.name }
@@ -54,16 +55,18 @@ class ChaptersViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationController?.navigationBar.setBackgroundImage(.init(), for: .default)
-        navigationController?.navigationBar.shadowImage = .init()
         navigationController?.navigationBar.isTranslucent = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isTranslucent = false
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // !!!: - the safeAreaInsets would be zero in viewDidLoad
-        let coverImageViewHeight = coverImageView.frame.size.height
-        collectionView.contentInset = .init(top: coverImageViewHeight + 8 - view.safeAreaInsets.top, left: 8, bottom: 8, right: 8)
+        collectionView.contentInset = .init(top: coverImageView.frame.height + 8 - view.safeAreaInsets.top, left: 8, bottom: 8, right: 8)
         view.constraints.filter { $0.firstAttribute == .top && $0.firstItem === coverImageView }.first?.constant = 0 - view.safeAreaInsets.top
     }
 
@@ -73,8 +76,8 @@ class ChaptersViewController: UIViewController {
         titleLabel.font = .boldSystemFont(ofSize: 17)
         titleLabel.textColor = .darkText
         titleLabel.type = .continuous
-        titleLabel.speed = .duration(3)
-        titleLabel.animationCurve = .easeInOut
+        titleLabel.speed = .duration(4)
+        titleLabel.animationCurve = .linear
         titleLabel.fadeLength = 4
         titleLabel.leadingBuffer = 8
         navigationItem.titleView = titleLabel
@@ -96,7 +99,7 @@ class ChaptersViewController: UIViewController {
     }
 
     private func setupBinding() {
-        viewModel.book.compactMap { $0.thumbnailUrl }.subscribe(onNext: { [weak self] in self?.coverImageView.kf.setImage(with: URL(string: $0)) }).disposed(by: bag)
+        viewModel.book.compactMap { $0.thumbnailUrl }.subscribe(onNext: { [weak self] in self?.coverImageView.kf.setImage(with: URL(string: $0), options: [.processor(BlurImageProcessor(blurRadius: 20)), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage]) }).disposed(by: bag)
         refreshControl.rx.controlEvent(.valueChanged).bind(to: viewModel.load).disposed(by: bag)
         viewModel.chapters.subscribe(onNext: { [weak self] _ in self?.refreshControl.endRefreshing() }).disposed(by: bag)
         viewModel.book.map { $0.title }.bind(to: titleLabel.rx.text).disposed(by: bag)
@@ -117,14 +120,14 @@ extension ChaptersViewController: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemCountPerRow = 4
+        let itemCountPerRow = 3
         let width = (collectionView.frame.size.width - collectionView.contentInset.left - collectionView.contentInset.right - CGFloat(itemCountPerRow - 1) * self.collectionView(collectionView, layout: collectionViewLayout, minimumInteritemSpacingForSectionAt: indexPath.section)) / CGFloat(itemCountPerRow)
-        let height = UIFont.preferredFont(forTextStyle: .caption1).textSize().height + 8
+        let height = UIFont.preferredFont(forTextStyle: .caption1).textSize().height + 16
         return .init(width: width, height: height)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // TODO: - Try to scale the image view
-        coverImageView.alpha = max(0, min(1, 0 - scrollView.contentOffset.y / collectionView.contentInset.top))
+        let alpha = max(0, min(1, 0 - scrollView.contentOffset.y / collectionView.contentInset.top))
+        coverImageView.alpha = alpha
     }
 }

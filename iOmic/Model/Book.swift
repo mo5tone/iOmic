@@ -8,12 +8,24 @@
 
 import Foundation
 import RxDataSources
+import UIKit
 
 struct Book {
     enum Status {
         case ongoing
         case completed
         case unknown
+
+        var name: String {
+            switch self {
+            case .ongoing:
+                return "Ongoing"
+            case .completed:
+                return "Completed"
+            case .unknown:
+                return "Unknown"
+            }
+        }
     }
 
     // MARK: - props.

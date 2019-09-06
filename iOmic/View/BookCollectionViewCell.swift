@@ -33,12 +33,11 @@ class BookCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-//        contentView.subviews.forEach { $0.backgroundColor = .clear }
         imageView.contentMode = .scaleAspectFill
         imageView.kf.indicatorType = .activity
-        titlteLabel.font = .preferredFont(forTextStyle: .headline)
+        titlteLabel.font = .preferredFont(forTextStyle: .subheadline)
         titlteLabel.textColor = .darkText
-        authorLabel.font = .preferredFont(forTextStyle: .caption1)
+        authorLabel.font = .preferredFont(forTextStyle: .caption2)
         authorLabel.textColor = .darkText
         statusLabel.font = .preferredFont(forTextStyle: .caption2)
         statusLabel.textColor = .darkText
@@ -47,9 +46,9 @@ class BookCollectionViewCell: UICollectionViewCell {
     func setup(book: Book, displaySource _: Bool = false) {
         var options = self.options
         options.append(.requestModifier(book.source.modifier))
-        imageView.kf.setImage(with: URL(string: book.thumbnailUrl ?? ""), placeholder: #imageLiteral(resourceName: "ic_ghost_sad"), options: options)
+        imageView.kf.setImage(with: URL(string: book.thumbnailUrl ?? ""), options: options)
         titlteLabel.text = book.title
         authorLabel.text = book.author
-        statusLabel.text = "\(book.status)"
+        statusLabel.text = book.status.name
     }
 }
