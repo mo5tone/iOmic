@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="319" height="133"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ap5-aL-G4C">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SF0-We-l29">
                         <rect key="frame" x="138.5" y="61.5" width="42" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -28,17 +28,17 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ap5-aL-G4C" secondAttribute="bottom" constant="4" id="Hui-AJ-8uR"/>
-                <constraint firstItem="ap5-aL-G4C" firstAttribute="centerY" secondItem="ZTg-uK-7eu" secondAttribute="centerY" id="Isu-Mc-UbA"/>
-                <constraint firstItem="ap5-aL-G4C" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="RRG-rw-mH1"/>
-                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ap5-aL-G4C" secondAttribute="trailing" constant="4" id="YGw-pM-qjy"/>
-                <constraint firstItem="ap5-aL-G4C" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="4" id="Yxh-W4-dnK"/>
-                <constraint firstItem="ap5-aL-G4C" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZTg-uK-7eu" secondAttribute="top" constant="4" id="lyb-Gd-fMj"/>
+                <constraint firstItem="SF0-We-l29" firstAttribute="centerY" secondItem="ZTg-uK-7eu" secondAttribute="centerY" id="4K1-aR-DI0"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SF0-We-l29" secondAttribute="trailing" constant="4" id="IP6-sf-paU"/>
+                <constraint firstItem="SF0-We-l29" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="4" id="dOu-pZ-W95"/>
+                <constraint firstItem="SF0-We-l29" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZTg-uK-7eu" secondAttribute="top" constant="4" id="e1i-lM-7N8"/>
+                <constraint firstItem="SF0-We-l29" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="ffz-RD-hmd"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="SF0-We-l29" secondAttribute="bottom" constant="4" id="u34-82-s8w"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="319" height="133"/>
             <connections>
-                <outlet property="titleLabel" destination="ap5-aL-G4C" id="EbJ-cZ-MOZ"/>
+                <outlet property="titleLabel" destination="SF0-We-l29" id="CqK-31-n0W"/>
             </connections>
             <point key="canvasLocation" x="326.81159420289856" y="163.72767857142856"/>
         </collectionViewCell>

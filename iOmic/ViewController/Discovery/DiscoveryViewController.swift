@@ -112,6 +112,11 @@ class DiscoveryViewController: UIViewController {
         setupView()
         setupBinding()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

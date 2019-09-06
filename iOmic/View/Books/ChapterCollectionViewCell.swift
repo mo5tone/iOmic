@@ -6,43 +6,41 @@
 //  Copyright © 2019 门捷夫. All rights reserved.
 //
 
-import MarqueeLabel
 import UIKit
 
 class ChapterCollectionViewCell: UICollectionViewCell {
-    @IBOutlet var titleLabel: MarqueeLabel!
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    // MARK: - instance props.
+
+    @IBOutlet var titleLabel: UILabel!
+
+    override var isSelected: Bool {
+        didSet {
+            titleLabel.textColor = isSelected ? .lightText : .darkText
+        }
     }
 
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - public instance methods
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         titleLabel.font = .preferredFont(forTextStyle: .caption1)
-        titleLabel.type = .continuous
-        titleLabel.speed = .duration(3)
-        titleLabel.animationCurve = .easeInOut
-        titleLabel.fadeLength = 4
-//        titleLabel.labelize = true
+        titleLabel.textColor = .darkText
         backgroundView = {
             let view = UIView()
-            view.backgroundColor = .lightGray
-            view.layer.cornerRadius = 8.0
+            view.backgroundColor = .groupTableViewBackground
+            view.layer.cornerRadius = 4.0
             view.layer.borderWidth = 1.0
-            view.layer.borderColor = UIColor.clear.cgColor
+            view.layer.borderColor = UIColor.darkGray.cgColor
             view.layer.masksToBounds = true
             return view
         }()
         selectedBackgroundView = {
             let view = UIView()
             view.backgroundColor = .darkGray
-            view.layer.cornerRadius = 8.0
+            view.layer.cornerRadius = 4.0
             view.layer.borderWidth = 1.0
-            view.layer.borderColor = UIColor.clear.cgColor
+            view.layer.borderColor = UIColor.darkGray.cgColor
             view.layer.masksToBounds = true
             return view
         }()
