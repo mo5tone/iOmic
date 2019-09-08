@@ -160,7 +160,7 @@ extension ManHuaRen: OnlineSourceProtocol {
 
     func fetchPages(chapter: Chapter) -> Observable<[Page]> {
         let convertible = Router.pages(chapter)
-        return AF.request(convertible).validate().response()
+        return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
             .compactMap { response -> [Page] in
                 switch response.result {
                 case let .success(data):

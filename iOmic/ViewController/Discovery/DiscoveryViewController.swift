@@ -70,7 +70,9 @@ class DiscoveryViewController: UIViewController {
         let loadControlEvents = [refreshControl.rx.controlEvent(.valueChanged), searchController.searchBar.rx.searchButtonClicked, searchController.searchBar.rx.cancelButtonClicked]
         Observable.merge(loadControlEvents.map { $0.asObservable() }).bind(to: viewModel.load).disposed(by: bag)
 
+        // TODO: - check ImagePrefetcher effect
         collectionView.rx.prefetchItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.compactMap { books[$0.item].thumbnailUrl }.compactMap { URL(string: $0) } }.subscribe(onNext: { ImagePrefetcher(urls: $0).start() }).disposed(by: bag)
+        collectionView.rx.cancelPrefetchingForItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.compactMap { books[$0.item].thumbnailUrl }.compactMap { URL(string: $0) } }.subscribe(onNext: { ImagePrefetcher(urls: $0).stop() }).disposed(by: bag)
         collectionView.rx.setDelegate(self).disposed(by: bag)
         collectionView.rx.itemSelected
             .withLatestFrom(viewModel.books, resultSelector: { $1[$0.item] })
