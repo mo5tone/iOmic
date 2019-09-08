@@ -26,6 +26,8 @@ struct Chapter {
     }
 }
 
+// MARK: - Equatable, IdentifiableType
+
 extension Chapter: Equatable, IdentifiableType {
     typealias Identity = String
     var identity: Identity { return "\(book.identity)#\(url)" }

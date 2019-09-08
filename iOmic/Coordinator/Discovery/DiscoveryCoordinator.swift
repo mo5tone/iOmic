@@ -26,6 +26,7 @@ class DiscoveryCoordinator: NavigationCoordinator {
         self.delegate = delegate
         viewController = DiscoveryViewController(coordinator: self, viewModel: .init())
         navigationController = .init(rootViewController: viewController)
+        navigationController.navigationBar.prefersLargeTitles = true
     }
 }
 
@@ -52,7 +53,7 @@ extension DiscoveryCoordinator: DiscoveryViewCoordinator {
     func showBook(_ book: Book) {
         let coordinator: ChaptersCoordinator = .init(window: window, delegate: self, navigationController: navigationController, book: book)
         append(coordinator: coordinator)
-        navigationController.pushViewController(coordinator.viewController, animated: true)
+        coordinator.start()
     }
 }
 

@@ -14,7 +14,9 @@ import RxDataSources
 import RxSwift
 import UIKit
 
-protocol ChaptersViewCoordinator: AnyObject {}
+protocol ChaptersViewCoordinator: ViewCoordinatorDelegate {
+    func showChapter(_ chapter: Chapter)
+}
 
 class ChaptersViewController: UIViewController {
     // MARK: - instance props.
@@ -23,6 +25,8 @@ class ChaptersViewController: UIViewController {
     private weak var coordinator: ChaptersViewCoordinator?
     private let viewModel: ChaptersViewModel
     private lazy var titleLabel: MarqueeLabel = .init()
+    private lazy var downloadBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_download_outline"), style: .plain, target: nil, action: nil)
+    private lazy var favoriteBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_favorite_outline"), style: .plain, target: nil, action: nil)
     private lazy var refreshControl: UIRefreshControl = .init()
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var headerContainerView: UIView!
@@ -58,16 +62,18 @@ class ChaptersViewController: UIViewController {
         setupBinding()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = false
-    }
-
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // !!!: - the safeAreaInsets would be zero in viewDidLoad
         collectionView.contentInset = .init(top: headerContainerView.frame.maxY + 4 - view.safeAreaInsets.top, left: 8, bottom: 8, right: 8)
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if isMovingFromParent { coordinator?.isMovingFromParentViewController() }
+    }
+
+    deinit { print(String(describing: self)) }
 
     // MARK: - private instance methods
 
@@ -93,6 +99,9 @@ class ChaptersViewController: UIViewController {
             return view
         }()
 
+        // TODO: - implement for these
+        navigationItem.rightBarButtonItems = [favoriteBarButtonItem, downloadBarButtonItem]
+
         collectionView.backgroundColor = .groupTableViewBackground
         collectionView.refreshControl = refreshControl
         collectionView.registerCell(ChapterCollectionViewCell.self)
@@ -114,7 +123,6 @@ class ChaptersViewController: UIViewController {
     private func setupBinding() {
         viewModel.book.subscribe(onNext: { [weak self] book in
             guard let self = self else { return }
-
             self.coverImageView.kf.setImage(with: URL(string: book.thumbnailUrl ?? ""), options: [.transition(.fade(0.2)), .requestModifier(book.source.modifier), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage]) { result in
                 var backgroundColor: UIColor
                 switch result {
@@ -141,6 +149,7 @@ class ChaptersViewController: UIViewController {
         viewModel.chapters.subscribe(onNext: { [weak self] _ in self?.refreshControl.endRefreshing() }).disposed(by: bag)
         viewModel.book.map { $0.title }.bind(to: titleLabel.rx.text).disposed(by: bag)
         collectionView.rx.setDelegate(self).disposed(by: bag)
+        collectionView.rx.itemSelected.withLatestFrom(viewModel.chapters) { $1[$0.item] }.subscribe(onNext: { [weak self] in self?.coordinator?.showChapter($0) }).disposed(by: bag)
         viewModel.chapters.compactMap { chapters in chapters.compactMap { $0.updateAt }.sorted(by: { $0 < $1 }).last?.convert2String(dateFormat: "yyyy-MM-dd") }.bind(to: updateAtLabel.rx.text).disposed(by: bag)
         viewModel.chapters.map { [AnimatableSectionModel<Int, Chapter>(model: 0, items: $0)] }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
     }

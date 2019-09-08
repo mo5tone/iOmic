@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 struct Page {
     // MARK: - props.
@@ -21,5 +22,19 @@ struct Page {
     init(chapter: Chapter, index: Int) {
         self.chapter = chapter
         self.index = index
+    }
+}
+
+// MARK: - Equatable, IdentifiableType
+
+extension Page: Equatable, IdentifiableType {
+    typealias Identity = String
+    var identity: Identity { return "\(chapter.identity)#\(index)" }
+
+    static func == (lhs: Page, rhs: Page) -> Bool {
+        return lhs.chapter == rhs.chapter
+            && lhs.index == rhs.index
+            && lhs.url == rhs.url
+            && lhs.imageURL == rhs.imageURL
     }
 }

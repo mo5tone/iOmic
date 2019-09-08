@@ -39,7 +39,6 @@ class AppCoordinator: Coordinator {
         let mainCoordinator: MainCoordinator = .init(window: window, delegate: self)
         append(coordinator: mainCoordinator)
         mainCoordinator.start()
-        makeKeyAndVisible(mainCoordinator.tabBarController)
     }
 
     // MARK: - Private

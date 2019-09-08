@@ -41,6 +41,8 @@ class MainCoordinator: TabBarCoordinator {
         settingCoordinator.navigationController.tabBarItem = .init(title: "Setting", image: #imageLiteral(resourceName: "ic_setting"), tag: 3)
 
         tabBarController.viewControllers = coordinators.compactMap { ($0 as? NavigationCoordinator)?.navigationController }
+
+        makeKeyAndVisible(tabBarController)
     }
 }
 

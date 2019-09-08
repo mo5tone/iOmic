@@ -63,6 +63,8 @@ extension Book.Status: CustomStringConvertible {
     }
 }
 
+// MARK: - Equatable, IdentifiableType
+
 extension Book: Equatable, IdentifiableType {
     typealias Identity = String
     var identity: Identity {

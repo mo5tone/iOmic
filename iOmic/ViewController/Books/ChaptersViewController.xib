@@ -42,32 +42,32 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="233"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mad-FI-YS9">
-                            <rect key="frame" x="8" y="8" width="122" height="217"/>
+                            <rect key="frame" x="8" y="8" width="162.5" height="217"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="mad-FI-YS9" secondAttribute="height" multiplier="9:16" id="UcZ-Xq-yGc"/>
+                                <constraint firstAttribute="width" secondItem="mad-FI-YS9" secondAttribute="height" multiplier="3:4" id="UcZ-Xq-yGc"/>
                             </constraints>
                         </imageView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="c1p-Rb-5SO">
-                            <rect key="frame" x="138" y="8" width="268" height="217"/>
+                            <rect key="frame" x="178.5" y="8" width="227.5" height="217"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gMR-vJ-Uss">
-                                    <rect key="frame" x="0.0" y="0.0" width="268" height="131.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="227.5" height="131.5"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
                                 <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="sWe-7k-gFq">
-                                    <rect key="frame" x="0.0" y="139.5" width="268" height="20.5"/>
+                                    <rect key="frame" x="0.0" y="139.5" width="227.5" height="20.5"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="250" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v4r-W1-mRI">
-                                            <rect key="frame" x="0.0" y="0.0" width="218" height="20.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="177.5" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2E-R5-KfW">
-                                            <rect key="frame" x="226" y="0.0" width="42" height="20.5"/>
+                                            <rect key="frame" x="185.5" y="0.0" width="42" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -75,13 +75,13 @@
                                     </subviews>
                                 </stackView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2P-Rb-9jg">
-                                    <rect key="frame" x="0.0" y="168" width="268" height="20.5"/>
+                                    <rect key="frame" x="0.0" y="168" width="227.5" height="20.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="253" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nto-GZ-Ubv">
-                                    <rect key="frame" x="0.0" y="196.5" width="268" height="20.5"/>
+                                    <rect key="frame" x="0.0" y="196.5" width="227.5" height="20.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>

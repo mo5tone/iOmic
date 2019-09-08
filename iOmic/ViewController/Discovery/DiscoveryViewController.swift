@@ -6,6 +6,7 @@
 //  Copyright © 2019 门捷夫. All rights reserved.
 //
 
+import Kingfisher
 import RxCocoa
 import RxDataSources
 import RxSwift
@@ -69,6 +70,7 @@ class DiscoveryViewController: UIViewController {
         let loadControlEvents = [refreshControl.rx.controlEvent(.valueChanged), searchController.searchBar.rx.searchButtonClicked, searchController.searchBar.rx.cancelButtonClicked]
         Observable.merge(loadControlEvents.map { $0.asObservable() }).bind(to: viewModel.load).disposed(by: bag)
 
+        collectionView.rx.prefetchItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.compactMap { books[$0.item].thumbnailUrl }.compactMap { URL(string: $0) } }.subscribe(onNext: { ImagePrefetcher(urls: $0).start() }).disposed(by: bag)
         collectionView.rx.setDelegate(self).disposed(by: bag)
         collectionView.rx.itemSelected
             .withLatestFrom(viewModel.books, resultSelector: { $1[$0.item] })
@@ -111,11 +113,6 @@ class DiscoveryViewController: UIViewController {
         // Do any additional setup after loading the view.
         setupView()
         setupBinding()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
 }
 

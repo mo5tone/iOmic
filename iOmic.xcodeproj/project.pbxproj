@@ -59,6 +59,12 @@
 		55BEAA9A23124EFF00A6A41D /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BEAA9923124EFF00A6A41D /* Chapter.swift */; };
 		55BEAA9C23124F0600A6A41D /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BEAA9B23124F0600A6A41D /* Page.swift */; };
 		55BEAA9E23124F1500A6A41D /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BEAA9D23124F1500A6A41D /* Filter.swift */; };
+		55CB63B12323C94C001A6E4D /* PagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CB63AF2323C94C001A6E4D /* PagesViewController.swift */; };
+		55CB63B22323C94C001A6E4D /* PagesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CB63B02323C94C001A6E4D /* PagesViewController.xib */; };
+		55CB63B42323C95F001A6E4D /* PagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CB63B32323C95F001A6E4D /* PagesViewModel.swift */; };
+		55CB63B62323C980001A6E4D /* PagesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CB63B52323C980001A6E4D /* PagesCoordinator.swift */; };
+		55CB63B92323DB8E001A6E4D /* PageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CB63B72323DB8E001A6E4D /* PageCollectionViewCell.swift */; };
+		55CB63BA2323DB8E001A6E4D /* PageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CB63B82323DB8E001A6E4D /* PageCollectionViewCell.xib */; };
 		55D05260231FE77B0005A2DD /* PickFilterTitleCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D0525E231FE77B0005A2DD /* PickFilterTitleCollectionReusableView.swift */; };
 		55D05261231FE77B0005A2DD /* PickFilterTitleCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D0525F231FE77B0005A2DD /* PickFilterTitleCollectionReusableView.xib */; };
 		55F48B0A23214571000FBC18 /* MarqueeLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F48B0923214571000FBC18 /* MarqueeLabel.framework */; };
@@ -163,6 +169,12 @@
 		55BEAA9923124EFF00A6A41D /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		55BEAA9B23124F0600A6A41D /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		55BEAA9D23124F1500A6A41D /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		55CB63AF2323C94C001A6E4D /* PagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesViewController.swift; sourceTree = "<group>"; };
+		55CB63B02323C94C001A6E4D /* PagesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PagesViewController.xib; sourceTree = "<group>"; };
+		55CB63B32323C95F001A6E4D /* PagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesViewModel.swift; sourceTree = "<group>"; };
+		55CB63B52323C980001A6E4D /* PagesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesCoordinator.swift; sourceTree = "<group>"; };
+		55CB63B72323DB8E001A6E4D /* PageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCollectionViewCell.swift; sourceTree = "<group>"; };
+		55CB63B82323DB8E001A6E4D /* PageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageCollectionViewCell.xib; sourceTree = "<group>"; };
 		55D0525E231FE77B0005A2DD /* PickFilterTitleCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFilterTitleCollectionReusableView.swift; sourceTree = "<group>"; };
 		55D0525F231FE77B0005A2DD /* PickFilterTitleCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickFilterTitleCollectionReusableView.xib; sourceTree = "<group>"; };
 		55F48B0923214571000FBC18 /* MarqueeLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MarqueeLabel.framework; path = Carthage/Build/iOS/MarqueeLabel.framework; sourceTree = "<group>"; };
@@ -373,6 +385,8 @@
 				55BEAA8D23122CD600A6A41D /* BooksViewController.xib */,
 				9FFB4B6F2320D42800297C12 /* ChaptersViewController.swift */,
 				9FFB4B702320D42800297C12 /* ChaptersViewController.xib */,
+				55CB63AF2323C94C001A6E4D /* PagesViewController.swift */,
+				55CB63B02323C94C001A6E4D /* PagesViewController.xib */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -411,6 +425,7 @@
 			children = (
 				5584B0FD2311089F000D9309 /* BooksCoordinator.swift */,
 				9FFB4B6D2320D3FE00297C12 /* ChaptersCoordinator.swift */,
+				55CB63B52323C980001A6E4D /* PagesCoordinator.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -430,6 +445,7 @@
 			children = (
 				5584B10B23114E01000D9309 /* BooksViewModel.swift */,
 				9FFB4B6B2320D3D100297C12 /* ChaptersViewModel.swift */,
+				55CB63B32323C95F001A6E4D /* PagesViewModel.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -513,8 +529,6 @@
 			children = (
 				9FFB4B762321008300297C12 /* Books */,
 				9FFB4B732320E01500297C12 /* Discovery */,
-				9F8418FB2317B35300A503BE /* BookCollectionViewCell.swift */,
-				9F8418FC2317B35300A503BE /* BookCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -552,8 +566,12 @@
 		9FFB4B762321008300297C12 /* Books */ = {
 			isa = PBXGroup;
 			children = (
+				9F8418FB2317B35300A503BE /* BookCollectionViewCell.swift */,
+				9F8418FC2317B35300A503BE /* BookCollectionViewCell.xib */,
 				9FFB4B77232100A500297C12 /* ChapterCollectionViewCell.swift */,
 				9FFB4B78232100A500297C12 /* ChapterCollectionViewCell.xib */,
+				55CB63B72323DB8E001A6E4D /* PageCollectionViewCell.swift */,
+				55CB63B82323DB8E001A6E4D /* PageCollectionViewCell.xib */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -678,6 +696,8 @@
 				55BEAA9023122DF000A6A41D /* DiscoveryViewController.xib in Resources */,
 				55D05261231FE77B0005A2DD /* PickFilterTitleCollectionReusableView.xib in Resources */,
 				55BEAA9223122E1600A6A41D /* DownloadViewController.xib in Resources */,
+				55CB63BA2323DB8E001A6E4D /* PageCollectionViewCell.xib in Resources */,
+				55CB63B22323C94C001A6E4D /* PagesViewController.xib in Resources */,
 				9F8418FE2317B35300A503BE /* BookCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -796,6 +816,7 @@
 				9FD786FC231F7D5F00E1C03C /* SourceFiltersViewModel.swift in Sources */,
 				9FD786FF231FA37B00E1C03C /* PickFilterCollectionViewCell.swift in Sources */,
 				5584B11F23115349000D9309 /* DownloadViewModel.swift in Sources */,
+				55CB63B12323C94C001A6E4D /* PagesViewController.swift in Sources */,
 				555C1CCE2319582900E388D6 /* ReusableIdentifier.swift in Sources */,
 				5584B10C23114E01000D9309 /* BooksViewModel.swift in Sources */,
 				9FD786F9231F7A0900E1C03C /* SourceFiltersCoordinator.swift in Sources */,
@@ -803,6 +824,7 @@
 				5584B12A2311540F000D9309 /* SettingCoordinator.swift in Sources */,
 				5584B0EF2310EE29000D9309 /* DiscoveryViewController.swift in Sources */,
 				5584B12823115405000D9309 /* DownloadCoordinator.swift in Sources */,
+				55CB63B62323C980001A6E4D /* PagesCoordinator.swift in Sources */,
 				55342F622310B6BB00FA141B /* AppDelegate.swift in Sources */,
 				9FA9472823152C960028A60D /* String.ex.swift in Sources */,
 				55BEAA9C23124F0600A6A41D /* Page.swift in Sources */,
@@ -823,7 +845,9 @@
 				9F423D5023178019006B950F /* Alamofire+RxSwift.swift in Sources */,
 				5584B0F72310EE85000D9309 /* SettingViewController.swift in Sources */,
 				5584B126231153FB000D9309 /* DiscoveryCoordinator.swift in Sources */,
+				55CB63B92323DB8E001A6E4D /* PageCollectionViewCell.swift in Sources */,
 				5584B0EB2310EC4F000D9309 /* BooksViewController.swift in Sources */,
+				55CB63B42323C95F001A6E4D /* PagesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

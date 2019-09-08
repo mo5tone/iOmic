@@ -83,6 +83,8 @@ class SourceFiltersViewController: UIViewController {
             }
         }
     }
+
+    deinit { print(String(describing: self)) }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegateFlowLayout

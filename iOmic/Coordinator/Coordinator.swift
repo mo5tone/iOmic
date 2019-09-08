@@ -19,7 +19,6 @@ class Coordinator: NSObject {
 
     let window: UIWindow
     private(set) var coordinators: [Coordinator] = []
-    private(set) var viewControllers: [UIViewController] = []
 
     // MARK: - Public instance methods
 
@@ -30,17 +29,10 @@ class Coordinator: NSObject {
 
     func append(coordinator: Coordinator) {
         guard !coordinators.contains(coordinator) else { return }
-        if let view = coordinator as? ViewCoordinator {
-            guard !viewControllers.contains(view.viewController) else { return }
-            viewControllers.append(view.viewController)
-        }
         coordinators.append(coordinator)
     }
 
     func remove(coordinator: Coordinator) {
-        if let view = coordinator as? ViewCoordinator, let index = viewControllers.firstIndex(of: view.viewController) {
-            viewControllers.remove(at: index)
-        }
         if let index = coordinators.firstIndex(of: coordinator) {
             coordinators.remove(at: index)
         }
@@ -70,10 +62,36 @@ class TabBarCoordinator: Coordinator, UITabBarControllerDelegate {
     }
 }
 
-class ViewCoordinator: Coordinator {
+class NavigationCoordinator: Coordinator {
     var viewController: UIViewController!
+    var navigationController: UINavigationController!
 }
 
-class NavigationCoordinator: ViewCoordinator {
-    var navigationController: UINavigationController!
+protocol ViewCoordinatorDelegate: AnyObject {
+    func pushed(animated: Bool)
+
+    func poped(animated: Bool)
+
+    func presented(animated: Bool, completion: (() -> Void)?)
+
+    func isMovingFromParentViewController()
+}
+
+class ViewCoordinator: Coordinator {
+    var viewController: UIViewController!
+    weak var navigationController: UINavigationController?
+}
+
+extension ViewCoordinatorDelegate where Self: ViewCoordinator {
+    func pushed(animated: Bool = true) {
+        navigationController?.pushViewController(viewController, animated: animated)
+    }
+
+    func poped(animated: Bool = true) {
+        navigationController?.popViewController(animated: animated)
+    }
+
+    func presented(animated: Bool = true, completion: (() -> Void)? = nil) {
+        navigationController?.topViewController?.present(viewController, animated: animated, completion: completion)
+    }
 }
