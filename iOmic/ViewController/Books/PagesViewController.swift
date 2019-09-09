@@ -94,11 +94,21 @@ class PagesViewController: UIViewController {
             return Float(offset.x / self.collectionView.frame.width)
         }.share()
         contentOffsetChanged.bind(to: slider.rx.value).disposed(by: bag)
-        // TODO: - check ImagePrefetcher effect
-        collectionView.rx.prefetchItems.withLatestFrom(viewModel.pages) { indexPaths, pages in indexPaths.compactMap { URL(string: pages[$0.item].imageURL ?? "") } }.subscribe(onNext: { ImagePrefetcher(urls: $0).start() }).disposed(by: bag)
-        collectionView.rx.cancelPrefetchingForItems.withLatestFrom(viewModel.pages) { indexPaths, pages in indexPaths.compactMap { URL(string: pages[$0.item].imageURL ?? "") } }.subscribe(onNext: { ImagePrefetcher(urls: $0).stop() }).disposed(by: bag)
+        // !!!: https://github.com/onevcat/Kingfisher/issues/1230
+        collectionView.rx.prefetchItems.withLatestFrom(viewModel.pages) { indexPaths, pages in indexPaths.compactMap { pages[$0.item] } }.subscribe(onNext: { [weak self] in self?.prefetchItems($0) }).disposed(by: bag)
+        collectionView.rx.cancelPrefetchingForItems.withLatestFrom(viewModel.pages) { indexPaths, pages in indexPaths.compactMap { pages[$0.item] } }.subscribe(onNext: { [weak self] in self?.cancelPrefetchingForItems($0) }).disposed(by: bag)
         slider.rx.value.skipUntil(viewModel.pages.filter { !$0.isEmpty }).map { Int($0) }.distinctUntilChanged().map { IndexPath(item: $0, section: 0) }.subscribe(onNext: { [weak self] in self?.collectionView.scrollToItem(at: $0, at: .centeredHorizontally, animated: false) }).disposed(by: bag)
         Observable.merge(contentOffsetChanged, slider.rx.value.asObservable()).map { "\(Int($0))" }.bind(to: currentIndexLabel.rx.text).disposed(by: bag)
+    }
+
+    private func prefetchItems(_ pages: [Page]) {
+        guard let source = pages.first?.chapter.book.source else { return }
+        ImagePrefetcher(resources: pages.compactMap { URL(string: $0.imageURL ?? "") }, options: [.requestModifier(source.modifier)]).start()
+    }
+
+    private func cancelPrefetchingForItems(_ pages: [Page]) {
+        guard let source = pages.first?.chapter.book.source else { return }
+        ImagePrefetcher(resources: pages.compactMap { URL(string: $0.imageURL ?? "") }, options: [.requestModifier(source.modifier)]).stop()
     }
 }
 

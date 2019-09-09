@@ -70,32 +70,44 @@ class DiscoveryViewController: UIViewController {
         let loadControlEvents = [refreshControl.rx.controlEvent(.valueChanged), searchController.searchBar.rx.searchButtonClicked, searchController.searchBar.rx.cancelButtonClicked]
         Observable.merge(loadControlEvents.map { $0.asObservable() }).bind(to: viewModel.load).disposed(by: bag)
 
-        // TODO: - check ImagePrefetcher effect
-        collectionView.rx.prefetchItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.compactMap { books[$0.item].thumbnailUrl }.compactMap { URL(string: $0) } }.subscribe(onNext: { ImagePrefetcher(urls: $0).start() }).disposed(by: bag)
-        collectionView.rx.cancelPrefetchingForItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.compactMap { books[$0.item].thumbnailUrl }.compactMap { URL(string: $0) } }.subscribe(onNext: { ImagePrefetcher(urls: $0).stop() }).disposed(by: bag)
+        // !!!: https://github.com/onevcat/Kingfisher/issues/1230
+        collectionView.rx.prefetchItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.compactMap { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.prefetchItems($0) }).disposed(by: bag)
+        collectionView.rx.cancelPrefetchingForItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.compactMap { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.cancelPrefetchingForItems($0) }).disposed(by: bag)
         collectionView.rx.setDelegate(self).disposed(by: bag)
         collectionView.rx.itemSelected
             .withLatestFrom(viewModel.books, resultSelector: { $1[$0.item] })
             .subscribe(onNext: { [weak self] in self?.coordinator?.showBook($0) })
             .disposed(by: bag)
-        collectionView.rx.willDisplayCell.subscribe(onNext: { cell, _ in
-            cell.contentView.layer.cornerRadius = 8.0
-            cell.contentView.layer.borderWidth = 1.0
-            cell.contentView.layer.borderColor = UIColor.clear.cgColor
-            cell.contentView.layer.masksToBounds = true
-
-            cell.layer.shadowColor = UIColor.lightGray.cgColor
-            cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
-            cell.layer.shadowRadius = 2.0
-            cell.layer.shadowOpacity = 1.0
-            cell.layer.masksToBounds = false
-            cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
-        }).disposed(by: bag)
+        collectionView.rx.willDisplayCell.subscribe(onNext: { [weak self] cell, _ in self?.willDisplayCell(cell) }).disposed(by: bag)
         collectionView.rx.willDisplayCell.map { $1 }.withLatestFrom(viewModel.books.map { $0.count }) { $0.item == $1 - 1 }.filter { $0 }.map { _ in () }.bind(to: viewModel.loadMore).disposed(by: bag)
         collectionView.rx.didEndDisplayingCell.compactMap { $0.cell as? BookCollectionViewCell }.subscribe(onNext: { $0.imageView?.kf.cancelDownloadTask() }).disposed(by: bag)
 
         viewModel.books.subscribe { [weak self] _ in self?.refreshControl.endRefreshing() }.disposed(by: bag)
         viewModel.books.map { [AnimatableSectionModel<Int, Book>(model: 0, items: $0)] }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
+    }
+
+    private func prefetchItems(_ books: [Book]) {
+        guard let source = books.first?.source else { return }
+        ImagePrefetcher(resources: books.compactMap { URL(string: $0.thumbnailUrl ?? "") }, options: [.requestModifier(source.modifier)]).start()
+    }
+
+    private func cancelPrefetchingForItems(_ books: [Book]) {
+        guard let source = books.first?.source else { return }
+        ImagePrefetcher(resources: books.compactMap { URL(string: $0.thumbnailUrl ?? "") }, options: [.requestModifier(source.modifier)]).stop()
+    }
+
+    private func willDisplayCell(_ cell: UICollectionViewCell) {
+        cell.contentView.layer.cornerRadius = 8.0
+        cell.contentView.layer.borderWidth = 1.0
+        cell.contentView.layer.borderColor = UIColor.clear.cgColor
+        cell.contentView.layer.masksToBounds = true
+
+        cell.layer.shadowColor = UIColor.lightGray.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        cell.layer.shadowRadius = 2.0
+        cell.layer.shadowOpacity = 1.0
+        cell.layer.masksToBounds = false
+        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
     }
 
     // MARK: - Public instance methods
