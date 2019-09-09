@@ -71,13 +71,10 @@ class DiscoveryViewController: UIViewController {
         Observable.merge(loadControlEvents.map { $0.asObservable() }).bind(to: viewModel.load).disposed(by: bag)
 
         // !!!: https://github.com/onevcat/Kingfisher/issues/1230
-        collectionView.rx.prefetchItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.compactMap { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.prefetchItems($0) }).disposed(by: bag)
-        collectionView.rx.cancelPrefetchingForItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.compactMap { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.cancelPrefetchingForItems($0) }).disposed(by: bag)
+        collectionView.rx.prefetchItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.map { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.prefetchItems($0) }).disposed(by: bag)
+        collectionView.rx.cancelPrefetchingForItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.map { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.cancelPrefetchingForItems($0) }).disposed(by: bag)
         collectionView.rx.setDelegate(self).disposed(by: bag)
-        collectionView.rx.itemSelected
-            .withLatestFrom(viewModel.books, resultSelector: { $1[$0.item] })
-            .subscribe(onNext: { [weak self] in self?.coordinator?.showBook($0) })
-            .disposed(by: bag)
+        collectionView.rx.itemSelected.withLatestFrom(viewModel.books) { $1[$0.item] }.subscribe(onNext: { [weak self] in self?.coordinator?.showBook($0) }).disposed(by: bag)
         collectionView.rx.willDisplayCell.subscribe(onNext: { [weak self] cell, _ in self?.willDisplayCell(cell) }).disposed(by: bag)
         collectionView.rx.willDisplayCell.map { $1 }.withLatestFrom(viewModel.books.map { $0.count }) { $0.item == $1 - 1 }.filter { $0 }.map { _ in () }.bind(to: viewModel.loadMore).disposed(by: bag)
         collectionView.rx.didEndDisplayingCell.compactMap { $0.cell as? BookCollectionViewCell }.subscribe(onNext: { $0.imageView?.kf.cancelDownloadTask() }).disposed(by: bag)

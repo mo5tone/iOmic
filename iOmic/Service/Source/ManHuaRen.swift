@@ -12,7 +12,7 @@ import Kingfisher
 import RxSwift
 import SwiftyJSON
 
-class ManHuaRen: Source {
+class ManHuaRen {
     // MARK: - Types
 
     fileprivate enum Router {
@@ -49,15 +49,9 @@ class ManHuaRen: Source {
 
     static let shared = ManHuaRen()
 
-    // MARK: - props.
-
     // MARK: - Private
 
-    private override init() {
-        super.init()
-    }
-
-    // MARK: - Public
+    private init() {}
 }
 
 extension Book.Status {
@@ -73,13 +67,18 @@ extension Book.Status {
     }
 }
 
-extension ManHuaRen: OnlineSourceProtocol {
-    var identifier: Source.Identifier { return .manhuaren }
+// MARK: - SourceProtocol
+
+extension ManHuaRen: SourceProtocol {
+    var identifier: SourceIdentifier { return .manhuaren }
 
     var name: String { return "漫画人" }
 
-    var defaultFilters: [FilterProrocol] {
-        return [ManHuaRen.SortFilter(title: "状态", options: [("热门", "0"), ("更新", "1"), ("新作", "2"), ("完结", "3")]), ManHuaRen.CategoryFilter(title: "分类", options: [("全部", ["0", "0"]), ("热血", ["0", "31"]), ("恋爱", ["0", "26"]), ("校园", ["0", "1"]), ("百合", ["0", "3"]), ("耽美", ["0", "27"]), ("伪娘", ["0", "5"]), ("冒险", ["0", "2"]), ("职场", ["0", "6"]), ("后宫", ["0", "8"]), ("治愈", ["0", "9"]), ("科幻", ["0", "25"]), ("励志", ["0", "10"]), ("生活", ["0", "11"]), ("战争", ["0", "12"]), ("悬疑", ["0", "17"]), ("推理", ["0", "33"]), ("搞笑", ["0", "37"]), ("奇幻", ["0", "14"]), ("魔法", ["0", "15"]), ("恐怖", ["0", "29"]), ("神鬼", ["0", "20"]), ("萌系", ["0", "21"]), ("历史", ["0", "4"]), ("美食", ["0", "7"]), ("同人", ["0", "30"]), ("运动", ["0", "34"]), ("绅士", ["0", "36"]), ("机甲", ["0", "40"]), ("限制级", ["0", "61"]), ("少年向", ["1", "1"]), ("少女向", ["1", "2"]), ("青年向", ["1", "3"]), ("港台", ["2", "35"]), ("日韩", ["2", "36"]), ("大陆", ["2", "37"]), ("欧美", ["2", "52"])])]
+    var filters: [FilterProrocol] {
+        return [
+            ManHuaRen.SortFilter(title: "状态", options: [("热门", "0"), ("更新", "1"), ("新作", "2"), ("完结", "3")]),
+            ManHuaRen.CategoryFilter(title: "分类", options: [("全部", ["0", "0"]), ("热血", ["0", "31"]), ("恋爱", ["0", "26"]), ("校园", ["0", "1"]), ("百合", ["0", "3"]), ("耽美", ["0", "27"]), ("伪娘", ["0", "5"]), ("冒险", ["0", "2"]), ("职场", ["0", "6"]), ("后宫", ["0", "8"]), ("治愈", ["0", "9"]), ("科幻", ["0", "25"]), ("励志", ["0", "10"]), ("生活", ["0", "11"]), ("战争", ["0", "12"]), ("悬疑", ["0", "17"]), ("推理", ["0", "33"]), ("搞笑", ["0", "37"]), ("奇幻", ["0", "14"]), ("魔法", ["0", "15"]), ("恐怖", ["0", "29"]), ("神鬼", ["0", "20"]), ("萌系", ["0", "21"]), ("历史", ["0", "4"]), ("美食", ["0", "7"]), ("同人", ["0", "30"]), ("运动", ["0", "34"]), ("绅士", ["0", "36"]), ("机甲", ["0", "40"]), ("限制级", ["0", "61"]), ("少年向", ["1", "1"]), ("少女向", ["1", "2"]), ("青年向", ["1", "3"]), ("港台", ["2", "35"]), ("日韩", ["2", "36"]), ("大陆", ["2", "37"]), ("欧美", ["2", "52"])]),
+        ]
     }
 
     var modifier: AnyModifier {
@@ -103,7 +102,7 @@ extension ManHuaRen: OnlineSourceProtocol {
                     let json = try JSON(data: data)
                     return (json["response", "result"].array ?? json["response", "mangas"].arrayValue).compactMap { ele -> Book? in
                         let bookId = ele["mangaId"].intValue
-                        var book = Book(source: strongSelf, url: "/v1/manga/getDetail?mangaId=\(bookId)")
+                        let book = Book(source: strongSelf, url: "/v1/manga/getDetail?mangaId=\(bookId)")
                         book.title = ele["mangaName"].string
                         book.thumbnailUrl = ele["mangaCoverimageUrl"].string
                         book.author = ele["mangaAuthor"].string
@@ -124,27 +123,25 @@ extension ManHuaRen: OnlineSourceProtocol {
                 case let .success(data):
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     let json = try JSON(data: data)["response"]
-                    let book = Book(source: book.source, url: book.url)
-                    var detail = book
-                    detail.title = json["mangaName"].string
+                    book.title = json["mangaName"].string
                     if let thumbnailUrl = json["mangaCoverimageUrl"].string, !thumbnailUrl.isEmpty {
-                        detail.thumbnailUrl = thumbnailUrl
+                        book.thumbnailUrl = thumbnailUrl
                     } else if let thumbnailUrl = json["mangaPicimageUrl"].string, !thumbnailUrl.isEmpty {
-                        detail.thumbnailUrl = thumbnailUrl
+                        book.thumbnailUrl = thumbnailUrl
                     } else if let thumbnailUrl = json["shareIcon"].string, !thumbnailUrl.isEmpty {
-                        detail.thumbnailUrl = thumbnailUrl
+                        book.thumbnailUrl = thumbnailUrl
                     }
-                    detail.author = json["mangaAuthors"].arrayValue.compactMap({ $0.string }).joined(separator: ", ")
-                    detail.genre = json["mangaTheme"].string?.replacingOccurrences(of: " ", with: ", ")
-                    detail.status = Book.Status(mangaIsOver: json["mangaIsOver"].int)
-                    detail.description = json["mangaIntro"].string
+                    book.author = json["mangaAuthors"].arrayValue.compactMap({ $0.string }).joined(separator: ", ")
+                    book.genre = json["mangaTheme"].string?.replacingOccurrences(of: " ", with: ", ")
+                    book.status = Book.Status(mangaIsOver: json["mangaIsOver"].int)
+                    book.description = json["mangaIntro"].string
                     // chapters
                     var chapters: [Chapter] = []
                     ["mangaEpisode", "mangaWords", "mangaRolls"].forEach { type in
                         guard let array = json[type].array else { return }
                         array.forEach { ele in
                             guard let sectionId = ele["sectionId"].int else { return }
-                            var chapter = Chapter(book: detail, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
+                            let chapter = Chapter(book: book, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
                             chapter.name = "\(type == "mangaEpisode" ? "[番外] " : "")\(ele["sectionName"].stringValue)\(ele["sectionTitle"].stringValue == "" ? "" : ": \(ele["sectionTitle"].stringValue)")"
                             chapter.updateAt = ele["releaseTime"].string?.convert2Date(dateFormat: "yyyy-MM-dd")
                             chapter.chapterNumber = ele["sectionSort"].double
@@ -170,7 +167,7 @@ extension ManHuaRen: OnlineSourceProtocol {
                     let array = json["mangaSectionImages"].arrayValue
                     let query = json["query"].stringValue
                     return array.enumerated().compactMap { offset, ele -> Page? in
-                        var page = Page(chapter: chapter, index: offset)
+                        let page = Page(chapter: chapter, index: offset)
                         page.imageURL = "\(host)\(ele.stringValue)\(query)"
                         return page
                     }
@@ -180,6 +177,8 @@ extension ManHuaRen: OnlineSourceProtocol {
             }
     }
 }
+
+// MARK: - RequestConvertible
 
 extension ManHuaRen.Router: RequestConvertible {
     var baseURLString: URLConvertible { return "http://mangaapi.manhuaren.com" }
@@ -238,6 +237,8 @@ extension ManHuaRen.Router: RequestConvertible {
 
     var interceptor: RequestInterceptor? { return ManHuaRen.Interceptor() }
 }
+
+// MARK: - Filter
 
 extension ManHuaRen {
     class SortFilter: SinglePickFilter {}

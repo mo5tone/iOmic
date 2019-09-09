@@ -12,7 +12,7 @@ import RxSwift
 class DiscoveryViewModel: NSObject {
     private let bag: DisposeBag = .init()
     private let page: BehaviorSubject<Int> = .init(value: 0)
-    let source: BehaviorSubject<SourceProtocol> = .init(value: Source.all[0])
+    let source: BehaviorSubject<SourceProtocol> = .init(value: SourceIdentifier.values[0].source)
     let title: BehaviorSubject<String> = .init(value: "Discovery")
     let load: PublishSubject<Void> = .init()
     let loadMore: PublishSubject<Void> = .init()
@@ -30,23 +30,20 @@ class DiscoveryViewModel: NSObject {
         }
         source.map { _ in [] }.bind(to: books).disposed(by: bag)
         source.map { $0.name }.bind(to: title).disposed(by: bag)
-        source.map { $0.defaultFilters }.bind(to: filters).disposed(by: bag)
+        source.map { $0.filters }.bind(to: filters).disposed(by: bag)
         Observable.merge(source.map { _ in }, load).map { _ in 0 }.bind(to: page).disposed(by: bag)
         loadMore.withLatestFrom(page) { $1 + 1 }.bind(to: page).disposed(by: bag)
         Observable.merge(source.map { _ in }, load, loadMore)
             .withLatestFrom(Observable.combineLatest(source, page, query, filters, books))
             .flatMapLatest { (source, page, query, filters, books) -> Observable<[Book]> in
-                if let online = source as? OnlineSourceProtocol {
-                    return online.fetchBooks(page: page, query: query ?? "", filters: filters)
-                        .map {
-                            if page == 0 { return $0 }
-                            var array = Array(books)
-                            array.append(contentsOf: $0)
-                            return array
-                        }
-                } else {
-                    return .just([])
-                }
+                source.fetchBooks(page: page, query: query ?? "", filters: filters)
+                    .map {
+                        if page == 0 { return $0 }
+                        var array = Array(books)
+                        array.append(contentsOf: $0)
+                        return array
+                    }
+
             }.catchErrorJustReturn([]).bind(to: books).disposed(by: bag)
     }
 

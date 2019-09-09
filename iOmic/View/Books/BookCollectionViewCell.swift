@@ -49,6 +49,6 @@ class BookCollectionViewCell: UICollectionViewCell {
         imageView.kf.setImage(with: URL(string: book.thumbnailUrl ?? ""), options: options)
         titlteLabel.text = book.title
         authorLabel.text = book.author
-        statusLabel.text = book.status.name
+        statusLabel.text = book.status.rawValue
     }
 }

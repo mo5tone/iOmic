@@ -7,30 +7,22 @@
 //
 
 import Foundation
+import RealmSwift
 import RxDataSources
 import UIKit
 
-struct Book {
-    enum Status {
-        case ongoing
-        case completed
-        case unknown
+class Book {
+    // MARK: - types
 
-        var name: String {
-            switch self {
-            case .ongoing:
-                return "Ongoing"
-            case .completed:
-                return "Completed"
-            case .unknown:
-                return "Unknown"
-            }
-        }
+    enum Status: String {
+        case ongoing = "Ongoing"
+        case completed = "Completed"
+        case unknown = "Unknown"
     }
 
     // MARK: - props.
 
-    let source: OnlineSourceProtocol
+    let source: SourceProtocol
     let url: String
     var thumbnailUrl: String?
     var title: String?
@@ -38,28 +30,13 @@ struct Book {
     var author: String?
     var genre: String?
     var description: String?
-    var status: Status = .unknown
+    var status: Book.Status = .unknown
 
-    // MARK: - public
+    // MARK: - methods
 
-    init(source: OnlineSourceProtocol, url: String) {
+    init(source: SourceProtocol, url: String) {
         self.source = source
         self.url = url
-    }
-}
-
-// MARK: - Book.Status CustomStringConvertible
-
-extension Book.Status: CustomStringConvertible {
-    var description: String {
-        switch self {
-        case .ongoing:
-            return "Ongoing"
-        case .completed:
-            return "Completed"
-        case .unknown:
-            return "Unknown"
-        }
     }
 }
 
@@ -67,9 +44,7 @@ extension Book.Status: CustomStringConvertible {
 
 extension Book: Equatable, IdentifiableType {
     typealias Identity = String
-    var identity: Identity {
-        return "\(source.identifier.rawValue)#\(url)"
-    }
+    var identity: Identity { return "\(source.identifier.rawValue)#\(url)" }
 
     static func == (lhs: Book, rhs: Book) -> Bool {
         return lhs.source.identifier == rhs.source.identifier

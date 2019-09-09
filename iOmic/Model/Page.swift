@@ -9,7 +9,7 @@
 import Foundation
 import RxDataSources
 
-struct Page {
+class Page {
     // MARK: - props.
 
     let chapter: Chapter

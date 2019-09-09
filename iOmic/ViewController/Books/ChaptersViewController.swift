@@ -142,7 +142,7 @@ class ChaptersViewController: UIViewController {
             }
             self.descriptionTextView.text = book.description
             self.authorLabel.text = book.author
-            self.statusLabel.text = book.status.name
+            self.statusLabel.text = book.status.rawValue
             self.genreLabel.text = book.genre
         }).disposed(by: bag)
         refreshControl.rx.controlEvent(.valueChanged).bind(to: viewModel.load).disposed(by: bag)

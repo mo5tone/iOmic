@@ -12,7 +12,7 @@ import Kingfisher
 import RxSwift
 import SwiftyJSON
 
-class DongManZhiJia: Source {
+class DongManZhiJia {
     // MARK: - Types
 
     fileprivate enum Router {
@@ -25,15 +25,9 @@ class DongManZhiJia: Source {
 
     static let shared = DongManZhiJia()
 
-    // MARK: - Props.
-
     // MARK: - Private
 
-    private override init() {
-        super.init()
-    }
-
-    // MARK: - Public
+    private init() {}
 }
 
 extension Book.Status {
@@ -49,15 +43,21 @@ extension Book.Status {
     }
 }
 
-// MARK: - OnlineSourceProtocol
+// MARK: - SourceProtocol
 
-extension DongManZhiJia: OnlineSourceProtocol {
-    var identifier: Source.Identifier { return .dongmanzhijia }
+extension DongManZhiJia: SourceProtocol {
+    var identifier: SourceIdentifier { return .dongmanzhijia }
 
     var name: String { return "动漫之家" }
 
-    var defaultFilters: [FilterProrocol] {
-        return [DongManZhiJia.SortFilter(title: "排序", options: [("人气", "0"), ("更新", "1")]), DongManZhiJia.GenreFilter(title: "分类", options: [("全部", ""), ("冒险", "4"), ("百合", "3243"), ("生活", "3242"), ("四格", "17"), ("伪娘", "3244"), ("悬疑", "3245"), ("后宫", "3249"), ("热血", "3248"), ("耽美", "3246"), ("其他", "16"), ("恐怖", "14"), ("科幻", "7"), ("格斗", "6"), ("欢乐向", "5"), ("爱情", "8"), ("侦探", "9"), ("校园", "13"), ("神鬼", "12"), ("魔法", "11"), ("竞技", "10"), ("历史", "3250"), ("战争", "3251"), ("魔幻", "5806"), ("扶她", "5345"), ("东方", "5077"), ("奇幻", "5848"), ("轻小说", "6316"), ("仙侠", "7900"), ("搞笑", "7568"), ("颜艺", "6437"), ("性转换", "4518"), ("高清单行", "4459"), ("治愈", "3254"), ("宅系", "3253"), ("萌系", "3252"), ("励志", "3255"), ("节操", "6219"), ("职场", "3328"), ("西方魔幻", "3365"), ("音乐舞蹈", "3326"), ("机战", "3325")]), DongManZhiJia.StatusFilter(title: "连载", options: [("全部", ""), ("连载", "2309"), ("完结", "2310")]), DongManZhiJia.TypeFilter(title: "地区", options: [("全部", ""), ("日本", "2304"), ("韩国", "2305"), ("欧美", "2306"), ("港台", "2307"), ("内地", "2308"), ("其他", "8453")]), DongManZhiJia.ReaderFilter(title: "读者", options: [("全部", ""), ("少年", "3262"), ("少女", "3263"), ("青年", "3264")])]
+    var filters: [FilterProrocol] {
+        return [
+            DongManZhiJia.SortFilter(title: "排序", options: [("人气", "0"), ("更新", "1")]),
+            DongManZhiJia.GenreFilter(title: "分类", options: [("全部", ""), ("冒险", "4"), ("百合", "3243"), ("生活", "3242"), ("四格", "17"), ("伪娘", "3244"), ("悬疑", "3245"), ("后宫", "3249"), ("热血", "3248"), ("耽美", "3246"), ("其他", "16"), ("恐怖", "14"), ("科幻", "7"), ("格斗", "6"), ("欢乐向", "5"), ("爱情", "8"), ("侦探", "9"), ("校园", "13"), ("神鬼", "12"), ("魔法", "11"), ("竞技", "10"), ("历史", "3250"), ("战争", "3251"), ("魔幻", "5806"), ("扶她", "5345"), ("东方", "5077"), ("奇幻", "5848"), ("轻小说", "6316"), ("仙侠", "7900"), ("搞笑", "7568"), ("颜艺", "6437"), ("性转换", "4518"), ("高清单行", "4459"), ("治愈", "3254"), ("宅系", "3253"), ("萌系", "3252"), ("励志", "3255"), ("节操", "6219"), ("职场", "3328"), ("西方魔幻", "3365"), ("音乐舞蹈", "3326"), ("机战", "3325")]),
+            DongManZhiJia.StatusFilter(title: "连载", options: [("全部", ""), ("连载", "2309"), ("完结", "2310")]),
+            DongManZhiJia.TypeFilter(title: "地区", options: [("全部", ""), ("日本", "2304"), ("韩国", "2305"), ("欧美", "2306"), ("港台", "2307"), ("内地", "2308"), ("其他", "8453")]),
+            DongManZhiJia.ReaderFilter(title: "读者", options: [("全部", ""), ("少年", "3262"), ("少女", "3263"), ("青年", "3264")]),
+        ]
     }
 
     var modifier: AnyModifier {
@@ -72,7 +72,7 @@ extension DongManZhiJia: OnlineSourceProtocol {
         func jsonParser(json: JSON) -> [Book] {
             return (json.array ?? []).compactMap { json -> Book? in
                 guard let bookId = json["id"].int else { return nil }
-                var book = Book(source: self, url: "/comic/\(bookId).json")
+                let book = Book(source: self, url: "/comic/\(bookId).json")
                 book.title = json["title"].string
                 book.author = json["authors"].string
                 book.thumbnailUrl = json["cover"].string?.fixScheme()
@@ -87,7 +87,7 @@ extension DongManZhiJia: OnlineSourceProtocol {
             guard let result = results.first, result.numberOfRanges > 1, let range = Range(result.range(at: 1), in: string) else { return [] }
             return (JSON(parseJSON: String(string[range])).array ?? []).compactMap { json -> Book? in
                 guard let bookId = json["id"].string else { return nil }
-                var book = Book(source: self, url: "/comic/\(bookId).json")
+                let book = Book(source: self, url: "/comic/\(bookId).json")
                 book.title = json["name"].string
                 book.author = json["authors"].string
                 book.thumbnailUrl = json["cover"].string?.fixScheme()
@@ -123,20 +123,19 @@ extension DongManZhiJia: OnlineSourceProtocol {
                 case let .success(data):
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     let json = try JSON(data: data)
-                    var detail = book
-                    detail.title = json["title"].string
-                    detail.thumbnailUrl = json["cover"].string?.fixScheme()
-                    detail.author = (json["authors"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                    detail.genre = (json["types"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                    if let intValue = json["status"][0]["tag_id"].int { detail.status = Book.Status(string: "\(intValue)") }
-                    detail.description = json["description"].string
+                    book.title = json["title"].string
+                    book.thumbnailUrl = json["cover"].string?.fixScheme()
+                    book.author = (json["authors"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    book.genre = (json["types"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    if let intValue = json["status"][0]["tag_id"].int { book.status = Book.Status(string: "\(intValue)") }
+                    book.description = json["description"].string
                     var chapters: [Chapter] = []
                     if let bookId = json["id"].int {
                         json["chapters"].array?.forEach { item in
                             let prefix = item["title"].stringValue
                             item["data"].array?.forEach { item1 in
                                 guard let chapterId = item1["chapter_id"].int else { return }
-                                var chapter = Chapter(book: detail, url: "/chapter/\(bookId)/\(chapterId).json")
+                                let chapter = Chapter(book: book, url: "/chapter/\(bookId)/\(chapterId).json")
                                 let chapterTitle = item1["chapter_title"].stringValue
                                 chapter.name = "[\(prefix)]\(chapterTitle)"
                                 chapter.updateAt = Date(timeIntervalSince1970: item1["updatetime"].doubleValue)
@@ -161,7 +160,7 @@ extension DongManZhiJia: OnlineSourceProtocol {
                     let json = try JSON(data: data)
                     var pages = [Page]()
                     (json["page_url"].array ?? []).enumerated().forEach { offset, element in
-                        var page = Page(chapter: chapter, index: offset)
+                        let page = Page(chapter: chapter, index: offset)
                         page.imageURL = element.string
                         pages.append(page)
                     }

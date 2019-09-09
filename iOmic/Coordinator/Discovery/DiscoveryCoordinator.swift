@@ -36,7 +36,7 @@ extension DiscoveryCoordinator: DiscoveryViewCoordinator {
     func popupSourcesSwitcher(current _: SourceProtocol) -> Observable<SourceProtocol> {
         let alertController: UIAlertController = .init(title: nil, message: nil, preferredStyle: .actionSheet)
         let subject: PublishSubject<SourceProtocol> = .init()
-        Source.all.map { source in .init(title: source.name, style: .default, handler: { _ in subject.on(.next(source)) }) }.forEach { alertController.addAction($0) }
+        SourceIdentifier.values.map { identifier in .init(title: identifier.source.name, style: .default, handler: { _ in subject.on(.next(identifier.source)) }) }.forEach { alertController.addAction($0) }
         alertController.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         // FIXME: - https://stackoverflow.com/questions/55653187/swift-default-alertviewcontroller-breaking-constraints
         alertController.view.addSubview(UIView())

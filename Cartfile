@@ -3,7 +3,8 @@ github "Alamofire/Alamofire" "5.0.0-beta.5"
 github "onevcat/Kingfisher" ~> 5.0 # Networking images caching
 
 # Persistence
-github "Tencent/WCDB" "v1.0.8.2" # ORM
+github "realm/realm-cocoa"
+github "nmdias/DefaultsKit" # UserDefaults
 github "nvzqz/FileKit" # FileManager helper
 github "ZipArchive/ZipArchive" # zipping and unzipping files
 

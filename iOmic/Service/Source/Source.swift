@@ -6,57 +6,48 @@
 //  Copyright © 2019 门捷夫. All rights reserved.
 //
 
-import Alamofire
+import DefaultsKit
 import FileKit
 import Foundation
 import Kingfisher
 import RxSwift
 
-class Source: NSObject {
-    enum Identifier: Int {
-        static var values: [Identifier] = [.local, .dongmanzhijia, .manhuaren]
-        // local
-        case local = 0
-        // online
-        case dongmanzhijia, manhuaren // JSON
+enum SourceIdentifier: String {
+    case dongmanzhijia, manhuaren // JSON
 
-        fileprivate var source: SourceProtocol {
-            switch self {
-            case .local:
-                return LocalSource.shared
-            case .dongmanzhijia:
-                return DongManZhiJia.shared
-            case .manhuaren:
-                return ManHuaRen.shared
-            }
+    static let values: [SourceIdentifier] = [.dongmanzhijia, .manhuaren]
+
+    var source: SourceProtocol {
+        switch self {
+        case .dongmanzhijia:
+            return DongManZhiJia.shared
+        case .manhuaren:
+            return ManHuaRen.shared
         }
-    }
-
-    static var all: [SourceProtocol] { return Source.Identifier.values.map { $0.source } }
-
-    private var _available = true
-    var available: Bool {
-        get { return _available }
-        set { _available = newValue }
     }
 }
 
 protocol SourceProtocol {
-    var identifier: Source.Identifier { get }
+    var identifier: SourceIdentifier { get }
     var name: String { get }
-    var available: Bool { get }
-    var defaultFilters: [FilterProrocol] { get }
-}
-
-protocol OnlineSourceProtocol: SourceProtocol {
+    var available: Bool { get set }
+    var filters: [FilterProrocol] { get }
     var modifier: AnyModifier { get }
     func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Observable<[Book]>
     func fetchChapters(book: Book) -> Observable<[Chapter]>
     func fetchPages(chapter: Chapter) -> Observable<[Page]>
 }
 
-protocol LocalSourceProtocol: SourceProtocol {
-    func booksOrder(by filters: [FilterProrocol]) -> [Path]
-    func markBooks(_ books: [Path], unread: Bool)
-    func pagesIn(book: Path) -> [Path]
+extension SourceProtocol {
+    var available: Bool {
+        set {
+            var sourceAvailability = Defaults.shared.get(for: .sourceAvailability) ?? [:]
+            sourceAvailability[identifier.rawValue] = newValue
+            Defaults.shared.set(sourceAvailability, for: .sourceAvailability)
+        }
+        get {
+            let sourceAvailability = Defaults.shared.get(for: .sourceAvailability) ?? [:]
+            return sourceAvailability[identifier.rawValue] ?? true
+        }
+    }
 }
