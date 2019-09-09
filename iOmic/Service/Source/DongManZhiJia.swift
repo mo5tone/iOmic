@@ -72,12 +72,14 @@ extension DongManZhiJia: SourceProtocol {
         func jsonParser(json: JSON) -> [Book] {
             return (json.array ?? []).compactMap { json -> Book? in
                 guard let bookId = json["id"].int else { return nil }
-                let book = Book(source: self, url: "/comic/\(bookId).json")
+                let book = Book()
+                book.sourceIdentifier = identifier
+                book.url = "/comic/\(bookId).json"
                 book.title = json["title"].string
                 book.author = json["authors"].string
                 book.thumbnailUrl = json["cover"].string?.fixScheme()
                 book.status = Book.Status(string: json["status"].string)
-                book.description = json["description"].string
+                book.summary = json["description"].string
                 return book
             }
         }
@@ -87,12 +89,14 @@ extension DongManZhiJia: SourceProtocol {
             guard let result = results.first, result.numberOfRanges > 1, let range = Range(result.range(at: 1), in: string) else { return [] }
             return (JSON(parseJSON: String(string[range])).array ?? []).compactMap { json -> Book? in
                 guard let bookId = json["id"].string else { return nil }
-                let book = Book(source: self, url: "/comic/\(bookId).json")
+                let book = Book()
+                book.sourceIdentifier = identifier
+                book.url = "/comic/\(bookId).json"
                 book.title = json["name"].string
                 book.author = json["authors"].string
                 book.thumbnailUrl = json["cover"].string?.fixScheme()
                 book.status = Book.Status(string: json["status_tag_id"].string)
-                book.description = json["description"].string
+                book.summary = json["description"].string
                 return book
             }
         }
@@ -128,7 +132,7 @@ extension DongManZhiJia: SourceProtocol {
                     book.author = (json["authors"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
                     book.genre = (json["types"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
                     if let intValue = json["status"][0]["tag_id"].int { book.status = Book.Status(string: "\(intValue)") }
-                    book.description = json["description"].string
+                    book.summary = json["description"].string
                     var chapters: [Chapter] = []
                     if let bookId = json["id"].int {
                         json["chapters"].array?.forEach { item in

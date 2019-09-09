@@ -11,7 +11,7 @@ import RealmSwift
 import RxDataSources
 import UIKit
 
-class Book {
+class Book: Object {
     // MARK: - types
 
     enum Status: String {
@@ -22,39 +22,32 @@ class Book {
 
     // MARK: - props.
 
-    let source: SourceProtocol
-    let url: String
-    var thumbnailUrl: String?
-    var title: String?
-    var artist: String?
-    var author: String?
-    var genre: String?
-    var description: String?
-    var status: Book.Status = .unknown
+    @objc private dynamic var _sourceIdentifier: String = SourceIdentifier.values[0].rawValue
+    @objc dynamic var url: String = ""
+    @objc dynamic var thumbnailUrl: String?
+    @objc dynamic var title: String?
+    @objc dynamic var artist: String?
+    @objc dynamic var author: String?
+    @objc dynamic var genre: String?
+    @objc dynamic var summary: String?
+    @objc private dynamic var _status: String = Book.Status.unknown.rawValue
+    var source: SourceProtocol { return sourceIdentifier.source }
+    var sourceIdentifier: SourceIdentifier {
+        get { return SourceIdentifier(rawValue: _sourceIdentifier) ?? SourceIdentifier.values[0] }
+        set { _sourceIdentifier = newValue.rawValue }
+    }
+
+    var status: Book.Status {
+        get { return Book.Status(rawValue: _status) ?? .unknown }
+        set { _status = newValue.rawValue }
+    }
 
     // MARK: - methods
-
-    init(source: SourceProtocol, url: String) {
-        self.source = source
-        self.url = url
-    }
 }
 
-// MARK: - Equatable, IdentifiableType
+// MARK: - IdentifiableType
 
-extension Book: Equatable, IdentifiableType {
+extension Book: IdentifiableType {
     typealias Identity = String
-    var identity: Identity { return "\(source.identifier.rawValue)#\(url)" }
-
-    static func == (lhs: Book, rhs: Book) -> Bool {
-        return lhs.source.identifier == rhs.source.identifier
-            && lhs.url == rhs.url
-            && lhs.thumbnailUrl == rhs.thumbnailUrl
-            && lhs.title == rhs.title
-            && lhs.artist == rhs.artist
-            && lhs.author == rhs.author
-            && lhs.genre == rhs.genre
-            && lhs.description == rhs.description
-            && lhs.status == rhs.status
-    }
+    var identity: Identity { return "\(_sourceIdentifier)#\(url)" }
 }

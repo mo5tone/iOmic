@@ -95,14 +95,16 @@ extension ManHuaRen: SourceProtocol {
         let convertible = Router.books(page, query, filters)
         return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
             .compactMap { [weak self] response -> [Book] in
-                guard let strongSelf = self else { return [] }
+                guard let self = self else { return [] }
                 switch response.result {
                 case let .success(data):
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     let json = try JSON(data: data)
                     return (json["response", "result"].array ?? json["response", "mangas"].arrayValue).compactMap { ele -> Book? in
                         let bookId = ele["mangaId"].intValue
-                        let book = Book(source: strongSelf, url: "/v1/manga/getDetail?mangaId=\(bookId)")
+                        let book = Book()
+                        book.sourceIdentifier = self.identifier
+                        book.url = "/v1/manga/getDetail?mangaId=\(bookId)"
                         book.title = ele["mangaName"].string
                         book.thumbnailUrl = ele["mangaCoverimageUrl"].string
                         book.author = ele["mangaAuthor"].string
@@ -134,7 +136,7 @@ extension ManHuaRen: SourceProtocol {
                     book.author = json["mangaAuthors"].arrayValue.compactMap({ $0.string }).joined(separator: ", ")
                     book.genre = json["mangaTheme"].string?.replacingOccurrences(of: " ", with: ", ")
                     book.status = Book.Status(mangaIsOver: json["mangaIsOver"].int)
-                    book.description = json["mangaIntro"].string
+                    book.summary = json["mangaIntro"].string
                     // chapters
                     var chapters: [Chapter] = []
                     ["mangaEpisode", "mangaWords", "mangaRolls"].forEach { type in
