@@ -131,6 +131,7 @@ class ChaptersViewController: UIViewController {
             }
         }).disposed(by: bag)
         favoriteBarButtonItem.rx.tap.withLatestFrom(viewModel.isFavorited) { !$1 }.bind(to: viewModel.isFavorited).disposed(by: bag)
+        favoriteBarButtonItem.rx.tap.bind(to: viewModel.switchFavorited).disposed(by: bag)
         viewModel.book.subscribe(onNext: { [weak self] book in
             guard let self = self else { return }
             self.coverImageView.kf.setImage(with: URL(string: book.thumbnailUrl ?? ""), options: [.transition(.fade(0.2)), .requestModifier(book.source.modifier), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage]) { result in

@@ -13,7 +13,7 @@ import Kingfisher
 import RxSwift
 import WCDBSwift
 
-enum SourceIdentifier: String {
+enum SourceIdentifier: String, ColumnCodable {
     case dongmanzhijia, manhuaren // JSON
 
     static let values: [SourceIdentifier] = [.dongmanzhijia, .manhuaren]
@@ -26,11 +26,9 @@ enum SourceIdentifier: String {
             return ManHuaRen.shared
         }
     }
-}
 
-// MARK: - ColumnCodable
+    // MARK: - ColumnCodable
 
-extension SourceIdentifier: ColumnCodable {
     static var columnType: ColumnType { return .text }
     func archivedValue() -> FundamentalValue { return FundamentalValue(rawValue) }
     init?(with value: FundamentalValue) { self.init(rawValue: value.stringValue) }

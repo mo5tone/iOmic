@@ -22,7 +22,7 @@ class ChaptersCoordinator: ViewCoordinator {
         super.init(window: window)
         self.delegate = delegate
         self.navigationController = navigationController
-        viewController = ChaptersViewController(coordinator: self, viewModel: .init(book: book))
+        viewController = ChaptersViewController(coordinator: self, viewModel: .init(book: book, databaseManager: DatabaseManager.shared))
         viewController.hidesBottomBarWhenPushed = true
     }
 
