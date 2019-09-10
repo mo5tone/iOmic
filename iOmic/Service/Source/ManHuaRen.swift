@@ -102,9 +102,7 @@ extension ManHuaRen: SourceProtocol {
                     let json = try JSON(data: data)
                     return (json["response", "result"].array ?? json["response", "mangas"].arrayValue).compactMap { ele -> Book? in
                         let bookId = ele["mangaId"].intValue
-                        let book = Book()
-                        book.sourceIdentifier = self.identifier
-                        book.url = "/v1/manga/getDetail?mangaId=\(bookId)"
+                        var book = Book(source: self, url: "/v1/manga/getDetail?mangaId=\(bookId)")
                         book.title = ele["mangaName"].string
                         book.thumbnailUrl = ele["mangaCoverimageUrl"].string
                         book.author = ele["mangaAuthor"].string
@@ -125,6 +123,7 @@ extension ManHuaRen: SourceProtocol {
                 case let .success(data):
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     let json = try JSON(data: data)["response"]
+                    var book = book
                     book.title = json["mangaName"].string
                     if let thumbnailUrl = json["mangaCoverimageUrl"].string, !thumbnailUrl.isEmpty {
                         book.thumbnailUrl = thumbnailUrl
@@ -143,10 +142,10 @@ extension ManHuaRen: SourceProtocol {
                         guard let array = json[type].array else { return }
                         array.forEach { ele in
                             guard let sectionId = ele["sectionId"].int else { return }
-                            let chapter = Chapter(book: book, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
+                            var chapter = Chapter(book: book, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
                             chapter.name = "\(type == "mangaEpisode" ? "[番外] " : "")\(ele["sectionName"].stringValue)\(ele["sectionTitle"].stringValue == "" ? "" : ": \(ele["sectionTitle"].stringValue)")"
                             chapter.updateAt = ele["releaseTime"].string?.convert2Date(dateFormat: "yyyy-MM-dd")
-                            chapter.chapterNumber = ele["sectionSort"].double
+                            chapter.chapterNumber = ele["sectionSort"].double ?? -1
                             chapters.append(chapter)
                         }
                     }
@@ -169,8 +168,8 @@ extension ManHuaRen: SourceProtocol {
                     let array = json["mangaSectionImages"].arrayValue
                     let query = json["query"].stringValue
                     return array.enumerated().compactMap { offset, ele -> Page? in
-                        let page = Page(chapter: chapter, index: offset)
-                        page.imageURL = "\(host)\(ele.stringValue)\(query)"
+                        var page = Page(chapter: chapter, index: offset)
+                        page.imageUrl = "\(host)\(ele.stringValue)\(query)"
                         return page
                     }
                 case let .failure(error):

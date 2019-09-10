@@ -121,6 +121,16 @@ class ChaptersViewController: UIViewController {
     }
 
     private func setupBinding() {
+        viewModel.isFavorited.subscribe(onNext: { [weak self] isFavorited in
+            if isFavorited {
+                self?.favoriteBarButtonItem.tintColor = .red
+                self?.favoriteBarButtonItem.image = #imageLiteral(resourceName: "ic_favorite")
+            } else {
+                self?.favoriteBarButtonItem.tintColor = UINavigationBar.appearance().tintColor
+                self?.favoriteBarButtonItem.image = #imageLiteral(resourceName: "ic_favorite_outline")
+            }
+        }).disposed(by: bag)
+        favoriteBarButtonItem.rx.tap.withLatestFrom(viewModel.isFavorited) { !$1 }.bind(to: viewModel.isFavorited).disposed(by: bag)
         viewModel.book.subscribe(onNext: { [weak self] book in
             guard let self = self else { return }
             self.coverImageView.kf.setImage(with: URL(string: book.thumbnailUrl ?? ""), options: [.transition(.fade(0.2)), .requestModifier(book.source.modifier), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage]) { result in

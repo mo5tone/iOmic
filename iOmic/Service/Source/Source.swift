@@ -11,6 +11,7 @@ import FileKit
 import Foundation
 import Kingfisher
 import RxSwift
+import WCDBSwift
 
 enum SourceIdentifier: String {
     case dongmanzhijia, manhuaren // JSON
@@ -25,6 +26,14 @@ enum SourceIdentifier: String {
             return ManHuaRen.shared
         }
     }
+}
+
+// MARK: - ColumnCodable
+
+extension SourceIdentifier: ColumnCodable {
+    static var columnType: ColumnType { return .text }
+    func archivedValue() -> FundamentalValue { return FundamentalValue(rawValue) }
+    init?(with value: FundamentalValue) { self.init(rawValue: value.stringValue) }
 }
 
 protocol SourceProtocol {

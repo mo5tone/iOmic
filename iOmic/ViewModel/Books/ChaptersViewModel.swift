@@ -7,13 +7,13 @@
 //
 
 import Foundation
+import RealmSwift
 import RxSwift
 
 class ChaptersViewModel: NSObject {
     private let bag: DisposeBag = .init()
     let load: PublishSubject<Void> = .init()
-    let toggleFavorite: PublishSubject<Void> = .init()
-    let isFavorited: Bool = false
+    let isFavorited: BehaviorSubject<Bool> = .init(value: false)
     let book: BehaviorSubject<Book>
     let chapters: BehaviorSubject<[Chapter]> = .init(value: [])
 
@@ -25,6 +25,7 @@ class ChaptersViewModel: NSObject {
             .share()
         results.bind(to: chapters).disposed(by: bag)
         results.compactMap { $0.first?.book }.bind(to: self.book).disposed(by: bag)
+        self.book.map { $0.isFavorited }.bind(to: isFavorited).disposed(by: bag)
         load.on(.next(()))
     }
 }

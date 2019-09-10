@@ -31,7 +31,7 @@ class PageCollectionViewCell: UICollectionViewCell {
     }()
 
     func setup(_ page: Page) {
-        imageView.kf.setImage(with: URL(string: page.imageURL ?? ""), options: [.transition(.fade(0.3)), .requestModifier(page.chapter.book.source.modifier)])
+        imageView.kf.setImage(with: URL(string: page.imageUrl ?? ""), options: [.transition(.fade(0.3)), .requestModifier(page.chapter.book.source.modifier)])
     }
 
     override func awakeFromNib() {

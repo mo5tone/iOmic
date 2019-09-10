@@ -103,12 +103,12 @@ class PagesViewController: UIViewController {
 
     private func prefetchItems(_ pages: [Page]) {
         guard let source = pages.first?.chapter.book.source else { return }
-        ImagePrefetcher(resources: pages.compactMap { URL(string: $0.imageURL ?? "") }, options: [.requestModifier(source.modifier)]).start()
+        ImagePrefetcher(resources: pages.compactMap { URL(string: $0.imageUrl ?? "") }, options: [.requestModifier(source.modifier)]).start()
     }
 
     private func cancelPrefetchingForItems(_ pages: [Page]) {
         guard let source = pages.first?.chapter.book.source else { return }
-        ImagePrefetcher(resources: pages.compactMap { URL(string: $0.imageURL ?? "") }, options: [.requestModifier(source.modifier)]).stop()
+        ImagePrefetcher(resources: pages.compactMap { URL(string: $0.imageUrl ?? "") }, options: [.requestModifier(source.modifier)]).stop()
     }
 }
 

@@ -7,47 +7,73 @@
 //
 
 import Foundation
-import RealmSwift
 import RxDataSources
 import UIKit
+import WCDBSwift
 
-class Book: Object {
+struct Book: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
+    // MARK: - IdentifiableType
+
+    typealias Identity = String
+    let identity: Identity
+
+    // MARK: - Equatable
+
+    static func == (lhs: Book, rhs: Book) -> Bool {
+        return lhs.source.identifier == rhs.source.identifier
+            && lhs.url == rhs.url
+            && lhs.thumbnailUrl == rhs.thumbnailUrl
+            && lhs.title == rhs.title
+            && lhs.artist == rhs.artist
+            && lhs.author == rhs.author
+            && lhs.genre == rhs.genre
+            && lhs.summary == rhs.summary
+            && lhs.status == rhs.status
+            && lhs.isFavorited == rhs.isFavorited
+    }
+
+    // MARK: - TableCodable
+
+    enum CodingKeys: String, CodingTableKey {
+        typealias Root = Book
+        static let objectRelationalMapping = TableBinding(CodingKeys.self)
+        case identity, sourceIdentifier = "source_identifier", url, thumbnailUrl = "thumbnail_url", title, artist, author, genre, summary, status, isFavorited = "is_favorited", readAt = "read_at"
+        static var columConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
+            return [identity: .init(isPrimary: true, isAutoIncrement: false, onConflict: .replace)]
+        }
+    }
+
     // MARK: - types
 
-    enum Status: String {
+    enum Status: String, ColumnCodable {
         case ongoing = "Ongoing"
         case completed = "Completed"
         case unknown = "Unknown"
+        static var columnType: ColumnType { return .text }
+        func archivedValue() -> FundamentalValue { return FundamentalValue(rawValue) }
+        init?(with value: FundamentalValue) { self.init(rawValue: value.stringValue) }
     }
 
     // MARK: - props.
 
-    @objc private dynamic var _sourceIdentifier: String = SourceIdentifier.values[0].rawValue
-    @objc dynamic var url: String = ""
-    @objc dynamic var thumbnailUrl: String?
-    @objc dynamic var title: String?
-    @objc dynamic var artist: String?
-    @objc dynamic var author: String?
-    @objc dynamic var genre: String?
-    @objc dynamic var summary: String?
-    @objc private dynamic var _status: String = Book.Status.unknown.rawValue
+    let sourceIdentifier: SourceIdentifier
+    let url: String
+    var thumbnailUrl: String?
+    var title: String?
+    var artist: String?
+    var author: String?
+    var genre: String?
+    var summary: String?
+    var status: Book.Status = .unknown
+    var isFavorited: Bool = false
+    var readAt: Date?
     var source: SourceProtocol { return sourceIdentifier.source }
-    var sourceIdentifier: SourceIdentifier {
-        get { return SourceIdentifier(rawValue: _sourceIdentifier) ?? SourceIdentifier.values[0] }
-        set { _sourceIdentifier = newValue.rawValue }
-    }
-
-    var status: Book.Status {
-        get { return Book.Status(rawValue: _status) ?? .unknown }
-        set { _status = newValue.rawValue }
-    }
 
     // MARK: - methods
-}
 
-// MARK: - IdentifiableType
-
-extension Book: IdentifiableType {
-    typealias Identity = String
-    var identity: Identity { return "\(_sourceIdentifier)#\(url)" }
+    init(source: SourceProtocol, url: String) {
+        sourceIdentifier = source.identifier
+        self.url = url
+        identity = "\(source.identifier.rawValue)#\(url)"
+    }
 }

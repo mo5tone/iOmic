@@ -67,8 +67,8 @@
 		55D05260231FE77B0005A2DD /* PickFilterTitleCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D0525E231FE77B0005A2DD /* PickFilterTitleCollectionReusableView.swift */; };
 		55D05261231FE77B0005A2DD /* PickFilterTitleCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D0525F231FE77B0005A2DD /* PickFilterTitleCollectionReusableView.xib */; };
 		55F48B0A23214571000FBC18 /* MarqueeLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F48B0923214571000FBC18 /* MarqueeLabel.framework */; };
-		9F27254B232650E900AFC8E6 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F272549232650E900AFC8E6 /* RealmSwift.framework */; };
-		9F27254C232650E900AFC8E6 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F27254A232650E900AFC8E6 /* Realm.framework */; };
+		9F27254E2327666900AFC8E6 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F27254D2327666900AFC8E6 /* DatabaseManager.swift */; };
+		9F27254F232766A000AFC8E6 /* WCDBSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F5B2310D47D007D1454 /* WCDBSwift.framework */; };
 		9F423D492316834E006B950F /* Date.ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F423D482316834E006B950F /* Date.ex.swift */; };
 		9F423D5023178019006B950F /* Alamofire+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F423D4F23178019006B950F /* Alamofire+RxSwift.swift */; };
 		9F8418FD2317B35300A503BE /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8418FB2317B35300A503BE /* BookCollectionViewCell.swift */; };
@@ -182,6 +182,7 @@
 		55F48B0923214571000FBC18 /* MarqueeLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MarqueeLabel.framework; path = Carthage/Build/iOS/MarqueeLabel.framework; sourceTree = "<group>"; };
 		9F272549232650E900AFC8E6 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		9F27254A232650E900AFC8E6 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
+		9F27254D2327666900AFC8E6 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		9F423D482316834E006B950F /* Date.ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.ex.swift; sourceTree = "<group>"; };
 		9F423D4B23175B35006B950F /* iOmic-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOmic-Bridging-Header.h"; sourceTree = "<group>"; };
 		9F423D4F23178019006B950F /* Alamofire+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alamofire+RxSwift.swift"; sourceTree = "<group>"; };
@@ -224,8 +225,6 @@
 				55191F4E2310D24C007D1454 /* Kingfisher.framework in Frameworks */,
 				55F48B0A23214571000FBC18 /* MarqueeLabel.framework in Frameworks */,
 				55B19F71231AB3A500CFBB02 /* QuickLayout.framework in Frameworks */,
-				9F27254C232650E900AFC8E6 /* Realm.framework in Frameworks */,
-				9F27254B232650E900AFC8E6 /* RealmSwift.framework in Frameworks */,
 				55191F522310D25A007D1454 /* RxCocoa.framework in Frameworks */,
 				555C1CD3231A035C00E388D6 /* RxDataSources.framework in Frameworks */,
 				55191F542310D25F007D1454 /* RxRelay.framework in Frameworks */,
@@ -234,6 +233,7 @@
 				55B19F73231AB3B600CFBB02 /* SwiftEntryKit.framework in Frameworks */,
 				559302A02312B7270021C170 /* SwiftyJSON.framework in Frameworks */,
 				55191F5A2310D477007D1454 /* SwipeCellKit.framework in Frameworks */,
+				9F27254F232766A000AFC8E6 /* WCDBSwift.framework in Frameworks */,
 				559302A62312C1BF0021C170 /* ZipArchive.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -568,6 +568,7 @@
 		9FE5102A23263FAA008F2610 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				9F27254D2327666900AFC8E6 /* DatabaseManager.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -853,6 +854,7 @@
 				55BEAA9823124EF700A6A41D /* Book.swift in Sources */,
 				9FD787022320B69000E1C03C /* UIFont.ex.swift in Sources */,
 				5584B12123115358000D9309 /* DiscoveryViewModel.swift in Sources */,
+				9F27254E2327666900AFC8E6 /* DatabaseManager.swift in Sources */,
 				5584B0F32310EE5E000D9309 /* DownloadViewController.swift in Sources */,
 				5584B12F23116213000D9309 /* UIColor.ex.swift in Sources */,
 				9FA947262314FBE90028A60D /* Whoops.swift in Sources */,
