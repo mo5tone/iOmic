@@ -30,7 +30,7 @@ struct Page: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
     enum CodingKeys: String, CodingTableKey {
         typealias Root = Page
         static let objectRelationalMapping = TableBinding(CodingKeys.self)
-        case identity, chapter, index, url, imageUrl = "image_url"
+        case identity, chapter, index = "page_index", url, imageUrl = "image_url"
         static var columConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
             return [identity: .init(isPrimary: true, isAutoIncrement: false, onConflict: .replace)]
         }

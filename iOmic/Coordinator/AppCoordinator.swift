@@ -50,6 +50,7 @@ class AppCoordinator: Coordinator {
 
     private func setupConfigurations() {
         IQKeyboardManager.shared.enable = true
+        do { try DatabaseManager.shared.createTables() } catch { print(error) }
     }
 }
 
