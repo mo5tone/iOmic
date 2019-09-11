@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BooksViewController" customModule="iOmic" customModuleProvider="target">
             <connections>
+                <outlet property="collectionView" destination="pYi-6q-UqH" id="Zyi-u9-Tse"/>
                 <outlet property="view" destination="iN0-l3-epB" id="GHs-A6-TVs"/>
             </connections>
         </placeholder>
@@ -20,17 +21,23 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reading View Controller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Dv-ya-Dvi">
-                    <rect key="frame" x="115.5" y="442.5" width="183.5" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="pYi-6q-UqH">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yOq-60-pkg">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="7Dv-ya-Dvi" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="7D7-mT-RJ5"/>
-                <constraint firstItem="7Dv-ya-Dvi" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="RSk-Xw-SeD"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="pYi-6q-UqH" secondAttribute="trailing" id="Jro-0i-DxK"/>
+                <constraint firstItem="pYi-6q-UqH" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="LyO-cV-ESa"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="pYi-6q-UqH" secondAttribute="bottom" id="fq1-jb-ChO"/>
+                <constraint firstItem="pYi-6q-UqH" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="rdf-sE-hmf"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
         </view>

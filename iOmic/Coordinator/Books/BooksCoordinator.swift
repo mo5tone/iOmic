@@ -21,7 +21,7 @@ class BooksCoordinator: NavigationCoordinator {
     init(window: UIWindow, delegate: BooksCoordinatorDelegate?) {
         super.init(window: window)
         self.delegate = delegate
-        viewController = BooksViewController(coordinator: self, viewModel: .init())
+        viewController = BooksViewController(coordinator: self, viewModel: .init(persistence: Persistence.shared))
         navigationController = .init(rootViewController: viewController)
         navigationController.navigationBar.prefersLargeTitles = true
     }

@@ -71,8 +71,8 @@ class DiscoveryViewController: UIViewController {
         Observable.merge(loadControlEvents.map { $0.asObservable() }).bind(to: viewModel.load).disposed(by: bag)
 
         // !!!: https://github.com/onevcat/Kingfisher/issues/1230
-        collectionView.rx.prefetchItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.map { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.prefetchItems($0) }).disposed(by: bag)
-        collectionView.rx.cancelPrefetchingForItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.map { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.cancelPrefetchingForItems($0) }).disposed(by: bag)
+        collectionView.rx.prefetchItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.filter { $0.item < books.count }.map { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.prefetchItems($0) }).disposed(by: bag)
+        collectionView.rx.cancelPrefetchingForItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.filter { $0.item < books.count }.map { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.cancelPrefetchingForItems($0) }).disposed(by: bag)
 
         collectionView.rx.setDelegate(self).disposed(by: bag)
         collectionView.rx.itemSelected.withLatestFrom(viewModel.books) { $1[$0.item] }.subscribe(onNext: { [weak self] in self?.coordinator?.showChapters(in: $0) }).disposed(by: bag)

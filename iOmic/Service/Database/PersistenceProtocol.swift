@@ -16,6 +16,11 @@ protocol PersistenceProtocol {
     var pageTable: Table<Page>? { get }
 }
 
+protocol BooksPersistenceProtocol: PersistenceProtocol {
+    func favoriteBook() -> Observable<[Book]>
+    func readBooks() -> Observable<[Book]>
+}
+
 protocol ChaptersPersistenceProtocol: PersistenceProtocol {
     func getBook(where identity: Book.Identity) -> Observable<Book?>
     func update(isFavorited: Bool, on book: Book) -> Observable<Void>
@@ -27,6 +32,20 @@ extension Persistence: PersistenceProtocol {
     var bookTable: Table<Book>? { return try? database.getTable(named: Book.tableName, of: Book.self) }
     var chapterTable: Table<Chapter>? { return try? database.getTable(named: Chapter.tableName, of: Chapter.self) }
     var pageTable: Table<Page>? { return try? database.getTable(named: Page.tableName, of: Page.self) }
+}
+
+// MARK: - BooksPersistenceProtocol
+
+extension Persistence: BooksPersistenceProtocol {
+    func favoriteBook() -> Observable<[Book]> {
+        guard let table = bookTable else { return Observable.empty() }
+        return table.rx.getObjects(on: Book.Properties.all, where: Book.Properties.isFavorited == true)
+    }
+
+    func readBooks() -> Observable<[Book]> {
+        guard let table = bookTable else { return Observable.empty() }
+        return table.rx.getObjects(on: Book.Properties.all, where: Book.Properties.readAt.isNotNull(), orderBy: [Book.Properties.readAt])
+    }
 }
 
 // MARK: - ChaptersPersistenceProtocol

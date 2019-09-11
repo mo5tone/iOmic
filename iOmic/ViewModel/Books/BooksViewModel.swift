@@ -7,5 +7,17 @@
 //
 
 import Foundation
+import RxSwift
 
-class BooksViewModel: NSObject {}
+class BooksViewModel: NSObject {
+    private let bag: DisposeBag = .init()
+    let add: PublishSubject<Void> = .init()
+    let groupIndex: BehaviorSubject<Int> = .init(value: 0)
+    let books: BehaviorSubject<[Book]> = .init(value: [])
+
+    init(persistence: BooksPersistenceProtocol) {
+        super.init()
+        groupIndex.filter { $0 == 0 }.flatMapLatest { _ in persistence.favoriteBook() }.bind(to: books).disposed(by: bag)
+        groupIndex.filter { $0 == 1 }.flatMapLatest { _ in persistence.readBooks() }.bind(to: books).disposed(by: bag)
+    }
+}
