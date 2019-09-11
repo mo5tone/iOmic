@@ -25,11 +25,11 @@ class ChaptersViewModel: NSObject {
         self.book = .init(value: book)
         super.init()
         load.withLatestFrom(databaseManager.getBook(where: book.identity)).compactMap { $0?.isFavorited }.bind(to: isFavorited).disposed(by: bag)
-        switchFavorited.withLatestFrom(isFavorited).withLatestFrom(self.book) { ($0, $1) }.subscribe(onNext: { isFavorited, value in
-            var book = value
-            book.isFavorited = isFavorited
-            _ = databaseManager.saveBook(book)
-        }).disposed(by: bag)
+        switchFavorited.withLatestFrom(isFavorited).withLatestFrom(self.book) { isFavorited, book -> Book in
+            var copy = book
+            copy.isFavorited = isFavorited
+            return copy
+        }.flatMapLatest { databaseManager.saveBook($0) }.subscribe().disposed(by: bag)
         let results = load.withLatestFrom(self.book)
             .flatMapLatest { book -> Observable<[Chapter]> in book.source.fetchChapters(book: book) }
             .share()

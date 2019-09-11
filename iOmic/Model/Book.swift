@@ -38,7 +38,7 @@ struct Book: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
         typealias Root = Book
         static let objectRelationalMapping = TableBinding(CodingKeys.self)
         case identity, sourceIdentifier = "source_identifier", url, thumbnailUrl = "thumbnail_url", title, artist, author, genre, summary, status, isFavorited = "is_favorited", readAt = "read_at"
-        static var columConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
+        static var columnConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
             return [identity: .init(isPrimary: true, isAutoIncrement: false, onConflict: .replace)]
         }
     }

@@ -32,7 +32,7 @@ struct Chapter: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
         typealias Root = Chapter
         static let objectRelationalMapping = TableBinding(CodingKeys.self)
         case identity, book, url, name, updateAt = "update_at", chapterNumber = "chapter_number"
-        static var columConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
+        static var columnConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
             return [identity: .init(isPrimary: true, isAutoIncrement: false, onConflict: .replace)]
         }
     }
