@@ -10,11 +10,20 @@ import Foundation
 import RxSwift
 import WCDBSwift
 
-extension Table: ReactiveCompatible {}
-
 /// https://github.com/ReactiveCocoa/ReactiveSwift/issues/238
-extension Reactive {
-    func getObject<Root>(on propertyConvertibleList: [PropertyConvertible], where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, offset: Offset? = nil) -> Observable<Root?> where Base: Table<Root>, Root: TableDecodable, Root: TableEncodable {
+// extension Table: ReactiveCompatible {}
+
+extension Table {
+    struct Reactive<Root> where Root: TableDecodable, Root: TableEncodable {
+        let base: Table<Root>
+        fileprivate init(_ base: Table<Root>) { self.base = base }
+    }
+
+    var rx: Reactive<Root> { return Reactive(self) }
+}
+
+extension Table.Reactive {
+    func getObject(on propertyConvertibleList: [PropertyConvertible], where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, offset: Offset? = nil) -> Observable<Root?> {
         return Observable.create { observer -> Disposable in
             do {
                 let object = try self.base.getObject(on: propertyConvertibleList, where: condition, orderBy: orderList, offset: offset)
@@ -27,7 +36,7 @@ extension Reactive {
         }
     }
 
-    func getObject<Root>(on propertyConvertibleList: PropertyConvertible..., where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, offset: Offset? = nil) -> Observable<Root?> where Base: Table<Root>, Root: TableDecodable, Root: TableEncodable {
+    func getObject(on propertyConvertibleList: PropertyConvertible..., where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, offset: Offset? = nil) -> Observable<Root?> {
         return Observable.create { observer -> Disposable in
             do {
                 let object = try self.base.getObject(on: propertyConvertibleList, where: condition, orderBy: orderList, offset: offset)
@@ -40,7 +49,7 @@ extension Reactive {
         }
     }
 
-    func insertOrReplace<Root>(objects: [Root], on propertyConvertibleList: [PropertyConvertible]? = nil) -> Observable<Void> where Base: Table<Root>, Root: TableDecodable, Root: TableEncodable {
+    func insertOrReplace(objects: [Root], on propertyConvertibleList: [PropertyConvertible]? = nil) -> Observable<Void> {
         return Observable.create { observer -> Disposable in
             do {
                 try self.base.insertOrReplace(objects: objects, on: propertyConvertibleList)
@@ -52,7 +61,7 @@ extension Reactive {
         }
     }
 
-    func insertOrReplace<Root>(objects: Root..., on propertyConvertibleList: [PropertyConvertible]? = nil) -> Observable<Void> where Base: Table<Root>, Root: TableDecodable, Root: TableEncodable {
+    func insertOrReplace(objects: Root..., on propertyConvertibleList: [PropertyConvertible]? = nil) -> Observable<Void> {
         return Observable.create { observer -> Disposable in
             do {
                 try self.base.insertOrReplace(objects: objects, on: propertyConvertibleList)
