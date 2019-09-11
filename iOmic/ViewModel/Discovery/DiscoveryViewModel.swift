@@ -43,8 +43,7 @@ class DiscoveryViewModel: NSObject {
                         array.append(contentsOf: $0)
                         return array
                     }
-
-            }.catchErrorJustReturn([]).bind(to: books).disposed(by: bag)
+            }.bind(to: books).disposed(by: bag)
     }
 
     func reset() {}

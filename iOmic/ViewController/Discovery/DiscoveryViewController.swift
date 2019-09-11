@@ -14,9 +14,9 @@ import SwiftEntryKit
 import UIKit
 
 protocol DiscoveryViewCoordinator: AnyObject {
-    func popupSourcesSwitcher(current: SourceProtocol) -> Observable<SourceProtocol>
-    func popupFiltersPicker(current: [FilterProrocol]) -> Observable<[FilterProrocol]>
-    func showBook(_ book: Book)
+    func presentSources(current: SourceProtocol) -> Observable<SourceProtocol>
+    func presentFilters(current: [FilterProrocol]) -> Observable<[FilterProrocol]>
+    func showChapters(in book: Book)
 }
 
 class DiscoveryViewController: UIViewController {
@@ -55,12 +55,12 @@ class DiscoveryViewController: UIViewController {
         viewModel.title.bind(to: navigationItem.rx.title).disposed(by: bag)
         navigationItem.leftBarButtonItem?.rx.tap
             .withLatestFrom(viewModel.source)
-            .flatMapLatest { [weak self] in self?.coordinator?.popupSourcesSwitcher(current: $0) ?? Observable.empty() }
+            .flatMapLatest { [weak self] in self?.coordinator?.presentSources(current: $0) ?? Observable.empty() }
             .bind(to: viewModel.source)
             .disposed(by: bag)
         let filtersChanged = navigationItem.rightBarButtonItem?.rx.tap
             .withLatestFrom(viewModel.filters)
-            .flatMapLatest { [weak self] in self?.coordinator?.popupFiltersPicker(current: $0) ?? Observable.empty() }
+            .flatMapLatest { [weak self] in self?.coordinator?.presentFilters(current: $0) ?? Observable.empty() }
             .share()
         filtersChanged?.bind(to: viewModel.filters).disposed(by: bag)
         filtersChanged?.map { _ in }.bind(to: viewModel.load).disposed(by: bag)
@@ -73,8 +73,9 @@ class DiscoveryViewController: UIViewController {
         // !!!: https://github.com/onevcat/Kingfisher/issues/1230
         collectionView.rx.prefetchItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.map { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.prefetchItems($0) }).disposed(by: bag)
         collectionView.rx.cancelPrefetchingForItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.map { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.cancelPrefetchingForItems($0) }).disposed(by: bag)
+
         collectionView.rx.setDelegate(self).disposed(by: bag)
-        collectionView.rx.itemSelected.withLatestFrom(viewModel.books) { $1[$0.item] }.subscribe(onNext: { [weak self] in self?.coordinator?.showBook($0) }).disposed(by: bag)
+        collectionView.rx.itemSelected.withLatestFrom(viewModel.books) { $1[$0.item] }.subscribe(onNext: { [weak self] in self?.coordinator?.showChapters(in: $0) }).disposed(by: bag)
         collectionView.rx.willDisplayCell.subscribe(onNext: { [weak self] cell, _ in self?.willDisplayCell(cell) }).disposed(by: bag)
         collectionView.rx.willDisplayCell.map { $1 }.withLatestFrom(viewModel.books.map { $0.count }) { $0.item == $1 - 1 }.filter { $0 }.map { _ in () }.bind(to: viewModel.loadMore).disposed(by: bag)
         collectionView.rx.didEndDisplayingCell.compactMap { $0.cell as? BookCollectionViewCell }.subscribe(onNext: { $0.imageView?.kf.cancelDownloadTask() }).disposed(by: bag)

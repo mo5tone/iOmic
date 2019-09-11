@@ -13,23 +13,19 @@ import WCDBSwift
 
 class ChaptersViewModel: NSObject {
     private let bag: DisposeBag = .init()
-    private let databaseManager: DatabaseManagerProtocol
+    private let persistence: ChaptersPersistenceProtocol
     let load: PublishSubject<Void> = .init()
     let switchFavorited: PublishSubject<Void> = .init()
     let isFavorited: BehaviorSubject<Bool> = .init(value: false)
     let book: BehaviorSubject<Book>
     let chapters: BehaviorSubject<[Chapter]> = .init(value: [])
 
-    init(book: Book, databaseManager: DatabaseManagerProtocol) {
-        self.databaseManager = databaseManager
+    init(book: Book, persistence: ChaptersPersistenceProtocol) {
+        self.persistence = persistence
         self.book = .init(value: book)
         super.init()
-        load.withLatestFrom(databaseManager.getBook(where: book.identity)).compactMap { $0?.isFavorited }.bind(to: isFavorited).disposed(by: bag)
-        switchFavorited.withLatestFrom(isFavorited).withLatestFrom(self.book) { isFavorited, book -> Book in
-            var copy = book
-            copy.isFavorited = isFavorited
-            return copy
-        }.flatMapLatest { databaseManager.saveBook($0) }.subscribe().disposed(by: bag)
+        load.withLatestFrom(persistence.getBook(where: book.identity)).compactMap { $0?.isFavorited }.bind(to: isFavorited).disposed(by: bag)
+        switchFavorited.withLatestFrom(Observable.combineLatest(isFavorited, self.book)).flatMapLatest { persistence.update(isFavorited: $0.0, on: $0.1) }.subscribe().disposed(by: bag)
         let results = load.withLatestFrom(self.book)
             .flatMapLatest { book -> Observable<[Chapter]> in book.source.fetchChapters(book: book) }
             .share()

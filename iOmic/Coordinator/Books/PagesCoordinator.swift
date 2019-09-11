@@ -37,7 +37,7 @@ class PagesCoordinator: ViewCoordinator {
 // MARK: - PagesViewCoordinator
 
 extension PagesCoordinator: PagesViewCoordinator {
-    func isMovingFromParentViewController() {
+    func movingFromParent() {
         delegate?.coordinatorDidEnd(self)
     }
 }

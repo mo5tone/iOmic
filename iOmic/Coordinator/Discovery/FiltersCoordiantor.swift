@@ -11,21 +11,21 @@ import RxSwift
 import SwiftEntryKit
 import UIKit
 
-protocol SourceFiltersCoordiantorDelegate: CoordinatorDelegate {}
+protocol FiltersCoordiantorDelegate: CoordinatorDelegate {}
 
-class SourceFiltersCoordiantor: ViewCoordinator {
+class FiltersCoordiantor: ViewCoordinator {
     private let filters: PublishSubject<[FilterProrocol]> = .init()
-    private weak var delegate: SourceFiltersCoordiantorDelegate?
+    private weak var delegate: FiltersCoordiantorDelegate?
 
-    init(window: UIWindow, delegate: SourceFiltersCoordiantorDelegate?, filters: [FilterProrocol]) {
+    init(window: UIWindow, delegate: FiltersCoordiantorDelegate?, filters: [FilterProrocol]) {
         super.init(window: window)
         self.delegate = delegate
-        viewController = SourceFiltersViewController(coordinator: self, viewModel: .init(filters: filters))
+        viewController = FiltersViewController(coordinator: self, viewModel: .init(filters: filters))
     }
 
     func start() -> Observable<[FilterProrocol]> {
         var attributes: EKAttributes = .bottomNote
-        attributes.name = String(describing: SourceFiltersViewController.self)
+        attributes.name = String(describing: FiltersViewController.self)
         attributes.displayDuration = .infinity
         attributes.positionConstraints.safeArea = .empty(fillSafeArea: false)
         attributes.positionConstraints.size = .init(width: .offset(value: 8), height: .ratio(value: 0.7))
@@ -40,11 +40,11 @@ class SourceFiltersCoordiantor: ViewCoordinator {
     }
 }
 
-// MARK: - SourceFiltersViewCoordinator
+// MARK: - FiltersViewCoordinator
 
-extension SourceFiltersCoordiantor: SourceFiltersViewCoordinator {
+extension FiltersCoordiantor: FiltersViewCoordinator {
     func dismiss() {
-        SwiftEntryKit.dismiss(.specific(entryName: String(describing: SourceFiltersViewController.self))) { [weak self] in
+        SwiftEntryKit.dismiss(.specific(entryName: String(describing: FiltersViewController.self))) { [weak self] in
             guard let self = self else { return }
             self.delegate?.coordinatorDidEnd(self)
         }

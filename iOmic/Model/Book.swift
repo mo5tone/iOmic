@@ -49,6 +49,9 @@ struct Book: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
         case ongoing = "Ongoing"
         case completed = "Completed"
         case unknown = "Unknown"
+
+        // MARK: - ColumnCodable
+
         static var columnType: ColumnType { return .text }
         func archivedValue() -> FundamentalValue { return FundamentalValue(rawValue) }
         init?(with value: FundamentalValue) { self.init(rawValue: value.stringValue) }

@@ -74,7 +74,9 @@ protocol ViewCoordinatorDelegate: AnyObject {
 
     func presented(animated: Bool, completion: (() -> Void)?)
 
-    func isMovingFromParentViewController()
+    func movingFromParent()
+
+    func whoops(_ error: Error)
 }
 
 class ViewCoordinator: Coordinator {
@@ -94,4 +96,6 @@ extension ViewCoordinatorDelegate where Self: ViewCoordinator {
     func presented(animated: Bool = true, completion: (() -> Void)? = nil) {
         navigationController?.topViewController?.present(viewController, animated: animated, completion: completion)
     }
+
+    func whoops(_: Error) {}
 }

@@ -13,7 +13,7 @@ $(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework
 $(SRCROOT)/Carthage/Build/iOS/RxDataSources.framework
 $(SRCROOT)/Carthage/Build/iOS/RxRelay.framework
 $(SRCROOT)/Carthage/Build/iOS/RxSwift.framework
-$(SRCROOT)/Carthage/Build/iOS/Skeleton.framework
+$(SRCROOT)/Carthage/Build/iOS/SkeletonView.framework
 $(SRCROOT)/Carthage/Build/iOS/SwiftEntryKit.framework
 $(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework
 $(SRCROOT)/Carthage/Build/iOS/SwipeCellKit.framework

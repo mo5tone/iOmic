@@ -33,7 +33,7 @@ class DiscoveryCoordinator: NavigationCoordinator {
 // MARK: - DiscoveryViewCoordinator
 
 extension DiscoveryCoordinator: DiscoveryViewCoordinator {
-    func popupSourcesSwitcher(current _: SourceProtocol) -> Observable<SourceProtocol> {
+    func presentSources(current _: SourceProtocol) -> Observable<SourceProtocol> {
         let alertController: UIAlertController = .init(title: nil, message: nil, preferredStyle: .actionSheet)
         let subject: PublishSubject<SourceProtocol> = .init()
         SourceIdentifier.values.map { identifier in .init(title: identifier.source.name, style: .default, handler: { _ in subject.on(.next(identifier.source)) }) }.forEach { alertController.addAction($0) }
@@ -44,22 +44,22 @@ extension DiscoveryCoordinator: DiscoveryViewCoordinator {
         return subject
     }
 
-    func popupFiltersPicker(current: [FilterProrocol]) -> Observable<[FilterProrocol]> {
-        let coordinator: SourceFiltersCoordiantor = .init(window: window, delegate: self, filters: current)
+    func presentFilters(current: [FilterProrocol]) -> Observable<[FilterProrocol]> {
+        let coordinator: FiltersCoordiantor = .init(window: window, delegate: self, filters: current)
         append(coordinator: coordinator)
         return coordinator.start()
     }
 
-    func showBook(_ book: Book) {
+    func showChapters(in book: Book) {
         let coordinator: ChaptersCoordinator = .init(window: window, delegate: self, navigationController: navigationController, book: book)
         append(coordinator: coordinator)
         coordinator.start()
     }
 }
 
-// MARK: - SourceFiltersCoordiantorDelegate
+// MARK: - FiltersCoordiantorDelegate
 
-extension DiscoveryCoordinator: SourceFiltersCoordiantorDelegate {}
+extension DiscoveryCoordinator: FiltersCoordiantorDelegate {}
 
 // MARK: - ChaptersCoordinatorDelegate
 

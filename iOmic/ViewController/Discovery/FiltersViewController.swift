@@ -1,5 +1,5 @@
 //
-//  SourceFiltersViewController.swift
+//  FiltersViewController.swift
 //  iOmic
 //
 //  Created by 门捷夫 on 2019/8/31.
@@ -11,16 +11,16 @@ import RxSwift
 import SwiftEntryKit
 import UIKit
 
-protocol SourceFiltersViewCoordinator: AnyObject {
+protocol FiltersViewCoordinator: AnyObject {
     func dismiss()
     func applyFilters(_ filters: [FilterProrocol])
 }
 
-class SourceFiltersViewController: UIViewController {
+class FiltersViewController: UIViewController {
     // MARK: - instance props.
 
-    private weak var coordinator: SourceFiltersViewCoordinator?
-    private let viewModel: SourceFiltersViewModel
+    private weak var coordinator: FiltersViewCoordinator?
+    private let viewModel: FiltersViewModel
     private let bag: DisposeBag = .init()
     @IBOutlet var cancelButton: UIButton!
     @IBOutlet var okButton: UIButton!
@@ -53,7 +53,7 @@ class SourceFiltersViewController: UIViewController {
 
     // MARK: - public instance methods.
 
-    init(coordinator: SourceFiltersViewCoordinator?, viewModel: SourceFiltersViewModel) {
+    init(coordinator: FiltersViewCoordinator?, viewModel: FiltersViewModel) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -89,7 +89,7 @@ class SourceFiltersViewController: UIViewController {
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 
-extension SourceFiltersViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension FiltersViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in _: UICollectionView) -> Int {
         return viewModel.filters.count
     }

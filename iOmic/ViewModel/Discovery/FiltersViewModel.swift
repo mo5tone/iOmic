@@ -1,5 +1,5 @@
 //
-//  SourceFiltersViewModel.swift
+//  FiltersViewModel.swift
 //  iOmic
 //
 //  Created by Jeff Men (CN) on 2019/9/4.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SourceFiltersViewModel: NSObject {
+class FiltersViewModel: NSObject {
     let filters: [FilterProrocol]
 
     init(filters: [FilterProrocol]) {

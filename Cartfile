@@ -5,6 +5,7 @@ github "onevcat/Kingfisher" ~> 5.0 # Networking images caching
 # Persistence
 github "Tencent/WCDB" "v1.0.8.2"
 github "nmdias/DefaultsKit" # UserDefaults
+github "Tencent/MMKV"
 github "nvzqz/FileKit" # FileManager helper
 github "ZipArchive/ZipArchive" # zipping and unzipping files
 
@@ -13,7 +14,7 @@ github "SwiftyJSON/SwiftyJSON" ~> 5.0 # JSON
 github "tid-kijyun/Kanna" ~> 5.0.0 # HTML [In the project settings add $(SDKROOT)/usr/include/libxml2 to the "header search paths" field]
 
 # UI
-github "gonzalonunez/Skeleton" ~> 0.3.1 # Loading placeholder
+github "Juanpe/SkeletonView" # Loading placeholder
 github "hackiftekhar/IQKeyboardManager" # Keyboard managing
 github "SwipeCellKit/SwipeCellKit" # Swipable cell
 github "huri000/SwiftEntryKit" ~> 1.1.3 # Pop-ups helper

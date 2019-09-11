@@ -24,8 +24,10 @@ class ChapterCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+
         titleLabel.font = .preferredFont(forTextStyle: .caption1)
         titleLabel.textColor = .darkText
+
         backgroundView = {
             let view = UIView()
             view.backgroundColor = .groupTableViewBackground

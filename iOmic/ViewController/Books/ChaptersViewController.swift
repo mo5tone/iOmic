@@ -70,7 +70,7 @@ class ChaptersViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if isMovingFromParent { coordinator?.isMovingFromParentViewController() }
+        if isMovingFromParent { coordinator?.movingFromParent() }
     }
 
     deinit { print(String(describing: self)) }

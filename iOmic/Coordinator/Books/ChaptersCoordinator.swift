@@ -22,7 +22,7 @@ class ChaptersCoordinator: ViewCoordinator {
         super.init(window: window)
         self.delegate = delegate
         self.navigationController = navigationController
-        viewController = ChaptersViewController(coordinator: self, viewModel: .init(book: book, databaseManager: DatabaseManager.shared))
+        viewController = ChaptersViewController(coordinator: self, viewModel: .init(book: book, persistence: Persistence.shared))
         viewController.hidesBottomBarWhenPushed = true
     }
 
@@ -41,7 +41,7 @@ extension ChaptersCoordinator: ChaptersViewCoordinator {
         coordinator.start()
     }
 
-    func isMovingFromParentViewController() {
+    func movingFromParent() {
         delegate?.coordinatorDidEnd(self)
     }
 }
