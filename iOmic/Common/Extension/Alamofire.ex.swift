@@ -8,7 +8,6 @@
 
 import Alamofire
 import Foundation
-import PromiseKit
 
 protocol RequestConvertible: URLRequestConvertible {
     var baseURLString: URLConvertible { get }

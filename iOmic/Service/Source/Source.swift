@@ -6,7 +6,6 @@
 //  Copyright © 2019 门捷夫. All rights reserved.
 //
 
-import DefaultsKit
 import FileKit
 import Foundation
 import Kingfisher
@@ -47,14 +46,7 @@ protocol SourceProtocol {
 
 extension SourceProtocol {
     var available: Bool {
-        set {
-            var sourceAvailability = Defaults.shared.get(for: .sourceAvailability) ?? [:]
-            sourceAvailability[identifier.rawValue] = newValue
-            Defaults.shared.set(sourceAvailability, for: .sourceAvailability)
-        }
-        get {
-            let sourceAvailability = Defaults.shared.get(for: .sourceAvailability) ?? [:]
-            return sourceAvailability[identifier.rawValue] ?? true
-        }
+        set { KeyValues.shared.set(souce: self, available: newValue) }
+        get { return KeyValues.shared.isAvailable(self) }
     }
 }

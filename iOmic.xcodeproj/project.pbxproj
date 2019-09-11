@@ -20,6 +20,8 @@
 		55342F6C2310B6BC00FA141B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55342F6A2310B6BC00FA141B /* LaunchScreen.storyboard */; };
 		55342F772310B6BC00FA141B /* iOmicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55342F762310B6BC00FA141B /* iOmicTests.swift */; };
 		55342F822310B6BC00FA141B /* iOmicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55342F812310B6BC00FA141B /* iOmicUITests.swift */; };
+		553634422329187B00715628 /* MMKV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 553634412329187B00715628 /* MMKV.framework */; };
+		55363444232918CD00715628 /* KeyValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55363443232918CD00715628 /* KeyValues.swift */; };
 		555C1CCE2319582900E388D6 /* ReusableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555C1CCD2319582900E388D6 /* ReusableIdentifier.swift */; };
 		555C1CD1231A034200E388D6 /* Differentiator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C1CD0231A034200E388D6 /* Differentiator.framework */; };
 		555C1CD3231A035C00E388D6 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C1CD2231A035C00E388D6 /* RxDataSources.framework */; };
@@ -69,7 +71,6 @@
 		9F27254E2327666900AFC8E6 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F27254D2327666900AFC8E6 /* Persistence.swift */; };
 		9F27254F232766A000AFC8E6 /* WCDBSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F5B2310D47D007D1454 /* WCDBSwift.framework */; };
 		9F272551232790CE00AFC8E6 /* WCDBSwift+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F272550232790CE00AFC8E6 /* WCDBSwift+RxSwift.swift */; };
-		9F4058C42328929A00AA1309 /* SkeletonView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F4058C32328929A00AA1309 /* SkeletonView.framework */; };
 		9F4058D82328EC3F00AA1309 /* PersistenceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4058D72328EC3F00AA1309 /* PersistenceProtocol.swift */; };
 		9F423D492316834E006B950F /* Date.ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F423D482316834E006B950F /* Date.ex.swift */; };
 		9F423D5023178019006B950F /* Alamofire+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F423D4F23178019006B950F /* Alamofire+RxSwift.swift */; };
@@ -84,8 +85,6 @@
 		9FD786FF231FA37B00E1C03C /* PickFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD786FD231FA37B00E1C03C /* PickFilterCollectionViewCell.swift */; };
 		9FD78700231FA37B00E1C03C /* PickFilterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FD786FE231FA37B00E1C03C /* PickFilterCollectionViewCell.xib */; };
 		9FD787022320B69000E1C03C /* UIFont.ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD787012320B69000E1C03C /* UIFont.ex.swift */; };
-		9FE510272326201E008F2610 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE510262326201E008F2610 /* UserDefaults.swift */; };
-		9FE510292326227D008F2610 /* DefaultsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FE510282326227D008F2610 /* DefaultsKit.framework */; };
 		9FFB4B6C2320D3D100297C12 /* ChaptersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFB4B6B2320D3D100297C12 /* ChaptersViewModel.swift */; };
 		9FFB4B6E2320D3FE00297C12 /* ChaptersCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFB4B6D2320D3FE00297C12 /* ChaptersCoordinator.swift */; };
 		9FFB4B712320D42800297C12 /* ChaptersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFB4B6F2320D42800297C12 /* ChaptersViewController.swift */; };
@@ -135,6 +134,8 @@
 		55342F7D2310B6BC00FA141B /* iOmicUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOmicUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		55342F812310B6BC00FA141B /* iOmicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOmicUITests.swift; sourceTree = "<group>"; };
 		55342F832310B6BC00FA141B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		553634412329187B00715628 /* MMKV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMKV.framework; path = Carthage/Build/iOS/MMKV.framework; sourceTree = "<group>"; };
+		55363443232918CD00715628 /* KeyValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValues.swift; sourceTree = "<group>"; };
 		555C1CCD2319582900E388D6 /* ReusableIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableIdentifier.swift; sourceTree = "<group>"; };
 		555C1CD0231A034200E388D6 /* Differentiator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differentiator.framework; path = Carthage/Build/iOS/Differentiator.framework; sourceTree = "<group>"; };
 		555C1CD2231A035C00E388D6 /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
@@ -203,7 +204,6 @@
 		9FD786FE231FA37B00E1C03C /* PickFilterCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickFilterCollectionViewCell.xib; sourceTree = "<group>"; };
 		9FD787012320B69000E1C03C /* UIFont.ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.ex.swift; sourceTree = "<group>"; };
 		9FE5102423261FCF008F2610 /* SwiftyUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyUserDefaults.framework; path = Carthage/Build/iOS/SwiftyUserDefaults.framework; sourceTree = "<group>"; };
-		9FE510262326201E008F2610 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		9FE510282326227D008F2610 /* DefaultsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DefaultsKit.framework; path = Carthage/Build/iOS/DefaultsKit.framework; sourceTree = "<group>"; };
 		9FFB4B6B2320D3D100297C12 /* ChaptersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersViewModel.swift; sourceTree = "<group>"; };
 		9FFB4B6D2320D3FE00297C12 /* ChaptersCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersCoordinator.swift; sourceTree = "<group>"; };
@@ -220,7 +220,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55191F4A2310D22D007D1454 /* Alamofire.framework in Frameworks */,
-				9FE510292326227D008F2610 /* DefaultsKit.framework in Frameworks */,
 				9FFB4B752320EA7C00297C12 /* DeviceKit.framework in Frameworks */,
 				555C1CD1231A034200E388D6 /* Differentiator.framework in Frameworks */,
 				559302A42312C1AE0021C170 /* FileKit.framework in Frameworks */,
@@ -229,12 +228,12 @@
 				5593029E2312B7150021C170 /* Kanna.framework in Frameworks */,
 				55191F4E2310D24C007D1454 /* Kingfisher.framework in Frameworks */,
 				55F48B0A23214571000FBC18 /* MarqueeLabel.framework in Frameworks */,
+				553634422329187B00715628 /* MMKV.framework in Frameworks */,
 				55B19F71231AB3A500CFBB02 /* QuickLayout.framework in Frameworks */,
 				55191F522310D25A007D1454 /* RxCocoa.framework in Frameworks */,
 				555C1CD3231A035C00E388D6 /* RxDataSources.framework in Frameworks */,
 				55191F542310D25F007D1454 /* RxRelay.framework in Frameworks */,
 				55191F562310D264007D1454 /* RxSwift.framework in Frameworks */,
-				9F4058C42328929A00AA1309 /* SkeletonView.framework in Frameworks */,
 				55B19F73231AB3B600CFBB02 /* SwiftEntryKit.framework in Frameworks */,
 				559302A02312B7270021C170 /* SwiftyJSON.framework in Frameworks */,
 				55191F5A2310D477007D1454 /* SwipeCellKit.framework in Frameworks */,
@@ -263,6 +262,7 @@
 		55191F482310D22D007D1454 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				553634412329187B00715628 /* MMKV.framework */,
 				9F4058C32328929A00AA1309 /* SkeletonView.framework */,
 				9F27254A232650E900AFC8E6 /* Realm.framework */,
 				9F272549232650E900AFC8E6 /* RealmSwift.framework */,
@@ -567,7 +567,7 @@
 			children = (
 				9FE5102A23263FAA008F2610 /* Database */,
 				5584B13023116835000D9309 /* Source */,
-				9FE510262326201E008F2610 /* UserDefaults.swift */,
+				55363443232918CD00715628 /* KeyValues.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -869,7 +869,6 @@
 				5584B12F23116213000D9309 /* UIColor.ex.swift in Sources */,
 				9FA947262314FBE90028A60D /* Whoops.swift in Sources */,
 				9FFB4B712320D42800297C12 /* ChaptersViewController.swift in Sources */,
-				9FE510272326201E008F2610 /* UserDefaults.swift in Sources */,
 				5584B11D2311533D000D9309 /* SettingViewModel.swift in Sources */,
 				9F423D492316834E006B950F /* Date.ex.swift in Sources */,
 				9FA947242314F4E80028A60D /* Alamofire.ex.swift in Sources */,
@@ -880,6 +879,7 @@
 				55CB63B92323DB8E001A6E4D /* PageCollectionViewCell.swift in Sources */,
 				5584B0EB2310EC4F000D9309 /* BooksViewController.swift in Sources */,
 				55CB63B42323C95F001A6E4D /* PagesViewModel.swift in Sources */,
+				55363444232918CD00715628 /* KeyValues.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
