@@ -13,10 +13,11 @@ import UIKit
 
 protocol DiscoveryCoordinatorDelegate: CoordinatorDelegate {}
 
-class DiscoveryCoordinator: NavigationCoordinator {
+class DiscoveryCoordinator: VisibleCoordinator, NavigationCoordinatorProtocol {
     // MARK: - Props.
 
     private weak var delegate: DiscoveryCoordinatorDelegate?
+    private(set) var navigationController: UINavigationController = .init()
     private let bag: DisposeBag = .init()
 
     // MARK: - Public

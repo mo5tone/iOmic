@@ -87,6 +87,8 @@ class PagesViewController: UIViewController {
     }
 
     private func setupBinding() {
+        viewModel.error.subscribe(onNext: { [weak self] in self?.coordinator?.whoops($0) }).disposed(by: bag)
+
         viewModel.chapter.map { $0.name }.bind(to: navigationItem.rx.title).disposed(by: bag)
         viewModel.pages.map { [AnimatableSectionModel<Int, Page>(model: 1, items: $0)] }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
         viewModel.pages.filter { !$0.isEmpty }.map { $0.count }.subscribe(onNext: { [weak self] in

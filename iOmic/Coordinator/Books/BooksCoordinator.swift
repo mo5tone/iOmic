@@ -11,10 +11,11 @@ import UIKit
 
 protocol BooksCoordinatorDelegate: CoordinatorDelegate {}
 
-class BooksCoordinator: NavigationCoordinator {
+class BooksCoordinator: VisibleCoordinator, NavigationCoordinatorProtocol {
     // MARK: - Props.
 
     private weak var delegate: BooksCoordinatorDelegate?
+    private(set) var navigationController: UINavigationController = .init()
 
     // MARK: - Public
 

@@ -11,10 +11,11 @@ import UIKit
 
 protocol ChaptersCoordinatorDelegate: CoordinatorDelegate {}
 
-class ChaptersCoordinator: ViewCoordinator {
+class ChaptersCoordinator: VisibleCoordinator {
     // MARK: - instace props.
 
     private weak var delegate: ChaptersCoordinatorDelegate?
+    private weak var navigationController: UINavigationController?
 
     // MARK: - public methods
 

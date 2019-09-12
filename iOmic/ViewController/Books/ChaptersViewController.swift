@@ -124,6 +124,8 @@ class ChaptersViewController: UIViewController {
     }
 
     private func setupBinding() {
+        viewModel.error.subscribe(onNext: { [weak self] in self?.coordinator?.whoops($0) }).disposed(by: bag)
+
         viewModel.isFavorited.subscribe(onNext: { [weak self] isFavorited in
             if isFavorited {
                 self?.favoriteBarButtonItem.tintColor = UIColor.flat.favorite

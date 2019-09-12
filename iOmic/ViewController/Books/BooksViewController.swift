@@ -78,6 +78,9 @@ class BooksViewController: UIViewController {
     }
 
     private func setupBinding() {
+        // TODO: -
+//        viewModel.error.subscribe(onNext: { [weak self] in self?.coordinator?.whoops($0) }).disposed(by: bag)
+
         addBarButtonItem.rx.tap.bind(to: viewModel.add).disposed(by: bag)
 
         segmentedControl.rx.selectedSegmentIndex.bind(to: viewModel.groupIndex).disposed(by: bag)

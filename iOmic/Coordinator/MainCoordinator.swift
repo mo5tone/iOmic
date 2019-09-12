@@ -11,7 +11,7 @@ import UIKit
 
 protocol MainCoordinatorDelegate: CoordinatorDelegate {}
 
-class MainCoordinator: TabBarCoordinator {
+class MainCoordinator: VisibleCoordinator {
     // MARK: - instace props.
 
     private weak var delegate: MainCoordinatorDelegate?
@@ -19,11 +19,13 @@ class MainCoordinator: TabBarCoordinator {
     // MARK: - Public instance methods
 
     init(window: UIWindow, delegate: MainCoordinatorDelegate?) {
+        self.viewController = UITabBarController()
         super.init(window: window)
         self.delegate = delegate
     }
 
     func start() {
+        guard let tabBarController = viewController as? UITabBarController else { return }
         let booksCoordinator: BooksCoordinator = .init(window: window, delegate: self)
         append(coordinator: booksCoordinator)
         booksCoordinator.navigationController.tabBarItem = .init(title: "Books", image: #imageLiteral(resourceName: "ic_books"), tag: 0)

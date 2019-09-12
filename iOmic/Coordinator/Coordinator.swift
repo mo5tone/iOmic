@@ -11,8 +11,21 @@ import RxSwift
 import SwiftEntryKit
 import UIKit
 
+
 protocol CoordinatorDelegate: AnyObject {
     func coordinatorDidEnd(_ coordinator: Coordinator)
+}
+
+protocol BaseViewCoordinator: AnyObject {
+    func pushed(animated: Bool)
+    
+    func poped(animated: Bool)
+    
+    func presented(animated: Bool, completion: (() -> Void)?)
+    
+    func movingFromParent()
+    
+    func whoops(_ error: Error)
 }
 
 class Coordinator: NSObject {
@@ -45,48 +58,23 @@ class Coordinator: NSObject {
     }
 }
 
-// MARK: - CoordinatorDelegate
+protocol VisibleCoordinatorProtocol {
+    var viewController: UIViewController { get }
+}
 
-extension Coordinator: CoordinatorDelegate {
+protocol NavigationCoordinatorProtocol: VisibleCoordinatorProtocol {
+    var navigationController: UINavigationController { get }
+}
+
+extension CoordinatorDelegate where Self: Coordinator {
     func coordinatorDidEnd(_ coordinator: Coordinator) {
         remove(coordinator: coordinator)
     }
 }
 
-class TabBarCoordinator: Coordinator, UITabBarControllerDelegate {
-    let tabBarController: UITabBarController
-
-    override init(window: UIWindow) {
-        tabBarController = .init()
-        super.init(window: window)
-        tabBarController.delegate = self
-    }
-}
-
-class NavigationCoordinator: Coordinator {
-    var viewController: UIViewController!
-    var navigationController: UINavigationController!
-}
-
-protocol BaseViewCoordinator: AnyObject {
-    func pushed(animated: Bool)
-
-    func poped(animated: Bool)
-
-    func presented(animated: Bool, completion: (() -> Void)?)
-
-    func movingFromParent()
-
-    func whoops(_ error: Error)
-}
-
-class ViewCoordinator: Coordinator {
-    var viewController: UIViewController!
-    weak var navigationController: UINavigationController?
-}
-
-extension BaseViewCoordinator where Self: ViewCoordinator {
+extension BaseViewCoordinator where Self: Coordinator {
     func pushed(animated: Bool = true) {
+        guard let viewController = viewController else { return }
         navigationController?.pushViewController(viewController, animated: animated)
     }
 
@@ -95,12 +83,14 @@ extension BaseViewCoordinator where Self: ViewCoordinator {
     }
 
     func presented(animated: Bool = true, completion: (() -> Void)? = nil) {
+        guard let viewController = viewController else { return }
         navigationController?.topViewController?.present(viewController, animated: animated, completion: completion)
     }
 
-    func whoops(_: Error) {
-        var attributes: EKAttributes = .topToast
-        attributes.name = String(describing: FiltersViewController.self)
-//        SwiftEntryKit.display(entry: <#T##UIViewController#>, using: <#T##EKAttributes#>)
+    func whoops(_ error: Error) {
+        var attributes: EKAttributes = .topNote
+        attributes.name = String(describing: ErrorViewController.self)
+        attributes.entryBackground = .color(color: .init(UIColor.flat.error))
+        SwiftEntryKit.display(entry: ErrorViewController(error: error), using: attributes)
     }
 }

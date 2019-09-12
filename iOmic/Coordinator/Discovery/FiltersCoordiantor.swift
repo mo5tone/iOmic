@@ -13,7 +13,7 @@ import UIKit
 
 protocol FiltersCoordiantorDelegate: CoordinatorDelegate {}
 
-class FiltersCoordiantor: ViewCoordinator {
+class FiltersCoordiantor: VisibleCoordinator {
     private let filters: PublishSubject<[FilterProrocol]> = .init()
     private weak var delegate: FiltersCoordiantorDelegate?
 
