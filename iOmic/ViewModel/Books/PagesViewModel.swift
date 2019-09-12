@@ -9,8 +9,7 @@
 import Foundation
 import RxSwift
 
-class PagesViewModel: NSObject {
-    private let bag: DisposeBag = .init()
+class PagesViewModel: ViewModel {
     let load: PublishSubject<Void> = .init()
     let chapter: BehaviorSubject<Chapter>
     let pages: BehaviorSubject<[Page]> = .init(value: [])
@@ -18,7 +17,11 @@ class PagesViewModel: NSObject {
     init(chapter: Chapter) {
         self.chapter = .init(value: chapter)
         super.init()
-        load.withLatestFrom(self.chapter).flatMapLatest { chapter in chapter.book.source.fetchPages(chapter: chapter) }.bind(to: pages).disposed(by: bag)
+        load.withLatestFrom(self.chapter)
+            .flatMapLatest { chapter in chapter.book.source.fetchPages(chapter: chapter) }
+            .catchError { [weak self] in self?.error.on(.next($0)); return .just([]) }
+            .bind(to: pages)
+            .disposed(by: bag)
         load.on(.next(()))
     }
 }

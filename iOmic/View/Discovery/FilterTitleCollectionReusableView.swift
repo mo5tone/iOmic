@@ -1,5 +1,5 @@
 //
-//  PickFilterTitleCollectionReusableView.swift
+//  FilterTitleCollectionReusableView.swift
 //  iOmic
 //
 //  Created by 门捷夫 on 2019/9/4.
@@ -8,8 +8,9 @@
 
 import UIKit
 
-class PickFilterTitleCollectionReusableView: UICollectionReusableView {
+class FilterTitleCollectionReusableView: UICollectionReusableView {
     @IBOutlet var titleLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

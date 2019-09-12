@@ -25,6 +25,3 @@ github "RxSwiftCommunity/RxDataSources" ~> 4.0 # RxSwift helper for UITableView 
 
 # Device
 github "devicekit/DeviceKit" ~> 2.0 # a value-type replacement of UIDevice.
-
-# Debugging
-github "flipboard/FLEX" ~> 3.0

@@ -23,10 +23,19 @@ class BooksCoordinator: NavigationCoordinator {
         self.delegate = delegate
         viewController = BooksViewController(coordinator: self, viewModel: .init(persistence: Persistence.shared))
         navigationController = .init(rootViewController: viewController)
-        navigationController.navigationBar.prefersLargeTitles = true
     }
 }
 
 // MARK: - BooksViewCoordinator
 
-extension BooksCoordinator: BooksViewCoordinator {}
+extension BooksCoordinator: BooksViewCoordinator {
+    func showChapters(in book: Book) {
+        let coordinator: ChaptersCoordinator = .init(window: window, delegate: self, navigationController: navigationController, book: book)
+        append(coordinator: coordinator)
+        coordinator.start()
+    }
+}
+
+// MARK: - ChaptersCoordinatorDelegate
+
+extension BooksCoordinator: ChaptersCoordinatorDelegate {}

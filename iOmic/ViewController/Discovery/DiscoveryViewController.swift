@@ -45,7 +45,6 @@ class DiscoveryViewController: UIViewController {
         searchController.searchBar.placeholder = "Keywords here"
         definesPresentationContext = true
 
-        collectionView.backgroundColor = .groupTableViewBackground
         collectionView.refreshControl = refreshControl
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
         collectionView.registerCell(BookCollectionViewCell.self)
@@ -80,7 +79,7 @@ class DiscoveryViewController: UIViewController {
         collectionView.rx.willDisplayCell.map { $1 }.withLatestFrom(viewModel.books.map { $0.count }) { $0.item == $1 - 1 }.filter { $0 }.map { _ in () }.bind(to: viewModel.loadMore).disposed(by: bag)
         collectionView.rx.didEndDisplayingCell.compactMap { $0.cell as? BookCollectionViewCell }.subscribe(onNext: { $0.imageView?.kf.cancelDownloadTask() }).disposed(by: bag)
 
-        viewModel.books.subscribe { [weak self] _ in self?.refreshControl.endRefreshing() }.disposed(by: bag)
+        viewModel.books.map { _ in false }.bind(to: refreshControl.rx.isRefreshing).disposed(by: bag)
         viewModel.books.map { [AnimatableSectionModel<Int, Book>(model: 0, items: $0)] }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
     }
 
@@ -97,10 +96,10 @@ class DiscoveryViewController: UIViewController {
     private func willDisplayCell(_ cell: UICollectionViewCell) {
         cell.contentView.layer.cornerRadius = 8.0
         cell.contentView.layer.borderWidth = 1.0
-        cell.contentView.layer.borderColor = UIColor.clear.cgColor
+        cell.contentView.layer.borderColor = UIColor.flat.clear.cgColor
         cell.contentView.layer.masksToBounds = true
 
-        cell.layer.shadowColor = UIColor.lightGray.cgColor
+        cell.layer.shadowColor = UIColor.flat.shadow.cgColor
         cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
         cell.layer.shadowRadius = 2.0
         cell.layer.shadowOpacity = 1.0
@@ -125,6 +124,11 @@ class DiscoveryViewController: UIViewController {
         // Do any additional setup after loading the view.
         setupView()
         setupBinding()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
 }
 

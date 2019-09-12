@@ -14,7 +14,7 @@ import RxDataSources
 import RxSwift
 import UIKit
 
-protocol ChaptersViewCoordinator: ViewCoordinatorDelegate {
+protocol ChaptersViewCoordinator: BaseViewCoordinator {
     func showChapter(_ chapter: Chapter)
 }
 
@@ -62,6 +62,11 @@ class ChaptersViewController: UIViewController {
         setupBinding()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // !!!: - the safeAreaInsets would be zero in viewDidLoad
@@ -79,7 +84,6 @@ class ChaptersViewController: UIViewController {
 
     private func setupView() {
         titleLabel.font = .boldSystemFont(ofSize: 17)
-        titleLabel.textColor = .darkText
         titleLabel.type = .continuous
         titleLabel.speed = .duration(4)
         titleLabel.animationCurve = .linear
@@ -99,10 +103,9 @@ class ChaptersViewController: UIViewController {
             return view
         }()
 
-        // TODO: - implement for these
+        // TODO: - implement for downloadBarButtonItem
         navigationItem.rightBarButtonItems = [favoriteBarButtonItem, downloadBarButtonItem]
 
-        collectionView.backgroundColor = .groupTableViewBackground
         collectionView.refreshControl = refreshControl
         collectionView.registerCell(ChapterCollectionViewCell.self)
 
@@ -123,10 +126,10 @@ class ChaptersViewController: UIViewController {
     private func setupBinding() {
         viewModel.isFavorited.subscribe(onNext: { [weak self] isFavorited in
             if isFavorited {
-                self?.favoriteBarButtonItem.tintColor = .red
+                self?.favoriteBarButtonItem.tintColor = UIColor.flat.favorite
                 self?.favoriteBarButtonItem.image = #imageLiteral(resourceName: "ic_favorite")
             } else {
-                self?.favoriteBarButtonItem.tintColor = UINavigationBar.appearance().tintColor
+                self?.favoriteBarButtonItem.tintColor = UIColor.flat.tint
                 self?.favoriteBarButtonItem.image = #imageLiteral(resourceName: "ic_favorite_outline")
             }
         }).disposed(by: bag)
@@ -140,11 +143,11 @@ class ChaptersViewController: UIViewController {
                 case let .success(image):
                     backgroundColor = image.image.colors().primary
                 case .failure:
-                    backgroundColor = .groupTableViewBackground
+                    backgroundColor = UIColor.flat.background
                 }
                 self.headerContainerView.backgroundColor = backgroundColor
                 self.descriptionTextView.backgroundColor = backgroundColor
-                let textColor: UIColor = backgroundColor.isDark ? .lightText : .darkText
+                let textColor: UIColor = backgroundColor.isDark ? UIColor.flat.lightText : UIColor.flat.darkText
                 self.descriptionTextView.textColor = textColor
                 self.authorLabel.textColor = textColor
                 self.statusLabel.textColor = textColor

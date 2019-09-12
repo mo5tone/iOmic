@@ -26,7 +26,6 @@ class DiscoveryCoordinator: NavigationCoordinator {
         self.delegate = delegate
         viewController = DiscoveryViewController(coordinator: self, viewModel: .init())
         navigationController = .init(rootViewController: viewController)
-        navigationController.navigationBar.prefersLargeTitles = true
     }
 }
 

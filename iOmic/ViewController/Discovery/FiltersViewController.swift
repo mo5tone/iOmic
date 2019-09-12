@@ -29,15 +29,14 @@ class FiltersViewController: UIViewController {
     // MARK: - private instance methods.
 
     private func setupView() {
-        view.backgroundColor = .clear
+        view.backgroundColor = UIColor.flat.clear
 
         cancelButton.setTitle("Cancel", for: .normal)
         okButton.setTitle("OK", for: .normal)
 
-        collectionView.backgroundColor = .groupTableViewBackground
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
-        collectionView.registerHeaderFooterView(PickFilterTitleCollectionReusableView.self, supplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
-        collectionView.registerCell(PickFilterCollectionViewCell.self)
+        collectionView.registerHeaderFooterView(FilterTitleCollectionReusableView.self, supplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
+        collectionView.registerCell(FilterCollectionViewCell.self)
         collectionView.allowsMultipleSelection = true
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -105,18 +104,18 @@ extension FiltersViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let identifier = PickFilterTitleCollectionReusableView.reusableIdentifier
+        let identifier = FilterTitleCollectionReusableView.reusableIdentifier
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: identifier, for: indexPath)
-        if let view = view as? PickFilterTitleCollectionReusableView {
+        if let view = view as? FilterTitleCollectionReusableView {
             view.titleLabel.text = viewModel.filters[indexPath.section].title
         }
         return view
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let identifier = PickFilterCollectionViewCell.reusableIdentifier
+        let identifier = FilterCollectionViewCell.reusableIdentifier
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
-        if let cell = cell as? PickFilterCollectionViewCell, let filter = viewModel.filters[indexPath.section] as? PickFilter {
+        if let cell = cell as? FilterCollectionViewCell, let filter = viewModel.filters[indexPath.section] as? PickFilter {
             cell.nameLabel.text = filter.options[indexPath.item].name
         }
         return cell

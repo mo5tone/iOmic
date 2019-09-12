@@ -35,6 +35,8 @@ struct Book: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
     // MARK: - TableCodable
 
     enum CodingKeys: String, CodingTableKey {
+        // this refer WCDBSwift implement
+        // swiftlint:disable:next nesting
         typealias Root = Book
         static let objectRelationalMapping = TableBinding(CodingKeys.self)
         case identity, sourceIdentifier = "source_identifier", url, thumbnailUrl = "thumbnail_url", title, artist, author, genre, summary, status, isFavorited = "is_favorited", readAt = "read_at"

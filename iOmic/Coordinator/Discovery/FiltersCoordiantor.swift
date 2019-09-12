@@ -31,9 +31,9 @@ class FiltersCoordiantor: ViewCoordinator {
         attributes.positionConstraints.size = .init(width: .offset(value: 8), height: .ratio(value: 0.7))
         let action: EKAttributes.UserInteraction.Action = { [weak self] in self?.dismiss() }
         attributes.screenInteraction = .init(defaultAction: .absorbTouches, customTapActions: [action])
-        attributes.entryBackground = .color(color: .init(.groupTableViewBackground))
+        attributes.entryBackground = .color(color: .init(UIColor.flat.background))
         attributes.screenBackground = .visualEffect(style: .standard)
-        attributes.shadow = .active(with: .init(color: .black, opacity: 0.3, radius: 10, offset: .zero))
+        attributes.shadow = .active(with: .init(color: .init(UIColor.flat.shadow), opacity: 0.3, radius: 10, offset: .zero))
         attributes.roundCorners = .all(radius: 16)
         SwiftEntryKit.display(entry: viewController, using: attributes)
         return filters

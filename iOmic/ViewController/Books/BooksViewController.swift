@@ -11,7 +11,9 @@ import RxDataSources
 import RxSwift
 import UIKit
 
-protocol BooksViewCoordinator: AnyObject {}
+protocol BooksViewCoordinator: AnyObject {
+    func showChapters(in book: Book)
+}
 
 class BooksViewController: UIViewController {
     // MARK: - props.
@@ -22,11 +24,19 @@ class BooksViewController: UIViewController {
     private lazy var segmentedControl: UISegmentedControl = .init(items: ["Favorite", "History"])
     private lazy var addBarButtonItem: UIBarButtonItem = .init(barButtonSystemItem: .add, target: nil, action: nil)
     @IBOutlet var collectionView: UICollectionView!
-    private let dataSource: RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<String, Book>> = .init(configureCell: { _, collectionView, indexPath, book in
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.reusableIdentifier, for: indexPath)
-        if let cell = cell as? BookCollectionViewCell { cell.setup(book: book) }
-        return cell
-    })
+    private let dataSource: RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<SourceIdentifier, Book>> = .init(
+        configureCell: { _, collectionView, indexPath, book in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.reusableIdentifier, for: indexPath)
+            if let cell = cell as? BookCollectionViewCell { cell.setup(book: book) }
+            return cell
+        },
+        configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+            guard kind == UICollectionView.elementKindSectionHeader else { return UICollectionReusableView() }
+            let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: BookCollectionReusableView.reusableIdentifier, for: indexPath)
+            if let supplementaryView = supplementaryView as? BookCollectionReusableView { supplementaryView.setup(identifier: dataSource.sectionModels[indexPath.section].model) }
+            return supplementaryView
+        }
+    )
 
     // MARK: - public instance methods
 
@@ -47,6 +57,12 @@ class BooksViewController: UIViewController {
         setupBinding()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+        viewModel.groupIndex.on(.next(segmentedControl.selectedSegmentIndex))
+    }
+
     // MARK: - private instance methods
 
     private func setupView() {
@@ -57,7 +73,7 @@ class BooksViewController: UIViewController {
         navigationItem.titleView = segmentedControl
 
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
-        collectionView.backgroundColor = .groupTableViewBackground
+        collectionView.registerHeaderFooterView(BookCollectionReusableView.self, supplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
         collectionView.registerCell(BookCollectionViewCell.self)
     }
 
@@ -66,12 +82,12 @@ class BooksViewController: UIViewController {
 
         segmentedControl.rx.selectedSegmentIndex.bind(to: viewModel.groupIndex).disposed(by: bag)
 
-        viewModel.books.map { books in SourceIdentifier.values.map { identifier in AnimatableSectionModel<String, Book>(model: identifier.rawValue, items: books.filter { $0.sourceIdentifier == identifier }) } }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
-        collectionView.rx.prefetchItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.map { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.prefetchItems($0) }).disposed(by: bag)
-        collectionView.rx.cancelPrefetchingForItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.map { books[$0.item] } }.subscribe(onNext: { [weak self] in self?.cancelPrefetchingForItems($0) }).disposed(by: bag)
+        viewModel.books.map { $0.map { .init(model: $0.0, items: $0.1) } }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
+        collectionView.rx.prefetchItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.map { books[$0.section].1[$0.item] } }.subscribe(onNext: { [weak self] in self?.prefetchItems($0) }).disposed(by: bag)
+        collectionView.rx.cancelPrefetchingForItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.map { books[$0.section].1[$0.item] } }.subscribe(onNext: { [weak self] in self?.cancelPrefetchingForItems($0) }).disposed(by: bag)
 
         collectionView.rx.setDelegate(self).disposed(by: bag)
-//        collectionView.rx.itemSelected.withLatestFrom(viewModel.books) { $1[$0.item] }.subscribe(onNext: { [weak self] in self?.coordinator?.showChapters(in: $0) }).disposed(by: bag)
+        collectionView.rx.itemSelected.withLatestFrom(viewModel.books) { $1[$0.section].1[$0.item] }.subscribe(onNext: { [weak self] in self?.coordinator?.showChapters(in: $0) }).disposed(by: bag)
         collectionView.rx.willDisplayCell.subscribe(onNext: { [weak self] cell, _ in self?.willDisplayCell(cell) }).disposed(by: bag)
         collectionView.rx.didEndDisplayingCell.compactMap { $0.cell as? BookCollectionViewCell }.subscribe(onNext: { $0.imageView?.kf.cancelDownloadTask() }).disposed(by: bag)
     }
@@ -89,11 +105,11 @@ class BooksViewController: UIViewController {
     private func willDisplayCell(_ cell: UICollectionViewCell) {
         cell.contentView.layer.cornerRadius = 8.0
         cell.contentView.layer.borderWidth = 1.0
-        cell.contentView.layer.borderColor = UIColor.clear.cgColor
+        cell.contentView.layer.borderColor = UIColor.flat.clear.cgColor
         cell.contentView.layer.masksToBounds = true
 
-        cell.layer.shadowColor = UIColor.lightGray.cgColor
-        cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        cell.layer.shadowColor = UIColor.flat.shadow.cgColor
+        cell.layer.shadowOffset = .init(width: 0, height: 2.0)
         cell.layer.shadowRadius = 2.0
         cell.layer.shadowOpacity = 1.0
         cell.layer.masksToBounds = false
@@ -110,7 +126,12 @@ extension BooksViewController: UICollectionViewDelegateFlowLayout {
         let aspect: CGFloat = 26 / 15
         let width = (collectionView.frame.size.width - collectionView.contentInset.left - collectionView.contentInset.right - (numberOfCellsPerRow - 1) * minimumInteritemSpacing) / numberOfCellsPerRow
         let height = width * aspect
-        return CGSize(width: width, height: height)
+        return .init(width: width, height: height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, referenceSizeForHeaderInSection _: Int) -> CGSize {
+        let height = UIFont.preferredFont(forTextStyle: .headline).textSize().height + 16 * 2
+        return .init(width: collectionView.frame.width, height: height)
     }
 
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumLineSpacingForSectionAt _: Int) -> CGFloat {

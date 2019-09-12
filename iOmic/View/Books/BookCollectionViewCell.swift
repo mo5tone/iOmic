@@ -38,13 +38,8 @@ class BookCollectionViewCell: UICollectionViewCell {
         imageView.kf.indicatorType = .activity
 
         titlteLabel.font = .preferredFont(forTextStyle: .subheadline)
-        titlteLabel.textColor = .darkText
-
         authorLabel.font = .preferredFont(forTextStyle: .caption2)
-        authorLabel.textColor = .darkText
-
         statusLabel.font = .preferredFont(forTextStyle: .caption2)
-        statusLabel.textColor = .darkText
     }
 
     func setup(book: Book, displaySource _: Bool = false) {

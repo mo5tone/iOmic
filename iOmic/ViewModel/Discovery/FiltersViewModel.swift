@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FiltersViewModel: NSObject {
+class FiltersViewModel: ViewModel {
     let filters: [FilterProrocol]
 
     init(filters: [FilterProrocol]) {

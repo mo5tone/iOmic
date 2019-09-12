@@ -23,7 +23,6 @@ class SettingCoordinator: NavigationCoordinator {
         self.delegate = delegate
         viewController = SettingViewController(coordinator: self, viewModel: .init())
         navigationController = .init(rootViewController: viewController)
-        navigationController.navigationBar.prefersLargeTitles = true
     }
 }
 

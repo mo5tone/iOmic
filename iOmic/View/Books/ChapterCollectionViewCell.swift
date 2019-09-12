@@ -15,7 +15,7 @@ class ChapterCollectionViewCell: UICollectionViewCell {
 
     override var isSelected: Bool {
         didSet {
-            titleLabel.textColor = isSelected ? .lightText : .darkText
+            titleLabel.textColor = isSelected ? UIColor.flat.lightText : UIColor.flat.darkText
         }
     }
 
@@ -26,23 +26,22 @@ class ChapterCollectionViewCell: UICollectionViewCell {
         // Initialization code
 
         titleLabel.font = .preferredFont(forTextStyle: .caption1)
-        titleLabel.textColor = .darkText
 
         backgroundView = {
             let view = UIView()
-            view.backgroundColor = .groupTableViewBackground
+            view.backgroundColor = UIColor.flat.background
             view.layer.cornerRadius = 4.0
             view.layer.borderWidth = 1.0
-            view.layer.borderColor = UIColor.darkGray.cgColor
+            view.layer.borderColor = UIColor.flat.border.cgColor
             view.layer.masksToBounds = true
             return view
         }()
         selectedBackgroundView = {
             let view = UIView()
-            view.backgroundColor = .darkGray
+            view.backgroundColor = UIColor.flat.selected
             view.layer.cornerRadius = 4.0
             view.layer.borderWidth = 1.0
-            view.layer.borderColor = UIColor.darkGray.cgColor
+            view.layer.borderColor = UIColor.flat.border.cgColor
             view.layer.masksToBounds = true
             return view
         }()

@@ -1,5 +1,5 @@
 //
-//  PickFilterCollectionViewCell.swift
+//  FilterCollectionViewCell.swift
 //  iOmic
 //
 //  Created by Jeff Men (CN) on 2019/9/4.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PickFilterCollectionViewCell: UICollectionViewCell {
+class FilterCollectionViewCell: UICollectionViewCell {
     @IBOutlet var nameLabel: UILabel!
 
     override func awakeFromNib() {
@@ -16,10 +16,10 @@ class PickFilterCollectionViewCell: UICollectionViewCell {
         // Initialization code
         selectedBackgroundView = {
             let view = UIView()
-            view.backgroundColor = .darkGray
+            view.backgroundColor = UIColor.flat.selected
             view.layer.cornerRadius = 8.0
             view.layer.borderWidth = 1.0
-            view.layer.borderColor = UIColor.clear.cgColor
+            view.layer.borderColor = UIColor.flat.clear.cgColor
             view.layer.masksToBounds = true
             return view
         }()

@@ -7,4 +7,5 @@
 //
 
 import Foundation
-class DownloadViewModel: NSObject {}
+
+class DownloadViewModel: ViewModel {}

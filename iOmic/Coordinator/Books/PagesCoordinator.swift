@@ -30,7 +30,6 @@ class PagesCoordinator: ViewCoordinator {
 
     func start() {
         pushed()
-        navigationController?.navigationBar.prefersLargeTitles = false
     }
 }
 

@@ -9,8 +9,7 @@
 import Foundation
 import RxSwift
 
-class DiscoveryViewModel: NSObject {
-    private let bag: DisposeBag = .init()
+class DiscoveryViewModel: ViewModel {
     private let page: BehaviorSubject<Int> = .init(value: 0)
     let source: BehaviorSubject<SourceProtocol> = .init(value: SourceIdentifier.values[0].source)
     let title: BehaviorSubject<String> = .init(value: "Discovery")
@@ -43,7 +42,9 @@ class DiscoveryViewModel: NSObject {
                         array.append(contentsOf: $0)
                         return array
                     }
-            }.bind(to: books).disposed(by: bag)
+            }
+            .catchError({ [weak self] in self?.error.on(.next($0)); return .just([]) })
+            .bind(to: books).disposed(by: bag)
     }
 
     func reset() {}

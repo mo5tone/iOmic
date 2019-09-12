@@ -10,8 +10,7 @@ import Foundation
 import RxSwift
 import WCDBSwift
 
-class ChaptersViewModel: NSObject {
-    private let bag: DisposeBag = .init()
+class ChaptersViewModel: ViewModel {
     private let persistence: ChaptersPersistenceProtocol
     let load: PublishSubject<Void> = .init()
     let switchFavorited: PublishSubject<Void> = .init()
@@ -23,10 +22,17 @@ class ChaptersViewModel: NSObject {
         self.persistence = persistence
         self.book = .init(value: book)
         super.init()
-        load.withLatestFrom(persistence.getBook(where: book.identity)).compactMap { $0?.isFavorited }.bind(to: isFavorited).disposed(by: bag)
-        switchFavorited.withLatestFrom(Observable.combineLatest(isFavorited, self.book)).flatMapLatest { persistence.update(isFavorited: $0.0, on: $0.1) }.subscribe().disposed(by: bag)
+        load.withLatestFrom(persistence.getBook(where: book.identity))
+            .compactMap { $0?.isFavorited }
+            .bind(to: isFavorited)
+            .disposed(by: bag)
+        switchFavorited.withLatestFrom(Observable.combineLatest(isFavorited, self.book))
+            .flatMapLatest { persistence.update(isFavorited: $0.0, on: $0.1) }
+            .subscribe()
+            .disposed(by: bag)
         let results = load.withLatestFrom(self.book)
             .flatMapLatest { book -> Observable<[Chapter]> in book.source.fetchChapters(book: book) }
+            .catchError { [weak self] in self?.error.on(.next($0)); return .just([]) }
             .share()
         results.bind(to: chapters).disposed(by: bag)
         results.compactMap { $0.first?.book }.bind(to: self.book).disposed(by: bag)

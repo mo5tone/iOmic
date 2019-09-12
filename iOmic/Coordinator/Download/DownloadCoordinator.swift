@@ -23,7 +23,6 @@ class DownloadCoordinator: NavigationCoordinator {
         self.delegate = delegate
         viewController = DownloadViewController(coordinator: self, viewModel: .init())
         navigationController = .init(rootViewController: viewController)
-        navigationController.navigationBar.prefersLargeTitles = true
     }
 }
 

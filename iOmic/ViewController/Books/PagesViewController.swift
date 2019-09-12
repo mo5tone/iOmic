@@ -12,7 +12,7 @@ import RxDataSources
 import RxSwift
 import UIKit
 
-protocol PagesViewCoordinator: ViewCoordinatorDelegate {}
+protocol PagesViewCoordinator: BaseViewCoordinator {}
 
 class PagesViewController: UIViewController {
     // MARK: - instance props.
@@ -53,6 +53,11 @@ class PagesViewController: UIViewController {
         setupBinding()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if isMovingFromParent { coordinator?.movingFromParent() }
@@ -63,7 +68,7 @@ class PagesViewController: UIViewController {
     // MARK: - private instance methods
 
     private func setupView() {
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor.flat.none
 
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -75,8 +80,8 @@ class PagesViewController: UIViewController {
         slider.maximumValue = 0
         slider.value = 0
 
-        currentIndexLabel.textColor = .lightText
-        pagesNumberLabel.textColor = .lightText
+        currentIndexLabel.textColor = UIColor.flat.lightText
+        pagesNumberLabel.textColor = UIColor.flat.lightText
         currentIndexLabel.font = .preferredFont(forTextStyle: .body)
         pagesNumberLabel.font = .preferredFont(forTextStyle: .body)
     }

@@ -9,13 +9,8 @@
 import Foundation
 import IQKeyboardManagerSwift
 import UIKit
-#if DEBUG
-    import FLEX
-#endif
 
 protocol AppCoordinatorProtocol {
-    func showFlexExplorer()
-    func hideFlexExplorer()
     func willResignActive()
     func didEnterBackground()
     func willEnterForeground()
@@ -49,30 +44,36 @@ class AppCoordinator: Coordinator {
     }
 
     private func setupConfigurations() {
+        setupAppearance()
         IQKeyboardManager.shared.enable = true
         do { try Persistence.shared.createTables() } catch { print(error) }
+    }
+
+    private func setupAppearance() {
+        window.tintColor = UIColor.flat.tint
+
+        let activityIndicatorViewAppearance = UIActivityIndicatorView.appearance()
+        activityIndicatorViewAppearance.color = UIColor.flat.animation
+
+        let navigationBarAppearance = UINavigationBar.appearance()
+        navigationBarAppearance.barTintColor = UIColor.flat.barTint
+        navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.flat.darkText]
+        navigationBarAppearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.flat.darkText]
+
+        let labelAppearance = UILabel.appearance()
+        labelAppearance.textColor = UIColor.flat.darkText
+
+        let tableViewAppearance = UITableView.appearance()
+        tableViewAppearance.backgroundColor = UIColor.flat.background
+
+        let collectionViewAppearance = UICollectionView.appearance()
+        collectionViewAppearance.backgroundColor = UIColor.flat.background
     }
 }
 
 // MARK: - AppCoordinatorProtocol
 
 extension AppCoordinator: AppCoordinatorProtocol {
-    func showFlexExplorer() {
-        #if DEBUG
-            if FLEXManager.shared()?.isHidden ?? false {
-                FLEXManager.shared()?.showExplorer()
-            }
-        #endif
-    }
-
-    func hideFlexExplorer() {
-        #if DEBUG
-            if !(FLEXManager.shared()?.isHidden ?? false) {
-                FLEXManager.shared()?.hideExplorer()
-            }
-        #endif
-    }
-
     func willResignActive() {}
     func didEnterBackground() {}
     func willEnterForeground() {}

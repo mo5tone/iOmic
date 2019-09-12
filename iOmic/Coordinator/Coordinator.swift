@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import SwiftEntryKit
 import UIKit
 
 protocol CoordinatorDelegate: AnyObject {
@@ -67,7 +68,7 @@ class NavigationCoordinator: Coordinator {
     var navigationController: UINavigationController!
 }
 
-protocol ViewCoordinatorDelegate: AnyObject {
+protocol BaseViewCoordinator: AnyObject {
     func pushed(animated: Bool)
 
     func poped(animated: Bool)
@@ -84,7 +85,7 @@ class ViewCoordinator: Coordinator {
     weak var navigationController: UINavigationController?
 }
 
-extension ViewCoordinatorDelegate where Self: ViewCoordinator {
+extension BaseViewCoordinator where Self: ViewCoordinator {
     func pushed(animated: Bool = true) {
         navigationController?.pushViewController(viewController, animated: animated)
     }
@@ -97,5 +98,9 @@ extension ViewCoordinatorDelegate where Self: ViewCoordinator {
         navigationController?.topViewController?.present(viewController, animated: animated, completion: completion)
     }
 
-    func whoops(_: Error) {}
+    func whoops(_: Error) {
+        var attributes: EKAttributes = .topToast
+        attributes.name = String(describing: FiltersViewController.self)
+//        SwiftEntryKit.display(entry: <#T##UIViewController#>, using: <#T##EKAttributes#>)
+    }
 }

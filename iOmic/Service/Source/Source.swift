@@ -9,10 +9,11 @@
 import FileKit
 import Foundation
 import Kingfisher
+import RxDataSources
 import RxSwift
 import WCDBSwift
 
-enum SourceIdentifier: String, ColumnCodable {
+enum SourceIdentifier: String, ColumnCodable, IdentifiableType {
     case dongmanzhijia, manhuaren // JSON
 
     static let values: [SourceIdentifier] = [.dongmanzhijia, .manhuaren]
@@ -31,6 +32,11 @@ enum SourceIdentifier: String, ColumnCodable {
     static var columnType: ColumnType { return .text }
     func archivedValue() -> FundamentalValue { return FundamentalValue(rawValue) }
     init?(with value: FundamentalValue) { self.init(rawValue: value.stringValue) }
+
+    // MARK: - IdentifiableType
+
+    typealias Identity = RawValue
+    var identity: Identity { return rawValue }
 }
 
 protocol SourceProtocol {

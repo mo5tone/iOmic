@@ -37,7 +37,7 @@ class PageCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        backgroundColor = .black
+        backgroundColor = UIColor.flat.none
         singleTapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
 
         scrollView.addGestureRecognizer(singleTapGestureRecognizer)

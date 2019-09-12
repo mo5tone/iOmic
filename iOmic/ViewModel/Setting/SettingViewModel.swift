@@ -7,4 +7,5 @@
 //
 
 import Foundation
-class SettingViewModel: NSObject {}
+
+class SettingViewModel: ViewModel {}

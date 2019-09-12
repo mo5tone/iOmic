@@ -28,6 +28,8 @@ struct Page: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
     // MARK: - TableCodable
 
     enum CodingKeys: String, CodingTableKey {
+        // this refer WCDBSwift implement
+        // swiftlint:disable:next nesting
         typealias Root = Page
         static let objectRelationalMapping = TableBinding(CodingKeys.self)
         case identity, chapter, index = "page_index", url, imageUrl = "image_url"
