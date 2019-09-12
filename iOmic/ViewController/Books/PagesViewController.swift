@@ -12,7 +12,7 @@ import RxDataSources
 import RxSwift
 import UIKit
 
-protocol PagesViewCoordinator: BaseViewCoordinator {}
+protocol PagesViewCoordinator: PushedViewCoordinator {}
 
 class PagesViewController: UIViewController {
     // MARK: - instance props.
@@ -58,8 +58,8 @@ class PagesViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         if isMovingFromParent { coordinator?.movingFromParent() }
     }
 

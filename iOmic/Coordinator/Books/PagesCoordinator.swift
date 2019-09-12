@@ -13,23 +13,19 @@ import UIKit
 
 protocol PagesCoordinatorDelegate: CoordinatorDelegate {}
 
-class PagesCoordinator: ViewCoordinator {
+class PagesCoordinator: Coordinator, VisibleCoordinatorProtocol {
     // MARK: - instance props.
 
     private weak var delegate: PagesCoordinatorDelegate?
+    private(set) var viewController: UIViewController = .init()
 
     // MARK: - public instance methods
 
-    init(window: UIWindow, delegate: PagesCoordinatorDelegate?, navigationController: UINavigationController?, chapter: Chapter) {
+    init(window: UIWindow, delegate: PagesCoordinatorDelegate?, chapter: Chapter) {
         super.init(window: window)
         self.delegate = delegate
-        self.navigationController = navigationController
         viewController = PagesViewController(coordinator: self, viewModel: .init(chapter: chapter))
         viewController.hidesBottomBarWhenPushed = true
-    }
-
-    func start() {
-        pushed()
     }
 }
 

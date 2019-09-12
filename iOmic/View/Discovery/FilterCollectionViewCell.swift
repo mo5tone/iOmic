@@ -11,6 +11,12 @@ import UIKit
 class FilterCollectionViewCell: UICollectionViewCell {
     @IBOutlet var nameLabel: UILabel!
 
+    override var isSelected: Bool {
+        didSet {
+            nameLabel.textColor = isSelected ? UIColor.flat.lightText : UIColor.flat.darkText
+        }
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

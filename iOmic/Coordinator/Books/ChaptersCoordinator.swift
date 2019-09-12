@@ -11,24 +11,19 @@ import UIKit
 
 protocol ChaptersCoordinatorDelegate: CoordinatorDelegate {}
 
-class ChaptersCoordinator: VisibleCoordinator {
+class ChaptersCoordinator: Coordinator, VisibleCoordinatorProtocol {
     // MARK: - instace props.
 
     private weak var delegate: ChaptersCoordinatorDelegate?
-    private weak var navigationController: UINavigationController?
+    private(set) var viewController: UIViewController = .init()
 
     // MARK: - public methods
 
-    init(window: UIWindow, delegate: ChaptersCoordinatorDelegate?, navigationController: UINavigationController?, book: Book) {
+    init(window: UIWindow, delegate: ChaptersCoordinatorDelegate?, book: Book) {
         super.init(window: window)
         self.delegate = delegate
-        self.navigationController = navigationController
         viewController = ChaptersViewController(coordinator: self, viewModel: .init(book: book, persistence: Persistence.shared))
         viewController.hidesBottomBarWhenPushed = true
-    }
-
-    func start() {
-        pushed()
     }
 }
 
@@ -36,9 +31,9 @@ class ChaptersCoordinator: VisibleCoordinator {
 
 extension ChaptersCoordinator: ChaptersViewCoordinator {
     func showChapter(_ chapter: Chapter) {
-        let coordinator: PagesCoordinator = .init(window: window, delegate: self, navigationController: navigationController, chapter: chapter)
+        let coordinator: PagesCoordinator = .init(window: window, delegate: self, chapter: chapter)
         append(coordinator: coordinator)
-        coordinator.start()
+        viewController.navigationController?.pushViewController(coordinator.viewController, animated: true)
     }
 
     func movingFromParent() {

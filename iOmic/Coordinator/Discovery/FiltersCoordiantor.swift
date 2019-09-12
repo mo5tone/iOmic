@@ -13,9 +13,10 @@ import UIKit
 
 protocol FiltersCoordiantorDelegate: CoordinatorDelegate {}
 
-class FiltersCoordiantor: VisibleCoordinator {
+class FiltersCoordiantor: Coordinator, VisibleCoordinatorProtocol {
     private let filters: PublishSubject<[FilterProrocol]> = .init()
     private weak var delegate: FiltersCoordiantorDelegate?
+    private(set) var viewController: UIViewController = .init()
 
     init(window: UIWindow, delegate: FiltersCoordiantorDelegate?, filters: [FilterProrocol]) {
         super.init(window: window)

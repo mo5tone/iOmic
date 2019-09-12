@@ -164,7 +164,7 @@ extension ManHuaRen: SourceProtocol {
                 case let .success(data):
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     let json = try JSON(data: data)["response"]
-                    guard let host = json["hostList"].array?.first?.string else { return [] }
+                    guard let host = json["hostList"].array?.first?.string else { throw Whoops.Source.noPageContentToShow }
                     let array = json["mangaSectionImages"].arrayValue
                     let query = json["query"].stringValue
                     return array.enumerated().compactMap { offset, ele -> Page? in

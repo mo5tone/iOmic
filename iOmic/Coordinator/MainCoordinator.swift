@@ -11,16 +11,17 @@ import UIKit
 
 protocol MainCoordinatorDelegate: CoordinatorDelegate {}
 
-class MainCoordinator: VisibleCoordinator {
+class MainCoordinator: Coordinator, VisibleCoordinatorProtocol {
     // MARK: - instace props.
 
     private weak var delegate: MainCoordinatorDelegate?
+    private(set) var viewController: UIViewController = .init()
 
     // MARK: - Public instance methods
 
     init(window: UIWindow, delegate: MainCoordinatorDelegate?) {
-        self.viewController = UITabBarController()
         super.init(window: window)
+        viewController = UITabBarController()
         self.delegate = delegate
     }
 
@@ -42,7 +43,7 @@ class MainCoordinator: VisibleCoordinator {
         append(coordinator: settingCoordinator)
         settingCoordinator.navigationController.tabBarItem = .init(title: "Setting", image: #imageLiteral(resourceName: "ic_setting"), tag: 3)
 
-        tabBarController.viewControllers = coordinators.compactMap { ($0 as? NavigationCoordinator)?.navigationController }
+        tabBarController.viewControllers = coordinators.compactMap { ($0 as? NavigationCoordinatorProtocol)?.navigationController }
 
         makeKeyAndVisible(tabBarController)
     }

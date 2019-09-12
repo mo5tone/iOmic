@@ -14,7 +14,7 @@ import RxDataSources
 import RxSwift
 import UIKit
 
-protocol ChaptersViewCoordinator: BaseViewCoordinator {
+protocol ChaptersViewCoordinator: PushedViewCoordinator {
     func showChapter(_ chapter: Chapter)
 }
 
@@ -73,8 +73,8 @@ class ChaptersViewController: UIViewController {
         collectionView.contentInset = .init(top: headerContainerView.frame.maxY + 4 - view.safeAreaInsets.top, left: 8, bottom: 8, right: 8)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         if isMovingFromParent { coordinator?.movingFromParent() }
     }
 

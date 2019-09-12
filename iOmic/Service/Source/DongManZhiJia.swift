@@ -70,7 +70,7 @@ extension DongManZhiJia: SourceProtocol {
 
     func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Observable<[Book]> {
         func jsonParser(json: JSON) -> [Book] {
-            return (json.array ?? []).compactMap { json -> Book? in
+            return json.arrayValue.compactMap { json -> Book? in
                 guard let bookId = json["id"].int else { return nil }
                 var book = Book(source: self, url: "/comic/\(bookId).json")
                 book.title = json["title"].string
@@ -85,7 +85,7 @@ extension DongManZhiJia: SourceProtocol {
             let regEx = try NSRegularExpression(pattern: #"g_search_data = (.*);"#)
             let results = regEx.matches(in: string, range: NSRange(string.startIndex..., in: string))
             guard let result = results.first, result.numberOfRanges > 1, let range = Range(result.range(at: 1), in: string) else { return [] }
-            return (JSON(parseJSON: String(string[range])).array ?? []).compactMap { json -> Book? in
+            return JSON(parseJSON: String(string[range])).arrayValue.compactMap { json -> Book? in
                 guard let bookId = json["id"].string else { return nil }
                 var book = Book(source: self, url: "/comic/\(bookId).json")
                 book.title = json["name"].string
@@ -126,24 +126,24 @@ extension DongManZhiJia: SourceProtocol {
                     var book = book
                     book.title = json["title"].string
                     book.thumbnailUrl = json["cover"].string?.fixScheme()
-                    book.author = (json["authors"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                    book.genre = (json["types"].array ?? []).compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                    if let intValue = json["status"][0]["tag_id"].int { book.status = Book.Status(string: "\(intValue)") }
+                    book.author = json["authors"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    book.genre = json["types"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    book.status = Book.Status(string: "\(json["status"][0]["tag_id"].intValue)")
                     book.summary = json["description"].string
                     var chapters: [Chapter] = []
-                    if let bookId = json["id"].int {
-                        json["chapters"].array?.forEach { item in
-                            let prefix = item["title"].stringValue
-                            item["data"].array?.forEach { item1 in
-                                guard let chapterId = item1["chapter_id"].int else { return }
-                                var chapter = Chapter(book: book, url: "/chapter/\(bookId)/\(chapterId).json")
-                                let chapterTitle = item1["chapter_title"].stringValue
-                                chapter.name = "[\(prefix)]\(chapterTitle)"
-                                chapter.updateAt = Date(timeIntervalSince1970: item1["updatetime"].doubleValue)
-                                chapters.append(chapter)
-                            }
+                    let bookId = json["id"].intValue
+                    json["chapters"].arrayValue.forEach { item in
+                        let prefix = item["title"].stringValue
+                        item["data"].arrayValue.forEach { item1 in
+                            let chapterId = item1["chapter_id"].intValue
+                            var chapter = Chapter(book: book, url: "/chapter/\(bookId)/\(chapterId).json")
+                            let chapterTitle = item1["chapter_title"].stringValue
+                            chapter.name = "[\(prefix)]\(chapterTitle)"
+                            chapter.updateAt = Date(timeIntervalSince1970: item1["updatetime"].doubleValue)
+                            chapters.append(chapter)
                         }
                     }
+
                     return chapters
                 case let .failure(error):
                     throw error
@@ -160,7 +160,7 @@ extension DongManZhiJia: SourceProtocol {
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     let json = try JSON(data: data)
                     var pages = [Page]()
-                    (json["page_url"].array ?? []).enumerated().forEach { offset, element in
+                    json["page_url"].arrayValue.enumerated().forEach { offset, element in
                         var page = Page(chapter: chapter, index: offset)
                         page.imageUrl = element.string
                         pages.append(page)

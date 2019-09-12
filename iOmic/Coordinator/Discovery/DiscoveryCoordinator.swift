@@ -13,10 +13,11 @@ import UIKit
 
 protocol DiscoveryCoordinatorDelegate: CoordinatorDelegate {}
 
-class DiscoveryCoordinator: VisibleCoordinator, NavigationCoordinatorProtocol {
+class DiscoveryCoordinator: Coordinator, NavigationCoordinatorProtocol {
     // MARK: - Props.
 
     private weak var delegate: DiscoveryCoordinatorDelegate?
+    private(set) var viewController: UIViewController = .init()
     private(set) var navigationController: UINavigationController = .init()
     private let bag: DisposeBag = .init()
 
@@ -51,9 +52,9 @@ extension DiscoveryCoordinator: DiscoveryViewCoordinator {
     }
 
     func showChapters(in book: Book) {
-        let coordinator: ChaptersCoordinator = .init(window: window, delegate: self, navigationController: navigationController, book: book)
+        let coordinator: ChaptersCoordinator = .init(window: window, delegate: self, book: book)
         append(coordinator: coordinator)
-        coordinator.start()
+        navigationController.pushViewController(coordinator.viewController, animated: true)
     }
 }
 

@@ -11,10 +11,11 @@ import UIKit
 
 protocol BooksCoordinatorDelegate: CoordinatorDelegate {}
 
-class BooksCoordinator: VisibleCoordinator, NavigationCoordinatorProtocol {
+class BooksCoordinator: Coordinator, NavigationCoordinatorProtocol {
     // MARK: - Props.
 
     private weak var delegate: BooksCoordinatorDelegate?
+    private(set) var viewController: UIViewController = .init()
     private(set) var navigationController: UINavigationController = .init()
 
     // MARK: - Public
@@ -31,9 +32,9 @@ class BooksCoordinator: VisibleCoordinator, NavigationCoordinatorProtocol {
 
 extension BooksCoordinator: BooksViewCoordinator {
     func showChapters(in book: Book) {
-        let coordinator: ChaptersCoordinator = .init(window: window, delegate: self, navigationController: navigationController, book: book)
+        let coordinator: ChaptersCoordinator = .init(window: window, delegate: self, book: book)
         append(coordinator: coordinator)
-        coordinator.start()
+        navigationController.pushViewController(coordinator.viewController, animated: true)
     }
 }
 

@@ -11,10 +11,11 @@ import UIKit
 
 protocol DownloadCoordinatorDelegate: CoordinatorDelegate {}
 
-class DownloadCoordinator: VisibleCoordinator, NavigationCoordinatorProtocol {
+class DownloadCoordinator: Coordinator, NavigationCoordinatorProtocol {
     // MARK: - Props.
 
     private weak var delegate: DownloadCoordinatorDelegate?
+    private(set) var viewController: UIViewController = .init()
     private(set) var navigationController: UINavigationController = .init()
 
     // MARK: - Public

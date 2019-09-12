@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SettingViewCoordinator: AnyObject {}
+protocol SettingViewCoordinator: VisibleViewCoordinator {}
 
 class SettingViewController: UIViewController {
     // MARK: - Props.

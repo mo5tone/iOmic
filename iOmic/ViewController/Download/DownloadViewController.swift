@@ -7,7 +7,8 @@
 //
 
 import UIKit
-protocol DownloadViewCoordinator: AnyObject {}
+
+protocol DownloadViewCoordinator: VisibleViewCoordinator {}
 
 class DownloadViewController: UIViewController {
     // MARK: - Props.

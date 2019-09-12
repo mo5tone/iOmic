@@ -11,10 +11,11 @@ import UIKit
 
 protocol SettingCoordinatorDelegate: CoordinatorDelegate {}
 
-class SettingCoordinator: VisibleCoordinator, NavigationCoordinatorProtocol {
+class SettingCoordinator: Coordinator, NavigationCoordinatorProtocol {
     // MARK: - Props.
 
     private weak var delegate: SettingCoordinatorDelegate?
+    private(set) var viewController: UIViewController = .init()
     private(set) var navigationController: UINavigationController = .init()
 
     // MARK: - Public

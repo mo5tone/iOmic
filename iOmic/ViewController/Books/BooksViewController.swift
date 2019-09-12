@@ -11,7 +11,7 @@ import RxDataSources
 import RxSwift
 import UIKit
 
-protocol BooksViewCoordinator: AnyObject {
+protocol BooksViewCoordinator: VisibleViewCoordinator {
     func showChapters(in book: Book)
 }
 
@@ -78,8 +78,7 @@ class BooksViewController: UIViewController {
     }
 
     private func setupBinding() {
-        // TODO: -
-//        viewModel.error.subscribe(onNext: { [weak self] in self?.coordinator?.whoops($0) }).disposed(by: bag)
+        viewModel.error.subscribe(onNext: { [weak self] in self?.coordinator?.whoops($0) }).disposed(by: bag)
 
         addBarButtonItem.rx.tap.bind(to: viewModel.add).disposed(by: bag)
 

@@ -11,23 +11,6 @@ import RxSwift
 import SwiftEntryKit
 import UIKit
 
-
-protocol CoordinatorDelegate: AnyObject {
-    func coordinatorDidEnd(_ coordinator: Coordinator)
-}
-
-protocol BaseViewCoordinator: AnyObject {
-    func pushed(animated: Bool)
-    
-    func poped(animated: Bool)
-    
-    func presented(animated: Bool, completion: (() -> Void)?)
-    
-    func movingFromParent()
-    
-    func whoops(_ error: Error)
-}
-
 class Coordinator: NSObject {
     // MARK: - instance props.
 
@@ -58,12 +41,8 @@ class Coordinator: NSObject {
     }
 }
 
-protocol VisibleCoordinatorProtocol {
-    var viewController: UIViewController { get }
-}
-
-protocol NavigationCoordinatorProtocol: VisibleCoordinatorProtocol {
-    var navigationController: UINavigationController { get }
+protocol CoordinatorDelegate: AnyObject {
+    func coordinatorDidEnd(_ coordinator: Coordinator)
 }
 
 extension CoordinatorDelegate where Self: Coordinator {
@@ -72,21 +51,27 @@ extension CoordinatorDelegate where Self: Coordinator {
     }
 }
 
-extension BaseViewCoordinator where Self: Coordinator {
-    func pushed(animated: Bool = true) {
-        guard let viewController = viewController else { return }
-        navigationController?.pushViewController(viewController, animated: animated)
-    }
+protocol VisibleCoordinatorProtocol {
+    var viewController: UIViewController { get }
+}
 
-    func poped(animated: Bool = true) {
-        navigationController?.popViewController(animated: animated)
-    }
+protocol NavigationCoordinatorProtocol: VisibleCoordinatorProtocol {
+    var navigationController: UINavigationController { get }
+}
 
-    func presented(animated: Bool = true, completion: (() -> Void)? = nil) {
-        guard let viewController = viewController else { return }
-        navigationController?.topViewController?.present(viewController, animated: animated, completion: completion)
-    }
+protocol VisibleViewCoordinator: AnyObject {
+    func whoops(_ error: Error)
+}
 
+protocol PresentedViewCoordinator: VisibleViewCoordinator {
+    func beingDismissed()
+}
+
+protocol PushedViewCoordinator: VisibleViewCoordinator {
+    func movingFromParent()
+}
+
+extension VisibleViewCoordinator where Self: VisibleCoordinatorProtocol {
     func whoops(_ error: Error) {
         var attributes: EKAttributes = .topNote
         attributes.name = String(describing: ErrorViewController.self)

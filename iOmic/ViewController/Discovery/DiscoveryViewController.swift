@@ -13,7 +13,7 @@ import RxSwift
 import SwiftEntryKit
 import UIKit
 
-protocol DiscoveryViewCoordinator: AnyObject {
+protocol DiscoveryViewCoordinator: VisibleViewCoordinator {
     func presentSources(current: SourceProtocol) -> Observable<SourceProtocol>
     func presentFilters(current: [FilterProrocol]) -> Observable<[FilterProrocol]>
     func showChapters(in book: Book)
@@ -51,8 +51,7 @@ class DiscoveryViewController: UIViewController {
     }
 
     private func setupBinding() {
-        // TODO: -
-//        viewModel.error.subscribe(onNext: { [weak self] in self?.coordinator?.whoops($0) }).disposed(by: bag)
+        viewModel.error.subscribe(onNext: { [weak self] in self?.coordinator?.whoops($0) }).disposed(by: bag)
 
         viewModel.title.bind(to: navigationItem.rx.title).disposed(by: bag)
         navigationItem.leftBarButtonItem?.rx.tap

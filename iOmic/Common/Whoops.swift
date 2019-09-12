@@ -16,6 +16,10 @@ enum Whoops: Error {
         case nilDataReponse(DataResponse<Data?>)
     }
 
+    enum Source: Error {
+        case noPageContentToShow
+    }
+
     enum Codeing: Error {
         case decodeFailed
         case encodeFailed
