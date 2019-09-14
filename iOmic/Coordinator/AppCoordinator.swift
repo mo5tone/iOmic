@@ -65,9 +65,13 @@ class AppCoordinator: Coordinator {
 
         let tableViewAppearance = UITableView.appearance()
         tableViewAppearance.backgroundColor = UIColor.flat.background
+        tableViewAppearance.showsVerticalScrollIndicator = false
+        tableViewAppearance.showsHorizontalScrollIndicator = false
 
         let collectionViewAppearance = UICollectionView.appearance()
         collectionViewAppearance.backgroundColor = UIColor.flat.background
+        collectionViewAppearance.showsVerticalScrollIndicator = false
+        collectionViewAppearance.showsHorizontalScrollIndicator = false
     }
 }
 

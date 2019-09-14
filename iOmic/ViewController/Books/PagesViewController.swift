@@ -45,6 +45,8 @@ class PagesViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit { print(String(describing: self)) }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -62,8 +64,6 @@ class PagesViewController: UIViewController {
         super.viewDidDisappear(animated)
         if isMovingFromParent { coordinator?.movingFromParent() }
     }
-
-    deinit { print(String(describing: self)) }
 
     // MARK: - private instance methods
 

@@ -48,7 +48,8 @@ extension DiscoveryCoordinator: DiscoveryViewCoordinator {
     func presentFilters(current: [FilterProrocol]) -> Observable<[FilterProrocol]> {
         let coordinator: FiltersCoordiantor = .init(window: window, delegate: self, filters: current)
         append(coordinator: coordinator)
-        return coordinator.start()
+        viewController.present(coordinator.navigationController, animated: true, completion: {})
+        return coordinator.filters
     }
 
     func showChapters(in book: Book) {

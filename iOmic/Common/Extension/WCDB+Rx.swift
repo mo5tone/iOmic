@@ -12,7 +12,19 @@ import WCDBSwift
 
 extension Database: ReactiveCompatible {}
 
-extension Reactive where Base: Database {
+extension Reactive where Base: TableInterface {
+    func create<Root>(virtualTable name: String, of rootType: Root.Type) -> Observable<Void> where Root: TableDecodable {
+        return Observable.create { observer -> Disposable in
+            do {
+                observer.on(.next(try self.base.create(virtualTable: name, of: rootType)))
+                observer.on(.completed)
+            } catch {
+                observer.on(.error(error))
+            }
+            return Disposables.create {}
+        }
+    }
+
     func create<Root>(table name: String, of rootType: Root.Type) -> Observable<Void> where Root: TableDecodable {
         return Observable.create { observer -> Disposable in
             do {
@@ -39,18 +51,6 @@ extension Reactive where Base: Database {
 
     func create(table name: String, with columnDefList: ColumnDef..., and constraintList: [TableConstraint]? = nil) -> Observable<Void> {
         return create(table: name, with: columnDefList, and: constraintList)
-    }
-
-    func create<Root>(virtualTable name: String, of rootType: Root.Type) -> Observable<Void> where Root: TableDecodable {
-        return Observable.create { observer -> Disposable in
-            do {
-                observer.on(.next(try self.base.create(virtualTable: name, of: rootType)))
-                observer.on(.completed)
-            } catch {
-                observer.on(.error(error))
-            }
-            return Disposables.create {}
-        }
     }
 }
 

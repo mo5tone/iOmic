@@ -54,6 +54,8 @@ class ChaptersViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit { print(String(describing: self)) }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -77,8 +79,6 @@ class ChaptersViewController: UIViewController {
         super.viewDidDisappear(animated)
         if isMovingFromParent { coordinator?.movingFromParent() }
     }
-
-    deinit { print(String(describing: self)) }
 
     // MARK: - private instance methods
 

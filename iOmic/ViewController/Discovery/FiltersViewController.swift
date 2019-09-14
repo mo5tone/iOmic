@@ -11,7 +11,7 @@ import RxSwift
 import SwiftEntryKit
 import UIKit
 
-protocol FiltersViewCoordinator: AnyObject {
+protocol FiltersViewCoordinator: PresentedViewCoordinator {
     func dismiss()
     func applyFilters(_ filters: [FilterProrocol])
 }
@@ -22,17 +22,18 @@ class FiltersViewController: UIViewController {
     private weak var coordinator: FiltersViewCoordinator?
     private let viewModel: FiltersViewModel
     private let bag: DisposeBag = .init()
-    @IBOutlet var cancelButton: UIButton!
-    @IBOutlet var okButton: UIButton!
+    private lazy var cancelBarButtonItem: UIBarButtonItem = .init(barButtonSystemItem: .cancel, target: nil, action: nil)
+    private lazy var doneBarButtonItem: UIBarButtonItem = .init(barButtonSystemItem: .done, target: nil, action: nil)
     @IBOutlet var collectionView: UICollectionView!
 
     // MARK: - private instance methods.
 
     private func setupView() {
-        view.backgroundColor = UIColor.flat.clear
+        view.backgroundColor = UIColor.flat.background
 
-        cancelButton.setTitle("Cancel", for: .normal)
-        okButton.setTitle("OK", for: .normal)
+        navigationItem.title = "Filters"
+        navigationItem.leftBarButtonItem = cancelBarButtonItem
+        navigationItem.rightBarButtonItem = doneBarButtonItem
 
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
         collectionView.registerHeaderFooterView(FilterTitleCollectionHeader.self, supplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
@@ -43,8 +44,8 @@ class FiltersViewController: UIViewController {
     }
 
     private func setupBinding() {
-        okButton.rx.tap.subscribe(onNext: { [weak self] in self?.coordinator?.applyFilters(self?.viewModel.filters ?? []) }).disposed(by: bag)
-        Observable.merge(cancelButton.rx.tap.asObservable(), okButton.rx.tap.asObservable())
+        doneBarButtonItem.rx.tap.subscribe(onNext: { [weak self] in self?.coordinator?.applyFilters(self?.viewModel.filters ?? []) }).disposed(by: bag)
+        Observable.merge(cancelBarButtonItem.rx.tap.asObservable(), doneBarButtonItem.rx.tap.asObservable())
             .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in self?.coordinator?.dismiss() })
             .disposed(by: bag)
@@ -61,6 +62,8 @@ class FiltersViewController: UIViewController {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    deinit { print(String(describing: self)) }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,8 +85,6 @@ class FiltersViewController: UIViewController {
             }
         }
     }
-
-    deinit { print(String(describing: self)) }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegateFlowLayout

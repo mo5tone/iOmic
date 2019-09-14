@@ -29,7 +29,9 @@ class DiscoveryViewController: UIViewController {
     private lazy var searchController: UISearchController = .init(searchResultsController: nil)
     private let dataSource: RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<Int, Book>> = .init(configureCell: { _, collectionView, indexPath, book in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.reusableIdentifier, for: indexPath)
-        if let cell = cell as? BookCollectionViewCell { cell.setup(book: book) }
+        if let cell = cell as? BookCollectionViewCell {
+            cell.setup(book: book)
+        }
         return cell
     })
     @IBOutlet var collectionView: UICollectionView!
@@ -120,6 +122,8 @@ class DiscoveryViewController: UIViewController {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    deinit { print(String(describing: self)) }
 
     override func viewDidLoad() {
         super.viewDidLoad()

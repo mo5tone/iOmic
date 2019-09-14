@@ -68,6 +68,7 @@ protocol PresentedViewCoordinator: VisibleViewCoordinator {
 }
 
 protocol PushedViewCoordinator: VisibleViewCoordinator {
+    // TODO: - replace back item with custom left item, handle pop and deinit
     func movingFromParent()
 }
 

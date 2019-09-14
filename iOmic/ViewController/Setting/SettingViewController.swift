@@ -28,6 +28,8 @@ class SettingViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit { print(String(describing: self)) }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

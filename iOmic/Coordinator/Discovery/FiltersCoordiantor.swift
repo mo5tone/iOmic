@@ -13,42 +13,30 @@ import UIKit
 
 protocol FiltersCoordiantorDelegate: CoordinatorDelegate {}
 
-class FiltersCoordiantor: Coordinator, VisibleCoordinatorProtocol {
-    private let filters: PublishSubject<[FilterProrocol]> = .init()
+class FiltersCoordiantor: Coordinator, NavigationCoordinatorProtocol {
+    let filters: PublishSubject<[FilterProrocol]> = .init()
     private weak var delegate: FiltersCoordiantorDelegate?
     private(set) var viewController: UIViewController = .init()
+    private(set) var navigationController: UINavigationController = .init()
 
     init(window: UIWindow, delegate: FiltersCoordiantorDelegate?, filters: [FilterProrocol]) {
         super.init(window: window)
         self.delegate = delegate
         viewController = FiltersViewController(coordinator: self, viewModel: .init(filters: filters))
-    }
-
-    func start() -> Observable<[FilterProrocol]> {
-        var attributes: EKAttributes = .bottomNote
-        attributes.name = String(describing: FiltersViewController.self)
-        attributes.displayDuration = .infinity
-        attributes.positionConstraints.safeArea = .empty(fillSafeArea: false)
-        attributes.positionConstraints.size = .init(width: .offset(value: 8), height: .ratio(value: 0.7))
-        let action: EKAttributes.UserInteraction.Action = { [weak self] in self?.dismiss() }
-        attributes.screenInteraction = .init(defaultAction: .absorbTouches, customTapActions: [action])
-        attributes.entryBackground = .color(color: .init(UIColor.flat.background))
-        attributes.screenBackground = .visualEffect(style: .standard)
-        attributes.shadow = .active(with: .init(color: .init(UIColor.flat.shadow), opacity: 0.3, radius: 10, offset: .zero))
-        attributes.roundCorners = .all(radius: 16)
-        SwiftEntryKit.display(entry: viewController, using: attributes)
-        return filters
+        navigationController = .init(rootViewController: viewController)
     }
 }
 
 // MARK: - FiltersViewCoordinator
 
 extension FiltersCoordiantor: FiltersViewCoordinator {
+    func beingDismissed() {
+        delegate?.coordinatorDidEnd(self)
+    }
+
     func dismiss() {
-        SwiftEntryKit.dismiss(.specific(entryName: String(describing: FiltersViewController.self))) { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.coordinatorDidEnd(self)
-        }
+        navigationController.popToRootViewController(animated: true)
+        navigationController.dismiss(animated: true, completion: { [weak self] in self?.beingDismissed() })
     }
 
     func applyFilters(_ filters: [FilterProrocol]) {

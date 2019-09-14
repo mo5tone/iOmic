@@ -48,7 +48,7 @@ extension Persistence: BooksPersistenceProtocol {
 
     func readBooks() -> Observable<[Book]> {
         guard let table = bookTable else { return Observable.empty() }
-        return table.rx.getObjects(on: Book.Properties.all, where: Book.Properties.readAt.isNotNull(), orderBy: [Book.Properties.readAt])
+        return table.rx.getObjects(on: Book.Properties.all, where: Book.Properties.readAt.isNotNull(), orderBy: [Book.Properties.readAt.asOrder(by: .descending)])
     }
 }
 
@@ -64,9 +64,7 @@ extension Persistence: ChaptersPersistenceProtocol {
         guard let table = bookTable else { return Observable.empty() }
         var copy = book
         copy.isFavorited = isFavorited
-        return table.rx.update(on: [Book.Properties.isFavorited], with: [isFavorited], where: Book.Properties.identity == copy.identity)
-            .debug("update")
-            .catchError { _ in table.rx.insertOrReplace(objects: copy) }
+        return table.rx.insertOrReplace(objects: copy)
     }
 }
 
@@ -75,9 +73,6 @@ extension Persistence: PagesPersistenceProtocol {
         guard let table = bookTable else { return Observable.empty() }
         var copy = book
         copy.readAt = readAt
-        // FIXME: - https://github.com/Tencent/wcdb/issues/601
-        return table.rx.update(on: Book.Properties.readAt, with: copy, where: Book.Properties.identity == copy.identity)
-            .debug("update")
-            .catchError { _ in table.rx.insertOrReplace(objects: copy) }
+        return table.rx.insertOrReplace(objects: copy)
     }
 }
