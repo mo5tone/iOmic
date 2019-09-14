@@ -1,19 +1,15 @@
 //
-//  BookCollectionReusableView.swift
+//  FilterTitleCollectionHeader.swift
 //  iOmic
 //
-//  Created by Jeff Men (CN) on 2019/9/12.
+//  Created by 门捷夫 on 2019/9/4.
 //  Copyright © 2019 门捷夫. All rights reserved.
 //
 
 import UIKit
 
-class BookCollectionReusableView: UICollectionReusableView {
+class FilterTitleCollectionHeader: UICollectionReusableView {
     @IBOutlet var titleLabel: UILabel!
-
-    func setup(identifier: SourceIdentifier) {
-        titleLabel.text = identifier.source.name
-    }
 
     override func awakeFromNib() {
         super.awakeFromNib()

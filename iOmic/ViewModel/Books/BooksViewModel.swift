@@ -17,7 +17,7 @@ class BooksViewModel: ViewModel {
     init(persistence: BooksPersistenceProtocol) {
         super.init()
         groupIndex.throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-            .flatMapLatest { $0 == 0 ? persistence.favoriteBook() : persistence.readBooks() }
+            .flatMapLatest { $0 == 0 ? persistence.favoriteBooks() : persistence.readBooks() }
             .map { books in SourceIdentifier.values.map { identifier in (identifier, books.filter { $0.sourceIdentifier == identifier }) }.filter { !$0.1.isEmpty } }
             .bind(to: books)
             .disposed(by: bag)

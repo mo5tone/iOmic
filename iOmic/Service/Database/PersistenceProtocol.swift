@@ -17,13 +17,17 @@ protocol PersistenceProtocol {
 }
 
 protocol BooksPersistenceProtocol: PersistenceProtocol {
-    func favoriteBook() -> Observable<[Book]>
+    func favoriteBooks() -> Observable<[Book]>
     func readBooks() -> Observable<[Book]>
 }
 
 protocol ChaptersPersistenceProtocol: PersistenceProtocol {
     func getBook(where identity: Book.Identity) -> Observable<Book?>
     func update(isFavorited: Bool, on book: Book) -> Observable<Void>
+}
+
+protocol PagesPersistenceProtocol: PersistenceProtocol {
+    func update(readAt: Date?, on book: Book) -> Observable<Void>
 }
 
 // MARK: - PersistenceProtocol
@@ -37,7 +41,7 @@ extension Persistence: PersistenceProtocol {
 // MARK: - BooksPersistenceProtocol
 
 extension Persistence: BooksPersistenceProtocol {
-    func favoriteBook() -> Observable<[Book]> {
+    func favoriteBooks() -> Observable<[Book]> {
         guard let table = bookTable else { return Observable.empty() }
         return table.rx.getObjects(on: Book.Properties.all, where: Book.Properties.isFavorited == true)
     }
@@ -60,6 +64,20 @@ extension Persistence: ChaptersPersistenceProtocol {
         guard let table = bookTable else { return Observable.empty() }
         var copy = book
         copy.isFavorited = isFavorited
-        return table.rx.insertOrReplace(objects: copy)
+        return table.rx.update(on: [Book.Properties.isFavorited], with: [isFavorited], where: Book.Properties.identity == copy.identity)
+            .debug("update")
+            .catchError { _ in table.rx.insertOrReplace(objects: copy) }
+    }
+}
+
+extension Persistence: PagesPersistenceProtocol {
+    func update(readAt: Date?, on book: Book) -> Observable<Void> {
+        guard let table = bookTable else { return Observable.empty() }
+        var copy = book
+        copy.readAt = readAt
+        // FIXME: - https://github.com/Tencent/wcdb/issues/601
+        return table.rx.update(on: Book.Properties.readAt, with: copy, where: Book.Properties.identity == copy.identity)
+            .debug("update")
+            .catchError { _ in table.rx.insertOrReplace(objects: copy) }
     }
 }

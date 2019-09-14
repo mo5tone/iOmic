@@ -24,7 +24,7 @@ class PagesCoordinator: Coordinator, VisibleCoordinatorProtocol {
     init(window: UIWindow, delegate: PagesCoordinatorDelegate?, chapter: Chapter) {
         super.init(window: window)
         self.delegate = delegate
-        viewController = PagesViewController(coordinator: self, viewModel: .init(chapter: chapter))
+        viewController = PagesViewController(coordinator: self, viewModel: .init(chapter: chapter, persistence: Persistence.shared))
         viewController.hidesBottomBarWhenPushed = true
     }
 }

@@ -22,10 +22,8 @@ class Persistence {
 
     // MARK: - instance methods
 
-    func createTables() throws {
-        try database.create(table: Book.tableName, of: Book.self)
-        try database.create(table: Chapter.tableName, of: Chapter.self)
-        try database.create(table: Page.tableName, of: Page.self)
+    func createTables() -> Observable<Void> {
+        return Observable.merge(database.rx.create(table: Book.tableName, of: Book.self), database.rx.create(table: Chapter.tableName, of: Chapter.self), database.rx.create(table: Page.tableName, of: Page.self)).take(3)
     }
 
     private init() {}

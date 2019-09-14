@@ -35,7 +35,7 @@ class FiltersViewController: UIViewController {
         okButton.setTitle("OK", for: .normal)
 
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
-        collectionView.registerHeaderFooterView(FilterTitleCollectionReusableView.self, supplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
+        collectionView.registerHeaderFooterView(FilterTitleCollectionHeader.self, supplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
         collectionView.registerCell(FilterCollectionViewCell.self)
         collectionView.allowsMultipleSelection = true
         collectionView.dataSource = self
@@ -104,9 +104,9 @@ extension FiltersViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let identifier = FilterTitleCollectionReusableView.reusableIdentifier
+        let identifier = FilterTitleCollectionHeader.reusableIdentifier
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: identifier, for: indexPath)
-        if let view = view as? FilterTitleCollectionReusableView {
+        if let view = view as? FilterTitleCollectionHeader {
             view.titleLabel.text = viewModel.filters[indexPath.section].title
         }
         return view

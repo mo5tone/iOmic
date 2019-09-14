@@ -32,8 +32,8 @@ class BooksViewController: UIViewController {
         },
         configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
             guard kind == UICollectionView.elementKindSectionHeader else { return UICollectionReusableView() }
-            let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: BookCollectionReusableView.reusableIdentifier, for: indexPath)
-            if let supplementaryView = supplementaryView as? BookCollectionReusableView { supplementaryView.setup(identifier: dataSource.sectionModels[indexPath.section].model) }
+            let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: BookCollectionHeader.reusableIdentifier, for: indexPath)
+            if let supplementaryView = supplementaryView as? BookCollectionHeader { supplementaryView.setup(identifier: dataSource.sectionModels[indexPath.section].model) }
             return supplementaryView
         }
     )
@@ -73,7 +73,7 @@ class BooksViewController: UIViewController {
         navigationItem.titleView = segmentedControl
 
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
-        collectionView.registerHeaderFooterView(BookCollectionReusableView.self, supplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
+        collectionView.registerHeaderFooterView(BookCollectionHeader.self, supplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
         collectionView.registerCell(BookCollectionViewCell.self)
     }
 
