@@ -13,13 +13,13 @@ class PagesViewModel: ViewModel {
     let load: PublishSubject<Void> = .init()
     let chapter: BehaviorSubject<Chapter>
     let pages: BehaviorSubject<[Page]> = .init(value: [])
-    private let persistence: PagesPersistenceProtocol
+    private let databaseManager: PagesDatabaseManagerProtocol
 
-    init(chapter: Chapter, persistence: PagesPersistenceProtocol) {
+    init(chapter: Chapter, databaseManager: PagesDatabaseManagerProtocol) {
         self.chapter = .init(value: chapter)
-        self.persistence = persistence
+        self.databaseManager = databaseManager
         super.init()
-        self.persistence.update(readAt: .init(), on: chapter.book).subscribe().disposed(by: bag)
+        self.databaseManager.update(readAt: .init(), on: chapter.book).subscribe().disposed(by: bag)
         load.withLatestFrom(self.chapter)
             .flatMapLatest { chapter in chapter.book.source.fetchPages(chapter: chapter) }
             .catchError { [weak self] in self?.error.on(.next($0)); return .just([]) }

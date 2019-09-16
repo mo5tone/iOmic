@@ -46,7 +46,7 @@ class AppCoordinator: Coordinator {
     private func setupConfigurations() {
         setupAppearance()
         IQKeyboardManager.shared.enable = true
-        _ = Persistence.shared.createTables().takeUntil(rx.deallocated).subscribe(onError: { print($0) })
+        _ = DatabaseManager.shared.createTables().asObservable().takeUntil(rx.deallocated).subscribe(onError: { print($0) })
     }
 
     private func setupAppearance() {

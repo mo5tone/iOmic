@@ -45,9 +45,9 @@ protocol SourceProtocol {
     var available: Bool { get set }
     var filters: [FilterProrocol] { get }
     var modifier: AnyModifier { get }
-    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Observable<[Book]>
-    func fetchChapters(book: Book) -> Observable<[Chapter]>
-    func fetchPages(chapter: Chapter) -> Observable<[Page]>
+    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Single<[Book]>
+    func fetchChapters(book: Book) -> Single<[Chapter]>
+    func fetchPages(chapter: Chapter) -> Single<[Page]>
 }
 
 extension SourceProtocol {

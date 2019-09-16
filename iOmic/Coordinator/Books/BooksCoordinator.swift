@@ -23,7 +23,7 @@ class BooksCoordinator: Coordinator, NavigationCoordinatorProtocol {
     init(window: UIWindow, delegate: BooksCoordinatorDelegate?) {
         super.init(window: window)
         self.delegate = delegate
-        viewController = BooksViewController(coordinator: self, viewModel: .init(persistence: Persistence.shared))
+        viewController = BooksViewController(coordinator: self, viewModel: .init(databaseManager: DatabaseManager.shared))
         navigationController = .init(rootViewController: viewController)
     }
 }

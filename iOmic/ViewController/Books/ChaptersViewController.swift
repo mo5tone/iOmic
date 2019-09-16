@@ -6,6 +6,7 @@
 //  Copyright © 2019 门捷夫. All rights reserved.
 //
 
+import Foundation
 import Hue
 import Kingfisher
 import MarqueeLabel

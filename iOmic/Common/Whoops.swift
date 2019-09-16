@@ -12,6 +12,8 @@ import Foundation
 enum Whoops: Error {
     case nilWeakSelf
     case rawString(String)
+    case nilProperty(String)
+
     enum Networking: Error {
         case nilDataReponse(DataResponse<Data?>)
     }

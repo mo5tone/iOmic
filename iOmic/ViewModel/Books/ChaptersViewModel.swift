@@ -11,27 +11,27 @@ import RxSwift
 import WCDBSwift
 
 class ChaptersViewModel: ViewModel {
-    private let persistence: ChaptersPersistenceProtocol
+    private let databaseManager: ChaptersDatabaseManagerProtocol
     let load: PublishSubject<Void> = .init()
     let switchFavorited: PublishSubject<Void> = .init()
     let isFavorited: BehaviorSubject<Bool> = .init(value: false)
     let book: BehaviorSubject<Book>
     let chapters: BehaviorSubject<[Chapter]> = .init(value: [])
 
-    init(book: Book, persistence: ChaptersPersistenceProtocol) {
-        self.persistence = persistence
+    init(book: Book, databaseManager: ChaptersDatabaseManagerProtocol) {
+        self.databaseManager = databaseManager
         self.book = .init(value: book)
         super.init()
-        load.withLatestFrom(persistence.getBook(where: book.identity))
+        load.withLatestFrom(databaseManager.getBook(where: book.identity))
             .compactMap { $0?.isFavorited }
             .bind(to: isFavorited)
             .disposed(by: bag)
         switchFavorited.withLatestFrom(Observable.combineLatest(isFavorited, self.book))
-            .flatMapLatest { persistence.update(isFavorited: $0.0, on: $0.1) }
+            .flatMapLatest { databaseManager.update(isFavorited: $0.0, on: $0.1) }
             .subscribe()
             .disposed(by: bag)
         let results = load.withLatestFrom(self.book)
-            .flatMapLatest { book -> Observable<[Chapter]> in book.source.fetchChapters(book: book) }
+            .flatMapLatest { book -> Single<[Chapter]> in book.source.fetchChapters(book: book) }
             .catchError { [weak self] in self?.error.on(.next($0)); return .just([]) }
             .share()
         results.bind(to: chapters).disposed(by: bag)

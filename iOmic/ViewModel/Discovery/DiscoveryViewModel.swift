@@ -34,7 +34,7 @@ class DiscoveryViewModel: ViewModel {
         loadMore.withLatestFrom(page) { $1 + 1 }.bind(to: page).disposed(by: bag)
         Observable.merge(source.map { _ in }, load, loadMore)
             .withLatestFrom(Observable.combineLatest(source, page, query, filters, books))
-            .flatMapLatest { (source, page, query, filters, books) -> Observable<[Book]> in
+            .flatMapLatest { (source, page, query, filters, books) -> Single<[Book]> in
                 source.fetchBooks(page: page, query: query ?? "", filters: filters)
                     .map {
                         if page == 0 { return $0 }

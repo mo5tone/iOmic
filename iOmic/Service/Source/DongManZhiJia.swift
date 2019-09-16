@@ -68,7 +68,7 @@ extension DongManZhiJia: SourceProtocol {
         }
     }
 
-    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Observable<[Book]> {
+    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Single<[Book]> {
         func jsonParser(json: JSON) -> [Book] {
             return json.arrayValue.compactMap { json -> Book? in
                 guard let bookId = json["id"].int else { return nil }
@@ -98,7 +98,7 @@ extension DongManZhiJia: SourceProtocol {
         }
         let convertible = Router.books(page, query, filters)
         return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
-            .compactMap { response -> [Book] in
+            .map { response -> [Book] in
                 switch response.result {
                 case let .success(data):
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
@@ -115,10 +115,10 @@ extension DongManZhiJia: SourceProtocol {
             }
     }
 
-    func fetchChapters(book: Book) -> Observable<[Chapter]> {
+    func fetchChapters(book: Book) -> Single<[Chapter]> {
         let convertible = Router.chapters(book)
         return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
-            .compactMap { response -> [Chapter] in
+            .map { response -> [Chapter] in
                 switch response.result {
                 case let .success(data):
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
@@ -151,10 +151,10 @@ extension DongManZhiJia: SourceProtocol {
             }
     }
 
-    func fetchPages(chapter: Chapter) -> Observable<[Page]> {
+    func fetchPages(chapter: Chapter) -> Single<[Page]> {
         let convertible = Router.pages(chapter)
         return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
-            .compactMap { response -> [Page] in
+            .map { response -> [Page] in
                 switch response.result {
                 case let .success(data):
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }

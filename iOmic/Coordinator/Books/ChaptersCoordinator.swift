@@ -22,7 +22,7 @@ class ChaptersCoordinator: Coordinator, VisibleCoordinatorProtocol {
     init(window: UIWindow, delegate: ChaptersCoordinatorDelegate?, book: Book) {
         super.init(window: window)
         self.delegate = delegate
-        viewController = ChaptersViewController(coordinator: self, viewModel: .init(book: book, persistence: Persistence.shared))
+        viewController = ChaptersViewController(coordinator: self, viewModel: .init(book: book, databaseManager: DatabaseManager.shared))
         viewController.hidesBottomBarWhenPushed = true
     }
 }

@@ -13,43 +13,43 @@ import WCDBSwift
 extension Database: ReactiveCompatible {}
 
 extension Reactive where Base: TableInterface {
-    func create<Root>(virtualTable name: String, of rootType: Root.Type) -> Observable<Void> where Root: TableDecodable {
-        return Observable.create { observer -> Disposable in
+    func create<Root>(virtualTable name: String, of rootType: Root.Type) -> Completable where Root: TableDecodable {
+        return Completable.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.create(virtualTable: name, of: rootType)))
-                observer.on(.completed)
+                try self.base.create(virtualTable: name, of: rootType)
+                observer(.completed)
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func create<Root>(table name: String, of rootType: Root.Type) -> Observable<Void> where Root: TableDecodable {
-        return Observable.create { observer -> Disposable in
+    func create<Root>(table name: String, of rootType: Root.Type) -> Completable where Root: TableDecodable {
+        return Completable.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.create(table: name, of: rootType)))
-                observer.on(.completed)
+                try self.base.create(table: name, of: rootType)
+                observer(.completed)
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func create(table name: String, with columnDefList: [ColumnDef], and constraintList: [TableConstraint]? = nil) -> Observable<Void> {
-        return Observable.create { observer -> Disposable in
+    func create(table name: String, with columnDefList: [ColumnDef], and constraintList: [TableConstraint]? = nil) -> Completable {
+        return Completable.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.create(table: name, with: columnDefList, and: constraintList)))
-                observer.on(.completed)
+                try self.base.create(table: name, with: columnDefList, and: constraintList)
+                observer(.completed)
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func create(table name: String, with columnDefList: ColumnDef..., and constraintList: [TableConstraint]? = nil) -> Observable<Void> {
+    func create(table name: String, with columnDefList: ColumnDef..., and constraintList: [TableConstraint]? = nil) -> Completable {
         return create(table: name, with: columnDefList, and: constraintList)
     }
 }
@@ -70,35 +70,35 @@ extension Table {
 // MARK: - InsertTableInterface
 
 extension Table.Reactive {
-    func insert(objects: [Root], on propertyConvertibleList: [PropertyConvertible]? = nil) -> Observable<Void> {
-        return Observable.create { observer -> Disposable in
+    func insert(objects: [Root], on propertyConvertibleList: [PropertyConvertible]? = nil) -> Completable {
+        return Completable.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.insert(objects: objects, on: propertyConvertibleList)))
-                observer.on(.completed)
+                try self.base.insert(objects: objects, on: propertyConvertibleList)
+                observer(.completed)
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func insert(objects: Root..., on propertyConvertibleList: [PropertyConvertible]? = nil) -> Observable<Void> {
+    func insert(objects: Root..., on propertyConvertibleList: [PropertyConvertible]? = nil) -> Completable {
         return insert(objects: objects, on: propertyConvertibleList)
     }
 
-    func insertOrReplace(objects: [Root], on propertyConvertibleList: [PropertyConvertible]? = nil) -> Observable<Void> {
-        return Observable.create { observer -> Disposable in
+    func insertOrReplace(objects: [Root], on propertyConvertibleList: [PropertyConvertible]? = nil) -> Completable {
+        return Completable.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.insertOrReplace(objects: objects, on: propertyConvertibleList)))
-                observer.on(.completed)
+                try self.base.insertOrReplace(objects: objects, on: propertyConvertibleList)
+                observer(.completed)
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func insertOrReplace(objects: Root..., on propertyConvertibleList: [PropertyConvertible]? = nil) -> Observable<Void> {
+    func insertOrReplace(objects: Root..., on propertyConvertibleList: [PropertyConvertible]? = nil) -> Completable {
         return insertOrReplace(objects: objects, on: propertyConvertibleList)
     }
 }
@@ -106,35 +106,35 @@ extension Table.Reactive {
 // MARK: - UpdateTableInterface
 
 extension Table.Reactive {
-    func update(on propertyConvertibleList: [PropertyConvertible], with object: Root, where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Observable<Void> {
-        return Observable.create { observer -> Disposable in
+    func update(on propertyConvertibleList: [PropertyConvertible], with object: Root, where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Completable {
+        return Completable.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.update(on: propertyConvertibleList, with: object, where: condition, orderBy: orderList, limit: limit, offset: offset)))
-                observer.on(.completed)
+                try self.base.update(on: propertyConvertibleList, with: object, where: condition, orderBy: orderList, limit: limit, offset: offset)
+                observer(.completed)
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func update(on propertyConvertibleList: PropertyConvertible..., with object: Root, where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Observable<Void> {
+    func update(on propertyConvertibleList: PropertyConvertible..., with object: Root, where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Completable {
         return update(on: propertyConvertibleList, with: object, where: condition, orderBy: orderList, limit: limit, offset: offset)
     }
 
-    func update(on propertyConvertibleList: [PropertyConvertible], with row: [ColumnEncodable], where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Observable<Void> {
-        return Observable.create { observer -> Disposable in
+    func update(on propertyConvertibleList: [PropertyConvertible], with row: [ColumnEncodable], where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Completable {
+        return Completable.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.update(on: propertyConvertibleList, with: row, where: condition, orderBy: orderList, limit: limit, offset: offset)))
-                observer.on(.completed)
+                try self.base.update(on: propertyConvertibleList, with: row, where: condition, orderBy: orderList, limit: limit, offset: offset)
+                observer(.completed)
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func update(on propertyConvertibleList: PropertyConvertible..., with row: [ColumnEncodable], where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Observable<Void> {
+    func update(on propertyConvertibleList: PropertyConvertible..., with row: [ColumnEncodable], where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Completable {
         return update(on: propertyConvertibleList, with: row, where: condition, orderBy: orderList, limit: limit, offset: offset)
     }
 }
@@ -142,13 +142,13 @@ extension Table.Reactive {
 // MARK: - DeleteTableInterface
 
 extension Table.Reactive {
-    func delete(where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Observable<Void> {
-        return Observable.create { observer -> Disposable in
+    func delete(where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Completable {
+        return Completable.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.delete(where: condition, orderBy: orderList, limit: limit, offset: offset)))
-                observer.on(.completed)
+                try self.base.delete(where: condition, orderBy: orderList, limit: limit, offset: offset)
+                observer(.completed)
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
@@ -158,35 +158,33 @@ extension Table.Reactive {
 // MARK: - SelectTableInterface
 
 extension Table.Reactive {
-    func getObjects(on propertyConvertibleList: [PropertyConvertible], where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Observable<[Root]> {
-        return Observable.create { observer -> Disposable in
+    func getObjects(on propertyConvertibleList: [PropertyConvertible], where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Single<[Root]> {
+        return Single.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.getObjects(on: propertyConvertibleList, where: condition, orderBy: orderList, limit: limit, offset: offset)))
-                observer.on(.completed)
+                observer(.success(try self.base.getObjects(on: propertyConvertibleList, where: condition, orderBy: orderList, limit: limit, offset: offset)))
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func getObjects(on propertyConvertibleList: PropertyConvertible..., where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Observable<[Root]> {
+    func getObjects(on propertyConvertibleList: PropertyConvertible..., where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Single<[Root]> {
         return getObjects(on: propertyConvertibleList, where: condition, orderBy: orderList, limit: limit, offset: offset)
     }
 
-    func getObject(on propertyConvertibleList: [PropertyConvertible], where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, offset: Offset? = nil) -> Observable<Root?> {
-        return Observable.create { observer -> Disposable in
+    func getObject(on propertyConvertibleList: [PropertyConvertible], where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, offset: Offset? = nil) -> Single<Root?> {
+        return Single.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.getObject(on: propertyConvertibleList, where: condition, orderBy: orderList, offset: offset)))
-                observer.on(.completed)
+                observer(.success(try self.base.getObject(on: propertyConvertibleList, where: condition, orderBy: orderList, offset: offset)))
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func getObject(on propertyConvertibleList: PropertyConvertible..., where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, offset: Offset? = nil) -> Observable<Root?> {
+    func getObject(on propertyConvertibleList: PropertyConvertible..., where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, offset: Offset? = nil) -> Single<Root?> {
         return getObject(on: propertyConvertibleList, where: condition, orderBy: orderList, offset: offset)
     }
 }
@@ -194,82 +192,76 @@ extension Table.Reactive {
 // MARK: - RowSelectTableInterface
 
 extension Table.Reactive {
-    func getRows(on columnResultConvertibleList: [ColumnResultConvertible], where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Observable<FundamentalRowXColumn> {
-        return Observable.create { observer -> Disposable in
+    func getRows(on columnResultConvertibleList: [ColumnResultConvertible], where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Single<FundamentalRowXColumn> {
+        return Single.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.getRows(on: columnResultConvertibleList, where: condition, orderBy: orderList, limit: limit, offset: offset)))
-                observer.on(.completed)
+                observer(.success(try self.base.getRows(on: columnResultConvertibleList, where: condition, orderBy: orderList, limit: limit, offset: offset)))
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func getRows(on columnResultConvertibleList: ColumnResultConvertible..., where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Observable<FundamentalRowXColumn> {
+    func getRows(on columnResultConvertibleList: ColumnResultConvertible..., where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Single<FundamentalRowXColumn> {
         return getRows(on: columnResultConvertibleList, where: condition, orderBy: orderList, limit: limit, offset: offset)
     }
 
     func getRow(on columnResultConvertibleList: [ColumnResultConvertible], where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, offset: Offset? = nil)
-        -> Observable<FundamentalRow> {
-        return Observable.create { observer -> Disposable in
+        -> Single<FundamentalRow> {
+        return Single.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.getRow(on: columnResultConvertibleList, where: condition, orderBy: orderList, offset: offset)))
-                observer.on(.completed)
+                observer(.success(try self.base.getRow(on: columnResultConvertibleList, where: condition, orderBy: orderList, offset: offset)))
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func getRow(on columnResultConvertibleList: ColumnResultConvertible..., where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, offset: Offset? = nil) -> Observable<FundamentalRow> {
+    func getRow(on columnResultConvertibleList: ColumnResultConvertible..., where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, offset: Offset? = nil) -> Single<FundamentalRow> {
         return getRow(on: columnResultConvertibleList, where: condition, orderBy: orderList, offset: offset)
     }
 
-    func getColumn(on result: ColumnResultConvertible, where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Observable<FundamentalColumn> {
-        return Observable.create { observer -> Disposable in
+    func getColumn(on result: ColumnResultConvertible, where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Single<FundamentalColumn> {
+        return Single.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.getColumn(on: result, where: condition, orderBy: orderList, limit: limit, offset: offset)))
-                observer.on(.completed)
+                observer(.success(try self.base.getColumn(on: result, where: condition, orderBy: orderList, limit: limit, offset: offset)))
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func getDistinctColumn(on result: ColumnResultConvertible, where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Observable<FundamentalColumn> {
-        return Observable.create { observer -> Disposable in
+    func getDistinctColumn(on result: ColumnResultConvertible, where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Single<FundamentalColumn> {
+        return Single.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.getDistinctColumn(on: result, where: condition, orderBy: orderList, limit: limit, offset: offset)))
-                observer.on(.completed)
+                observer(.success(try self.base.getDistinctColumn(on: result, where: condition, orderBy: orderList, limit: limit, offset: offset)))
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func getValue(on result: ColumnResultConvertible, where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Observable<FundamentalValue> {
-        return Observable.create { observer -> Disposable in
+    func getValue(on result: ColumnResultConvertible, where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Single<FundamentalValue> {
+        return Single.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.getValue(on: result, where: condition, orderBy: orderList, limit: limit, offset: offset)))
-                observer.on(.completed)
+                observer(.success(try self.base.getValue(on: result, where: condition, orderBy: orderList, limit: limit, offset: offset)))
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func getDistinctValue(on result: ColumnResultConvertible, where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Observable<FundamentalValue> {
-        return Observable.create { observer -> Disposable in
+    func getDistinctValue(on result: ColumnResultConvertible, where condition: Condition? = nil, orderBy orderList: [OrderBy]? = nil, limit: Limit? = nil, offset: Offset? = nil) -> Single<FundamentalValue> {
+        return Single.create { observer -> Disposable in
             do {
-                observer.on(.next(try self.base.getDistinctValue(on: result, where: condition, orderBy: orderList, limit: limit, offset: offset)))
-                observer.on(.completed)
+                observer(.success(try self.base.getDistinctValue(on: result, where: condition, orderBy: orderList, limit: limit, offset: offset)))
             } catch {
-                observer.on(.error(error))
+                observer(.error(error))
             }
             return Disposables.create {}
         }
