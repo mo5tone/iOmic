@@ -39,8 +39,8 @@ class DiscoveryViewController: UIViewController {
     // MARK: - Private instance methods
 
     private func setupView() {
-        navigationItem.leftBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_tune"), style: .plain, target: nil, action: nil)
-        navigationItem.rightBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_filter"), style: .plain, target: nil, action: nil)
+        navigationItem.leftBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_tune"), style: .plain, target: nil, action: nil)
+        navigationItem.rightBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_filter"), style: .plain, target: nil, action: nil)
         navigationItem.searchController = searchController
 
         searchController.obscuresBackgroundDuringPresentation = false

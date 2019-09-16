@@ -29,19 +29,19 @@ class MainCoordinator: Coordinator, VisibleCoordinatorProtocol {
         guard let tabBarController = viewController as? UITabBarController else { return }
         let booksCoordinator: BooksCoordinator = .init(window: window, delegate: self)
         append(coordinator: booksCoordinator)
-        booksCoordinator.navigationController.tabBarItem = .init(title: "Books", image: #imageLiteral(resourceName: "ic_books"), tag: 0)
+        booksCoordinator.navigationController.tabBarItem = .init(title: "Books", image: #imageLiteral(resourceName: "ic_tabbar_books"), tag: 0)
 
         let discoveryCoordinator: DiscoveryCoordinator = .init(window: window, delegate: self)
         append(coordinator: discoveryCoordinator)
-        discoveryCoordinator.navigationController.tabBarItem = .init(title: "Discovery", image: #imageLiteral(resourceName: "ic_discovery"), tag: 1)
+        discoveryCoordinator.navigationController.tabBarItem = .init(title: "Discovery", image: #imageLiteral(resourceName: "ic_tabbar_discovery"), tag: 1)
 
-        let downloadCoordinator: DownloadCoordinator = .init(window: window, delegate: self)
+        let downloadCoordinator: UpDownLoadCoordinator = .init(window: window, delegate: self)
         append(coordinator: downloadCoordinator)
-        downloadCoordinator.navigationController.tabBarItem = .init(title: "Download", image: #imageLiteral(resourceName: "ic_download"), tag: 2)
+        downloadCoordinator.navigationController.tabBarItem = .init(title: "Download", image: #imageLiteral(resourceName: "ic_tabbar_updown_load"), tag: 2)
 
         let settingCoordinator: SettingCoordinator = .init(window: window, delegate: self)
         append(coordinator: settingCoordinator)
-        settingCoordinator.navigationController.tabBarItem = .init(title: "Setting", image: #imageLiteral(resourceName: "ic_setting"), tag: 3)
+        settingCoordinator.navigationController.tabBarItem = .init(title: "Setting", image: #imageLiteral(resourceName: "ic_tabbar_setting"), tag: 3)
 
         tabBarController.viewControllers = coordinators.compactMap { ($0 as? NavigationCoordinatorProtocol)?.navigationController }
 
@@ -57,9 +57,9 @@ extension MainCoordinator: BooksCoordinatorDelegate {}
 
 extension MainCoordinator: DiscoveryCoordinatorDelegate {}
 
-// MARK: - DownloadCoordinatorDelegate
+// MARK: - UpDownLoadCoordinatorDelegate
 
-extension MainCoordinator: DownloadCoordinatorDelegate {}
+extension MainCoordinator: UpDownLoadCoordinatorDelegate {}
 
 // MARK: - SettingCoordinatorDelegate
 

@@ -26,8 +26,8 @@ class ChaptersViewController: UIViewController {
     private weak var coordinator: ChaptersViewCoordinator?
     private let viewModel: ChaptersViewModel
     private lazy var titleLabel: MarqueeLabel = .init()
-    private lazy var downloadBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_download_outline"), style: .plain, target: nil, action: nil)
-    private lazy var favoriteBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_favorite_outline"), style: .plain, target: nil, action: nil)
+    private lazy var downloadBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_download_outline"), style: .plain, target: nil, action: nil)
+    private lazy var favoriteBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_favorite_outline"), style: .plain, target: nil, action: nil)
     private lazy var refreshControl: UIRefreshControl = .init()
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var headerContainerView: UIView!
@@ -130,10 +130,10 @@ class ChaptersViewController: UIViewController {
         viewModel.isFavorited.subscribe(onNext: { [weak self] isFavorited in
             if isFavorited {
                 self?.favoriteBarButtonItem.tintColor = UIColor.flat.favorite
-                self?.favoriteBarButtonItem.image = #imageLiteral(resourceName: "ic_favorite")
+                self?.favoriteBarButtonItem.image = #imageLiteral(resourceName: "ic_navigationbar_favorite")
             } else {
                 self?.favoriteBarButtonItem.tintColor = UIColor.flat.tint
-                self?.favoriteBarButtonItem.image = #imageLiteral(resourceName: "ic_favorite_outline")
+                self?.favoriteBarButtonItem.image = #imageLiteral(resourceName: "ic_navigationbar_favorite_outline")
             }
         }).disposed(by: bag)
         favoriteBarButtonItem.rx.tap.withLatestFrom(viewModel.isFavorited) { !$1 }.bind(to: viewModel.isFavorited).disposed(by: bag)

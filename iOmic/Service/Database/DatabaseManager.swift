@@ -23,7 +23,7 @@ class DatabaseManager {
     // MARK: - instance methods
 
     func createTables() -> Completable {
-        return Completable.merge(database.rx.create(table: Book.tableName, of: Book.self), database.rx.create(table: Chapter.tableName, of: Chapter.self), database.rx.create(table: Page.tableName, of: Page.self))
+        return Completable.zip(database.rx.create(table: Book.tableName, of: Book.self), database.rx.create(table: Chapter.tableName, of: Chapter.self), database.rx.create(table: Page.tableName, of: Page.self))
     }
 
     private init() {}

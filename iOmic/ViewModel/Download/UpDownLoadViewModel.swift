@@ -1,5 +1,5 @@
 //
-//  DownloadViewModel.swift
+//  UpDownLoadViewModel.swift
 //  iOmic
 //
 //  Created by 门捷夫 on 2019/8/24.
@@ -8,4 +8,4 @@
 
 import Foundation
 
-class DownloadViewModel: ViewModel {}
+class UpDownLoadViewModel: ViewModel {}

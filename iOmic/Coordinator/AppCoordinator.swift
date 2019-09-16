@@ -60,6 +60,9 @@ class AppCoordinator: Coordinator {
         navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.flat.darkText]
         navigationBarAppearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.flat.darkText]
 
+        let toolbarAppearance = UIToolbar.appearance()
+        toolbarAppearance.barTintColor = UIColor.flat.barTint
+
         let labelAppearance = UILabel.appearance()
         labelAppearance.textColor = UIColor.flat.darkText
 
