@@ -58,16 +58,21 @@ class UploadViewController: UIViewController {
         navigationItem.title = "Upload"
 
         portLabel.text = "Port:"
-        portTextField.placeholder = Device.current.isSimulator ? "8080" : "80"
+        portTextField.placeholder = "Port"
+        portTextField.textContentType = .creditCardNumber
+        portTextField.keyboardType = .numberPad
         authenticationLabel.text = "Authentication"
         authenticationSwitch.isOn = false
         usernameLabel.text = "Username:"
         usernameLabel.isEnabled = false
         usernameTextField.placeholder = "Username"
+        usernameTextField.textContentType = .name
         usernameTextField.isEnabled = false
         passwordLabel.text = "Password:"
         passwordLabel.isEnabled = false
         passwordTextField.placeholder = "Password"
+        passwordTextField.textContentType = .password
+        passwordTextField.isSecureTextEntry = true
         passwordTextField.isEnabled = false
 
         navigationController?.isToolbarHidden = false
@@ -75,6 +80,8 @@ class UploadViewController: UIViewController {
     }
 
     private func setupBinding() {
+        viewModel.error.subscribe(onNext: { [weak self] in self?.coordinator?.whoops($0) }).disposed(by: bag)
+
         doneButtonItem.rx.tap
             .subscribe(onNext: { [weak self] in self?.coordinator?.dismiss() })
             .disposed(by: bag)
@@ -86,6 +93,6 @@ class UploadViewController: UIViewController {
         passwordTextField.rx.text.bind(to: viewModel.password).disposed(by: bag)
 
         viewModel.isRunning.map { $0 ? "Stop" : "Start" }.bind(to: toggleButtonItem.rx.title).disposed(by: bag)
-        toggleButtonItem.rx.tap.bind(to: viewModel.toggle).disposed(by: bag)
+        toggleButtonItem.rx.tap.throttle(.milliseconds(300), scheduler: MainScheduler.instance).bind(to: viewModel.toggle).disposed(by: bag)
     }
 }

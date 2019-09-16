@@ -13,8 +13,8 @@ import GCDWebServers
 import RxSwift
 
 protocol UploaderProtocol {
-    func start(with port: UInt?, username: String?, password: String?) -> Completable
-    func stop() -> Completable
+    func start(with port: UInt?, username: String?, password: String?) -> Observable<Void>
+    func stop() -> Observable<Void>
 }
 
 class Uploader: NSObject, UploaderProtocol {
@@ -35,7 +35,7 @@ class Uploader: NSObject, UploaderProtocol {
 
     // MARK: - UploaderProtocol
 
-    func start(with port: UInt? = nil, username: String? = nil, password: String? = nil) -> Completable {
+    func start(with port: UInt? = nil, username: String? = nil, password: String? = nil) -> Observable<Void> {
         var options: [String: Any] = [
             GCDWebServerOption_Port: port ?? (Device.current.isSimulator ? 8080 : 80),
         ]
@@ -44,21 +44,23 @@ class Uploader: NSObject, UploaderProtocol {
             options[GCDWebServerOption_AuthenticationMethod] = GCDWebServerAuthenticationMethod_Basic
             options[GCDWebServerOption_AuthenticationAccounts] = [username: password]
         }
-        return Completable.create { [weak self] observer -> Disposable in
+        return Observable.create { [weak self] observer -> Disposable in
             do {
                 try self?.webUploader.start(options: options)
-                observer(.completed)
+                observer.on(.next(()))
+                observer.on(.completed)
             } catch {
-                observer(.error(error))
+                observer.on(.error(error))
             }
             return Disposables.create {}
         }
     }
 
-    func stop() -> Completable {
-        return Completable.create { [weak self] observer -> Disposable in
+    func stop() -> Observable<Void> {
+        return Observable.create { [weak self] observer -> Disposable in
             self?.webUploader.stop()
-            observer(.completed)
+            observer.on(.next(()))
+            observer.on(.completed)
             return Disposables.create {}
         }
     }

@@ -20,18 +20,15 @@ class UploadViewModel: ViewModel {
     init(uploader: UploaderProtocol) {
         self.uploader = uploader
         super.init()
-        let start = toggle.withLatestFrom(isRunning).filter { !$0 }
-        let stop = toggle.withLatestFrom(isRunning).filter { $0 }
-        start.withLatestFrom(Observable.combineLatest(port, username, password))
+        let sharedToggle = toggle.withLatestFrom(isRunning).share()
+        sharedToggle.filter { !$0 }.withLatestFrom(Observable.combineLatest(port, username, password))
             .flatMapLatest { port, username, password in uploader.start(with: port, username: username, password: password) }
             .debug("start")
-            .asCompletable()
-            .subscribe(onCompleted: { [weak self] in self?.isRunning.on(.next(true)) }, onError: { [weak self] in self?.error.on(.next($0)) })
+            .subscribe(onNext: { [weak self] in self?.isRunning.on(.next(true)) }, onError: { [weak self] in self?.error.on(.next($0)) })
             .disposed(by: bag)
-        stop.flatMapLatest { _ in uploader.stop() }
+        sharedToggle.filter { $0 }.flatMapLatest { _ in uploader.stop() }
             .debug("stop")
-            .asCompletable()
-            .subscribe(onCompleted: { [weak self] in self?.isRunning.on(.next(false)) }, onError: { [weak self] in self?.error.on(.next($0)) })
+            .subscribe(onNext: { [weak self] in self?.isRunning.on(.next(false)) }, onError: { [weak self] in self?.error.on(.next($0)) })
             .disposed(by: bag)
     }
 }
