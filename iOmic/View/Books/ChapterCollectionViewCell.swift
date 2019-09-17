@@ -28,22 +28,20 @@ class ChapterCollectionViewCell: UICollectionViewCell {
         titleLabel.font = .preferredFont(forTextStyle: .caption1)
 
         backgroundView = {
-            let view = UIView()
-            view.backgroundColor = UIColor.flat.background
-            view.layer.cornerRadius = 4.0
-            view.layer.borderWidth = 1.0
-            view.layer.borderColor = UIColor.flat.border.cgColor
-            view.layer.masksToBounds = true
-            return view
-        }()
+            $0.backgroundColor = UIColor.flat.background
+            $0.layer.cornerRadius = 4.0
+            $0.layer.borderWidth = 1.0
+            $0.layer.borderColor = UIColor.flat.border.cgColor
+            $0.layer.masksToBounds = true
+            return $0
+        }(UIView())
         selectedBackgroundView = {
-            let view = UIView()
-            view.backgroundColor = UIColor.flat.selected
-            view.layer.cornerRadius = 4.0
-            view.layer.borderWidth = 1.0
-            view.layer.borderColor = UIColor.flat.border.cgColor
-            view.layer.masksToBounds = true
-            return view
-        }()
+            $0.backgroundColor = UIColor.flat.selected
+            $0.layer.cornerRadius = 4.0
+            $0.layer.borderWidth = 1.0
+            $0.layer.borderColor = UIColor.flat.border.cgColor
+            $0.layer.masksToBounds = true
+            return $0
+        }(UIView())
     }
 }

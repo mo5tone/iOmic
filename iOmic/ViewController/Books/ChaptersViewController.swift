@@ -78,9 +78,13 @@ class ChaptersViewController: UIViewController {
         collectionView.contentInset = .init(top: headerContainerView.frame.maxY + 4 - view.safeAreaInsets.top, left: 8, bottom: 8, right: 8)
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.isToolbarHidden = true
+    }
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        navigationController?.isToolbarHidden = true
         if isMovingFromParent { coordinator?.movingFromParent() }
     }
 
@@ -96,16 +100,15 @@ class ChaptersViewController: UIViewController {
         titleLabel.trailingBuffer = 4
         navigationItem.titleView = {
             /// https://stackoverflow.com/questions/20094198
-            let view = UIView()
-            view.addSubview(titleLabel)
+            $0.addSubview(titleLabel)
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
-                titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                titleLabel.centerXAnchor.constraint(equalTo: $0.centerXAnchor),
+                titleLabel.centerYAnchor.constraint(equalTo: $0.centerYAnchor),
                 titleLabel.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width / 2),
             ])
-            return view
-        }()
+            return $0
+        }(UIView())
 
         // TODO: - implement for downloadBarButtonItem
         setToolbarItems([.flexibleSpace, downloadBarButtonItem, .flexibleSpace, favoriteBarButtonItem, .flexibleSpace, topBottomBarButtonItem, .flexibleSpace], animated: true)

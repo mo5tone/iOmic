@@ -21,14 +21,13 @@ class FilterCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         selectedBackgroundView = {
-            let view = UIView()
-            view.backgroundColor = UIColor.flat.selected
-            view.layer.cornerRadius = 8.0
-            view.layer.borderWidth = 1.0
-            view.layer.borderColor = UIColor.flat.clear.cgColor
-            view.layer.masksToBounds = true
-            return view
-        }()
+            $0.backgroundColor = UIColor.flat.selected
+            $0.layer.cornerRadius = 8.0
+            $0.layer.borderWidth = 1.0
+            $0.layer.borderColor = UIColor.flat.clear.cgColor
+            $0.layer.masksToBounds = true
+            return $0
+        }(UIView())
         nameLabel.font = .preferredFont(forTextStyle: .body)
     }
 }
