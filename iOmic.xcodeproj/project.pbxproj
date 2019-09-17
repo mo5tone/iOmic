@@ -67,6 +67,7 @@
 		55CB63BA2323DB8E001A6E4D /* PageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CB63B82323DB8E001A6E4D /* PageCollectionViewCell.xib */; };
 		55D05260231FE77B0005A2DD /* FilterTitleCollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D0525E231FE77B0005A2DD /* FilterTitleCollectionHeader.swift */; };
 		55D05261231FE77B0005A2DD /* FilterTitleCollectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D0525F231FE77B0005A2DD /* FilterTitleCollectionHeader.xib */; };
+		55E4AC9E233112D6002B42A9 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E4AC9D233112D6002B42A9 /* Downloader.swift */; };
 		55F48B0A23214571000FBC18 /* MarqueeLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F48B0923214571000FBC18 /* MarqueeLabel.framework */; };
 		9F27254E2327666900AFC8E6 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F27254D2327666900AFC8E6 /* DatabaseManager.swift */; };
 		9F27254F232766A000AFC8E6 /* WCDBSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F5B2310D47D007D1454 /* WCDBSwift.framework */; };
@@ -196,6 +197,7 @@
 		55CB63B82323DB8E001A6E4D /* PageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageCollectionViewCell.xib; sourceTree = "<group>"; };
 		55D0525E231FE77B0005A2DD /* FilterTitleCollectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTitleCollectionHeader.swift; sourceTree = "<group>"; };
 		55D0525F231FE77B0005A2DD /* FilterTitleCollectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterTitleCollectionHeader.xib; sourceTree = "<group>"; };
+		55E4AC9D233112D6002B42A9 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Downloader.swift; path = iOmic/Common/Extension/Downloader.swift; sourceTree = SOURCE_ROOT; };
 		55F48B0923214571000FBC18 /* MarqueeLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MarqueeLabel.framework; path = Carthage/Build/iOS/MarqueeLabel.framework; sourceTree = "<group>"; };
 		9F272549232650E900AFC8E6 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		9F27254A232650E900AFC8E6 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
@@ -328,7 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				5584B124231153DF000D9309 /* Setting */,
-				5584B123231153D9000D9309 /* Download */,
+				5584B123231153D9000D9309 /* UpDownLoad */,
 				5584B122231153D1000D9309 /* Discovery */,
 				5584B0FC23110886000D9309 /* Books */,
 				55191F622310E047007D1454 /* Coordinator.swift */,
@@ -342,7 +344,7 @@
 			isa = PBXGroup;
 			children = (
 				5584B0E82310EBD2000D9309 /* Setting */,
-				5584B0E72310EB54000D9309 /* Download */,
+				5584B0E72310EB54000D9309 /* UpDownLoad */,
 				5584B0E62310EB4B000D9309 /* Discovery */,
 				5584B0E52310EB3D000D9309 /* Books */,
 				9F82EA49232A3737003E465E /* ErrorViewController.swift */,
@@ -355,7 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				5584B11B2311532B000D9309 /* Setting */,
-				5584B11A23115325000D9309 /* Download */,
+				5584B11A23115325000D9309 /* UpDownLoad */,
 				5584B11923115319000D9309 /* Discovery */,
 				5584B1182311530D000D9309 /* Books */,
 				9F82EA472329FFD6003E465E /* ViewModel.swift */,
@@ -453,7 +455,7 @@
 			path = Discovery;
 			sourceTree = "<group>";
 		};
-		5584B0E72310EB54000D9309 /* Download */ = {
+		5584B0E72310EB54000D9309 /* UpDownLoad */ = {
 			isa = PBXGroup;
 			children = (
 				5584B0F12310EE5E000D9309 /* UpDownLoadViewController.swift */,
@@ -461,7 +463,7 @@
 				9FC348AE232F4FF400310987 /* UploadViewController.swift */,
 				9FC348AF232F4FF400310987 /* UploadViewController.xib */,
 			);
-			path = Download;
+			path = UpDownLoad;
 			sourceTree = "<group>";
 		};
 		5584B0E82310EBD2000D9309 /* Setting */ = {
@@ -512,13 +514,13 @@
 			path = Discovery;
 			sourceTree = "<group>";
 		};
-		5584B11A23115325000D9309 /* Download */ = {
+		5584B11A23115325000D9309 /* UpDownLoad */ = {
 			isa = PBXGroup;
 			children = (
 				5584B11E23115349000D9309 /* UpDownLoadViewModel.swift */,
 				9FC348B2232F506900310987 /* UploadViewModel.swift */,
 			);
-			path = Download;
+			path = UpDownLoad;
 			sourceTree = "<group>";
 		};
 		5584B11B2311532B000D9309 /* Setting */ = {
@@ -538,13 +540,13 @@
 			path = Discovery;
 			sourceTree = "<group>";
 		};
-		5584B123231153D9000D9309 /* Download */ = {
+		5584B123231153D9000D9309 /* UpDownLoad */ = {
 			isa = PBXGroup;
 			children = (
 				5584B12723115405000D9309 /* UpDownLoadCoordinator.swift */,
 				9FC348B4232F508E00310987 /* UploadCoordinator.swift */,
 			);
-			path = Download;
+			path = UpDownLoad;
 			sourceTree = "<group>";
 		};
 		5584B124231153DF000D9309 /* Setting */ = {
@@ -625,6 +627,7 @@
 		9FC348AB232F309800310987 /* Download */ = {
 			isa = PBXGroup;
 			children = (
+				55E4AC9D233112D6002B42A9 /* Downloader.swift */,
 			);
 			path = Download;
 			sourceTree = "<group>";
@@ -943,6 +946,7 @@
 				9FC348B5232F508E00310987 /* UploadCoordinator.swift in Sources */,
 				9FC348B3232F506900310987 /* UploadViewModel.swift in Sources */,
 				9F82EA4B232A3737003E465E /* ErrorViewController.swift in Sources */,
+				55E4AC9E233112D6002B42A9 /* Downloader.swift in Sources */,
 				9F423D492316834E006B950F /* Date.swift in Sources */,
 				9FA947242314F4E80028A60D /* Alamofire.swift in Sources */,
 				9FFB4B6C2320D3D100297C12 /* ChaptersViewModel.swift in Sources */,
