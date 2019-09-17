@@ -23,6 +23,7 @@ struct Page: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
             && lhs.index == rhs.index
             && lhs.url == rhs.url
             && lhs.imageUrl == rhs.imageUrl
+            && lhs.localFilePath == rhs.localFilePath
     }
 
     // MARK: - TableCodable
@@ -32,7 +33,7 @@ struct Page: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
         // swiftlint:disable:next nesting
         typealias Root = Page
         static let objectRelationalMapping = TableBinding(CodingKeys.self)
-        case identity, chapter, index = "page_index", url, imageUrl = "image_url"
+        case identity, chapter, index = "page_index", url, imageUrl = "image_url", localFilePath = "local_file_path"
         static var columnConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
             return [identity: .init(isPrimary: true, isAutoIncrement: false, onConflict: .replace)]
         }
@@ -44,6 +45,7 @@ struct Page: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
     var index: Int
     var url: String?
     var imageUrl: String?
+    var localFilePath: String?
 
     // MARK: - public
 

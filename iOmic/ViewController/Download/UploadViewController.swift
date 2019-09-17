@@ -41,6 +41,8 @@ class UploadViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit { print(String(describing: self)) }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,12 +51,20 @@ class UploadViewController: UIViewController {
         setupBinding()
     }
 
-    deinit { print(String(describing: self)) }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isToolbarHidden = false
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        navigationController?.isToolbarHidden = true
+    }
 
     private func setupView() {
         view.backgroundColor = UIColor.flat.background
 
-        navigationItem.leftBarButtonItem = doneButtonItem
+        navigationItem.rightBarButtonItem = doneButtonItem
         navigationItem.title = "Upload"
 
         portLabel.text = "Port:"
@@ -75,7 +85,6 @@ class UploadViewController: UIViewController {
         passwordTextField.isSecureTextEntry = true
         passwordTextField.isEnabled = false
 
-        navigationController?.isToolbarHidden = false
         setToolbarItems([.init(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), toggleButtonItem, .init(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)], animated: true)
     }
 
@@ -86,8 +95,8 @@ class UploadViewController: UIViewController {
             .subscribe(onNext: { [weak self] in self?.coordinator?.dismiss() })
             .disposed(by: bag)
 
-        portTextField.rx.text.compactMap { UInt($0 ?? "") }.bind(to: viewModel.port).disposed(by: bag)
-        authenticationSwitch.rx.isOn.bind(to: usernameTextField.rx.isEnabled, passwordTextField.rx.isEnabled).disposed(by: bag)
+        portTextField.rx.text.map { UInt($0 ?? "") }.bind(to: viewModel.port).disposed(by: bag)
+        authenticationSwitch.rx.isOn.bind(to: usernameLabel.rx.isEnabled, usernameTextField.rx.isEnabled, passwordLabel.rx.isEnabled, passwordTextField.rx.isEnabled).disposed(by: bag)
         authenticationSwitch.rx.isOn.filter { !$0 }.map { _ in nil }.bind(to: viewModel.username, viewModel.password).disposed(by: bag)
         usernameTextField.rx.text.bind(to: viewModel.username).disposed(by: bag)
         passwordTextField.rx.text.bind(to: viewModel.password).disposed(by: bag)

@@ -38,6 +38,7 @@ class Uploader: NSObject, UploaderProtocol {
     func start(with port: UInt? = nil, username: String? = nil, password: String? = nil) -> Observable<Void> {
         var options: [String: Any] = [
             GCDWebServerOption_Port: port ?? (Device.current.isSimulator ? 8080 : 80),
+            GCDWebServerOption_ConnectionClass: Uploader.Connection.self,
         ]
         options[GCDWebServerOption_BonjourName] = ""
         if let username = username, let password = password {
@@ -69,3 +70,7 @@ class Uploader: NSObject, UploaderProtocol {
 // MARK: - GCDWebUploaderDelegate
 
 extension Uploader: GCDWebUploaderDelegate {}
+
+private extension Uploader {
+    class Connection: GCDWebServerConnection {}
+}

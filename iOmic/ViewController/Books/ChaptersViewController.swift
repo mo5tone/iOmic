@@ -27,6 +27,7 @@ class ChaptersViewController: UIViewController {
     private let viewModel: ChaptersViewModel
     private lazy var titleLabel: MarqueeLabel = .init()
     private lazy var downloadBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_download_outline"), style: .plain, target: nil, action: nil)
+    private lazy var topBottomBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_bar_drop_down"), style: .plain, target: nil, action: nil)
     private lazy var favoriteBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_favorite_outline"), style: .plain, target: nil, action: nil)
     private lazy var refreshControl: UIRefreshControl = .init()
     @IBOutlet var collectionView: UICollectionView!
@@ -68,6 +69,7 @@ class ChaptersViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.isToolbarHidden = false
     }
 
     override func viewDidLayoutSubviews() {
@@ -78,6 +80,7 @@ class ChaptersViewController: UIViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        navigationController?.isToolbarHidden = true
         if isMovingFromParent { coordinator?.movingFromParent() }
     }
 
@@ -105,16 +108,18 @@ class ChaptersViewController: UIViewController {
         }()
 
         // TODO: - implement for downloadBarButtonItem
-        navigationItem.rightBarButtonItems = [favoriteBarButtonItem, downloadBarButtonItem]
+        setToolbarItems([.flexibleSpace, downloadBarButtonItem, .flexibleSpace, favoriteBarButtonItem, .flexibleSpace, topBottomBarButtonItem, .flexibleSpace], animated: true)
 
         collectionView.refreshControl = refreshControl
         collectionView.registerCell(ChapterCollectionViewCell.self)
 
         headerContainerView.isOpaque = false
+        headerContainerView.backgroundColor = UIColor.flat.background
         coverImageView.contentMode = .scaleAspectFill
         coverImageView.layer.cornerRadius = 8.0
         coverImageView.layer.masksToBounds = true
         descriptionTextView.isEditable = false
+        descriptionTextView.backgroundColor = UIColor.flat.background
         descriptionTextView.showsVerticalScrollIndicator = false
         descriptionTextView.showsHorizontalScrollIndicator = false
         descriptionTextView.font = .preferredFont(forTextStyle: .body)
@@ -127,41 +132,16 @@ class ChaptersViewController: UIViewController {
     private func setupBinding() {
         viewModel.error.subscribe(onNext: { [weak self] in self?.coordinator?.whoops($0) }).disposed(by: bag)
 
-        viewModel.isFavorited.subscribe(onNext: { [weak self] isFavorited in
-            if isFavorited {
-                self?.favoriteBarButtonItem.tintColor = UIColor.flat.favorite
-                self?.favoriteBarButtonItem.image = #imageLiteral(resourceName: "ic_navigationbar_favorite")
-            } else {
-                self?.favoriteBarButtonItem.tintColor = UIColor.flat.tint
-                self?.favoriteBarButtonItem.image = #imageLiteral(resourceName: "ic_navigationbar_favorite_outline")
-            }
-        }).disposed(by: bag)
+        viewModel.isFavorited.map { $0 ? UIColor.flat.favorite : UIColor.flat.tint }.bind(to: favoriteBarButtonItem.rx.tintColor).disposed(by: bag)
+        viewModel.isFavorited.map { $0 ? #imageLiteral(resourceName: "ic_navigationbar_favorite") : #imageLiteral(resourceName: "ic_navigationbar_favorite_outline") }.bind(to: favoriteBarButtonItem.rx.image).disposed(by: bag)
         favoriteBarButtonItem.rx.tap.withLatestFrom(viewModel.isFavorited) { !$1 }.bind(to: viewModel.isFavorited).disposed(by: bag)
         favoriteBarButtonItem.rx.tap.bind(to: viewModel.switchFavorited).disposed(by: bag)
-        viewModel.book.subscribe(onNext: { [weak self] book in
-            guard let self = self else { return }
-            self.coverImageView.kf.setImage(with: URL(string: book.thumbnailUrl ?? ""), options: [.transition(.fade(0.2)), .requestModifier(book.source.modifier), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage]) { result in
-                var backgroundColor: UIColor
-                switch result {
-                case let .success(image):
-                    backgroundColor = image.image.colors().primary
-                case .failure:
-                    backgroundColor = UIColor.flat.background
-                }
-                self.headerContainerView.backgroundColor = backgroundColor
-                self.descriptionTextView.backgroundColor = backgroundColor
-                let textColor: UIColor = backgroundColor.isDark ? UIColor.flat.lightText : UIColor.flat.darkText
-                self.descriptionTextView.textColor = textColor
-                self.authorLabel.textColor = textColor
-                self.statusLabel.textColor = textColor
-                self.genreLabel.textColor = textColor
-                self.updateAtLabel.textColor = textColor
-            }
-            self.descriptionTextView.text = book.summary
-            self.authorLabel.text = book.author
-            self.statusLabel.text = book.status.rawValue
-            self.genreLabel.text = book.genre
-        }).disposed(by: bag)
+        topBottomBarButtonItem.rx.tap.subscribe(onNext: { [weak self] in self?.scrollToCollectionViewEdge() }).disposed(by: bag)
+        viewModel.book.subscribe(onNext: { [weak self] book in self?.coverImageView.kf.setImage(with: URL(string: book.thumbnailUrl ?? ""), options: [.transition(.fade(0.2)), .requestModifier(book.source.modifier), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage]) }).disposed(by: bag)
+        viewModel.book.map { $0.summary }.bind(to: descriptionTextView.rx.text).disposed(by: bag)
+        viewModel.book.map { $0.author }.bind(to: authorLabel.rx.text).disposed(by: bag)
+        viewModel.book.map { $0.status.rawValue }.bind(to: statusLabel.rx.text).disposed(by: bag)
+        viewModel.book.map { $0.genre }.bind(to: genreLabel.rx.text).disposed(by: bag)
         refreshControl.rx.controlEvent(.valueChanged).bind(to: viewModel.load).disposed(by: bag)
         viewModel.chapters.subscribe(onNext: { [weak self] _ in self?.refreshControl.endRefreshing() }).disposed(by: bag)
         viewModel.book.map { $0.title }.bind(to: titleLabel.rx.text).disposed(by: bag)
@@ -169,6 +149,15 @@ class ChaptersViewController: UIViewController {
         collectionView.rx.itemSelected.withLatestFrom(viewModel.chapters) { $1[$0.item] }.subscribe(onNext: { [weak self] in self?.coordinator?.showChapter($0) }).disposed(by: bag)
         viewModel.chapters.compactMap { chapters in chapters.compactMap { $0.updateAt }.sorted(by: { $0 < $1 }).last?.convert2String(dateFormat: "yyyy-MM-dd") }.bind(to: updateAtLabel.rx.text).disposed(by: bag)
         viewModel.chapters.map { [AnimatableSectionModel<Int, Chapter>(model: 0, items: $0)] }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
+    }
+
+    private func scrollToCollectionViewEdge() {
+        let offsetX = 0 - collectionView.contentInset.left
+        let topY = 0 - collectionView.contentInset.top
+        var bottomY = collectionView.contentSize.height + collectionView.contentInset.bottom - collectionView.frame.height
+        bottomY = (bottomY + collectionView.contentInset.top > 0) ? bottomY : topY
+        let offsetY = (collectionView.contentOffset.y + collectionView.contentInset.top - collectionView.contentSize.height / 2) > 0 ? topY : bottomY
+        collectionView.setContentOffset(.init(x: offsetX, y: offsetY), animated: true)
     }
 }
 

@@ -14,6 +14,7 @@ protocol ColorSystem {
     var clear: UIColor { get }
     var tint: UIColor { get }
     var barTint: UIColor { get }
+    var onTint: UIColor { get }
     var background: UIColor { get }
     var darkText: UIColor { get }
     var lightText: UIColor { get }
@@ -66,6 +67,7 @@ private extension UIColor.Flat {
 extension UIColor.Flat: ColorSystem {
     var tint: UIColor { return clearChill }
     var barTint: UIColor { return white }
+    var onTint: UIColor { return limeSoap }
     var background: UIColor { return antiFlashWhite }
     var darkText: UIColor { return prestigeBlue }
     var lightText: UIColor { return cityLights }

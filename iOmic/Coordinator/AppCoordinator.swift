@@ -55,6 +55,9 @@ class AppCoordinator: Coordinator {
         let activityIndicatorViewAppearance = UIActivityIndicatorView.appearance()
         activityIndicatorViewAppearance.color = UIColor.flat.animation
 
+        let switchAppearance = UISwitch.appearance()
+        switchAppearance.onTintColor = UIColor.flat.onTint
+
         let navigationBarAppearance = UINavigationBar.appearance()
         navigationBarAppearance.barTintColor = UIColor.flat.barTint
         navigationBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.flat.darkText]
@@ -65,6 +68,12 @@ class AppCoordinator: Coordinator {
 
         let labelAppearance = UILabel.appearance()
         labelAppearance.textColor = UIColor.flat.darkText
+
+        let textFieldAppearance = UITextField.appearance()
+        textFieldAppearance.textColor = UIColor.flat.darkText
+
+        let textViewAppearance = UITextView.appearance()
+        textViewAppearance.textColor = UIColor.flat.darkText
 
         let tableViewAppearance = UITableView.appearance()
         tableViewAppearance.backgroundColor = UIColor.flat.background

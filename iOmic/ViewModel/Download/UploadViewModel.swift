@@ -23,11 +23,9 @@ class UploadViewModel: ViewModel {
         let sharedToggle = toggle.withLatestFrom(isRunning).share()
         sharedToggle.filter { !$0 }.withLatestFrom(Observable.combineLatest(port, username, password))
             .flatMapLatest { port, username, password in uploader.start(with: port, username: username, password: password) }
-            .debug("start")
             .subscribe(onNext: { [weak self] in self?.isRunning.on(.next(true)) }, onError: { [weak self] in self?.error.on(.next($0)) })
             .disposed(by: bag)
         sharedToggle.filter { $0 }.flatMapLatest { _ in uploader.stop() }
-            .debug("stop")
             .subscribe(onNext: { [weak self] in self?.isRunning.on(.next(false)) }, onError: { [weak self] in self?.error.on(.next($0)) })
             .disposed(by: bag)
     }
