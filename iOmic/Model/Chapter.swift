@@ -11,6 +11,18 @@ import RxDataSources
 import WCDBSwift
 
 struct Chapter: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
+    // MARK: - Type
+
+    enum Download: String, ColumnCodable {
+        case pending, active, paused, cancled, done, failed
+
+        // MARK: - ColumnCodable
+
+        static var columnType: ColumnType { return .text }
+        func archivedValue() -> FundamentalValue { return .init(rawValue) }
+        init?(with value: FundamentalValue) { self.init(rawValue: value.stringValue) }
+    }
+
     // MARK: - IdentifiableType
 
     typealias Identity = String
@@ -24,6 +36,7 @@ struct Chapter: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
             && lhs.name == rhs.name
             && lhs.updateAt == rhs.updateAt
             && lhs.chapterNumber == rhs.chapterNumber
+            && lhs.download == rhs.download
     }
 
     // MARK: - TableCodable
@@ -46,6 +59,7 @@ struct Chapter: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
     var name: String?
     var updateAt: Date?
     var chapterNumber: Double?
+    var download: Download?
 
     // MARK: - public
 

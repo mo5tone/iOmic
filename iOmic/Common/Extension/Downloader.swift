@@ -7,3 +7,6 @@
 //
 
 import Foundation
+import Kingfisher
+
+class Downloader {}

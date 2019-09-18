@@ -17,6 +17,7 @@ import UIKit
 
 protocol ChaptersViewCoordinator: PushedViewCoordinator {
     func showChapter(_ chapter: Chapter)
+    func presentDownload(_ chapters: [Chapter])
 }
 
 class ChaptersViewController: UIViewController {
@@ -40,7 +41,7 @@ class ChaptersViewController: UIViewController {
     @IBOutlet var updateAtLabel: UILabel!
     private let dataSource: RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<Int, Chapter>> = .init(configureCell: { _, collectionView, indexPath, chapter in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChapterCollectionViewCell.reusableIdentifier, for: indexPath)
-        if let cell = cell as? ChapterCollectionViewCell { cell.titleLabel.text = chapter.name }
+        if let cell = cell as? ChapterCollectionViewCell { cell.setup(chapter) }
         return cell
     })
 
@@ -70,6 +71,9 @@ class ChaptersViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.isToolbarHidden = false
+        collectionView.indexPathsForSelectedItems?.forEach {
+            collectionView.deselectItem(at: $0, animated: true)
+        }
     }
 
     override func viewDidLayoutSubviews() {
@@ -110,7 +114,6 @@ class ChaptersViewController: UIViewController {
             return $0
         }(UIView())
 
-        // TODO: - implement for downloadBarButtonItem
         setToolbarItems([.flexibleSpace, downloadBarButtonItem, .flexibleSpace, favoriteBarButtonItem, .flexibleSpace, topBottomBarButtonItem, .flexibleSpace], animated: true)
 
         collectionView.refreshControl = refreshControl
@@ -135,6 +138,7 @@ class ChaptersViewController: UIViewController {
     private func setupBinding() {
         viewModel.error.subscribe(onNext: { [weak self] in self?.coordinator?.whoops($0) }).disposed(by: bag)
 
+        downloadBarButtonItem.rx.tap.withLatestFrom(viewModel.chapters).subscribe(onNext: { [weak self] in self?.coordinator?.presentDownload($0) }).disposed(by: bag)
         viewModel.isFavorited.map { $0 ? UIColor.flat.favorite : UIColor.flat.tint }.bind(to: favoriteBarButtonItem.rx.tintColor).disposed(by: bag)
         viewModel.isFavorited.map { $0 ? #imageLiteral(resourceName: "ic_navigationbar_favorite") : #imageLiteral(resourceName: "ic_navigationbar_favorite_outline") }.bind(to: favoriteBarButtonItem.rx.image).disposed(by: bag)
         favoriteBarButtonItem.rx.tap.withLatestFrom(viewModel.isFavorited) { !$1 }.bind(to: viewModel.isFavorited).disposed(by: bag)

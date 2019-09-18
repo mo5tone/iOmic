@@ -12,7 +12,7 @@ import RxSwift
 import UIKit
 
 protocol UploadViewCoordinator: PresentedViewCoordinator {
-    func dismiss()
+    func dismiss(animated: Bool)
 }
 
 class UploadViewController: UIViewController {
@@ -92,7 +92,7 @@ class UploadViewController: UIViewController {
         viewModel.error.subscribe(onNext: { [weak self] in self?.coordinator?.whoops($0) }).disposed(by: bag)
 
         doneButtonItem.rx.tap
-            .subscribe(onNext: { [weak self] in self?.coordinator?.dismiss() })
+            .subscribe(onNext: { [weak self] in self?.coordinator?.dismiss(animated: true) })
             .disposed(by: bag)
 
         portTextField.rx.text.map { UInt($0 ?? "") }.bind(to: viewModel.port).disposed(by: bag)

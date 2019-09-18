@@ -30,17 +30,27 @@ class ChaptersCoordinator: Coordinator, VisibleCoordinatorProtocol {
 // MARK: - ChaptersViewCoordinator
 
 extension ChaptersCoordinator: ChaptersViewCoordinator {
+    func movingFromParent() {
+        delegate?.coordinatorDidEnd(self)
+    }
+
     func showChapter(_ chapter: Chapter) {
         let coordinator: PagesCoordinator = .init(window: window, delegate: self, chapter: chapter)
         append(coordinator: coordinator)
         viewController.navigationController?.pushViewController(coordinator.viewController, animated: true)
     }
 
-    func movingFromParent() {
-        delegate?.coordinatorDidEnd(self)
+    func presentDownload(_ chapters: [Chapter]) {
+        let coordinator: DownloadCoordinator = .init(window: window, delegate: self, chapters: chapters)
+        append(coordinator: coordinator)
+        viewController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 }
 
 // MARK: - PagesCoordinatorDelegate
 
 extension ChaptersCoordinator: PagesCoordinatorDelegate {}
+
+// MARK: - DownloadCoordinatorDelegate
+
+extension ChaptersCoordinator: DownloadCoordinatorDelegate {}

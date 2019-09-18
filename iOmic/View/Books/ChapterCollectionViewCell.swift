@@ -19,6 +19,10 @@ class ChapterCollectionViewCell: UICollectionViewCell {
         }
     }
 
+    func setup(_ chapter: Chapter) {
+        titleLabel.text = chapter.name
+    }
+
     // MARK: - public instance methods
 
     override func awakeFromNib() {
