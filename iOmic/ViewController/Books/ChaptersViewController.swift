@@ -27,9 +27,9 @@ class ChaptersViewController: UIViewController {
     private weak var coordinator: ChaptersViewCoordinator?
     private let viewModel: ChaptersViewModel
     private lazy var titleLabel: MarqueeLabel = .init()
-    private lazy var downloadBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_download_outline"), style: .plain, target: nil, action: nil)
-    private lazy var topBottomBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_bar_drop_down"), style: .plain, target: nil, action: nil)
-    private lazy var favoriteBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_favorite_outline"), style: .plain, target: nil, action: nil)
+    private lazy var downloadBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_toolbar_download"), style: .plain, target: nil, action: nil)
+    private lazy var toEdgeBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_toolbar_to_edge"), style: .plain, target: nil, action: nil)
+    private lazy var favoriteBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_toolbar_favorite_outline"), style: .plain, target: nil, action: nil)
     private lazy var refreshControl: UIRefreshControl = .init()
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var headerContainerView: UIView!
@@ -114,7 +114,7 @@ class ChaptersViewController: UIViewController {
             return $0
         }(UIView())
 
-        setToolbarItems([.flexibleSpace, downloadBarButtonItem, .flexibleSpace, favoriteBarButtonItem, .flexibleSpace, topBottomBarButtonItem, .flexibleSpace], animated: true)
+        setToolbarItems([downloadBarButtonItem, .flexibleSpace, favoriteBarButtonItem, .flexibleSpace, toEdgeBarButtonItem], animated: true)
 
         collectionView.refreshControl = refreshControl
         collectionView.registerCell(ChapterCollectionViewCell.self)
@@ -140,10 +140,10 @@ class ChaptersViewController: UIViewController {
 
         downloadBarButtonItem.rx.tap.withLatestFrom(viewModel.chapters).subscribe(onNext: { [weak self] in self?.coordinator?.presentDownload($0) }).disposed(by: bag)
         viewModel.isFavorited.map { $0 ? UIColor.flat.favorite : UIColor.flat.tint }.bind(to: favoriteBarButtonItem.rx.tintColor).disposed(by: bag)
-        viewModel.isFavorited.map { $0 ? #imageLiteral(resourceName: "ic_navigationbar_favorite") : #imageLiteral(resourceName: "ic_navigationbar_favorite_outline") }.bind(to: favoriteBarButtonItem.rx.image).disposed(by: bag)
+        viewModel.isFavorited.map { $0 ? #imageLiteral(resourceName: "ic_toolbar_favorite") : #imageLiteral(resourceName: "ic_toolbar_favorite_outline") }.bind(to: favoriteBarButtonItem.rx.image).disposed(by: bag)
         favoriteBarButtonItem.rx.tap.withLatestFrom(viewModel.isFavorited) { !$1 }.bind(to: viewModel.isFavorited).disposed(by: bag)
         favoriteBarButtonItem.rx.tap.bind(to: viewModel.switchFavorited).disposed(by: bag)
-        topBottomBarButtonItem.rx.tap.subscribe(onNext: { [weak self] in self?.scrollToCollectionViewEdge() }).disposed(by: bag)
+        toEdgeBarButtonItem.rx.tap.subscribe(onNext: { [weak self] in self?.scrollToCollectionViewEdge() }).disposed(by: bag)
         viewModel.book.subscribe(onNext: { [weak self] book in self?.coverImageView.kf.setImage(with: URL(string: book.thumbnailUrl ?? ""), options: [.transition(.fade(0.2)), .requestModifier(book.source.modifier), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage]) }).disposed(by: bag)
         viewModel.book.map { $0.summary }.bind(to: descriptionTextView.rx.text).disposed(by: bag)
         viewModel.book.map { $0.author }.bind(to: authorLabel.rx.text).disposed(by: bag)

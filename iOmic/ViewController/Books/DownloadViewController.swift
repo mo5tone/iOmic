@@ -18,7 +18,7 @@ class DownloadViewController: UIViewController {
     private let viewModel: DownloadViewModel
     private let bag: DisposeBag = .init()
     private lazy var doneBarButtonItem: UIBarButtonItem = .init(barButtonSystemItem: .done, target: nil, action: nil)
-    private lazy var allBarButtonItem: UIBarButtonItem = .init(title: "All", style: .done, target: nil, action: nil)
+    private lazy var allBarButtonItem: UIBarButtonItem = .init(title: "All", style: .plain, target: nil, action: nil)
     private lazy var downloadBarButtonItem: UIBarButtonItem = .init(title: "Download", style: .done, target: nil, action: nil)
     @IBOutlet var collectionView: UICollectionView!
 
@@ -54,10 +54,11 @@ class DownloadViewController: UIViewController {
     }
 
     private func setupView() {
+        navigationItem.leftBarButtonItem = allBarButtonItem
         navigationItem.title = "Chapters to Download"
         navigationItem.rightBarButtonItem = doneBarButtonItem
 
-        setToolbarItems([allBarButtonItem, .flexibleSpace, downloadBarButtonItem, .flexibleSpace], animated: true)
+        setToolbarItems([.flexibleSpace, downloadBarButtonItem, .flexibleSpace], animated: true)
 
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
         collectionView.allowsMultipleSelection = true

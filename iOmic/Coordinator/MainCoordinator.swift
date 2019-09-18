@@ -37,7 +37,7 @@ class MainCoordinator: Coordinator, VisibleCoordinatorProtocol {
 
         let downloadCoordinator: UpDownLoadCoordinator = .init(window: window, delegate: self)
         append(coordinator: downloadCoordinator)
-        downloadCoordinator.navigationController.tabBarItem = .init(title: "Download", image: #imageLiteral(resourceName: "ic_tabbar_updown_load"), tag: 2)
+        downloadCoordinator.navigationController.tabBarItem = .init(title: "Download", image: #imageLiteral(resourceName: "ic_tabbar_upload"), tag: 2)
 
         let settingCoordinator: SettingCoordinator = .init(window: window, delegate: self)
         append(coordinator: settingCoordinator)
