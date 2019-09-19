@@ -19,7 +19,7 @@ protocol UploaderProtocol {
 
 class Uploader: NSObject, UploaderProtocol {
     static let shared: Uploader = .init()
-    private var path: Path
+    private let path: Path
     private let webUploader: GCDWebUploader
     var delegate: GCDWebUploaderDelegate? {
         get { return webUploader.delegate }
@@ -48,27 +48,19 @@ class Uploader: NSObject, UploaderProtocol {
             options[GCDWebServerOption_AuthenticationMethod] = GCDWebServerAuthenticationMethod_Basic
             options[GCDWebServerOption_AuthenticationAccounts] = [username: password]
         }
-        return Single.create { [weak self] observer -> Disposable in
-            if let self = self {
-                do {
-                    observer(.success(try self.webUploader.start(options: options)))
-                } catch {
-                    observer(.error(error))
-                }
-            } else {
-                observer(.error(Whoops.nilWeakSelf))
+        return Single.create {
+            do {
+                $0(.success(try self.webUploader.start(options: options)))
+            } catch {
+                $0(.error(error))
             }
             return Disposables.create {}
         }
     }
 
     func stop() -> Single<Void> {
-        return Single.create { [weak self] observer -> Disposable in
-            if let self = self {
-                observer(.success(self.webUploader.stop()))
-            } else {
-                observer(.error(Whoops.nilWeakSelf))
-            }
+        return Single.create {
+            $0(.success(self.webUploader.stop()))
             return Disposables.create {}
         }
     }

@@ -99,3 +99,7 @@ extension DatabaseManager: PagesViewModelDatabaseManager {
             }
     }
 }
+
+// MARK: - DownloaderDatabaseManager
+
+extension DatabaseManager: DownloaderDatabaseManager {}

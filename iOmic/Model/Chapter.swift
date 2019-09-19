@@ -14,7 +14,7 @@ struct Chapter: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
     // MARK: - Type
 
     enum Download: String, ColumnCodable {
-        case pending, active, paused, cancled, done, failed
+        case pending, running, paused, done, failed
 
         // MARK: - ColumnCodable
 

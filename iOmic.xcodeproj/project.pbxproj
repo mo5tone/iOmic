@@ -572,16 +572,11 @@
 		5584B12D23116206000D9309 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				5584B12E23116213000D9309 /* UIColor.swift */,
+				9F2F6F6E23334A2700E5996A /* UIKit */,
+				9F2F6F6D23334A1A00E5996A /* Foundation */,
 				9FA947232314F4E80028A60D /* Alamofire.swift */,
-				9FA9472723152C960028A60D /* String.swift */,
-				9F423D482316834E006B950F /* Date.swift */,
-				9FD787012320B69000E1C03C /* UIFont.swift */,
 				9F2F6F6B2333426100E5996A /* WCDB.Database.swift */,
 				9F272550232790CE00AFC8E6 /* WCDB.Table.swift */,
-				9FA8DEFC23306EF60003E278 /* UIBarButtonItem.swift */,
-				9F955C0523308C820015069E /* UIView.swift */,
-				9F955C0723309BBD0015069E /* UILabel.swift */,
 				9F85FAF72330DF400070E3A0 /* Kingfisher.swift */,
 			);
 			path = Extension;
@@ -627,6 +622,27 @@
 				55363443232918CD00715628 /* KeyValues.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		9F2F6F6D23334A1A00E5996A /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				9FA9472723152C960028A60D /* String.swift */,
+				9F423D482316834E006B950F /* Date.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		9F2F6F6E23334A2700E5996A /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				5584B12E23116213000D9309 /* UIColor.swift */,
+				9FD787012320B69000E1C03C /* UIFont.swift */,
+				9FA8DEFC23306EF60003E278 /* UIBarButtonItem.swift */,
+				9F955C0523308C820015069E /* UIView.swift */,
+				9F955C0723309BBD0015069E /* UILabel.swift */,
+			);
+			path = UIKit;
 			sourceTree = "<group>";
 		};
 		9FC348AA232F308900310987 /* Upload */ = {
