@@ -12,21 +12,17 @@ import Kingfisher
 import RxSwift
 
 protocol DownloaderProtocol {
-    func createTask(_ task: Downloader.Task)
+    func createTask(with chapter: Chapter) -> Completable
 
-    func startTask(task: Downloader.Task)
+    func startTask(with chapter: Chapter) -> Completable
 
-    func pauseTask(task: Downloader.Task)
+    func pauseTask(with chapter: Chapter) -> Completable
 
-    func removeTask(task: Downloader.Task)
+    func removeTask(with chapter: Chapter) -> Completable
 }
 
 protocol DownloaderDatabaseManager {
-//    func download(of chapter: Chapter) -> Single<Chapter.Download?>
-//    func appendDownload(of chapter: Chapter) -> Completable
-//    func startDownload(of chapter: Chapter) -> Completable
-//    func pauseDownload(of chapter: Chapter) -> Completable
-//    func removeDownload(of chapter: Chapter) -> Completable
+    func setChapter(_ chapter: Chapter, download: Chapter.Download) -> Completable
 }
 
 class Downloader: NSObject {
@@ -52,12 +48,4 @@ class Downloader: NSObject {
     }
 }
 
-extension Downloader: DownloaderProtocol {
-    func createTask(_: Downloader.Task) {}
-
-    func startTask(task _: Downloader.Task) {}
-
-    func pauseTask(task _: Downloader.Task) {}
-
-    func removeTask(task _: Downloader.Task) {}
-}
+// extension Downloader: DownloaderProtocol {}

@@ -60,7 +60,7 @@ extension DatabaseManager: ChaptersViewModelDatabaseManager {
         guard let table = bookTable else { return Single.error(Whoops.nilProperty("bookTable")) }
         return table.rx.getValue(on: Book.Properties.isFavorited, where: Book.Properties.identity == book.identity)
             .catchErrorJustReturn(.init(0))
-            .map { $0.int32Value == 1 }
+            .map { $0.type != .null && $0.int32Value == 1 }
     }
 
     func setBook(_ book: Book, isFavorited: Bool) -> Completable {
@@ -70,10 +70,10 @@ extension DatabaseManager: ChaptersViewModelDatabaseManager {
             book.isFavorited = isFavorited
             return book
         }(book)
-        return table.rx.getObject(on: Book.Properties.all, where: Book.Properties.identity == book.identity)
-            .catchErrorJustReturn(nil)
+        return table.rx.getValue(on: Book.Properties.identity, where: Book.Properties.identity == book.identity)
+            .catchErrorJustReturn(.init(nil))
             .flatMapCompletable {
-                $0 == nil
+                $0.type == .null
                     ? table.rx.insertOrReplace(objects: newBook)
                     : table.rx.update(on: Book.Properties.isFavorited, with: newBook, where: Book.Properties.identity == book.identity)
             }
@@ -90,10 +90,10 @@ extension DatabaseManager: PagesViewModelDatabaseManager {
             book.readAt = readAt
             return book
         }(book)
-        return table.rx.getObject(on: Book.Properties.all, where: Book.Properties.identity == book.identity)
-            .catchErrorJustReturn(nil)
+        return table.rx.getValue(on: Book.Properties.identity, where: Book.Properties.identity == book.identity)
+            .catchErrorJustReturn(.init(nil))
             .flatMapCompletable {
-                $0 == nil
+                $0.type == .null
                     ? table.rx.insertOrReplace(objects: newBook)
                     : table.rx.update(on: Book.Properties.readAt, with: newBook, where: Book.Properties.identity == book.identity)
             }
@@ -102,4 +102,20 @@ extension DatabaseManager: PagesViewModelDatabaseManager {
 
 // MARK: - DownloaderDatabaseManager
 
-extension DatabaseManager: DownloaderDatabaseManager {}
+extension DatabaseManager: DownloaderDatabaseManager {
+    func setChapter(_ chapter: Chapter, download: Chapter.Download) -> Completable {
+        guard let table = chapterTable else { return Completable.error(Whoops.nilProperty("chapterTable")) }
+        let newChapter: Chapter = {
+            var chapter = $0
+            chapter.download = download
+            return chapter
+        }(chapter)
+        return table.rx.getValue(on: Chapter.Properties.identity, where: Chapter.Properties.identity == chapter.identity)
+            .catchErrorJustReturn(.init(nil))
+            .flatMapCompletable {
+                $0.type == .null
+                    ? table.rx.insertOrReplace(objects: newChapter)
+                    : table.rx.update(on: Chapter.Properties.download, with: newChapter, where: Chapter.Properties.identity == chapter.identity)
+            }
+    }
+}

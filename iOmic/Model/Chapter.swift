@@ -46,7 +46,7 @@ struct Chapter: IdentifiableType, Equatable, TableCodable, ColumnJSONCodable {
         // swiftlint:disable:next nesting
         typealias Root = Chapter
         static let objectRelationalMapping = TableBinding(CodingKeys.self)
-        case identity, book, url, name, updateAt = "update_at", chapterNumber = "chapter_number"
+        case identity, book, url, name, updateAt = "update_at", chapterNumber = "chapter_number", download
         static var columnConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
             return [identity: .init(isPrimary: true, isAutoIncrement: false, onConflict: .replace)]
         }
