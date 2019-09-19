@@ -62,7 +62,7 @@ class BooksViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
-        viewModel.groupIndex.on(.next(segmentedControl.selectedSegmentIndex))
+        viewModel.load.on(.next(()))
     }
 
     // MARK: - private instance methods
@@ -84,7 +84,7 @@ class BooksViewController: UIViewController {
 
         addBarButtonItem.rx.tap.bind(to: viewModel.add).disposed(by: bag)
 
-        segmentedControl.rx.selectedSegmentIndex.bind(to: viewModel.groupIndex).disposed(by: bag)
+        segmentedControl.rx.selectedSegmentIndex.bind(to: viewModel.segmentIndex).disposed(by: bag)
 
         viewModel.books.map { $0.map { .init(model: $0.0, items: $0.1) } }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
         collectionView.rx.prefetchItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.map { books[$0.section].1[$0.item] } }.subscribe(onNext: { [weak self] in self?.prefetchItems($0) }).disposed(by: bag)

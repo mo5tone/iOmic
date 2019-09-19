@@ -41,7 +41,7 @@ extension ChaptersCoordinator: ChaptersViewCoordinator {
     }
 
     func presentDownload(_ chapters: [Chapter]) {
-        let coordinator: DownloadCoordinator = .init(window: window, delegate: self, chapters: chapters)
+        let coordinator: ChaptersDownloadCoordinator = .init(window: window, delegate: self, chapters: chapters)
         append(coordinator: coordinator)
         viewController.present(coordinator.navigationController, animated: true, completion: nil)
     }
@@ -51,6 +51,6 @@ extension ChaptersCoordinator: ChaptersViewCoordinator {
 
 extension ChaptersCoordinator: PagesCoordinatorDelegate {}
 
-// MARK: - DownloadCoordinatorDelegate
+// MARK: - ChaptersDownloadCoordinatorDelegate
 
-extension ChaptersCoordinator: DownloadCoordinatorDelegate {}
+extension ChaptersCoordinator: ChaptersDownloadCoordinatorDelegate {}

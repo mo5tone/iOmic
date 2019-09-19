@@ -1,5 +1,5 @@
 //
-//  DownloadViewController.swift
+//  ChaptersDownloadViewController.swift
 //  iOmic
 //
 //  Created by Jeff Men (CN) on 2019/9/18.
@@ -9,20 +9,20 @@
 import RxSwift
 import UIKit
 
-protocol DownloadViewCoordinator: PresentedViewCoordinator {
+protocol ChaptersDownloadViewCoordinator: PresentedViewCoordinator {
     func dismiss(animated: Bool)
 }
 
-class DownloadViewController: UIViewController {
-    private weak var coordinator: DownloadViewCoordinator?
-    private let viewModel: DownloadViewModel
+class ChaptersDownloadViewController: UIViewController {
+    private weak var coordinator: ChaptersDownloadViewCoordinator?
+    private let viewModel: ChaptersDownloadViewModel
     private let bag: DisposeBag = .init()
     private lazy var doneBarButtonItem: UIBarButtonItem = .init(barButtonSystemItem: .done, target: nil, action: nil)
     private lazy var allBarButtonItem: UIBarButtonItem = .init(title: "All", style: .plain, target: nil, action: nil)
     private lazy var downloadBarButtonItem: UIBarButtonItem = .init(title: "Download", style: .done, target: nil, action: nil)
     @IBOutlet var collectionView: UICollectionView!
 
-    init(coordinator: DownloadViewCoordinator?, viewModel: DownloadViewModel) {
+    init(coordinator: ChaptersDownloadViewCoordinator?, viewModel: ChaptersDownloadViewModel) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -55,7 +55,7 @@ class DownloadViewController: UIViewController {
 
     private func setupView() {
         navigationItem.leftBarButtonItem = allBarButtonItem
-        navigationItem.title = "Chapters to Download"
+        navigationItem.title = "Chapters Download"
         navigationItem.rightBarButtonItem = doneBarButtonItem
 
         setToolbarItems([.flexibleSpace, downloadBarButtonItem, .flexibleSpace], animated: true)
@@ -70,18 +70,22 @@ class DownloadViewController: UIViewController {
     private func setupBinding() {
         viewModel.error.subscribe(onNext: { [weak self] in self?.coordinator?.whoops($0) }).disposed(by: bag)
 
+        allBarButtonItem.rx.tap.bind(to: viewModel.markAll).disposed(by: bag)
         allBarButtonItem.rx.tap.subscribe { [weak self] _ in self?.markAllCells() }.disposed(by: bag)
         doneBarButtonItem.rx.tap.subscribe { [weak self] _ in self?.coordinator?.dismiss(animated: true) }.disposed(by: bag)
+
+        collectionView.rx.setDelegate(self).disposed(by: bag)
+        collectionView.rx.itemSelected.bind(to: viewModel.selectedIndexPath).disposed(by: bag)
+        collectionView.rx.itemDeselected.bind(to: viewModel.deselectedIndexPath).disposed(by: bag)
+
         downloadBarButtonItem.rx.tap.subscribe { [weak self] _ in self?.coordinator?.dismiss(animated: true) }.disposed(by: bag)
     }
 
     private func markAllCells() {
         let indexPaths = (0 ..< viewModel.chapters.count).map { IndexPath(item: $0, section: 0) }
         if collectionView.indexPathsForSelectedItems?.isEmpty ?? true {
-            // TODO: - append all
             indexPaths.forEach { collectionView.selectItem(at: $0, animated: true, scrollPosition: []) }
         } else {
-            // TODO: - remove all
             indexPaths.forEach { collectionView.deselectItem(at: $0, animated: true) }
         }
     }
@@ -89,7 +93,7 @@ class DownloadViewController: UIViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension DownloadViewController: UICollectionViewDataSource {
+extension ChaptersDownloadViewController: UICollectionViewDataSource {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return viewModel.chapters.count
     }
@@ -105,17 +109,7 @@ extension DownloadViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension DownloadViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: - add chapter to download sequence
-        print("didSelectItemAt \(indexPath)")
-    }
-
-    func collectionView(_: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        // TODO: - remove chapter from download sequence
-        print("didDeselectItemAt \(indexPath)")
-    }
-
+extension ChaptersDownloadViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumLineSpacingForSectionAt _: Int) -> CGFloat {
         return 4
     }

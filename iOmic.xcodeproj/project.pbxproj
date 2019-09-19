@@ -71,12 +71,12 @@
 		55F48B0A23214571000FBC18 /* MarqueeLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F48B0923214571000FBC18 /* MarqueeLabel.framework */; };
 		9F27254E2327666900AFC8E6 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F27254D2327666900AFC8E6 /* DatabaseManager.swift */; };
 		9F27254F232766A000AFC8E6 /* WCDBSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F5B2310D47D007D1454 /* WCDBSwift.framework */; };
-		9F272551232790CE00AFC8E6 /* WCDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F272550232790CE00AFC8E6 /* WCDB.swift */; };
-		9F2F6F642331F66F00E5996A /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F6F632331F66F00E5996A /* DownloadViewModel.swift */; };
-		9F2F6F672331F6CF00E5996A /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F6F652331F6CF00E5996A /* DownloadViewController.swift */; };
-		9F2F6F682331F6CF00E5996A /* DownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2F6F662331F6CF00E5996A /* DownloadViewController.xib */; };
-		9F2F6F6A2331F74D00E5996A /* DownloadCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F6F692331F74D00E5996A /* DownloadCoordinator.swift */; };
-		9F4058D82328EC3F00AA1309 /* DatabaseManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4058D72328EC3F00AA1309 /* DatabaseManagerProtocol.swift */; };
+		9F272551232790CE00AFC8E6 /* WCDB.Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F272550232790CE00AFC8E6 /* WCDB.Table.swift */; };
+		9F2F6F642331F66F00E5996A /* ChaptersDownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F6F632331F66F00E5996A /* ChaptersDownloadViewModel.swift */; };
+		9F2F6F672331F6CF00E5996A /* ChaptersDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F6F652331F6CF00E5996A /* ChaptersDownloadViewController.swift */; };
+		9F2F6F682331F6CF00E5996A /* ChaptersDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F2F6F662331F6CF00E5996A /* ChaptersDownloadViewController.xib */; };
+		9F2F6F6A2331F74D00E5996A /* ChaptersDownloadCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F6F692331F74D00E5996A /* ChaptersDownloadCoordinator.swift */; };
+		9F2F6F6C2333426100E5996A /* WCDB.Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F6F6B2333426100E5996A /* WCDB.Database.swift */; };
 		9F423D492316834E006B950F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F423D482316834E006B950F /* Date.swift */; };
 		9F82EA452329DC85003E465E /* BookCollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F82EA432329DC85003E465E /* BookCollectionHeader.swift */; };
 		9F82EA462329DC85003E465E /* BookCollectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F82EA442329DC85003E465E /* BookCollectionHeader.xib */; };
@@ -206,13 +206,13 @@
 		9F272549232650E900AFC8E6 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		9F27254A232650E900AFC8E6 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 		9F27254D2327666900AFC8E6 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
-		9F272550232790CE00AFC8E6 /* WCDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCDB.swift; sourceTree = "<group>"; };
-		9F2F6F632331F66F00E5996A /* DownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewModel.swift; sourceTree = "<group>"; };
-		9F2F6F652331F6CF00E5996A /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
-		9F2F6F662331F6CF00E5996A /* DownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadViewController.xib; sourceTree = "<group>"; };
-		9F2F6F692331F74D00E5996A /* DownloadCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadCoordinator.swift; sourceTree = "<group>"; };
+		9F272550232790CE00AFC8E6 /* WCDB.Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCDB.Table.swift; sourceTree = "<group>"; };
+		9F2F6F632331F66F00E5996A /* ChaptersDownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersDownloadViewModel.swift; sourceTree = "<group>"; };
+		9F2F6F652331F6CF00E5996A /* ChaptersDownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersDownloadViewController.swift; sourceTree = "<group>"; };
+		9F2F6F662331F6CF00E5996A /* ChaptersDownloadViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChaptersDownloadViewController.xib; sourceTree = "<group>"; };
+		9F2F6F692331F74D00E5996A /* ChaptersDownloadCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersDownloadCoordinator.swift; sourceTree = "<group>"; };
+		9F2F6F6B2333426100E5996A /* WCDB.Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCDB.Database.swift; sourceTree = "<group>"; };
 		9F4058C32328929A00AA1309 /* SkeletonView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SkeletonView.framework; path = Carthage/Build/iOS/SkeletonView.framework; sourceTree = "<group>"; };
-		9F4058D72328EC3F00AA1309 /* DatabaseManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerProtocol.swift; sourceTree = "<group>"; };
 		9F423D482316834E006B950F /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		9F423D4B23175B35006B950F /* iOmic-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOmic-Bridging-Header.h"; sourceTree = "<group>"; };
 		9F82EA432329DC85003E465E /* BookCollectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionHeader.swift; sourceTree = "<group>"; };
@@ -444,12 +444,12 @@
 			children = (
 				5584B0E92310EC4F000D9309 /* BooksViewController.swift */,
 				55BEAA8D23122CD600A6A41D /* BooksViewController.xib */,
+				9F2F6F652331F6CF00E5996A /* ChaptersDownloadViewController.swift */,
+				9F2F6F662331F6CF00E5996A /* ChaptersDownloadViewController.xib */,
 				9FFB4B6F2320D42800297C12 /* ChaptersViewController.swift */,
 				9FFB4B702320D42800297C12 /* ChaptersViewController.xib */,
 				55CB63AF2323C94C001A6E4D /* PagesViewController.swift */,
 				55CB63B02323C94C001A6E4D /* PagesViewController.xib */,
-				9F2F6F652331F6CF00E5996A /* DownloadViewController.swift */,
-				9F2F6F662331F6CF00E5996A /* DownloadViewController.xib */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -491,7 +491,7 @@
 				5584B0FD2311089F000D9309 /* BooksCoordinator.swift */,
 				9FFB4B6D2320D3FE00297C12 /* ChaptersCoordinator.swift */,
 				55CB63B52323C980001A6E4D /* PagesCoordinator.swift */,
-				9F2F6F692331F74D00E5996A /* DownloadCoordinator.swift */,
+				9F2F6F692331F74D00E5996A /* ChaptersDownloadCoordinator.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -510,9 +510,9 @@
 			isa = PBXGroup;
 			children = (
 				5584B10B23114E01000D9309 /* BooksViewModel.swift */,
+				9F2F6F632331F66F00E5996A /* ChaptersDownloadViewModel.swift */,
 				9FFB4B6B2320D3D100297C12 /* ChaptersViewModel.swift */,
 				55CB63B32323C95F001A6E4D /* PagesViewModel.swift */,
-				9F2F6F632331F66F00E5996A /* DownloadViewModel.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -577,7 +577,8 @@
 				9FA9472723152C960028A60D /* String.swift */,
 				9F423D482316834E006B950F /* Date.swift */,
 				9FD787012320B69000E1C03C /* UIFont.swift */,
-				9F272550232790CE00AFC8E6 /* WCDB.swift */,
+				9F2F6F6B2333426100E5996A /* WCDB.Database.swift */,
+				9F272550232790CE00AFC8E6 /* WCDB.Table.swift */,
 				9FA8DEFC23306EF60003E278 /* UIBarButtonItem.swift */,
 				9F955C0523308C820015069E /* UIView.swift */,
 				9F955C0723309BBD0015069E /* UILabel.swift */,
@@ -647,7 +648,6 @@
 		9FE5102A23263FAA008F2610 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				9F4058D72328EC3F00AA1309 /* DatabaseManagerProtocol.swift */,
 				9F27254D2327666900AFC8E6 /* DatabaseManager.swift */,
 			);
 			path = Database;
@@ -796,7 +796,7 @@
 				55342F6C2310B6BC00FA141B /* LaunchScreen.storyboard in Resources */,
 				55BEAA8E23122CD600A6A41D /* BooksViewController.xib in Resources */,
 				55342F692310B6BC00FA141B /* Assets.xcassets in Resources */,
-				9F2F6F682331F6CF00E5996A /* DownloadViewController.xib in Resources */,
+				9F2F6F682331F6CF00E5996A /* ChaptersDownloadViewController.xib in Resources */,
 				9FFB4B722320D42800297C12 /* ChaptersViewController.xib in Resources */,
 				9FD78700231FA37B00E1C03C /* FilterCollectionViewCell.xib in Resources */,
 				55BEAA9023122DF000A6A41D /* DiscoveryViewController.xib in Resources */,
@@ -909,7 +909,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F2F6F6A2331F74D00E5996A /* DownloadCoordinator.swift in Sources */,
+				9F2F6F6A2331F74D00E5996A /* ChaptersDownloadCoordinator.swift in Sources */,
 				9FFB4B79232100A500297C12 /* ChapterCollectionViewCell.swift in Sources */,
 				55D05260231FE77B0005A2DD /* FilterTitleCollectionHeader.swift in Sources */,
 				559302AA2312CF180021C170 /* ManHuaRen.swift in Sources */,
@@ -930,6 +930,7 @@
 				55CB63B12323C94C001A6E4D /* PagesViewController.swift in Sources */,
 				555C1CCE2319582900E388D6 /* ReusableIdentifier.swift in Sources */,
 				5584B10C23114E01000D9309 /* BooksViewModel.swift in Sources */,
+				9F2F6F6C2333426100E5996A /* WCDB.Database.swift in Sources */,
 				9F85FAF82330DF400070E3A0 /* Kingfisher.swift in Sources */,
 				9FC348AD232F471D00310987 /* Uploader.swift in Sources */,
 				9FD786F9231F7A0900E1C03C /* FiltersCoordiantor.swift in Sources */,
@@ -945,13 +946,12 @@
 				55BEAA9E23124F1500A6A41D /* Filter.swift in Sources */,
 				55BEAA9823124EF700A6A41D /* Book.swift in Sources */,
 				9FC348B0232F4FF400310987 /* UploadViewController.swift in Sources */,
-				9F4058D82328EC3F00AA1309 /* DatabaseManagerProtocol.swift in Sources */,
-				9F2F6F672331F6CF00E5996A /* DownloadViewController.swift in Sources */,
+				9F2F6F672331F6CF00E5996A /* ChaptersDownloadViewController.swift in Sources */,
 				9FD787022320B69000E1C03C /* UIFont.swift in Sources */,
 				5584B12123115358000D9309 /* DiscoveryViewModel.swift in Sources */,
 				9F27254E2327666900AFC8E6 /* DatabaseManager.swift in Sources */,
 				5584B0F32310EE5E000D9309 /* UpDownLoadViewController.swift in Sources */,
-				9F272551232790CE00AFC8E6 /* WCDB.swift in Sources */,
+				9F272551232790CE00AFC8E6 /* WCDB.Table.swift in Sources */,
 				9F955C0823309BBD0015069E /* UILabel.swift in Sources */,
 				5584B12F23116213000D9309 /* UIColor.swift in Sources */,
 				9FA947262314FBE90028A60D /* Whoops.swift in Sources */,
@@ -963,7 +963,7 @@
 				9F82EA4B232A3737003E465E /* ErrorViewController.swift in Sources */,
 				55E4AC9E233112D6002B42A9 /* Downloader.swift in Sources */,
 				9F423D492316834E006B950F /* Date.swift in Sources */,
-				9F2F6F642331F66F00E5996A /* DownloadViewModel.swift in Sources */,
+				9F2F6F642331F66F00E5996A /* ChaptersDownloadViewModel.swift in Sources */,
 				9FA947242314F4E80028A60D /* Alamofire.swift in Sources */,
 				9FFB4B6C2320D3D100297C12 /* ChaptersViewModel.swift in Sources */,
 				5584B0F72310EE85000D9309 /* SettingViewController.swift in Sources */,

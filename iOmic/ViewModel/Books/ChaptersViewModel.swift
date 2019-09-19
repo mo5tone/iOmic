@@ -10,24 +10,26 @@ import Foundation
 import RxSwift
 import WCDBSwift
 
+protocol ChaptersViewModelDatabaseManager {
+    func isFavorited(book: Book) -> Single<Bool>
+    func setBook(_ book: Book, isFavorited: Bool) -> Completable
+}
+
 class ChaptersViewModel: ViewModel {
-    private let databaseManager: ChaptersDatabaseManagerProtocol
     let load: PublishSubject<Void> = .init()
     let switchFavorited: PublishSubject<Void> = .init()
     let isFavorited: BehaviorSubject<Bool> = .init(value: false)
     let book: BehaviorSubject<Book>
     let chapters: BehaviorSubject<[Chapter]> = .init(value: [])
 
-    init(book: Book, databaseManager: ChaptersDatabaseManagerProtocol) {
-        self.databaseManager = databaseManager
+    init(book: Book, databaseManager: ChaptersViewModelDatabaseManager) {
         self.book = .init(value: book)
         super.init()
-        load.withLatestFrom(databaseManager.getBook(where: book.identity))
-            .compactMap { $0?.isFavorited }
+        load.withLatestFrom(databaseManager.isFavorited(book: book))
             .bind(to: isFavorited)
             .disposed(by: bag)
         switchFavorited.withLatestFrom(Observable.combineLatest(isFavorited, self.book))
-            .flatMapLatest { databaseManager.update(isFavorited: $0.0, on: $0.1) }
+            .flatMapLatest { databaseManager.setBook($0.1, isFavorited: $0.0) }
             .subscribe()
             .disposed(by: bag)
         let results = load.withLatestFrom(self.book)
