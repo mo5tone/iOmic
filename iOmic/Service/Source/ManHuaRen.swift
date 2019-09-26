@@ -23,7 +23,7 @@ class ManHuaRen {
 
     fileprivate class Interceptor: RequestInterceptor {
         func adapt(_ urlRequest: URLRequest, for _: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
-            var request = urlRequest
+            let request = urlRequest
             if let url = request.url, let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
                 let cipher = "4e0a48e1c0b54041bce9c8f0e036124d"
                 var key = cipher + "GET"
@@ -36,8 +36,10 @@ class ManHuaRen {
                 key += cipher
                 do {
                     completion(.success(try URLEncoding.default.encode(request, with: ["gsn": key.md5String()])))
-                } catch {
+                } catch let error as AFError {
                     completion(.failure(error))
+                } catch {
+                    completion(.success(request))
                 }
             } else {
                 completion(.success(request))

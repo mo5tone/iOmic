@@ -15,7 +15,7 @@ enum Whoops: Error {
     case nilProperty(String)
 
     enum Networking: Error {
-        case nilDataReponse(DataResponse<Data?>)
+        case nilDataReponse(AFDataResponse<Data?>)
     }
 
     enum Source: Error {

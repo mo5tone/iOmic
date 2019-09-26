@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import SwiftEntryKit
 import UIKit
 
 class Coordinator: NSObject {
@@ -73,9 +72,7 @@ protocol PushedViewCoordinator: VisibleViewCoordinator {
 
 extension VisibleViewCoordinator where Self: VisibleCoordinatorProtocol {
     func whoops(_ error: Error) {
-        var attributes: EKAttributes = .topNote
-        attributes.name = String(describing: ErrorViewController.self)
-        attributes.entryBackground = .color(color: .init(UIColor.flat.error))
-        SwiftEntryKit.display(entry: ErrorViewController(error: error), using: attributes)
+        let alert: UIAlertController = .init(title: "Whoops", message: error.localizedDescription, preferredStyle: .alert)
+        viewController.present(alert, animated: true, completion: nil)
     }
 }

@@ -30,37 +30,37 @@ extension URLRequestConvertible where Self: RequestConvertible {
 }
 
 extension DataRequest {
-    func response(queue: DispatchQueue = .main) -> Single<DataResponse<Data?>> {
+    func response(queue: DispatchQueue = .main) -> Single<AFDataResponse<Data?>> {
         return Single.create { [weak self] observer -> Disposable in
             self?.response(queue: queue) { observer(.success($0)) }
             return Disposables.create { self?.cancel() }
         }
     }
 
-    func responseData(queue: DispatchQueue = .main) -> Single<DataResponse<Data>> {
+    func responseData(queue: DispatchQueue = .main) -> Single<AFDataResponse<Data>> {
         return Single.create { [weak self] observer -> Disposable in
             self?.responseData(queue: queue) { observer(.success($0)) }
             return Disposables.create { self?.cancel() }
         }
     }
 
-    func responseString(queue: DispatchQueue = .main, encoding: String.Encoding? = nil) -> Single<DataResponse<String>> {
+    func responseString(queue: DispatchQueue = .main, encoding: String.Encoding? = nil) -> Single<AFDataResponse<String>> {
         return Single.create { [weak self] observer -> Disposable in
             self?.responseString(queue: queue, encoding: encoding) { observer(.success($0)) }
             return Disposables.create { self?.cancel() }
         }
     }
 
-    func responseJSON(queue: DispatchQueue = .main, options: JSONSerialization.ReadingOptions = .allowFragments) -> Single<DataResponse<Any>> {
+    func responseJSON(queue: DispatchQueue = .main, options: JSONSerialization.ReadingOptions = .allowFragments) -> Single<AFDataResponse<Any>> {
         return Single.create { [weak self] observer -> Disposable in
             self?.responseJSON(queue: queue, options: options) { observer(.success($0)) }
             return Disposables.create { self?.cancel() }
         }
     }
 
-    func responseDecodable<T>(queue: DispatchQueue = .main, decoder: DataDecoder = JSONDecoder()) -> Single<DataResponse<T>> where T: Decodable {
+    func responseDecodable<T>(queue: DispatchQueue = .main, decoder: DataDecoder = JSONDecoder()) -> Single<AFDataResponse<T>> where T: Decodable {
         return Single.create { [weak self] observer -> Disposable in
-            self?.responseDecodable(queue: queue, decoder: decoder) { (response: DataResponse<T>) in observer(.success(response)) }
+            self?.responseDecodable(queue: queue, decoder: decoder) { (response: AFDataResponse<T>) in observer(.success(response)) }
             return Disposables.create { self?.cancel() }
         }
     }

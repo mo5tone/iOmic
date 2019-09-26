@@ -9,7 +9,7 @@
 import DeviceKit
 import FileKit
 import Foundation
-import GCDWebServers
+import GCDWebServer
 import RxSwift
 
 protocol UploaderProtocol {

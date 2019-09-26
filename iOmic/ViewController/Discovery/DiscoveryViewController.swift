@@ -10,7 +10,6 @@ import Kingfisher
 import RxCocoa
 import RxDataSources
 import RxSwift
-import SwiftEntryKit
 import UIKit
 
 protocol DiscoveryViewCoordinator: VisibleViewCoordinator {

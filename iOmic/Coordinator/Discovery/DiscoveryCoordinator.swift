@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import SwiftEntryKit
 import UIKit
 
 protocol DiscoveryCoordinatorDelegate: CoordinatorDelegate {}

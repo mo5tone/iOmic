@@ -8,7 +8,6 @@
 
 import RxCocoa
 import RxSwift
-import SwiftEntryKit
 import UIKit
 
 protocol FiltersViewCoordinator: PresentedViewCoordinator {

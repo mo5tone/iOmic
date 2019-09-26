@@ -7,24 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		55191F4A2310D22D007D1454 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F492310D22D007D1454 /* Alamofire.framework */; };
-		55191F4C2310D244007D1454 /* IQKeyboardManagerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F4B2310D244007D1454 /* IQKeyboardManagerSwift.framework */; };
-		55191F4E2310D24C007D1454 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F4D2310D24C007D1454 /* Kingfisher.framework */; };
-		55191F522310D25A007D1454 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F512310D25A007D1454 /* RxCocoa.framework */; };
-		55191F542310D25F007D1454 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F532310D25F007D1454 /* RxRelay.framework */; };
-		55191F562310D264007D1454 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F552310D264007D1454 /* RxSwift.framework */; };
-		55191F5A2310D477007D1454 /* SwipeCellKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F592310D477007D1454 /* SwipeCellKit.framework */; };
+		11A0D4433AEDCACD8C49CE8A /* Pods_iOmic_iOmicUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85CB0CA0C167483D587E8B26 /* Pods_iOmic_iOmicUITests.framework */; };
 		55191F632310E047007D1454 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55191F622310E047007D1454 /* Coordinator.swift */; };
 		55342F622310B6BB00FA141B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55342F612310B6BB00FA141B /* AppDelegate.swift */; };
 		55342F692310B6BC00FA141B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55342F682310B6BC00FA141B /* Assets.xcassets */; };
 		55342F6C2310B6BC00FA141B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55342F6A2310B6BC00FA141B /* LaunchScreen.storyboard */; };
 		55342F772310B6BC00FA141B /* iOmicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55342F762310B6BC00FA141B /* iOmicTests.swift */; };
 		55342F822310B6BC00FA141B /* iOmicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55342F812310B6BC00FA141B /* iOmicUITests.swift */; };
-		553634422329187B00715628 /* MMKV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 553634412329187B00715628 /* MMKV.framework */; };
 		55363444232918CD00715628 /* KeyValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55363443232918CD00715628 /* KeyValues.swift */; };
 		555C1CCE2319582900E388D6 /* ReusableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555C1CCD2319582900E388D6 /* ReusableIdentifier.swift */; };
-		555C1CD1231A034200E388D6 /* Differentiator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C1CD0231A034200E388D6 /* Differentiator.framework */; };
-		555C1CD3231A035C00E388D6 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C1CD2231A035C00E388D6 /* RxDataSources.framework */; };
 		5584B0E42310E6A7000D9309 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0E32310E6A7000D9309 /* AppCoordinator.swift */; };
 		5584B0EB2310EC4F000D9309 /* BooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0E92310EC4F000D9309 /* BooksViewController.swift */; };
 		5584B0EF2310EE29000D9309 /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0ED2310EE29000D9309 /* DiscoveryViewController.swift */; };
@@ -41,16 +32,10 @@
 		5584B12C23115709000D9309 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B12B23115709000D9309 /* MainCoordinator.swift */; };
 		5584B12F23116213000D9309 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B12E23116213000D9309 /* UIColor.swift */; };
 		5584B13223116849000D9309 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B13123116849000D9309 /* Source.swift */; };
-		5593029E2312B7150021C170 /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5593029D2312B7150021C170 /* Kanna.framework */; };
-		559302A02312B7270021C170 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5593029F2312B7270021C170 /* SwiftyJSON.framework */; };
-		559302A42312C1AE0021C170 /* FileKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559302A32312C1AE0021C170 /* FileKit.framework */; };
-		559302A62312C1BF0021C170 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559302A52312C1BF0021C170 /* ZipArchive.framework */; };
 		559302A82312CE750021C170 /* DongManZhiJia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A72312CE750021C170 /* DongManZhiJia.swift */; };
 		559302AA2312CF180021C170 /* ManHuaRen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A92312CF180021C170 /* ManHuaRen.swift */; };
 		55B19F6E231AA09A00CFBB02 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B19F6C231AA09A00CFBB02 /* FiltersViewController.swift */; };
 		55B19F6F231AA09A00CFBB02 /* FiltersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B19F6D231AA09A00CFBB02 /* FiltersViewController.xib */; };
-		55B19F71231AB3A500CFBB02 /* QuickLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B19F70231AB3A500CFBB02 /* QuickLayout.framework */; };
-		55B19F73231AB3B600CFBB02 /* SwiftEntryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B19F72231AB3B600CFBB02 /* SwiftEntryKit.framework */; };
 		55BEAA8E23122CD600A6A41D /* BooksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA8D23122CD600A6A41D /* BooksViewController.xib */; };
 		55BEAA9023122DF000A6A41D /* DiscoveryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA8F23122DF000A6A41D /* DiscoveryViewController.xib */; };
 		55BEAA9223122E1600A6A41D /* UpDownLoadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BEAA9123122E1600A6A41D /* UpDownLoadViewController.xib */; };
@@ -68,9 +53,9 @@
 		55D05260231FE77B0005A2DD /* FilterTitleCollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D0525E231FE77B0005A2DD /* FilterTitleCollectionHeader.swift */; };
 		55D05261231FE77B0005A2DD /* FilterTitleCollectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D0525F231FE77B0005A2DD /* FilterTitleCollectionHeader.xib */; };
 		55E4AC9E233112D6002B42A9 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E4AC9D233112D6002B42A9 /* Downloader.swift */; };
-		55F48B0A23214571000FBC18 /* MarqueeLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F48B0923214571000FBC18 /* MarqueeLabel.framework */; };
+		6D782122AE1BA356C74A9778 /* Pods_iOmic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E2B02A185ACFF8F80F055A /* Pods_iOmic.framework */; };
+		7BB69D00239A186207ADE719 /* Pods_iOmicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97464C6EEEDBEE678A3F7657 /* Pods_iOmicTests.framework */; };
 		9F27254E2327666900AFC8E6 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F27254D2327666900AFC8E6 /* DatabaseManager.swift */; };
-		9F27254F232766A000AFC8E6 /* WCDBSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55191F5B2310D47D007D1454 /* WCDBSwift.framework */; };
 		9F272551232790CE00AFC8E6 /* WCDB.Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F272550232790CE00AFC8E6 /* WCDB.Table.swift */; };
 		9F2F6F642331F66F00E5996A /* ChaptersDownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F6F632331F66F00E5996A /* ChaptersDownloadViewModel.swift */; };
 		9F2F6F672331F6CF00E5996A /* ChaptersDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F6F652331F6CF00E5996A /* ChaptersDownloadViewController.swift */; };
@@ -86,14 +71,12 @@
 		9F8418FD2317B35300A503BE /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8418FB2317B35300A503BE /* BookCollectionViewCell.swift */; };
 		9F8418FE2317B35300A503BE /* BookCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F8418FC2317B35300A503BE /* BookCollectionViewCell.xib */; };
 		9F85FAF82330DF400070E3A0 /* Kingfisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F85FAF72330DF400070E3A0 /* Kingfisher.swift */; };
-		9F860CA8231E53DC001052EE /* Hue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F860CA7231E53DC001052EE /* Hue.framework */; };
 		9F955C0623308C820015069E /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F955C0523308C820015069E /* UIView.swift */; };
 		9F955C0823309BBD0015069E /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F955C0723309BBD0015069E /* UILabel.swift */; };
 		9FA8DEFD23306EF60003E278 /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA8DEFC23306EF60003E278 /* UIBarButtonItem.swift */; };
 		9FA947242314F4E80028A60D /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA947232314F4E80028A60D /* Alamofire.swift */; };
 		9FA947262314FBE90028A60D /* Whoops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA947252314FBE90028A60D /* Whoops.swift */; };
 		9FA9472823152C960028A60D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA9472723152C960028A60D /* String.swift */; };
-		9FC348A9232F2FC500310987 /* GCDWebServers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC348A8232F2FC500310987 /* GCDWebServers.framework */; };
 		9FC348AD232F471D00310987 /* Uploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC348AC232F471D00310987 /* Uploader.swift */; };
 		9FC348B0232F4FF400310987 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC348AE232F4FF400310987 /* UploadViewController.swift */; };
 		9FC348B1232F4FF400310987 /* UploadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FC348AF232F4FF400310987 /* UploadViewController.xib */; };
@@ -108,7 +91,6 @@
 		9FFB4B6E2320D3FE00297C12 /* ChaptersCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFB4B6D2320D3FE00297C12 /* ChaptersCoordinator.swift */; };
 		9FFB4B712320D42800297C12 /* ChaptersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFB4B6F2320D42800297C12 /* ChaptersViewController.swift */; };
 		9FFB4B722320D42800297C12 /* ChaptersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFB4B702320D42800297C12 /* ChaptersViewController.xib */; };
-		9FFB4B752320EA7C00297C12 /* DeviceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFB4B742320EA7C00297C12 /* DeviceKit.framework */; };
 		9FFB4B79232100A500297C12 /* ChapterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFB4B77232100A500297C12 /* ChapterCollectionViewCell.swift */; };
 		9FFB4B7A232100A500297C12 /* ChapterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFB4B78232100A500297C12 /* ChapterCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -131,6 +113,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		063DF8225738EEF682DE4584 /* Pods-iOmic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOmic.debug.xcconfig"; path = "Target Support Files/Pods-iOmic/Pods-iOmic.debug.xcconfig"; sourceTree = "<group>"; };
+		36E2B02A185ACFF8F80F055A /* Pods_iOmic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOmic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55191F492310D22D007D1454 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		55191F4B2310D244007D1454 /* IQKeyboardManagerSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IQKeyboardManagerSwift.framework; path = Carthage/Build/iOS/IQKeyboardManagerSwift.framework; sourceTree = "<group>"; };
 		55191F4D2310D24C007D1454 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
@@ -203,6 +187,10 @@
 		55D0525F231FE77B0005A2DD /* FilterTitleCollectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterTitleCollectionHeader.xib; sourceTree = "<group>"; };
 		55E4AC9D233112D6002B42A9 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Downloader.swift; path = iOmic/Common/Extension/Downloader.swift; sourceTree = SOURCE_ROOT; };
 		55F48B0923214571000FBC18 /* MarqueeLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MarqueeLabel.framework; path = Carthage/Build/iOS/MarqueeLabel.framework; sourceTree = "<group>"; };
+		67699326613E912CDB80FE1C /* Pods-iOmic-iOmicUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOmic-iOmicUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOmic-iOmicUITests/Pods-iOmic-iOmicUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		7A1EC97BD66FD0BAEE404596 /* Pods-iOmicTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOmicTests.release.xcconfig"; path = "Target Support Files/Pods-iOmicTests/Pods-iOmicTests.release.xcconfig"; sourceTree = "<group>"; };
+		85CB0CA0C167483D587E8B26 /* Pods_iOmic_iOmicUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOmic_iOmicUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		97464C6EEEDBEE678A3F7657 /* Pods_iOmicTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOmicTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F272549232650E900AFC8E6 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		9F27254A232650E900AFC8E6 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 		9F27254D2327666900AFC8E6 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
@@ -250,6 +238,9 @@
 		9FFB4B742320EA7C00297C12 /* DeviceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceKit.framework; path = Carthage/Build/iOS/DeviceKit.framework; sourceTree = "<group>"; };
 		9FFB4B77232100A500297C12 /* ChapterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterCollectionViewCell.swift; sourceTree = "<group>"; };
 		9FFB4B78232100A500297C12 /* ChapterCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChapterCollectionViewCell.xib; sourceTree = "<group>"; };
+		DF291DEE4CA7798E61BC7395 /* Pods-iOmic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOmic.release.xcconfig"; path = "Target Support Files/Pods-iOmic/Pods-iOmic.release.xcconfig"; sourceTree = "<group>"; };
+		EBDCD9BF1E63881B07344FEA /* Pods-iOmicTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOmicTests.debug.xcconfig"; path = "Target Support Files/Pods-iOmicTests/Pods-iOmicTests.debug.xcconfig"; sourceTree = "<group>"; };
+		ECF1AEC78ED9FAF944383152 /* Pods-iOmic-iOmicUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOmic-iOmicUITests.release.xcconfig"; path = "Target Support Files/Pods-iOmic-iOmicUITests/Pods-iOmic-iOmicUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,27 +248,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55191F4A2310D22D007D1454 /* Alamofire.framework in Frameworks */,
-				9FFB4B752320EA7C00297C12 /* DeviceKit.framework in Frameworks */,
-				555C1CD1231A034200E388D6 /* Differentiator.framework in Frameworks */,
-				559302A42312C1AE0021C170 /* FileKit.framework in Frameworks */,
-				9FC348A9232F2FC500310987 /* GCDWebServers.framework in Frameworks */,
-				9F860CA8231E53DC001052EE /* Hue.framework in Frameworks */,
-				55191F4C2310D244007D1454 /* IQKeyboardManagerSwift.framework in Frameworks */,
-				5593029E2312B7150021C170 /* Kanna.framework in Frameworks */,
-				55191F4E2310D24C007D1454 /* Kingfisher.framework in Frameworks */,
-				55F48B0A23214571000FBC18 /* MarqueeLabel.framework in Frameworks */,
-				553634422329187B00715628 /* MMKV.framework in Frameworks */,
-				55B19F71231AB3A500CFBB02 /* QuickLayout.framework in Frameworks */,
-				55191F522310D25A007D1454 /* RxCocoa.framework in Frameworks */,
-				555C1CD3231A035C00E388D6 /* RxDataSources.framework in Frameworks */,
-				55191F542310D25F007D1454 /* RxRelay.framework in Frameworks */,
-				55191F562310D264007D1454 /* RxSwift.framework in Frameworks */,
-				55B19F73231AB3B600CFBB02 /* SwiftEntryKit.framework in Frameworks */,
-				559302A02312B7270021C170 /* SwiftyJSON.framework in Frameworks */,
-				55191F5A2310D477007D1454 /* SwipeCellKit.framework in Frameworks */,
-				9F27254F232766A000AFC8E6 /* WCDBSwift.framework in Frameworks */,
-				559302A62312C1BF0021C170 /* ZipArchive.framework in Frameworks */,
+				6D782122AE1BA356C74A9778 /* Pods_iOmic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +256,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BB69D00239A186207ADE719 /* Pods_iOmicTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +264,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11A0D4433AEDCACD8C49CE8A /* Pods_iOmic_iOmicUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +303,9 @@
 				55191F4D2310D24C007D1454 /* Kingfisher.framework */,
 				55191F4B2310D244007D1454 /* IQKeyboardManagerSwift.framework */,
 				55191F492310D22D007D1454 /* Alamofire.framework */,
+				36E2B02A185ACFF8F80F055A /* Pods_iOmic.framework */,
+				85CB0CA0C167483D587E8B26 /* Pods_iOmic_iOmicUITests.framework */,
+				97464C6EEEDBEE678A3F7657 /* Pods_iOmicTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -381,6 +357,7 @@
 				55342F802310B6BC00FA141B /* iOmicUITests */,
 				55342F5F2310B6BB00FA141B /* Products */,
 				55191F482310D22D007D1454 /* Frameworks */,
+				8E92F9EA69485014F52CBE44 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -624,6 +601,19 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		8E92F9EA69485014F52CBE44 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				063DF8225738EEF682DE4584 /* Pods-iOmic.debug.xcconfig */,
+				DF291DEE4CA7798E61BC7395 /* Pods-iOmic.release.xcconfig */,
+				67699326613E912CDB80FE1C /* Pods-iOmic-iOmicUITests.debug.xcconfig */,
+				ECF1AEC78ED9FAF944383152 /* Pods-iOmic-iOmicUITests.release.xcconfig */,
+				EBDCD9BF1E63881B07344FEA /* Pods-iOmicTests.debug.xcconfig */,
+				7A1EC97BD66FD0BAEE404596 /* Pods-iOmicTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		9F2F6F6D23334A1A00E5996A /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
@@ -702,13 +692,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55342F862310B6BC00FA141B /* Build configuration list for PBXNativeTarget "iOmic" */;
 			buildPhases = (
+				26FB2877F3955BD17AFDFC1D /* [CP] Check Pods Manifest.lock */,
 				55342F5A2310B6BB00FA141B /* Sources */,
 				55342F5B2310B6BB00FA141B /* Frameworks */,
 				55342F5C2310B6BB00FA141B /* Resources */,
-				55191F5D2310D4B4007D1454 /* Carthage Copy */,
-				55191F5E2310D8A9007D1454 /* Carthage Copy [DEBUG] */,
-				9FD786FA231F7AE600E1C03C /* Swift Format */,
-				9F423D4A231753BB006B950F /* Swift Lint */,
+				536878EBEE000490CC5AF0F6 /* [CP] Embed Pods Frameworks */,
+				554BCDEC233C3A2D00710A41 /* Swift Format */,
+				554BCDEB233C3A1700710A41 /* Swift Lint */,
 			);
 			buildRules = (
 			);
@@ -723,9 +713,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55342F892310B6BC00FA141B /* Build configuration list for PBXNativeTarget "iOmicTests" */;
 			buildPhases = (
+				E04C4D1307C23CECC1001441 /* [CP] Check Pods Manifest.lock */,
 				55342F6E2310B6BC00FA141B /* Sources */,
 				55342F6F2310B6BC00FA141B /* Frameworks */,
 				55342F702310B6BC00FA141B /* Resources */,
+				5249D9A0DE30E99D44AE0EB3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -741,9 +733,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55342F8C2310B6BC00FA141B /* Build configuration list for PBXNativeTarget "iOmicUITests" */;
 			buildPhases = (
+				0572CDB064A981D8F530A018 /* [CP] Check Pods Manifest.lock */,
 				55342F792310B6BC00FA141B /* Sources */,
 				55342F7A2310B6BC00FA141B /* Frameworks */,
 				55342F7B2310B6BC00FA141B /* Resources */,
+				CDD38C1F0AC81698CC240CA9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -842,47 +836,85 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		55191F5D2310D4B4007D1454 /* Carthage Copy */ = {
+		0572CDB064A981D8F530A018 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"$(SRCROOT)/Carthage/input.xcfilelist",
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "Carthage Copy";
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"$(SRCROOT)/Carthage/output.xcfilelist",
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iOmic-iOmicUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
-		55191F5E2310D8A9007D1454 /* Carthage Copy [DEBUG] */ = {
+		26FB2877F3955BD17AFDFC1D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"$(SRCROOT)/Carthage/input.debug.xcfilelist",
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "Carthage Copy [DEBUG]";
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"$(SRCROOT)/Carthage/output.debug.xcfilelist",
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iOmic-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n/usr/local/bin/carthage copy-frameworks\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
-		9F423D4A231753BB006B950F /* Swift Lint */ = {
+		5249D9A0DE30E99D44AE0EB3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iOmicTests/Pods-iOmicTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iOmicTests/Pods-iOmicTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iOmicTests/Pods-iOmicTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		536878EBEE000490CC5AF0F6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iOmic/Pods-iOmic-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iOmic/Pods-iOmic-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iOmic/Pods-iOmic-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		554BCDEB233C3A1700710A41 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -898,9 +930,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
-		9FD786FA231F7AE600E1C03C /* Swift Format */ = {
+		554BCDEC233C3A2D00710A41 /* Swift Format */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -916,7 +948,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftformat >/dev/null; then\nswiftformat iOmic/\nelse\necho \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"${SRCROOT}/iOmic/\"\n";
+		};
+		CDD38C1F0AC81698CC240CA9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iOmic-iOmicUITests/Pods-iOmic-iOmicUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iOmic-iOmicUITests/Pods-iOmic-iOmicUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iOmic-iOmicUITests/Pods-iOmic-iOmicUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E04C4D1307C23CECC1001441 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iOmicTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1152,13 +1223,14 @@
 		};
 		55342F872310B6BC00FA141B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 063DF8225738EEF682DE4584 /* Pods-iOmic.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8ZATFQ33TG;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
-				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = iOmic/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1176,13 +1248,14 @@
 		};
 		55342F882310B6BC00FA141B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF291DEE4CA7798E61BC7395 /* Pods-iOmic.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8ZATFQ33TG;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
-				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = iOmic/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1199,8 +1272,9 @@
 		};
 		55342F8A2310B6BC00FA141B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EBDCD9BF1E63881B07344FEA /* Pods-iOmicTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8ZATFQ33TG;
@@ -1220,8 +1294,9 @@
 		};
 		55342F8B2310B6BC00FA141B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A1EC97BD66FD0BAEE404596 /* Pods-iOmicTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8ZATFQ33TG;
@@ -1241,8 +1316,9 @@
 		};
 		55342F8D2310B6BC00FA141B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 67699326613E912CDB80FE1C /* Pods-iOmic-iOmicUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8ZATFQ33TG;
 				INFOPLIST_FILE = iOmicUITests/Info.plist;
@@ -1261,8 +1337,9 @@
 		};
 		55342F8E2310B6BC00FA141B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ECF1AEC78ED9FAF944383152 /* Pods-iOmic-iOmicUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8ZATFQ33TG;
 				INFOPLIST_FILE = iOmicUITests/Info.plist;
