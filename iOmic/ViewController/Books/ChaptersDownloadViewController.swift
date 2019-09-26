@@ -46,19 +46,19 @@ class ChaptersDownloadViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.isToolbarHidden = false
+        setToolbarItems([.flexibleSpace, downloadBarButtonItem, .flexibleSpace], animated: true)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isToolbarHidden = true
+        setToolbarItems([], animated: true)
     }
 
     private func setupView() {
         navigationItem.leftBarButtonItem = allBarButtonItem
         navigationItem.title = "Chapters Download"
         navigationItem.rightBarButtonItem = doneBarButtonItem
-
-        setToolbarItems([.flexibleSpace, downloadBarButtonItem, .flexibleSpace], animated: true)
 
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
         collectionView.allowsMultipleSelection = true
@@ -74,7 +74,6 @@ class ChaptersDownloadViewController: UIViewController {
         allBarButtonItem.rx.tap.subscribe { [weak self] _ in self?.markAllCells() }.disposed(by: bag)
         doneBarButtonItem.rx.tap.subscribe { [weak self] _ in self?.coordinator?.dismiss(animated: true) }.disposed(by: bag)
 
-        collectionView.rx.setDelegate(self).disposed(by: bag)
         collectionView.rx.itemSelected.bind(to: viewModel.selectedIndexPath).disposed(by: bag)
         collectionView.rx.itemDeselected.bind(to: viewModel.deselectedIndexPath).disposed(by: bag)
 

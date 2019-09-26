@@ -466,9 +466,9 @@
 			isa = PBXGroup;
 			children = (
 				5584B0FD2311089F000D9309 /* BooksCoordinator.swift */,
+				9F2F6F692331F74D00E5996A /* ChaptersDownloadCoordinator.swift */,
 				9FFB4B6D2320D3FE00297C12 /* ChaptersCoordinator.swift */,
 				55CB63B52323C980001A6E4D /* PagesCoordinator.swift */,
-				9F2F6F692331F74D00E5996A /* ChaptersDownloadCoordinator.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";

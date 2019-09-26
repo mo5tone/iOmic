@@ -71,9 +71,8 @@ class ChaptersViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.isToolbarHidden = false
-        collectionView.indexPathsForSelectedItems?.forEach {
-            collectionView.deselectItem(at: $0, animated: true)
-        }
+        setToolbarItems([downloadBarButtonItem, .flexibleSpace, favoriteBarButtonItem, .flexibleSpace, toEdgeBarButtonItem], animated: true)
+        collectionView.indexPathsForSelectedItems?.forEach { collectionView.deselectItem(at: $0, animated: true) }
     }
 
     override func viewDidLayoutSubviews() {
@@ -85,6 +84,7 @@ class ChaptersViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isToolbarHidden = true
+        setToolbarItems([], animated: true)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -113,8 +113,6 @@ class ChaptersViewController: UIViewController {
             ])
             return $0
         }(UIView())
-
-        setToolbarItems([downloadBarButtonItem, .flexibleSpace, favoriteBarButtonItem, .flexibleSpace, toEdgeBarButtonItem], animated: true)
 
         collectionView.refreshControl = refreshControl
         collectionView.registerCell(ChapterCollectionViewCell.self)
