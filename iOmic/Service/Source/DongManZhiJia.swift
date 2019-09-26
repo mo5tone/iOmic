@@ -86,12 +86,12 @@ extension DongManZhiJia: SourceProtocol {
             let results = regEx.matches(in: string, range: NSRange(string.startIndex..., in: string))
             guard let result = results.first, result.numberOfRanges > 1, let range = Range(result.range(at: 1), in: string) else { return [] }
             return JSON(parseJSON: String(string[range])).arrayValue.compactMap { json -> Book? in
-                guard let bookId = json["id"].string else { return nil }
+                guard let bookId = json["id"].int else { return nil }
                 var book = Book(source: self, url: "/comic/\(bookId).json")
-                book.title = json["name"].string
-                book.author = json["authors"].string
+                book.title = json["comic_name"].string
+                book.author = json["comic_author"].string
                 book.thumbnailUrl = json["cover"].string?.fixScheme()
-                book.status = Book.Status(string: json["status_tag_id"].string)
+                book.status = json["status"].string?.contains("完") ?? false ? .completed : .ongoing
                 book.summary = json["description"].string
                 return book
             }
