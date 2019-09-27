@@ -1,5 +1,5 @@
 //
-//  ReusableIdentifier.swift
+//  Reusable.swift
 //  iOmic
 //
 //  Created by 门捷夫 on 2019/8/30.
@@ -9,41 +9,41 @@
 import Foundation
 import UIKit
 
-protocol ReusableIdentifier {
+protocol Reusable {
     static var reusableIdentifier: String { get }
 }
 
-extension UICollectionReusableView: ReusableIdentifier {
+extension UICollectionReusableView: Reusable {
     static var reusableIdentifier: String { return String(describing: self) }
 }
 
 extension UICollectionView {
-    func registerCell<Reusable: ReusableIdentifier>(_ reusable: Reusable.Type) {
+    func registerForCell<Reuse>(_ reusable: Reuse.Type) where Reuse: UICollectionViewCell {
         let reusableIdentifier = reusable.reusableIdentifier
         register(UINib(nibName: reusableIdentifier, bundle: nil), forCellWithReuseIdentifier: reusableIdentifier)
     }
 
-    func registerHeaderFooterView<Reusable: ReusableIdentifier>(_ reusable: Reusable.Type, supplementaryViewOfKind: String) {
+    func registerForHeaderFooterView<Reuse>(_ reusable: Reuse.Type, forSupplementaryViewOfKind kind: String) where Reuse: UICollectionReusableView {
         let reusableIdentifier = reusable.reusableIdentifier
-        register(UINib(nibName: reusableIdentifier, bundle: nil), forSupplementaryViewOfKind: supplementaryViewOfKind, withReuseIdentifier: reusableIdentifier)
+        register(UINib(nibName: reusableIdentifier, bundle: nil), forSupplementaryViewOfKind: kind, withReuseIdentifier: reusableIdentifier)
     }
 }
 
-extension UITableViewCell: ReusableIdentifier {
+extension UITableViewCell: Reusable {
     static var reusableIdentifier: String { return String(describing: self) }
 }
 
-extension UITableViewHeaderFooterView: ReusableIdentifier {
+extension UITableViewHeaderFooterView: Reusable {
     static var reusableIdentifier: String { return String(describing: self) }
 }
 
 extension UITableView {
-    func registerCell<Reusable: ReusableIdentifier>(_ reusable: Reusable.Type) {
+    func registerForCell<Reuse>(_ reusable: Reuse.Type) where Reuse: UITableViewCell {
         let reusableIdentifier = reusable.reusableIdentifier
         register(UINib(nibName: reusableIdentifier, bundle: nil), forCellReuseIdentifier: reusableIdentifier)
     }
 
-    func registerHeaderFooterView<Reusable: ReusableIdentifier>(_ reusable: Reusable.Type) {
+    func registerForHeaderFooterView<Reuse>(_ reusable: Reuse.Type) where Reuse: UITableViewHeaderFooterView {
         let reusableIdentifier = reusable.reusableIdentifier
         register(UINib(nibName: reusableIdentifier, bundle: nil), forHeaderFooterViewReuseIdentifier: reusableIdentifier)
     }

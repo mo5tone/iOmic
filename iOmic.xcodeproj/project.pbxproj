@@ -15,7 +15,7 @@
 		55342F772310B6BC00FA141B /* iOmicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55342F762310B6BC00FA141B /* iOmicTests.swift */; };
 		55342F822310B6BC00FA141B /* iOmicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55342F812310B6BC00FA141B /* iOmicUITests.swift */; };
 		55363444232918CD00715628 /* KeyValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55363443232918CD00715628 /* KeyValues.swift */; };
-		555C1CCE2319582900E388D6 /* ReusableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555C1CCD2319582900E388D6 /* ReusableIdentifier.swift */; };
+		555C1CCE2319582900E388D6 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555C1CCD2319582900E388D6 /* Reusable.swift */; };
 		5584B0E42310E6A7000D9309 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0E32310E6A7000D9309 /* AppCoordinator.swift */; };
 		5584B0EB2310EC4F000D9309 /* BooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0E92310EC4F000D9309 /* BooksViewController.swift */; };
 		5584B0EF2310EE29000D9309 /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B0ED2310EE29000D9309 /* DiscoveryViewController.swift */; };
@@ -139,7 +139,7 @@
 		55342F832310B6BC00FA141B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		553634412329187B00715628 /* MMKV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMKV.framework; path = Carthage/Build/iOS/MMKV.framework; sourceTree = "<group>"; };
 		55363443232918CD00715628 /* KeyValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValues.swift; sourceTree = "<group>"; };
-		555C1CCD2319582900E388D6 /* ReusableIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableIdentifier.swift; sourceTree = "<group>"; };
+		555C1CCD2319582900E388D6 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		555C1CD0231A034200E388D6 /* Differentiator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differentiator.framework; path = Carthage/Build/iOS/Differentiator.framework; sourceTree = "<group>"; };
 		555C1CD2231A035C00E388D6 /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
 		5584B0E32310E6A7000D9309 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -408,14 +408,6 @@
 			path = iOmicUITests;
 			sourceTree = "<group>";
 		};
-		555C1CCF2319587600E388D6 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				555C1CCD2319582900E388D6 /* ReusableIdentifier.swift */,
-			);
-			path = Protocol;
-			sourceTree = "<group>";
-		};
 		5584B0E52310EB3D000D9309 /* Books */ = {
 			isa = PBXGroup;
 			children = (
@@ -476,8 +468,8 @@
 		5584B10D23114F3F000D9309 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				555C1CCF2319587600E388D6 /* Protocol */,
 				5584B12D23116206000D9309 /* Extension */,
+				555C1CCD2319582900E388D6 /* Reusable.swift */,
 				9FA947252314FBE90028A60D /* Whoops.swift */,
 			);
 			path = Common;
@@ -1015,7 +1007,7 @@
 				9FD786FF231FA37B00E1C03C /* FilterCollectionViewCell.swift in Sources */,
 				5584B11F23115349000D9309 /* UpDownLoadViewModel.swift in Sources */,
 				55CB63B12323C94C001A6E4D /* PagesViewController.swift in Sources */,
-				555C1CCE2319582900E388D6 /* ReusableIdentifier.swift in Sources */,
+				555C1CCE2319582900E388D6 /* Reusable.swift in Sources */,
 				5584B10C23114E01000D9309 /* BooksViewModel.swift in Sources */,
 				9F2F6F6C2333426100E5996A /* WCDB.Database.swift in Sources */,
 				9F85FAF82330DF400070E3A0 /* Kingfisher.swift in Sources */,

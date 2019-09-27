@@ -62,7 +62,7 @@ class ChaptersDownloadViewController: UIViewController {
 
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
         collectionView.allowsMultipleSelection = true
-        collectionView.registerCell(ChapterCollectionViewCell.self)
+        collectionView.registerForCell(ChapterCollectionViewCell.self)
         collectionView.dataSource = self
         collectionView.delegate = self
     }
