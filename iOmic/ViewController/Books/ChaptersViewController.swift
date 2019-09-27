@@ -83,8 +83,8 @@ class ChaptersViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.isToolbarHidden = true
         setToolbarItems([], animated: true)
+        navigationController?.isToolbarHidden = true
     }
 
     override func viewDidDisappear(_ animated: Bool) {

@@ -51,8 +51,8 @@ class ChaptersDownloadViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.isToolbarHidden = true
         setToolbarItems([], animated: true)
+        navigationController?.isToolbarHidden = true
     }
 
     private func setupView() {
