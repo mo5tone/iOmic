@@ -15,8 +15,8 @@ protocol PageCollectionViewCellDelegate: AnyObject {
 
 /// https://stackoverflow.com/questions/19036228
 class PageCollectionViewCell: UICollectionViewCell {
-    @IBOutlet var scrollView: UIScrollView!
-    @IBOutlet var imageView: UIImageView!
+    @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private var imageView: UIImageView!
     weak var delegate: PageCollectionViewCellDelegate?
     private lazy var singleTapGestureRecognizer: UITapGestureRecognizer = {
         let gestureRecognizer: UITapGestureRecognizer = .init(target: self, action: #selector(onSingleTap(recognizer:)))

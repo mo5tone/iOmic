@@ -23,7 +23,7 @@ class BooksViewController: UIViewController {
     private var viewModel: BooksViewModel
     private lazy var segmentedControl: UISegmentedControl = .init(items: ["Favorite", "History"])
     private lazy var addBarButtonItem: UIBarButtonItem = .init(barButtonSystemItem: .add, target: nil, action: nil)
-    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet private var collectionView: UICollectionView!
     private let dataSource: RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<SourceIdentifier, Book>> = .init(
         configureCell: { _, collectionView, indexPath, book in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.reusableIdentifier, for: indexPath)
@@ -85,6 +85,7 @@ class BooksViewController: UIViewController {
         addBarButtonItem.rx.tap.bind(to: viewModel.add).disposed(by: bag)
 
         segmentedControl.rx.selectedSegmentIndex.bind(to: viewModel.segmentIndex).disposed(by: bag)
+        segmentedControl.rx.selectedSegmentIndex.map { _ in }.bind(to: viewModel.load).disposed(by: bag)
 
         viewModel.books.map { $0.map { .init(model: $0.0, items: $0.1) } }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
         collectionView.rx.prefetchItems.withLatestFrom(viewModel.books) { indexPaths, books in indexPaths.map { books[$0.section].1[$0.item] } }.subscribe(onNext: { [weak self] in self?.prefetchItems($0) }).disposed(by: bag)
@@ -92,8 +93,6 @@ class BooksViewController: UIViewController {
 
         collectionView.rx.setDelegate(self).disposed(by: bag)
         collectionView.rx.itemSelected.withLatestFrom(viewModel.books) { $1[$0.section].1[$0.item] }.subscribe(onNext: { [weak self] in self?.coordinator?.showChapters(in: $0) }).disposed(by: bag)
-        collectionView.rx.willDisplayCell.subscribe(onNext: { [weak self] cell, _ in self?.willDisplayCell(cell) }).disposed(by: bag)
-        collectionView.rx.didEndDisplayingCell.compactMap { $0.cell as? BookCollectionViewCell }.subscribe(onNext: { $0.imageView?.kf.cancelDownloadTask() }).disposed(by: bag)
     }
 
     private func prefetchItems(_ books: [Book]) {
@@ -105,8 +104,12 @@ class BooksViewController: UIViewController {
         guard let source = books.first?.source else { return }
         ImagePrefetcher(resources: books.compactMap { URL(string: $0.thumbnailUrl ?? "") }, options: [.requestModifier(source.modifier)]).stop()
     }
+}
 
-    private func willDisplayCell(_ cell: UICollectionViewCell) {
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension BooksViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt _: IndexPath) {
         cell.contentView.layer.cornerRadius = 8.0
         cell.contentView.layer.borderWidth = 1.0
         cell.contentView.layer.borderColor = UIColor.flat.clear.cgColor
@@ -119,11 +122,12 @@ class BooksViewController: UIViewController {
         cell.layer.masksToBounds = false
         cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
     }
-}
 
-// MARK: - UICollectionViewDelegateFlowLayout
+    func collectionView(_: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt _: IndexPath) {
+        guard let cell = cell as? BookCollectionViewCell else { return }
+        cell.cancelDownloadTask()
+    }
 
-extension BooksViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let numberOfCellsPerRow: CGFloat = 3
         let minimumInteritemSpacing = self.collectionView(collectionView, layout: collectionViewLayout, minimumInteritemSpacingForSectionAt: indexPath.section)

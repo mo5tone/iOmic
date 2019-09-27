@@ -31,14 +31,14 @@ class ChaptersViewController: UIViewController {
     private lazy var toEdgeBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_toolbar_to_edge"), style: .plain, target: nil, action: nil)
     private lazy var favoriteBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_toolbar_favorite_outline"), style: .plain, target: nil, action: nil)
     private lazy var refreshControl: UIRefreshControl = .init()
-    @IBOutlet var collectionView: UICollectionView!
-    @IBOutlet var headerContainerView: UIView!
-    @IBOutlet var coverImageView: UIImageView!
-    @IBOutlet var descriptionTextView: UITextView!
-    @IBOutlet var authorLabel: UILabel!
-    @IBOutlet var statusLabel: UILabel!
-    @IBOutlet var genreLabel: UILabel!
-    @IBOutlet var updateAtLabel: UILabel!
+    @IBOutlet private var collectionView: UICollectionView!
+    @IBOutlet private var headerContainerView: UIView!
+    @IBOutlet private var coverImageView: UIImageView!
+    @IBOutlet private var descriptionTextView: UITextView!
+    @IBOutlet private var authorLabel: UILabel!
+    @IBOutlet private var statusLabel: UILabel!
+    @IBOutlet private var genreLabel: UILabel!
+    @IBOutlet private var updateAtLabel: UILabel!
     private let dataSource: RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<Int, Chapter>> = .init(configureCell: { _, collectionView, indexPath, chapter in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChapterCollectionViewCell.reusableIdentifier, for: indexPath)
         if let cell = cell as? ChapterCollectionViewCell { cell.setup(chapter) }

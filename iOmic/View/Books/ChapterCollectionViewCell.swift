@@ -11,7 +11,7 @@ import UIKit
 class ChapterCollectionViewCell: UICollectionViewCell {
     // MARK: - instance props.
 
-    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet private var titleLabel: UILabel!
 
     override var isSelected: Bool {
         didSet {

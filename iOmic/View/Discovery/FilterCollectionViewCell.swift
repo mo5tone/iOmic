@@ -9,7 +9,7 @@
 import UIKit
 
 class FilterCollectionViewCell: UICollectionViewCell {
-    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet private var nameLabel: UILabel!
 
     override var isSelected: Bool {
         didSet {
@@ -29,5 +29,9 @@ class FilterCollectionViewCell: UICollectionViewCell {
             return $0
         }(UIView())
         nameLabel.font = .preferredFont(forTextStyle: .body)
+    }
+
+    func setup(_ option: (name: String, value: [String])) {
+        nameLabel.text = option.name
     }
 }

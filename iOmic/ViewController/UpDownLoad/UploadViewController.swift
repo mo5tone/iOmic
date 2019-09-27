@@ -21,15 +21,15 @@ class UploadViewController: UIViewController {
     private let bag: DisposeBag = .init()
     private lazy var doneButtonItem: UIBarButtonItem = .init(barButtonSystemItem: .done, target: nil, action: nil)
     private lazy var toggleButtonItem: UIBarButtonItem = .init(title: "Start", style: .plain, target: nil, action: nil)
-    @IBOutlet var portLabel: UILabel!
-    @IBOutlet var portTextField: UITextField!
-    @IBOutlet var authenticationLabel: UILabel!
-    @IBOutlet var authenticationSwitch: UISwitch!
-    @IBOutlet var usernameLabel: UILabel!
-    @IBOutlet var usernameTextField: UITextField!
-    @IBOutlet var passwordLabel: UILabel!
-    @IBOutlet var passwordTextField: UITextField!
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet private var portLabel: UILabel!
+    @IBOutlet private var portTextField: UITextField!
+    @IBOutlet private var authenticationLabel: UILabel!
+    @IBOutlet private var authenticationSwitch: UISwitch!
+    @IBOutlet private var usernameLabel: UILabel!
+    @IBOutlet private var usernameTextField: UITextField!
+    @IBOutlet private var passwordLabel: UILabel!
+    @IBOutlet private var passwordTextField: UITextField!
+    @IBOutlet private var tableView: UITableView!
 
     init(coordinator: UploadViewCoordinator?, viewModel: UploadViewModel) {
         self.coordinator = coordinator

@@ -20,10 +20,10 @@ class PagesViewController: UIViewController {
     private let bag: DisposeBag = .init()
     private weak var coordinator: PagesViewCoordinator?
     private let viewModel: PagesViewModel
-    @IBOutlet var collectionView: UICollectionView!
-    @IBOutlet var slider: UISlider!
-    @IBOutlet var currentIndexLabel: UILabel!
-    @IBOutlet var pagesNumberLabel: UILabel!
+    @IBOutlet private var collectionView: UICollectionView!
+    @IBOutlet private var slider: UISlider!
+    @IBOutlet private var currentIndexLabel: UILabel!
+    @IBOutlet private var pagesNumberLabel: UILabel!
     private lazy var dataSource: RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<Int, Page>> = .init(configureCell: { [weak self] _, collectionView, indexPath, page in
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PageCollectionViewCell.reusableIdentifier, for: indexPath)
         if let cell = cell as? PageCollectionViewCell {

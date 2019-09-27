@@ -9,7 +9,7 @@
 import UIKit
 
 class BookCollectionHeader: UICollectionReusableView {
-    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet private var titleLabel: UILabel!
 
     func setup(identifier: SourceIdentifier) {
         titleLabel.text = identifier.source.name

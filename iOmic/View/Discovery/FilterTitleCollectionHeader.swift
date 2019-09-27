@@ -9,11 +9,15 @@
 import UIKit
 
 class FilterTitleCollectionHeader: UICollectionReusableView {
-    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet private var titleLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         titleLabel.font = .preferredFont(forTextStyle: .headline)
+    }
+
+    func setup(_ filter: FilterProrocol) {
+        titleLabel.text = filter.title
     }
 }

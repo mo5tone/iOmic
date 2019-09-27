@@ -23,7 +23,7 @@ class FiltersViewController: UIViewController {
     private let bag: DisposeBag = .init()
     private lazy var cancelBarButtonItem: UIBarButtonItem = .init(barButtonSystemItem: .cancel, target: nil, action: nil)
     private lazy var doneBarButtonItem: UIBarButtonItem = .init(barButtonSystemItem: .done, target: nil, action: nil)
-    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet private var collectionView: UICollectionView!
 
     // MARK: - private instance methods.
 
@@ -107,7 +107,7 @@ extension FiltersViewController: UICollectionViewDataSource, UICollectionViewDel
         let identifier = FilterTitleCollectionHeader.reusableIdentifier
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: identifier, for: indexPath)
         if let view = view as? FilterTitleCollectionHeader {
-            view.titleLabel.text = viewModel.filters[indexPath.section].title
+            view.setup(viewModel.filters[indexPath.section])
         }
         return view
     }
@@ -116,7 +116,7 @@ extension FiltersViewController: UICollectionViewDataSource, UICollectionViewDel
         let identifier = FilterCollectionViewCell.reusableIdentifier
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
         if let cell = cell as? FilterCollectionViewCell, let filter = viewModel.filters[indexPath.section] as? PickFilter {
-            cell.nameLabel.text = filter.options[indexPath.item].name
+            cell.setup(filter.options[indexPath.item])
         }
         return cell
     }

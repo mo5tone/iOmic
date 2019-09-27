@@ -14,10 +14,10 @@ import UIKit
 class BookCollectionViewCell: UICollectionViewCell {
     // MARK: - Props.
 
-    @IBOutlet var imageView: UIImageView!
-    @IBOutlet var titlteLabel: UILabel!
-    @IBOutlet var authorLabel: UILabel!
-    @IBOutlet var statusLabel: UILabel!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var titlteLabel: UILabel!
+    @IBOutlet private var authorLabel: UILabel!
+    @IBOutlet private var statusLabel: UILabel!
 
     private var processor: ImageProcessor {
         let imageViewsize = imageView.frame.size
@@ -49,5 +49,9 @@ class BookCollectionViewCell: UICollectionViewCell {
         titlteLabel.text = book.title
         authorLabel.text = book.author
         statusLabel.text = book.status.rawValue
+    }
+
+    func cancelDownloadTask() {
+        imageView.kf.cancelDownloadTask()
     }
 }

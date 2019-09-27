@@ -9,8 +9,8 @@
 import UIKit
 
 class ErrorViewController: UIViewController {
-    @IBOutlet var imageView: UIImageView!
-    @IBOutlet var label: UILabel!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var label: UILabel!
     private var error: Error
 
     init(error: Error) {

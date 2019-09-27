@@ -20,7 +20,7 @@ class ChaptersDownloadViewController: UIViewController {
     private lazy var doneBarButtonItem: UIBarButtonItem = .init(barButtonSystemItem: .done, target: nil, action: nil)
     private lazy var allBarButtonItem: UIBarButtonItem = .init(title: "All", style: .plain, target: nil, action: nil)
     private lazy var downloadBarButtonItem: UIBarButtonItem = .init(title: "Download", style: .done, target: nil, action: nil)
-    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet private var collectionView: UICollectionView!
 
     init(coordinator: ChaptersDownloadViewCoordinator?, viewModel: ChaptersDownloadViewModel) {
         self.coordinator = coordinator

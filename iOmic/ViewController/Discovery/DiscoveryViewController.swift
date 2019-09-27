@@ -33,7 +33,7 @@ class DiscoveryViewController: UIViewController {
         }
         return cell
     })
-    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet private var collectionView: UICollectionView!
 
     // MARK: - Private instance methods
 
@@ -78,9 +78,7 @@ class DiscoveryViewController: UIViewController {
 
         collectionView.rx.setDelegate(self).disposed(by: bag)
         collectionView.rx.itemSelected.withLatestFrom(viewModel.books) { $1[$0.item] }.subscribe(onNext: { [weak self] in self?.coordinator?.showChapters(in: $0) }).disposed(by: bag)
-        collectionView.rx.willDisplayCell.subscribe(onNext: { [weak self] cell, _ in self?.willDisplayCell(cell) }).disposed(by: bag)
         collectionView.rx.willDisplayCell.map { $1 }.withLatestFrom(viewModel.books.map { $0.count }) { $0.item == $1 - 1 }.filter { $0 }.map { _ in () }.bind(to: viewModel.loadMore).disposed(by: bag)
-        collectionView.rx.didEndDisplayingCell.compactMap { $0.cell as? BookCollectionViewCell }.subscribe(onNext: { $0.imageView?.kf.cancelDownloadTask() }).disposed(by: bag)
 
         viewModel.books.map { _ in false }.bind(to: refreshControl.rx.isRefreshing).disposed(by: bag)
         viewModel.books.map { [AnimatableSectionModel<Int, Book>(model: 0, items: $0)] }.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
@@ -94,20 +92,6 @@ class DiscoveryViewController: UIViewController {
     private func cancelPrefetchingForItems(_ books: [Book]) {
         guard let source = books.first?.source else { return }
         ImagePrefetcher(resources: books.compactMap { URL(string: $0.thumbnailUrl ?? "") }, options: [.requestModifier(source.modifier)]).stop()
-    }
-
-    private func willDisplayCell(_ cell: UICollectionViewCell) {
-        cell.contentView.layer.cornerRadius = 8.0
-        cell.contentView.layer.borderWidth = 1.0
-        cell.contentView.layer.borderColor = UIColor.flat.clear.cgColor
-        cell.contentView.layer.masksToBounds = true
-
-        cell.layer.shadowColor = UIColor.flat.shadow.cgColor
-        cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
-        cell.layer.shadowRadius = 2.0
-        cell.layer.shadowOpacity = 1.0
-        cell.layer.masksToBounds = false
-        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
     }
 
     // MARK: - Public instance methods
@@ -140,6 +124,25 @@ class DiscoveryViewController: UIViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension DiscoveryViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt _: IndexPath) {
+        cell.contentView.layer.cornerRadius = 8.0
+        cell.contentView.layer.borderWidth = 1.0
+        cell.contentView.layer.borderColor = UIColor.flat.clear.cgColor
+        cell.contentView.layer.masksToBounds = true
+
+        cell.layer.shadowColor = UIColor.flat.shadow.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        cell.layer.shadowRadius = 2.0
+        cell.layer.shadowOpacity = 1.0
+        cell.layer.masksToBounds = false
+        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
+    }
+
+    func collectionView(_: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt _: IndexPath) {
+        guard let cell = cell as? BookCollectionViewCell else { return }
+        cell.cancelDownloadTask()
+    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let numberOfCellsPerRow: CGFloat = 3
         let minimumInteritemSpacing = self.collectionView(collectionView, layout: collectionViewLayout, minimumInteritemSpacingForSectionAt: indexPath.section)
