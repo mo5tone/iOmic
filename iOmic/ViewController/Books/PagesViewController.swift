@@ -74,7 +74,7 @@ class PagesViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isPagingEnabled = true
         (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.scrollDirection = .horizontal
-        collectionView.registerForCell(PageCollectionViewCell.self)
+        collectionView.registerCell(PageCollectionViewCell.self)
 
         slider.minimumValue = 0
         slider.maximumValue = 0

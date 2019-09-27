@@ -35,8 +35,8 @@ class FiltersViewController: UIViewController {
         navigationItem.rightBarButtonItem = doneBarButtonItem
 
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
-        collectionView.registerForHeaderFooterView(FilterTitleCollectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
-        collectionView.registerForCell(FilterCollectionViewCell.self)
+        collectionView.registerSupplementaryView(FilterTitleCollectionHeader.self, of: UICollectionView.elementKindSectionHeader)
+        collectionView.registerCell(FilterCollectionViewCell.self)
         collectionView.allowsMultipleSelection = true
         collectionView.dataSource = self
         collectionView.delegate = self

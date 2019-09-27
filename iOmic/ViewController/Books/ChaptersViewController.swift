@@ -115,7 +115,7 @@ class ChaptersViewController: UIViewController {
         }(UIView())
 
         collectionView.refreshControl = refreshControl
-        collectionView.registerForCell(ChapterCollectionViewCell.self)
+        collectionView.registerCell(ChapterCollectionViewCell.self)
 
         headerContainerView.isOpaque = false
         headerContainerView.backgroundColor = UIColor.flat.background

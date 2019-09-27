@@ -63,6 +63,8 @@
 		9F2F6F6A2331F74D00E5996A /* ChaptersDownloadCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F6F692331F74D00E5996A /* ChaptersDownloadCoordinator.swift */; };
 		9F2F6F6C2333426100E5996A /* WCDB.Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F6F6B2333426100E5996A /* WCDB.Database.swift */; };
 		9F423D492316834E006B950F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F423D482316834E006B950F /* Date.swift */; };
+		9F811D64233E019F00F5925F /* UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F811D63233E019F00F5925F /* UICollectionView.swift */; };
+		9F811D66233E01DD00F5925F /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F811D65233E01DD00F5925F /* UITableView.swift */; };
 		9F82EA452329DC85003E465E /* BookCollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F82EA432329DC85003E465E /* BookCollectionHeader.swift */; };
 		9F82EA462329DC85003E465E /* BookCollectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F82EA442329DC85003E465E /* BookCollectionHeader.xib */; };
 		9F82EA482329FFD6003E465E /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F82EA472329FFD6003E465E /* ViewModel.swift */; };
@@ -203,6 +205,8 @@
 		9F4058C32328929A00AA1309 /* SkeletonView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SkeletonView.framework; path = Carthage/Build/iOS/SkeletonView.framework; sourceTree = "<group>"; };
 		9F423D482316834E006B950F /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		9F423D4B23175B35006B950F /* iOmic-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOmic-Bridging-Header.h"; sourceTree = "<group>"; };
+		9F811D63233E019F00F5925F /* UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionView.swift; sourceTree = "<group>"; };
+		9F811D65233E01DD00F5925F /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		9F82EA432329DC85003E465E /* BookCollectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionHeader.swift; sourceTree = "<group>"; };
 		9F82EA442329DC85003E465E /* BookCollectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BookCollectionHeader.xib; sourceTree = "<group>"; };
 		9F82EA472329FFD6003E465E /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
@@ -623,6 +627,8 @@
 				9FA8DEFC23306EF60003E278 /* UIBarButtonItem.swift */,
 				9F955C0523308C820015069E /* UIView.swift */,
 				9F955C0723309BBD0015069E /* UILabel.swift */,
+				9F811D63233E019F00F5925F /* UICollectionView.swift */,
+				9F811D65233E01DD00F5925F /* UITableView.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -1042,6 +1048,7 @@
 				9F82EA4B232A3737003E465E /* ErrorViewController.swift in Sources */,
 				55E4AC9E233112D6002B42A9 /* Downloader.swift in Sources */,
 				9F423D492316834E006B950F /* Date.swift in Sources */,
+				9F811D64233E019F00F5925F /* UICollectionView.swift in Sources */,
 				9F2F6F642331F66F00E5996A /* ChaptersDownloadViewModel.swift in Sources */,
 				9FA947242314F4E80028A60D /* Alamofire.swift in Sources */,
 				9FFB4B6C2320D3D100297C12 /* ChaptersViewModel.swift in Sources */,
@@ -1049,6 +1056,7 @@
 				5584B126231153FB000D9309 /* DiscoveryCoordinator.swift in Sources */,
 				55CB63B92323DB8E001A6E4D /* PageCollectionViewCell.swift in Sources */,
 				5584B0EB2310EC4F000D9309 /* BooksViewController.swift in Sources */,
+				9F811D66233E01DD00F5925F /* UITableView.swift in Sources */,
 				55CB63B42323C95F001A6E4D /* PagesViewModel.swift in Sources */,
 				55363444232918CD00715628 /* KeyValues.swift in Sources */,
 			);

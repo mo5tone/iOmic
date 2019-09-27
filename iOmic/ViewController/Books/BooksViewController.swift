@@ -75,8 +75,8 @@ class BooksViewController: UIViewController {
         navigationItem.titleView = segmentedControl
 
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
-        collectionView.registerForHeaderFooterView(BookCollectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
-        collectionView.registerForCell(BookCollectionViewCell.self)
+        collectionView.registerSupplementaryView(BookCollectionHeader.self, of: UICollectionView.elementKindSectionHeader)
+        collectionView.registerCell(BookCollectionViewCell.self)
     }
 
     private func setupBinding() {

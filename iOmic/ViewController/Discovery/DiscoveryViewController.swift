@@ -48,7 +48,7 @@ class DiscoveryViewController: UIViewController {
 
         collectionView.refreshControl = refreshControl
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
-        collectionView.registerForCell(BookCollectionViewCell.self)
+        collectionView.registerCell(BookCollectionViewCell.self)
     }
 
     private func setupBinding() {
