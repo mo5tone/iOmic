@@ -16,6 +16,8 @@ class BooksViewController: UIViewController, BooksViewProtocol {
 
     @IBOutlet private var collectionView: UICollectionView!
     var presenter: BooksViewOutputProtocol!
+    private lazy var addBarButtonItem: UIBarButtonItem = .init(barButtonSystemItem: .add, target: nil, action: nil)
+    private lazy var segmentedControl: UISegmentedControl = .init(items: ["Favorite", "History"])
     private var books: [ArraySection<Source, Book>] = []
 
     // MARK: - Overrides
@@ -37,6 +39,10 @@ class BooksViewController: UIViewController, BooksViewProtocol {
     }
 
     private func setupView() {
+        navigationItem.title = "Books"
+        navigationItem.leftBarButtonItem = addBarButtonItem
+        navigationItem.titleView = segmentedControl
+
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
         collectionView.registerCell(BookCollectionViewCell.self)
         collectionView.registerSupplementaryView(BookCollectionHeader.self, of: UICollectionView.elementKindSectionHeader)
@@ -45,6 +51,8 @@ class BooksViewController: UIViewController, BooksViewProtocol {
         collectionView.delegate = self
     }
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension BooksViewController: UICollectionViewDataSource {
     func numberOfSections(in _: UICollectionView) -> Int {
@@ -71,6 +79,8 @@ extension BooksViewController: UICollectionViewDataSource {
         return reusableView
     }
 }
+
+// MARK: - UICollectionViewDataSourcePrefetching
 
 extension BooksViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {

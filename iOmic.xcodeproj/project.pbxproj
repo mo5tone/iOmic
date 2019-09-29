@@ -20,6 +20,13 @@
 		5584B13223116849000D9309 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B13123116849000D9309 /* Source.swift */; };
 		559302A82312CE750021C170 /* DongManZhiJia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A72312CE750021C170 /* DongManZhiJia.swift */; };
 		559302AA2312CF180021C170 /* ManHuaRen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A92312CF180021C170 /* ManHuaRen.swift */; };
+		55BBC2F12340EE6F006B9746 /* SourcesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BBC2EC2340EE6F006B9746 /* SourcesPresenter.swift */; };
+		55BBC2F22340EE6F006B9746 /* SourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BBC2ED2340EE6F006B9746 /* SourcesViewController.swift */; };
+		55BBC2F32340EE6F006B9746 /* SourcesProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BBC2EE2340EE6F006B9746 /* SourcesProtocols.swift */; };
+		55BBC2F42340EE6F006B9746 /* SourcesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BBC2EF2340EE6F006B9746 /* SourcesInteractor.swift */; };
+		55BBC2F52340EE6F006B9746 /* SourcesWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BBC2F02340EE6F006B9746 /* SourcesWireframe.swift */; };
+		55BBC2F82340EF23006B9746 /* SourceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BBC2F62340EF23006B9746 /* SourceTableViewCell.swift */; };
+		55BBC2F92340EF23006B9746 /* SourceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BBC2F72340EF23006B9746 /* SourceTableViewCell.xib */; };
 		55BEAA9823124EF700A6A41D /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BEAA9723124EF700A6A41D /* Book.swift */; };
 		55BEAA9A23124EFF00A6A41D /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BEAA9923124EFF00A6A41D /* Chapter.swift */; };
 		55BEAA9C23124F0600A6A41D /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BEAA9B23124F0600A6A41D /* Page.swift */; };
@@ -137,6 +144,13 @@
 		559302A92312CF180021C170 /* ManHuaRen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManHuaRen.swift; sourceTree = "<group>"; };
 		55B19F70231AB3A500CFBB02 /* QuickLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLayout.framework; path = Carthage/Build/iOS/QuickLayout.framework; sourceTree = "<group>"; };
 		55B19F72231AB3B600CFBB02 /* SwiftEntryKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftEntryKit.framework; path = Carthage/Build/iOS/SwiftEntryKit.framework; sourceTree = "<group>"; };
+		55BBC2EC2340EE6F006B9746 /* SourcesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesPresenter.swift; sourceTree = "<group>"; };
+		55BBC2ED2340EE6F006B9746 /* SourcesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesViewController.swift; sourceTree = "<group>"; };
+		55BBC2EE2340EE6F006B9746 /* SourcesProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesProtocols.swift; sourceTree = "<group>"; };
+		55BBC2EF2340EE6F006B9746 /* SourcesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesInteractor.swift; sourceTree = "<group>"; };
+		55BBC2F02340EE6F006B9746 /* SourcesWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesWireframe.swift; sourceTree = "<group>"; };
+		55BBC2F62340EF23006B9746 /* SourceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceTableViewCell.swift; sourceTree = "<group>"; };
+		55BBC2F72340EF23006B9746 /* SourceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SourceTableViewCell.xib; sourceTree = "<group>"; };
 		55BEAA9723124EF700A6A41D /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		55BEAA9923124EFF00A6A41D /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		55BEAA9B23124F0600A6A41D /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
@@ -424,6 +438,7 @@
 				9F303C4A2340A066000848F1 /* DiscoveryPresenter.swift */,
 				9F303C582340A3FD000848F1 /* FilesPresenter.swift */,
 				9F303C622340A48C000848F1 /* SettingsPresenter.swift */,
+				55BBC2EC2340EE6F006B9746 /* SourcesPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -436,6 +451,7 @@
 				9F303C4D2340A066000848F1 /* DiscoveryInteractor.swift */,
 				9F303C5B2340A3FD000848F1 /* FilesInteractor.swift */,
 				9F303C652340A48C000848F1 /* SettingsInteractor.swift */,
+				55BBC2EF2340EE6F006B9746 /* SourcesInteractor.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -448,6 +464,7 @@
 				9F303C4C2340A066000848F1 /* DiscoveryProtocols.swift */,
 				9F303C5A2340A3FD000848F1 /* FilesProtocols.swift */,
 				9F303C642340A48C000848F1 /* SettingsProtocols.swift */,
+				55BBC2EE2340EE6F006B9746 /* SourcesProtocols.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -502,6 +519,7 @@
 				9F303C4E2340A066000848F1 /* DiscoveryWireframe.swift */,
 				9F303C5C2340A3FD000848F1 /* FilesWireframe.swift */,
 				9F303C662340A48C000848F1 /* SettingsWireframe.swift */,
+				55BBC2F02340EE6F006B9746 /* SourcesWireframe.swift */,
 			);
 			path = Wireframe;
 			sourceTree = "<group>";
@@ -514,6 +532,7 @@
 				9F303C4B2340A066000848F1 /* DiscoveryViewController.swift */,
 				9F303C592340A3FD000848F1 /* FilesViewController.swift */,
 				9F303C632340A48C000848F1 /* SettingsViewController.swift */,
+				55BBC2ED2340EE6F006B9746 /* SourcesViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -537,6 +556,8 @@
 				9FFB4B78232100A500297C12 /* ChapterCollectionViewCell.xib */,
 				55CB63B72323DB8E001A6E4D /* PageCollectionViewCell.swift */,
 				55CB63B82323DB8E001A6E4D /* PageCollectionViewCell.xib */,
+				55BBC2F62340EF23006B9746 /* SourceTableViewCell.swift */,
+				55BBC2F72340EF23006B9746 /* SourceTableViewCell.xib */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -660,6 +681,7 @@
 				9F93FEFC23409338007D6F21 /* Books.storyboard in Resources */,
 				9F303C552340A0A0000848F1 /* Discovery.storyboard in Resources */,
 				55342F6C2310B6BC00FA141B /* LaunchScreen.storyboard in Resources */,
+				55BBC2F92340EF23006B9746 /* SourceTableViewCell.xib in Resources */,
 				55342F692310B6BC00FA141B /* Assets.xcassets in Resources */,
 				55CB63BA2323DB8E001A6E4D /* PageCollectionViewCell.xib in Resources */,
 				9F8418FE2317B35300A503BE /* BookCollectionViewCell.xib in Resources */,
@@ -858,10 +880,13 @@
 				9F303C512340A066000848F1 /* DiscoveryProtocols.swift in Sources */,
 				9F955C0623308C820015069E /* UIView.swift in Sources */,
 				9F303C602340A3FD000848F1 /* FilesInteractor.swift in Sources */,
+				55BBC2F82340EF23006B9746 /* SourceTableViewCell.swift in Sources */,
 				9FE16855234070C200D85E7A /* TabBarWireframe.swift in Sources */,
 				9FE16851234070C200D85E7A /* TabBarPresenter.swift in Sources */,
 				555C1CCE2319582900E388D6 /* Reusable.swift in Sources */,
 				9F2F6F6C2333426100E5996A /* WCDB.Database.swift in Sources */,
+				55BBC2F42340EE6F006B9746 /* SourcesInteractor.swift in Sources */,
+				55BBC2F52340EE6F006B9746 /* SourcesWireframe.swift in Sources */,
 				9F303C5F2340A3FD000848F1 /* FilesProtocols.swift in Sources */,
 				9F85FAF82330DF400070E3A0 /* Kingfisher.swift in Sources */,
 				9F93FEF9234092FE007D6F21 /* BooksInteractor.swift in Sources */,
@@ -874,6 +899,7 @@
 				9F303C5E2340A3FD000848F1 /* FilesViewController.swift in Sources */,
 				9F303C5D2340A3FD000848F1 /* FilesPresenter.swift in Sources */,
 				55BEAA9C23124F0600A6A41D /* Page.swift in Sources */,
+				55BBC2F32340EE6F006B9746 /* SourcesProtocols.swift in Sources */,
 				55BEAA9A23124EFF00A6A41D /* Chapter.swift in Sources */,
 				9F303C4F2340A066000848F1 /* DiscoveryPresenter.swift in Sources */,
 				55BEAA9823124EF700A6A41D /* Book.swift in Sources */,
@@ -897,8 +923,10 @@
 				9FE16852234070C200D85E7A /* TabBarViewController.swift in Sources */,
 				55CB63B92323DB8E001A6E4D /* PageCollectionViewCell.swift in Sources */,
 				5584B0EB2310EC4F000D9309 /* BooksViewController.swift in Sources */,
+				55BBC2F12340EE6F006B9746 /* SourcesPresenter.swift in Sources */,
 				9F811D66233E01DD00F5925F /* UITableView.swift in Sources */,
 				55363444232918CD00715628 /* KeyValues.swift in Sources */,
+				55BBC2F22340EE6F006B9746 /* SourcesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

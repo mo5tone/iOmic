@@ -16,6 +16,7 @@ import WCDBSwift
 protocol SourceProtocol {
     var name: String { get }
     var imageDownloadRequestModifier: ImageDownloadRequestModifier { get }
+    var available: Bool { get set }
 
     func fetchBooks(where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort) -> Single<[Book]>
     func fetchBook(where book: Book) -> Single<Book>
@@ -60,8 +61,8 @@ extension Source: SourceProtocol {
     var name: String { return instance.name }
     var imageDownloadRequestModifier: ImageDownloadRequestModifier { return instance.imageDownloadRequestModifier }
     var available: Bool {
-        set { KeyValues.shared.set(souce: self, available: newValue) }
         get { return KeyValues.shared.isAvailable(self) }
+        set { KeyValues.shared.set(souce: self, available: newValue) }
     }
 
     func fetchBooks(where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort) -> Single<[Book]> { return instance.fetchBooks(where: page, query: query, sortedBy: fetchingSort) }
