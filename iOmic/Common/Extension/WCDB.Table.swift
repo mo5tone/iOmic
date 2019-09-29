@@ -18,7 +18,6 @@ extension Table {
         fileprivate init(_ base: Table<Root>) { self.base = base }
     }
 
-    // keep same with RxSwift namespace
     // swiftlint:disable:next identifier_name
     var rx: Reactive<Root> { return Reactive(self) }
 }

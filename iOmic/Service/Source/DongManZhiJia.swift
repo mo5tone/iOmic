@@ -13,21 +13,19 @@ import RxSwift
 import SwiftyJSON
 
 class DongManZhiJia {
-    // MARK: - Types
+    // MARK: - Static properties
 
-    fileprivate enum Router {
-        case books(Int, String, [FilterProrocol])
-        case chapters(Book)
-        case pages(Chapter)
+    static let shared: DongManZhiJia = .init(source: .dongmanzhijia)
+
+    // MARK: - Instance properties
+
+    let source: Source
+
+    // MARK: - Init
+
+    private init(source: Source) {
+        self.source = source
     }
-
-    // MARK: - Static
-
-    static let shared = DongManZhiJia()
-
-    // MARK: - Private
-
-    private init() {}
 }
 
 extension Book.Status {
@@ -46,21 +44,14 @@ extension Book.Status {
 // MARK: - SourceProtocol
 
 extension DongManZhiJia: SourceProtocol {
-    var identifier: SourceIdentifier { return .dongmanzhijia }
-
     var name: String { return "动漫之家" }
 
-    var filters: [FilterProrocol] {
-        return [
-            DongManZhiJia.SortFilter(title: "排序", options: [("人气", "0"), ("更新", "1")]),
-            DongManZhiJia.GenreFilter(title: "分类", options: [("全部", ""), ("冒险", "4"), ("百合", "3243"), ("生活", "3242"), ("四格", "17"), ("伪娘", "3244"), ("悬疑", "3245"), ("后宫", "3249"), ("热血", "3248"), ("耽美", "3246"), ("其他", "16"), ("恐怖", "14"), ("科幻", "7"), ("格斗", "6"), ("欢乐向", "5"), ("爱情", "8"), ("侦探", "9"), ("校园", "13"), ("神鬼", "12"), ("魔法", "11"), ("竞技", "10"), ("历史", "3250"), ("战争", "3251"), ("魔幻", "5806"), ("扶她", "5345"), ("东方", "5077"), ("奇幻", "5848"), ("轻小说", "6316"), ("仙侠", "7900"), ("搞笑", "7568"), ("颜艺", "6437"), ("性转换", "4518"), ("高清单行", "4459"), ("治愈", "3254"), ("宅系", "3253"), ("萌系", "3252"), ("励志", "3255"), ("节操", "6219"), ("职场", "3328"), ("西方魔幻", "3365"), ("音乐舞蹈", "3326"), ("机战", "3325")]),
-            DongManZhiJia.StatusFilter(title: "连载", options: [("全部", ""), ("连载", "2309"), ("完结", "2310")]),
-            DongManZhiJia.TypeFilter(title: "地区", options: [("全部", ""), ("日本", "2304"), ("韩国", "2305"), ("欧美", "2306"), ("港台", "2307"), ("内地", "2308"), ("其他", "8453")]),
-            DongManZhiJia.ReaderFilter(title: "读者", options: [("全部", ""), ("少年", "3262"), ("少女", "3263"), ("青年", "3264")]),
-        ]
+    var available: Bool {
+        set { KeyValues.shared.set(souce: source, available: newValue) }
+        get { return KeyValues.shared.isAvailable(source) }
     }
 
-    var modifier: AnyModifier {
+    var imageDownloadRequestModifier: ImageDownloadRequestModifier {
         return AnyModifier { request -> URLRequest? in
             var req = request
             req.addValue("http://www.dmzj.com/", forHTTPHeaderField: "Referer")
@@ -68,11 +59,11 @@ extension DongManZhiJia: SourceProtocol {
         }
     }
 
-    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Single<[Book]> {
+    func fetchBooks(where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort) -> Single<[Book]> {
         func jsonParser(json: JSON) -> [Book] {
             return json.arrayValue.compactMap { json -> Book? in
                 guard let bookId = json["id"].int else { return nil }
-                var book = Book(source: self, url: "/comic/\(bookId).json")
+                var book = Book(source: source, url: "/comic/\(bookId).json")
                 book.title = json["title"].string
                 book.author = json["authors"].string
                 book.thumbnailUrl = json["cover"].string?.fixScheme()
@@ -87,7 +78,7 @@ extension DongManZhiJia: SourceProtocol {
             guard let result = results.first, result.numberOfRanges > 1, let range = Range(result.range(at: 1), in: string) else { return [] }
             return JSON(parseJSON: String(string[range])).arrayValue.compactMap { json -> Book? in
                 guard let bookId = json["id"].int else { return nil }
-                var book = Book(source: self, url: "/comic/\(bookId).json")
+                var book = Book(source: source, url: "/comic/\(bookId).json")
                 book.title = json["comic_name"].string
                 book.author = json["comic_author"].string
                 book.thumbnailUrl = json["cover"].string?.fixScheme()
@@ -96,12 +87,11 @@ extension DongManZhiJia: SourceProtocol {
                 return book
             }
         }
-        let convertible = Router.books(page, query, filters)
-        return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
+        let convertible = Router.books(page, query, fetchingSort)
+        return AF.request(convertible, interceptor: convertible.interceptor).validate().responseData()
             .map { response -> [Book] in
                 switch response.result {
                 case let .success(data):
-                    guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     if query.isEmpty {
                         return jsonParser(json: try JSON(data: data))
                     } else if let string = String(data: data, encoding: .utf8) {
@@ -115,13 +105,14 @@ extension DongManZhiJia: SourceProtocol {
             }
     }
 
-    func fetchChapters(book: Book) -> Single<[Chapter]> {
+    func fetchBook(where _: Book) -> Single<Book> { return Single.error(Whoops.nilWeakSelf) }
+
+    func fetchChapters(where book: Book) -> Single<[Chapter]> {
         let convertible = Router.chapters(book)
-        return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
+        return AF.request(convertible, interceptor: convertible.interceptor).validate().responseData()
             .map { response -> [Chapter] in
                 switch response.result {
                 case let .success(data):
-                    guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     let json = try JSON(data: data)
                     var book = book
                     book.title = json["title"].string
@@ -151,13 +142,12 @@ extension DongManZhiJia: SourceProtocol {
             }
     }
 
-    func fetchPages(chapter: Chapter) -> Single<[Page]> {
+    func fetchPages(where chapter: Chapter) -> Single<[Page]> {
         let convertible = Router.pages(chapter)
-        return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
+        return AF.request(convertible, interceptor: convertible.interceptor).validate().responseData()
             .map { response -> [Page] in
                 switch response.result {
                 case let .success(data):
-                    guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     let json = try JSON(data: data)
                     var pages = [Page]()
                     json["page_url"].arrayValue.enumerated().forEach { offset, element in
@@ -173,87 +163,61 @@ extension DongManZhiJia: SourceProtocol {
     }
 }
 
-// MARK: - RequestConvertible
+private extension DongManZhiJia {
+    enum Router: RequestConvertible {
+        case books(Int, String, Source.FetchingSort)
+        case book(Book)
+        case chapters(Book)
+        case pages(Chapter)
 
-extension DongManZhiJia.Router: RequestConvertible {
-    var baseURLString: URLConvertible {
-        if case let .books(_, query, _) = self, !query.isEmpty {
-            return "http://s.acg.dmzj.com/comicsum/search.php"
-        }
-        return "http://v2.api.dmzj.com"
-    }
+        // MARK: - RequestConvertible
 
-    var path: String {
-        switch self {
-        case let .books(page, query, filters):
-            var types = filters.filter { !($0 is DongManZhiJia.SortFilter) }
-                .compactMap { $0 as? SinglePickFilter }
-                .compactMap { $0.value[0].isEmpty ? nil : $0.value[0] }
-                .joined(separator: "-")
-            if types.isEmpty { types = "0" }
-            var order = filters.compactMap { $0 as? DongManZhiJia.SortFilter }
-                .compactMap { $0.value[0].isEmpty ? nil : $0.value[0] }
-                .joined()
-            if order.isEmpty { order = "0" }
-            if query.isEmpty {
-                return "/classify/\(types)/\(order)/\(page).json"
-            } else {
-                return ""
+        var baseURLString: URLConvertible {
+            if case let .books(_, query, _) = self, !query.isEmpty {
+                return "http://s.acg.dmzj.com/comicsum/search.php"
             }
-        case let .chapters(book):
-            return URLComponents(string: book.url)?.path ?? book.url
-        case let .pages(chapter):
-            return chapter.url
+            return "http://v2.api.dmzj.com"
         }
-    }
 
-    var headers: HTTPHeaders {
-        var headers = HTTPHeaders()
-        headers.add(name: "Referer", value: "http://www.dmzj.com/")
-        headers.add(name: "User-Agent", value: ["Mozilla/5.0 (X11; Linux x86_64)", "AppleWebKit/537.36 (KHTML, like Gecko)", "Chrome/56.0.2924.87", "Safari/537.36", "iOmic/1.0"].joined(separator: " "))
-        return headers
-    }
+        var method: HTTPMethod { return .get }
 
-    var method: HTTPMethod { return .get }
-
-    var parameters: Parameters {
-        var parameters: Parameters = [:]
-        switch self {
-        case let .books(_, query, _):
-            parameters["s"] = query
-        case let .chapters(book):
-            URLComponents(string: book.url)?.queryItems?.forEach { parameters[$0.name] = $0.value }
-        case .pages:
-            break
+        var path: String {
+            switch self {
+            case let .books(page, query, fetchingSort):
+                if query.isEmpty {
+                    return "/classify/0/\(fetchingSort == .popularity ? "0" : "1")/\(page).json"
+                } else {
+                    return ""
+                }
+            case let .book(book), let .chapters(book):
+                return URLComponents(string: book.url)?.path ?? book.url
+            case let .pages(chapter):
+                return chapter.url
+            }
         }
-        return parameters
-    }
 
-    var parameterEncoding: ParameterEncoding { return URLEncoding.default }
+        var headers: HTTPHeaders {
+            var headers = HTTPHeaders()
+            headers.add(name: "Referer", value: "http://www.dmzj.com/")
+            headers.add(name: "User-Agent", value: ["Mozilla/5.0 (X11; Linux x86_64)", "AppleWebKit/537.36 (KHTML, like Gecko)", "Chrome/56.0.2924.87", "Safari/537.36", "iOmic/1.0"].joined(separator: " "))
+            return headers
+        }
 
-    var interceptor: RequestInterceptor? { return nil }
-}
+        var parameterEncoding: ParameterEncoding { return URLEncoding.default }
 
-// MARK: - Filters
+        var parameters: Parameters {
+            var parameters: Parameters = [:]
+            switch self {
+            case let .books(_, query, _):
+                parameters["s"] = query
+            case let .book(book), let .chapters(book):
+                URLComponents(string: book.url)?.queryItems?.forEach { parameters[$0.name] = $0.value }
+            case .pages:
+                break
+            }
+            return parameters
+        }
 
-extension DongManZhiJia {
-    class GenreFilter: SinglePickFilter {
-        var parameter: String { return value[0] }
-    }
-
-    class StatusFilter: SinglePickFilter {
-        var parameter: String { return value[0] }
-    }
-
-    class TypeFilter: SinglePickFilter {
-        var parameter: String { return value[0] }
-    }
-
-    class SortFilter: SinglePickFilter {
-        var parameter: String { return value[0] }
-    }
-
-    class ReaderFilter: SinglePickFilter {
-        var parameter: String { return value[0] }
+        var interceptor: RequestInterceptor? { return nil }
     }
 }

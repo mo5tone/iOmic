@@ -8,6 +8,8 @@ target 'iOmic' do
   inhibit_all_warnings!
 
   # Pods for iOmic
+  pod 'XCGLogger'
+
   pod 'Alamofire', '~> 5.0.0-rc.2'
   pod 'Kingfisher'
   pod "GCDWebServer/WebUploader"
@@ -22,7 +24,6 @@ target 'iOmic' do
 
   pod 'RxSwift'
   pod 'RxCocoa'
-  pod 'RxDataSources'
 
   pod 'IQKeyboardManagerSwift'
   pod 'SwipeCellKit'

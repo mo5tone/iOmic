@@ -12,11 +12,11 @@ import RxSwift
 
 protocol RequestConvertible: URLRequestConvertible {
     var baseURLString: URLConvertible { get }
+    var method: HTTPMethod { get }
     var path: String { get }
     var headers: HTTPHeaders { get }
-    var method: HTTPMethod { get }
-    var parameters: Parameters { get }
     var parameterEncoding: ParameterEncoding { get }
+    var parameters: Parameters { get }
     var interceptor: RequestInterceptor? { get }
 //    var validation: DataRequest.Validation { get }
 }

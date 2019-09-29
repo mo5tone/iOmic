@@ -15,11 +15,11 @@ class KeyValues {
 
     private init() {}
 
-    func set(souce: SourceProtocol, available: Bool) {
-        mmkv.set(available, forKey: souce.identifier.rawValue)
+    func set(souce: Source, available: Bool) {
+        mmkv.set(available, forKey: souce.rawValue)
     }
 
-    func isAvailable(_ souce: SourceProtocol) -> Bool {
-        return mmkv.bool(forKey: souce.identifier.rawValue, defaultValue: true)
+    func isAvailable(_ souce: Source) -> Bool {
+        return mmkv.bool(forKey: souce.rawValue, defaultValue: true)
     }
 }

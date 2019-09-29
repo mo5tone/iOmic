@@ -13,47 +13,19 @@ import RxSwift
 import SwiftyJSON
 
 class ManHuaRen {
-    // MARK: - Types
+    // MARK: - Static properties
 
-    fileprivate enum Router {
-        case books(Int, String, [FilterProrocol])
-        case chapters(Book)
-        case pages(Chapter)
+    static let shared: ManHuaRen = .init(source: .manhuaren)
+
+    // MARK: - Instance properties
+
+    let source: Source
+
+    // MARK: - Init
+
+    private init(source: Source) {
+        self.source = source
     }
-
-    fileprivate class Interceptor: RequestInterceptor {
-        func adapt(_ urlRequest: URLRequest, for _: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
-            let request = urlRequest
-            if let url = request.url, let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
-                let cipher = "4e0a48e1c0b54041bce9c8f0e036124d"
-                var key = cipher + "GET"
-                let queryItems = components.queryItems ?? []
-                queryItems.filter { $0.name != "gsn" }.sorted(by: { $0.name < $1.name }).forEach {
-                    guard let value = $0.value?.addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed) else { return }
-                    key += $0.name
-                    key += value
-                }
-                key += cipher
-                do {
-                    completion(.success(try URLEncoding.default.encode(request, with: ["gsn": key.md5String()])))
-                } catch let error as AFError {
-                    completion(.failure(error))
-                } catch {
-                    completion(.success(request))
-                }
-            } else {
-                completion(.success(request))
-            }
-        }
-    }
-
-    // MARK: - Static
-
-    static let shared = ManHuaRen()
-
-    // MARK: - Private
-
-    private init() {}
 }
 
 extension Book.Status {
@@ -69,21 +41,45 @@ extension Book.Status {
     }
 }
 
+// MARK: - RequestInterceptor
+
+extension ManHuaRen: RequestInterceptor {
+    private func adapt(_ urlRequest: URLRequest, for _: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
+        let request = urlRequest
+        if let url = request.url, let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+            let cipher = "4e0a48e1c0b54041bce9c8f0e036124d"
+            var key = cipher + "GET"
+            let queryItems = components.queryItems ?? []
+            queryItems.filter { $0.name != "gsn" }.sorted(by: { $0.name < $1.name }).forEach {
+                guard let value = $0.value?.addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed) else { return }
+                key += $0.name
+                key += value
+            }
+            key += cipher
+            do {
+                completion(.success(try URLEncoding.default.encode(request, with: ["gsn": key.md5String()])))
+            } catch let error as AFError {
+                completion(.failure(error))
+            } catch {
+                completion(.success(request))
+            }
+        } else {
+            completion(.success(request))
+        }
+    }
+}
+
 // MARK: - SourceProtocol
 
 extension ManHuaRen: SourceProtocol {
-    var identifier: SourceIdentifier { return .manhuaren }
-
     var name: String { return "漫画人" }
 
-    var filters: [FilterProrocol] {
-        return [
-            ManHuaRen.SortFilter(title: "状态", options: [("热门", "0"), ("更新", "1"), ("新作", "2"), ("完结", "3")]),
-            ManHuaRen.CategoryFilter(title: "分类", options: [("全部", ["0", "0"]), ("热血", ["0", "31"]), ("恋爱", ["0", "26"]), ("校园", ["0", "1"]), ("百合", ["0", "3"]), ("耽美", ["0", "27"]), ("伪娘", ["0", "5"]), ("冒险", ["0", "2"]), ("职场", ["0", "6"]), ("后宫", ["0", "8"]), ("治愈", ["0", "9"]), ("科幻", ["0", "25"]), ("励志", ["0", "10"]), ("生活", ["0", "11"]), ("战争", ["0", "12"]), ("悬疑", ["0", "17"]), ("推理", ["0", "33"]), ("搞笑", ["0", "37"]), ("奇幻", ["0", "14"]), ("魔法", ["0", "15"]), ("恐怖", ["0", "29"]), ("神鬼", ["0", "20"]), ("萌系", ["0", "21"]), ("历史", ["0", "4"]), ("美食", ["0", "7"]), ("同人", ["0", "30"]), ("运动", ["0", "34"]), ("绅士", ["0", "36"]), ("机甲", ["0", "40"]), ("限制级", ["0", "61"]), ("少年向", ["1", "1"]), ("少女向", ["1", "2"]), ("青年向", ["1", "3"]), ("港台", ["2", "35"]), ("日韩", ["2", "36"]), ("大陆", ["2", "37"]), ("欧美", ["2", "52"])]),
-        ]
+    var available: Bool {
+        set { KeyValues.shared.set(souce: source, available: newValue) }
+        get { return KeyValues.shared.isAvailable(source) }
     }
 
-    var modifier: AnyModifier {
+    var imageDownloadRequestModifier: ImageDownloadRequestModifier {
         return AnyModifier { request -> URLRequest? in
             var req = request
             req.addValue(#"{"le": "zh"}"#, forHTTPHeaderField: "X-Yq-Yqci")
@@ -93,8 +89,8 @@ extension ManHuaRen: SourceProtocol {
         }
     }
 
-    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Single<[Book]> {
-        let convertible = Router.books(page, query, filters)
+    func fetchBooks(where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort) -> Single<[Book]> {
+        let convertible = Router.books(page, query, fetchingSort)
         return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
             .map { [weak self] response -> [Book] in
                 guard let self = self else { return [] }
@@ -104,7 +100,7 @@ extension ManHuaRen: SourceProtocol {
                     let json = try JSON(data: data)
                     return (json["response", "result"].array ?? json["response", "mangas"].arrayValue).compactMap { ele -> Book? in
                         let bookId = ele["mangaId"].intValue
-                        var book = Book(source: self, url: "/v1/manga/getDetail?mangaId=\(bookId)")
+                        var book = Book(source: self.source, url: "/v1/manga/getDetail?mangaId=\(bookId)")
                         book.title = ele["mangaName"].string
                         book.thumbnailUrl = ele["mangaCoverimageUrl"].string
                         book.author = ele["mangaAuthor"].string
@@ -117,7 +113,8 @@ extension ManHuaRen: SourceProtocol {
             }
     }
 
-    func fetchChapters(book: Book) -> Single<[Chapter]> {
+    func fetchBook(where _: Book) -> Single<Book> { return Single.error(Whoops.nilWeakSelf) }
+    func fetchChapters(where book: Book) -> Single<[Chapter]> {
         let convertible = Router.chapters(book)
         return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
             .map { response -> [Chapter] in
@@ -158,7 +155,7 @@ extension ManHuaRen: SourceProtocol {
             }
     }
 
-    func fetchPages(chapter: Chapter) -> Single<[Page]> {
+    func fetchPages(where chapter: Chapter) -> Single<[Page]> {
         let convertible = Router.pages(chapter)
         return AF.request(convertible, interceptor: convertible.interceptor).validate().response()
             .map { response -> [Page] in
@@ -181,78 +178,65 @@ extension ManHuaRen: SourceProtocol {
     }
 }
 
-// MARK: - RequestConvertible
+private extension ManHuaRen {
+    enum Router: RequestConvertible {
+        case books(Int, String, Source.FetchingSort)
+        case book(Book)
+        case chapters(Book)
+        case pages(Chapter)
 
-extension ManHuaRen.Router: RequestConvertible {
-    var baseURLString: URLConvertible { return "http://mangaapi.manhuaren.com" }
+        // MARK: - RequestConvertible
 
-    var path: String {
-        switch self {
-        case let .books(_, query, _):
-            return query.isEmpty ? "/v2/manga/getCategoryMangas" : "/v1/search/getSearchManga"
-        case let .chapters(book):
-            return URLComponents(string: book.url)?.path ?? book.url
-        case let .pages(chapter):
-            return URLComponents(string: chapter.url)?.path ?? chapter.url
-        }
-    }
+        var baseURLString: URLConvertible { return "http://mangaapi.manhuaren.com" }
 
-    var headers: HTTPHeaders {
-        var headers = HTTPHeaders()
-        headers.add(name: "X-Yq-Yqci", value: #"{"le": "zh"}"#)
-        headers.add(name: "Referer", value: "http://www.dm5.com/dm5api/")
-        headers.add(name: "clubReferer", value: "http://mangaapi.manhuaren.com/")
-        return headers
-    }
+        var method: HTTPMethod { return .get }
 
-    var method: HTTPMethod { return .get }
-
-    var parameters: Parameters {
-        var parameters: Parameters = ["gsm": "md5", "gft": "json", "gts": Date().convert2String(), "gak": "android_manhuaren2", "gat": "", "gaui": "191909801", "gui": "191909801", "gut": "0"]
-        switch self {
-        case let .books(page, query, filters):
-            let pageSize = 20
-            parameters["start"] = "\(page * pageSize)"
-            parameters["limit"] = "\(pageSize)"
-            if query.isEmpty {
-                if let sortFilter = filters.first(where: { $0 is ManHuaRen.SortFilter }) as? ManHuaRen.SortFilter {
-                    parameters["sort"] = sortFilter.value[0]
-                }
-                if let categoryFilter = filters.first(where: { $0 is ManHuaRen.CategoryFilter }) as? ManHuaRen.CategoryFilter {
-                    parameters["subCategoryType"] = categoryFilter.categoryType
-                    parameters["subCategoryId"] = categoryFilter.categoryId
-                }
-            } else {
-                parameters["keywords"] = query
+        var path: String {
+            switch self {
+            case let .books(_, query, _):
+                return query.isEmpty ? "/v2/manga/getCategoryMangas" : "/v1/search/getSearchManga"
+            case let .book(book), let .chapters(book):
+                return URLComponents(string: book.url)?.path ?? book.url
+            case let .pages(chapter):
+                return URLComponents(string: chapter.url)?.path ?? chapter.url
             }
-        case let .chapters(book):
-            URLComponents(string: book.url)?.queryItems?.forEach { parameters[$0.name] = $0.value }
-        case let .pages(chapter):
-            parameters["netType"] = "4"
-            parameters["loadreal"] = "1"
-            parameters["imageQuality"] = "2"
-            URLComponents(string: chapter.url)?.queryItems?.forEach { parameters[$0.name] = $0.value }
-        }
-        return parameters
-    }
-
-    var parameterEncoding: ParameterEncoding { return URLEncoding.default }
-
-    var interceptor: RequestInterceptor? { return ManHuaRen.Interceptor() }
-}
-
-// MARK: - Filter
-
-extension ManHuaRen {
-    class SortFilter: SinglePickFilter {}
-
-    class CategoryFilter: SinglePickFilter {
-        var categoryType: String {
-            return value[0]
         }
 
-        var categoryId: String {
-            return value[1]
+        var headers: HTTPHeaders {
+            var headers = HTTPHeaders()
+            headers.add(name: "X-Yq-Yqci", value: #"{"le": "zh"}"#)
+            headers.add(name: "Referer", value: "http://www.dm5.com/dm5api/")
+            headers.add(name: "clubReferer", value: "http://mangaapi.manhuaren.com/")
+            return headers
         }
+
+        var parameterEncoding: ParameterEncoding { return URLEncoding.default }
+
+        var parameters: Parameters {
+            var parameters: Parameters = ["gsm": "md5", "gft": "json", "gts": Date().convert2String(), "gak": "android_manhuaren2", "gat": "", "gaui": "191909801", "gui": "191909801", "gut": "0"]
+            switch self {
+            case let .books(page, query, fetchingSort):
+                let pageSize = 20
+                parameters["start"] = "\(page * pageSize)"
+                parameters["limit"] = "\(pageSize)"
+                if query.isEmpty {
+                    parameters["sort"] = fetchingSort == .popularity ? "0" : "1"
+                    parameters["subCategoryType"] = "0"
+                    parameters["subCategoryId"] = "0"
+                } else {
+                    parameters["keywords"] = query
+                }
+            case let .book(book), let .chapters(book):
+                URLComponents(string: book.url)?.queryItems?.forEach { parameters[$0.name] = $0.value }
+            case let .pages(chapter):
+                parameters["netType"] = "4"
+                parameters["loadreal"] = "1"
+                parameters["imageQuality"] = "2"
+                URLComponents(string: chapter.url)?.queryItems?.forEach { parameters[$0.name] = $0.value }
+            }
+            return parameters
+        }
+
+        var interceptor: RequestInterceptor? { return ManHuaRen.shared }
     }
 }

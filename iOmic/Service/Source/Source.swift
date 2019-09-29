@@ -6,19 +6,29 @@
 //  Copyright © 2019 门捷夫. All rights reserved.
 //
 
+import DifferenceKit
 import FileKit
 import Foundation
 import Kingfisher
-import RxDataSources
 import RxSwift
 import WCDBSwift
 
-enum SourceIdentifier: String, ColumnCodable, IdentifiableType {
+protocol SourceProtocol {
+    var name: String { get }
+    var imageDownloadRequestModifier: ImageDownloadRequestModifier { get }
+
+    func fetchBooks(where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort) -> Single<[Book]>
+    func fetchBook(where book: Book) -> Single<Book>
+    func fetchChapters(where book: Book) -> Single<[Chapter]>
+    func fetchPages(where chapter: Chapter) -> Single<[Page]>
+}
+
+enum Source: String, ColumnCodable, Differentiable {
+    static var values: [Source] = [.dongmanzhijia, .manhuaren]
+
     case dongmanzhijia, manhuaren // JSON
 
-    static let values: [SourceIdentifier] = [.dongmanzhijia, .manhuaren]
-
-    var source: SourceProtocol {
+    var instance: SourceProtocol {
         switch self {
         case .dongmanzhijia:
             return DongManZhiJia.shared
@@ -37,22 +47,24 @@ enum SourceIdentifier: String, ColumnCodable, IdentifiableType {
 
     typealias Identity = RawValue
     var identity: Identity { return rawValue }
+
+    // MARK: - FetchingSort
+
+    enum FetchingSort {
+        case popularity, updatedDate
+    }
 }
 
-protocol SourceProtocol {
-    var identifier: SourceIdentifier { get }
-    var name: String { get }
-    var available: Bool { get set }
-    var filters: [FilterProrocol] { get }
-    var modifier: AnyModifier { get }
-    func fetchBooks(page: Int, query: String, filters: [FilterProrocol]) -> Single<[Book]>
-    func fetchChapters(book: Book) -> Single<[Chapter]>
-    func fetchPages(chapter: Chapter) -> Single<[Page]>
-}
-
-extension SourceProtocol {
+extension Source: SourceProtocol {
+    var name: String { return instance.name }
+    var imageDownloadRequestModifier: ImageDownloadRequestModifier { return instance.imageDownloadRequestModifier }
     var available: Bool {
         set { KeyValues.shared.set(souce: self, available: newValue) }
         get { return KeyValues.shared.isAvailable(self) }
     }
+
+    func fetchBooks(where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort) -> Single<[Book]> { return instance.fetchBooks(where: page, query: query, sortedBy: fetchingSort) }
+    func fetchBook(where book: Book) -> Single<Book> { return instance.fetchBook(where: book) }
+    func fetchChapters(where book: Book) -> Single<[Chapter]> { return instance.fetchChapters(where: book) }
+    func fetchPages(where chapter: Chapter) -> Single<[Page]> { return instance.fetchPages(where: chapter) }
 }
