@@ -28,7 +28,7 @@ class DongManZhiJia {
     }
 }
 
-extension Book.Status {
+extension Book.SerialState {
     fileprivate init(string: String?) {
         switch string {
         case "2310", "已完结":
@@ -67,7 +67,7 @@ extension DongManZhiJia: SourceProtocol {
                 book.title = json["title"].string
                 book.author = json["authors"].string
                 book.thumbnailUrl = json["cover"].string?.fixScheme()
-                book.status = Book.Status(string: json["status"].string)
+                book.serialState = Book.SerialState(string: json["status"].string)
                 book.summary = json["description"].string
                 return book
             }
@@ -82,7 +82,7 @@ extension DongManZhiJia: SourceProtocol {
                 book.title = json["comic_name"].string
                 book.author = json["comic_author"].string
                 book.thumbnailUrl = json["cover"].string?.fixScheme()
-                book.status = json["status"].string?.contains("完") ?? false ? .completed : .ongoing
+                book.serialState = json["status"].string?.contains("完") ?? false ? .completed : .ongoing
                 book.summary = json["description"].string
                 return book
             }
@@ -117,7 +117,7 @@ extension DongManZhiJia: SourceProtocol {
                     detail.thumbnailUrl = json["cover"].string?.fixScheme()
                     detail.author = json["authors"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
                     detail.genre = json["types"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                    detail.status = Book.Status(string: "\(json["status"][0]["tag_id"].intValue)")
+                    detail.serialState = Book.SerialState(string: "\(json["status"][0]["tag_id"].intValue)")
                     detail.summary = json["description"].string
                     return detail
                 case let .failure(error):
@@ -165,7 +165,7 @@ extension DongManZhiJia: SourceProtocol {
                     detail.thumbnailUrl = json["cover"].string?.fixScheme()
                     detail.author = json["authors"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
                     detail.genre = json["types"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                    detail.status = Book.Status(string: "\(json["status"][0]["tag_id"].intValue)")
+                    detail.serialState = Book.SerialState(string: "\(json["status"][0]["tag_id"].intValue)")
                     detail.summary = json["description"].string
                     var chapters: [Chapter] = []
                     let bookId = json["id"].intValue

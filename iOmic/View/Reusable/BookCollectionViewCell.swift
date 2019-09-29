@@ -48,7 +48,7 @@ class BookCollectionViewCell: UICollectionViewCell {
         imageView.kf.setImage(with: URL(string: book.thumbnailUrl ?? ""), options: options)
         titlteLabel.text = book.title
         authorLabel.text = book.author
-        statusLabel.text = book.status.rawValue
+        statusLabel.text = book.serialState.rawValue
     }
 
     func cancelDownloadTask() {

@@ -25,7 +25,7 @@ struct Book: Differentiable, TableCodable, ColumnJSONCodable {
             && author == source.author
             && genre == source.genre
             && summary == source.summary
-            && status == source.status
+            && serialState == source.serialState
             && isFavorited == source.isFavorited
     }
 
@@ -35,15 +35,15 @@ struct Book: Differentiable, TableCodable, ColumnJSONCodable {
         // swiftlint:disable:next nesting
         typealias Root = Book
         static let objectRelationalMapping = TableBinding(CodingKeys.self)
-        case identity, source, url, thumbnailUrl = "thumbnail_url", title, artist, author, genre, summary, status, isFavorited = "is_favorited", readAt = "read_at"
+        case identity, source, url, thumbnailUrl = "thumbnail_url", title, artist, author, genre, summary, serialState = "serial_state", isFavorited = "is_favorited", readAt = "read_at"
         static var columnConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
             return [identity: .init(isPrimary: true, isAutoIncrement: false, onConflict: .replace)]
         }
     }
 
-    // MARK: - Status
+    // MARK: - SerialState
 
-    enum Status: String, ColumnCodable {
+    enum SerialState: String, ColumnCodable {
         case ongoing = "Ongoing"
         case completed = "Completed"
         case unknown = "Unknown"
@@ -66,7 +66,7 @@ struct Book: Differentiable, TableCodable, ColumnJSONCodable {
     var author: String?
     var genre: String?
     var summary: String?
-    var status: Book.Status = .unknown
+    var serialState: Book.SerialState = .unknown
     var isFavorited: Bool = false
     var readAt: Date?
 

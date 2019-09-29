@@ -28,7 +28,7 @@ class ManHuaRen {
     }
 }
 
-extension Book.Status {
+extension Book.SerialState {
     fileprivate init(mangaIsOver: Int?) {
         switch mangaIsOver {
         case 0:
@@ -104,7 +104,7 @@ extension ManHuaRen: SourceProtocol {
                         book.title = ele["mangaName"].string
                         book.thumbnailUrl = ele["mangaCoverimageUrl"].string
                         book.author = ele["mangaAuthor"].string
-                        book.status = Book.Status(mangaIsOver: ele["mangaIsOver"].int)
+                        book.serialState = Book.SerialState(mangaIsOver: ele["mangaIsOver"].int)
                         return book
                     }
                 case let .failure(error):
@@ -132,7 +132,7 @@ extension ManHuaRen: SourceProtocol {
                     }
                     detail.author = json["mangaAuthors"].arrayValue.compactMap({ $0.string }).joined(separator: ", ")
                     detail.genre = json["mangaTheme"].string?.replacingOccurrences(of: " ", with: ", ")
-                    detail.status = Book.Status(mangaIsOver: json["mangaIsOver"].int)
+                    detail.serialState = Book.SerialState(mangaIsOver: json["mangaIsOver"].int)
                     detail.summary = json["mangaIntro"].string
                     return detail
                 case let .failure(error):
@@ -160,7 +160,7 @@ extension ManHuaRen: SourceProtocol {
                     }
                     book.author = json["mangaAuthors"].arrayValue.compactMap({ $0.string }).joined(separator: ", ")
                     book.genre = json["mangaTheme"].string?.replacingOccurrences(of: " ", with: ", ")
-                    book.status = Book.Status(mangaIsOver: json["mangaIsOver"].int)
+                    book.serialState = Book.SerialState(mangaIsOver: json["mangaIsOver"].int)
                     book.summary = json["mangaIntro"].string
                     // chapters
                     var chapters: [Chapter] = []
@@ -201,7 +201,7 @@ extension ManHuaRen: SourceProtocol {
                     }
                     detail.author = json["mangaAuthors"].arrayValue.compactMap({ $0.string }).joined(separator: ", ")
                     detail.genre = json["mangaTheme"].string?.replacingOccurrences(of: " ", with: ", ")
-                    detail.status = Book.Status(mangaIsOver: json["mangaIsOver"].int)
+                    detail.serialState = Book.SerialState(mangaIsOver: json["mangaIsOver"].int)
                     detail.summary = json["mangaIntro"].string
                     // chapters
                     var chapters: [Chapter] = []
