@@ -105,7 +105,26 @@ extension DongManZhiJia: SourceProtocol {
             }
     }
 
-    func fetchBook(where _: Book) -> Single<Book> { return Single.error(Whoops.nilWeakSelf) }
+    func fetchBook(where book: Book) -> Single<Book> {
+        let convertible = Router.chapters(book)
+        return AF.request(convertible, interceptor: convertible.interceptor).validate().responseData()
+            .map { response -> Book in
+                switch response.result {
+                case let .success(data):
+                    let json = try JSON(data: data)
+                    var detail = book
+                    detail.title = json["title"].string
+                    detail.thumbnailUrl = json["cover"].string?.fixScheme()
+                    detail.author = json["authors"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    detail.genre = json["types"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    detail.status = Book.Status(string: "\(json["status"][0]["tag_id"].intValue)")
+                    detail.summary = json["description"].string
+                    return detail
+                case let .failure(error):
+                    throw error
+                }
+            }
+    }
 
     func fetchChapters(where book: Book) -> Single<[Chapter]> {
         let convertible = Router.chapters(book)
@@ -114,13 +133,6 @@ extension DongManZhiJia: SourceProtocol {
                 switch response.result {
                 case let .success(data):
                     let json = try JSON(data: data)
-                    var book = book
-                    book.title = json["title"].string
-                    book.thumbnailUrl = json["cover"].string?.fixScheme()
-                    book.author = json["authors"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                    book.genre = json["types"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                    book.status = Book.Status(string: "\(json["status"][0]["tag_id"].intValue)")
-                    book.summary = json["description"].string
                     var chapters: [Chapter] = []
                     let bookId = json["id"].intValue
                     json["chapters"].arrayValue.forEach { item in
@@ -134,8 +146,41 @@ extension DongManZhiJia: SourceProtocol {
                             chapters.append(chapter)
                         }
                     }
-
                     return chapters
+                case let .failure(error):
+                    throw error
+                }
+            }
+    }
+
+    func fetchBookAndChapters(where book: Book) -> Single<(Book, [Chapter])> {
+        let convertible = Router.chapters(book)
+        return AF.request(convertible, interceptor: convertible.interceptor).validate().responseData()
+            .map { response -> (Book, [Chapter]) in
+                switch response.result {
+                case let .success(data):
+                    let json = try JSON(data: data)
+                    var detail = book
+                    detail.title = json["title"].string
+                    detail.thumbnailUrl = json["cover"].string?.fixScheme()
+                    detail.author = json["authors"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    detail.genre = json["types"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    detail.status = Book.Status(string: "\(json["status"][0]["tag_id"].intValue)")
+                    detail.summary = json["description"].string
+                    var chapters: [Chapter] = []
+                    let bookId = json["id"].intValue
+                    json["chapters"].arrayValue.forEach { item in
+                        let prefix = item["title"].stringValue
+                        item["data"].arrayValue.forEach { item1 in
+                            let chapterId = item1["chapter_id"].intValue
+                            var chapter = Chapter(book: detail, url: "/chapter/\(bookId)/\(chapterId).json")
+                            let chapterTitle = item1["chapter_title"].stringValue
+                            chapter.name = "[\(prefix)]\(chapterTitle)"
+                            chapter.updateAt = Date(timeIntervalSince1970: item1["updatetime"].doubleValue)
+                            chapters.append(chapter)
+                        }
+                    }
+                    return (detail, chapters)
                 case let .failure(error):
                     throw error
                 }

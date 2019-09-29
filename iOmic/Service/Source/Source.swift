@@ -20,6 +20,7 @@ protocol SourceProtocol {
     func fetchBooks(where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort) -> Single<[Book]>
     func fetchBook(where book: Book) -> Single<Book>
     func fetchChapters(where book: Book) -> Single<[Chapter]>
+    func fetchBookAndChapters(where book: Book) -> Single<(Book, [Chapter])>
     func fetchPages(where chapter: Chapter) -> Single<[Page]>
 }
 
@@ -66,5 +67,6 @@ extension Source: SourceProtocol {
     func fetchBooks(where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort) -> Single<[Book]> { return instance.fetchBooks(where: page, query: query, sortedBy: fetchingSort) }
     func fetchBook(where book: Book) -> Single<Book> { return instance.fetchBook(where: book) }
     func fetchChapters(where book: Book) -> Single<[Chapter]> { return instance.fetchChapters(where: book) }
+    func fetchBookAndChapters(where book: Book) -> Single<(Book, [Chapter])> { return instance.fetchBookAndChapters(where: book) }
     func fetchPages(where chapter: Chapter) -> Single<[Page]> { return instance.fetchPages(where: chapter) }
 }
