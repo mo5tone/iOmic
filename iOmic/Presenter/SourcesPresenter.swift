@@ -7,14 +7,20 @@
 //
 
 class SourcesPresenter: SourcesPresenterProtocol {
+    // MARK: - Instance properties
+
     private(set) weak var view: SourcesViewProtocol?
     private(set) var interactor: SourcesInteractorProtocol
     private(set) var wireframe: SourcesWireframeProtocol
+    private var source: Source
 
-    init(view: SourcesViewProtocol?, interactor: SourcesInteractorProtocol, wireframe: SourcesWireframeProtocol) {
+    // MARK: - Init
+
+    init(view: SourcesViewProtocol?, interactor: SourcesInteractorProtocol, wireframe: SourcesWireframeProtocol, source: Source) {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
+        self.source = source
     }
 }
 
@@ -24,7 +30,20 @@ extension SourcesPresenter: SourcesWireframeOutputProtocol {}
 
 // MARK: - SourcesViewOutputProtocol
 
-extension SourcesPresenter: SourcesViewOutputProtocol {}
+extension SourcesPresenter: SourcesViewOutputProtocol {
+    func viewDidLoad() {
+        view?.update(sources: interactor.sources, current: source)
+    }
+
+    func didTapDoneBarButtonItem() {
+        wireframe.dismiss(with: source)
+    }
+
+    func didSelectRow(_ row: Int) {
+        source = interactor.sources[row]
+        wireframe.dismiss(with: source)
+    }
+}
 
 // MARK: - SourcesInteractorOutputProtocol
 

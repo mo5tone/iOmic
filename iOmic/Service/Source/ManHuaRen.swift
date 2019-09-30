@@ -74,6 +74,8 @@ extension ManHuaRen: RequestInterceptor {
 extension ManHuaRen: SourceProtocol {
     var name: String { return "漫画人" }
 
+    var version: String { return "0.1.0" }
+
     var available: Bool {
         set { KeyValues.shared.set(souce: source, available: newValue) }
         get { return KeyValues.shared.isAvailable(source) }

@@ -46,6 +46,8 @@ extension Book.SerialState {
 extension DongManZhiJia: SourceProtocol {
     var name: String { return "动漫之家" }
 
+    var version: String { return "0.1.0" }
+
     var available: Bool {
         set { KeyValues.shared.set(souce: source, available: newValue) }
         get { return KeyValues.shared.isAvailable(source) }

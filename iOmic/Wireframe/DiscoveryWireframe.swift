@@ -27,7 +27,22 @@ class DiscoveryWireframe: DiscoveryWireframeProtocol {
         return navigationController
     }
 
+    func presentSourcesModule(current source: Source) {
+        let viewController = SourcesWireframe.create(with: source, delegate: self)
+        self.viewController?.present(viewController, animated: true, completion: nil)
+    }
+
+    // MARK: - Init
+
     private init(viewController: UIViewController?) {
         self.viewController = viewController
+    }
+}
+
+// MARK: - SourcesModuleDelegate
+
+extension DiscoveryWireframe: SourcesModuleDelegate {
+    func didSelectSource(_ source: Source) {
+        presenter?.update(source: source)
     }
 }

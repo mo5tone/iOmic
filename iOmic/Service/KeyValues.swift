@@ -9,11 +9,18 @@
 import Foundation
 import MMKV
 
-class KeyValues {
-    static let shared: KeyValues = .init()
-    private var mmkv: MMKV { return MMKV.default() }
+protocol KeyValuesProtocol: AnyObject {
+    func set(souce: Source, available: Bool)
+    func isAvailable(_ souce: Source) -> Bool
+}
 
-    private init() {}
+class KeyValues: KeyValuesProtocol {
+    static let shared: KeyValues = .init()
+    private let mmkv: MMKV
+
+    private init() {
+        mmkv = .default()
+    }
 
     func set(souce: Source, available: Bool) {
         mmkv.set(available, forKey: souce.rawValue)

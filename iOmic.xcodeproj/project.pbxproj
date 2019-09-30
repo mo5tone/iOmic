@@ -55,6 +55,7 @@
 		9F303C6A2340A48C000848F1 /* SettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F303C652340A48C000848F1 /* SettingsInteractor.swift */; };
 		9F303C6B2340A48C000848F1 /* SettingsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F303C662340A48C000848F1 /* SettingsWireframe.swift */; };
 		9F303C6D2340A4D9000848F1 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F303C6C2340A4D9000848F1 /* Settings.storyboard */; };
+		9F303C6F23419BD4000848F1 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F303C6E23419BD4000848F1 /* Int.swift */; };
 		9F423D492316834E006B950F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F423D482316834E006B950F /* Date.swift */; };
 		9F811D64233E019F00F5925F /* UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F811D63233E019F00F5925F /* UICollectionView.swift */; };
 		9F811D66233E01DD00F5925F /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F811D65233E01DD00F5925F /* UITableView.swift */; };
@@ -184,6 +185,7 @@
 		9F303C652340A48C000848F1 /* SettingsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInteractor.swift; sourceTree = "<group>"; };
 		9F303C662340A48C000848F1 /* SettingsWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWireframe.swift; sourceTree = "<group>"; };
 		9F303C6C2340A4D9000848F1 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		9F303C6E23419BD4000848F1 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		9F4058C32328929A00AA1309 /* SkeletonView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SkeletonView.framework; path = Carthage/Build/iOS/SkeletonView.framework; sourceTree = "<group>"; };
 		9F423D482316834E006B950F /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		9F423D4B23175B35006B950F /* iOmic-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOmic-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -474,6 +476,7 @@
 			children = (
 				9FA9472723152C960028A60D /* String.swift */,
 				9F423D482316834E006B950F /* Date.swift */,
+				9F303C6E23419BD4000848F1 /* Int.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -871,6 +874,7 @@
 				9F82EA452329DC85003E465E /* BookCollectionHeader.swift in Sources */,
 				9F303C532340A066000848F1 /* DiscoveryWireframe.swift in Sources */,
 				5584B13223116849000D9309 /* Source.swift in Sources */,
+				9F303C6F23419BD4000848F1 /* Int.swift in Sources */,
 				9F303C522340A066000848F1 /* DiscoveryInteractor.swift in Sources */,
 				559302A82312CE750021C170 /* DongManZhiJia.swift in Sources */,
 				9F303C672340A48C000848F1 /* SettingsPresenter.swift in Sources */,

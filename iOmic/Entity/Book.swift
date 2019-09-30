@@ -27,6 +27,7 @@ struct Book: Differentiable, TableCodable, ColumnJSONCodable {
             && summary == source.summary
             && serialState == source.serialState
             && isFavorited == source.isFavorited
+            && readAt == source.readAt
     }
 
     // MARK: - TableCodable

@@ -11,6 +11,7 @@ import UIKit
 protocol DiscoveryWireframeProtocol: AnyObject {
     var presenter: DiscoveryWireframeOutputProtocol? { get }
     static func create() -> UIViewController
+    func presentSourcesModule(current source: Source)
 }
 
 protocol DiscoveryViewProtocol: AnyObject {
@@ -21,9 +22,14 @@ protocol DiscoveryInteractorProtocol: AnyObject {
     var presenter: DiscoveryInteractorOutputProtocol? { get }
 }
 
-protocol DiscoveryWireframeOutputProtocol: AnyObject {}
+protocol DiscoveryWireframeOutputProtocol: AnyObject {
+    func update(source: Source)
+}
 
-protocol DiscoveryViewOutputProtocol: AnyObject {}
+protocol DiscoveryViewOutputProtocol: AnyObject {
+    func viewDidLoad()
+    func didTapSourcesBarButtonItem()
+}
 
 protocol DiscoveryInteractorOutputProtocol: AnyObject {}
 

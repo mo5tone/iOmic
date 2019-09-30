@@ -16,20 +16,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discovery" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fgt-qs-LkR">
-                                <rect key="frame" x="169.5" y="442.5" width="75.5" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Iig-L1-Nrq">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="xh8-Hv-WkA">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="fgt-qs-LkR" firstAttribute="centerX" secondItem="lmB-gU-zUX" secondAttribute="centerX" id="FJ2-QO-BdP"/>
-                            <constraint firstItem="fgt-qs-LkR" firstAttribute="centerY" secondItem="lmB-gU-zUX" secondAttribute="centerY" id="OGx-dU-JyB"/>
+                            <constraint firstItem="lmB-gU-zUX" firstAttribute="trailing" secondItem="Iig-L1-Nrq" secondAttribute="trailing" id="1Vr-nR-SO8"/>
+                            <constraint firstItem="Iig-L1-Nrq" firstAttribute="top" secondItem="lmB-gU-zUX" secondAttribute="top" id="PUo-6M-caa"/>
+                            <constraint firstItem="Iig-L1-Nrq" firstAttribute="leading" secondItem="lmB-gU-zUX" secondAttribute="leading" id="Z75-Jj-zKZ"/>
+                            <constraint firstItem="lmB-gU-zUX" firstAttribute="bottom" secondItem="Iig-L1-Nrq" secondAttribute="bottom" id="vhq-mK-gD9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lmB-gU-zUX"/>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="Iig-L1-Nrq" id="2WW-ts-N8F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PJo-2U-Rzk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -52,7 +62,7 @@
                         <constraints>
                             <constraint firstItem="HLQ-9Y-nnJ" firstAttribute="bottom" secondItem="Du7-ID-umJ" secondAttribute="bottom" id="9Da-DA-b4v"/>
                             <constraint firstItem="Du7-ID-umJ" firstAttribute="top" secondItem="HLQ-9Y-nnJ" secondAttribute="top" id="Qqd-pl-M7V"/>
-                            <constraint firstAttribute="trailing" secondItem="Du7-ID-umJ" secondAttribute="trailing" id="jYl-wk-q6P"/>
+                            <constraint firstItem="HLQ-9Y-nnJ" firstAttribute="trailing" secondItem="Du7-ID-umJ" secondAttribute="trailing" id="jYl-wk-q6P"/>
                             <constraint firstItem="Du7-ID-umJ" firstAttribute="leading" secondItem="HLQ-9Y-nnJ" secondAttribute="leading" id="xgn-w9-aTo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HLQ-9Y-nnJ"/>

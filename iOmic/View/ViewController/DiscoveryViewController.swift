@@ -8,11 +8,13 @@
 
 import DifferenceKit
 import Kingfisher
+import RxSwift
 import UIKit
 
 class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
     // MARK: - Instance properties
 
+    private let bag: DisposeBag = .init()
     @IBOutlet private var collectionView: UICollectionView!
     var presenter: DiscoveryViewOutputProtocol!
     private lazy var sourceBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_tune"), style: .plain, target: nil, action: nil)
@@ -34,6 +36,7 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
 
     private func setup() {
         setupView()
+        setupBinding()
     }
 
     private func setupView() {
@@ -44,6 +47,13 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
         collectionView.delegate = self
+    }
+
+    private func setupBinding() {
+        sourceBarButtonItem.rx.tap
+            .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in self?.presenter.didTapSourcesBarButtonItem() })
+            .disposed(by: bag)
     }
 }
 

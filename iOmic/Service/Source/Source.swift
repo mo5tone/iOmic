@@ -15,6 +15,7 @@ import WCDBSwift
 
 protocol SourceProtocol {
     var name: String { get }
+    var version: String { get }
     var imageDownloadRequestModifier: ImageDownloadRequestModifier { get }
     var available: Bool { get set }
 
@@ -59,6 +60,7 @@ enum Source: String, ColumnCodable, Differentiable {
 
 extension Source: SourceProtocol {
     var name: String { return instance.name }
+    var version: String { return instance.version }
     var imageDownloadRequestModifier: ImageDownloadRequestModifier { return instance.imageDownloadRequestModifier }
     var available: Bool {
         get { return KeyValues.shared.isAvailable(self) }

@@ -7,5 +7,21 @@
 //
 
 class SourcesInteractor: SourcesInteractorProtocol {
+    // MARK: - Instance properties
+
     weak var presenter: SourcesInteractorOutputProtocol?
+    private var keyValues: KeyValuesProtocol
+    var sources: [Source] { return Source.values }
+
+    // MARK: - Public instance methods
+
+    func set(souce: Source, available: Bool) {
+        keyValues.set(souce: souce, available: available)
+    }
+
+    // MARK: - Init
+
+    init(keyValues: KeyValuesProtocol) {
+        self.keyValues = keyValues
+    }
 }
