@@ -16,6 +16,7 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
 
     private let bag: DisposeBag = .init()
     @IBOutlet private var collectionView: UICollectionView!
+    @IBOutlet private var collectionViewLayout: UICollectionViewLayout!
     var presenter: DiscoveryViewOutputProtocol!
     private lazy var sourceBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_tune"), style: .plain, target: nil, action: nil)
     private lazy var refreshControl: UIRefreshControl = .init()
@@ -27,6 +28,7 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
     func update(source: Source, books: [Book]) {
         self.source = source
         navigationItem.title = source.name
+        refreshControl.endRefreshing()
         collectionView.reload(using: .init(source: self.books, target: books)) { self.books = $0 }
     }
 
@@ -58,13 +60,15 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
 
     private func setupView() {
         navigationItem.leftBarButtonItem = sourceBarButtonItem
+        navigationItem.title = source.name
 
+        (collectionViewLayout as? UICollectionViewFlowLayout)?.estimatedItemSize = .zero
         collectionView.refreshControl = refreshControl
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
         collectionView.registerCell(BookCollectionViewCell.self)
+        collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
-        collectionView.delegate = self
     }
 
     private func setupBinding() {
