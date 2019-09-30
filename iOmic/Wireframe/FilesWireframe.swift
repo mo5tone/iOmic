@@ -10,14 +10,14 @@ import UIKit
 
 class FilesWireframe: FilesWireframeProtocol {
     private(set) weak var presenter: FilesWireframeOutputProtocol?
-    private(set) weak var view: FilesViewController?
+    private weak var viewController: UIViewController?
 
     static func create() -> UIViewController {
         let storyboard: UIStoryboard = .init(name: "Files", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "FilesViewController")
         guard let view = viewController as? FilesViewController else { fatalError("Instance of FilesViewController expected.") }
         let interactor: FilesInteractor = .init()
-        let wireframe: FilesWireframe = .init(view: view)
+        let wireframe: FilesWireframe = .init(viewController: view)
         let presenter: FilesPresenter = .init(view: view, interactor: interactor, wireframe: wireframe)
         view.presenter = presenter
         interactor.presenter = presenter
@@ -27,7 +27,7 @@ class FilesWireframe: FilesWireframeProtocol {
         return navigationController
     }
 
-    private init(view: FilesViewController?) {
-        self.view = view
+    private init(viewController: UIViewController?) {
+        self.viewController = viewController
     }
 }

@@ -10,14 +10,14 @@ import UIKit
 
 class SettingsWireframe: SettingsWireframeProtocol {
     private(set) weak var presenter: SettingsWireframeOutputProtocol?
-    private(set) weak var view: SettingsViewController?
+    private weak var viewController: UIViewController?
 
     static func create() -> UIViewController {
         let storyboard: UIStoryboard = .init(name: "Settings", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "SettingsViewController")
         guard let view = viewController as? SettingsViewController else { fatalError("Instance of SettingsViewController expected.") }
         let interactor: SettingsInteractor = .init()
-        let wireframe: SettingsWireframe = .init(view: view)
+        let wireframe: SettingsWireframe = .init(viewController: view)
         let presenter: SettingsPresenter = .init(view: view, interactor: interactor, wireframe: wireframe)
         view.presenter = presenter
         interactor.presenter = presenter
@@ -27,7 +27,7 @@ class SettingsWireframe: SettingsWireframeProtocol {
         return navigationController
     }
 
-    private init(view: SettingsViewController?) {
-        self.view = view
+    private init(viewController: UIViewController?) {
+        self.viewController = viewController
     }
 }

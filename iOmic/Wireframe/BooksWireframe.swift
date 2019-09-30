@@ -10,14 +10,14 @@ import UIKit
 
 class BooksWireframe: BooksWireframeProtocol {
     private(set) weak var presenter: BooksWireframeOutputProtocol?
-    private(set) weak var view: BooksViewController?
+    private weak var viewController: UIViewController?
 
     static func create() -> UIViewController {
         let storyboard: UIStoryboard = .init(name: "Books", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "BooksViewController")
         guard let view = viewController as? BooksViewController else { fatalError("Instance of BooksViewController expected.") }
         let interactor: BooksInteractor = .init()
-        let wireframe: BooksWireframe = .init(view: view)
+        let wireframe: BooksWireframe = .init(viewController: view)
         let presenter: BooksPresenter = .init(view: view, interactor: interactor, wireframe: wireframe)
         view.presenter = presenter
         interactor.presenter = presenter
@@ -27,7 +27,7 @@ class BooksWireframe: BooksWireframeProtocol {
         return navigationController
     }
 
-    private init(view: BooksViewController?) {
-        self.view = view
+    private init(viewController: UIViewController?) {
+        self.viewController = viewController
     }
 }

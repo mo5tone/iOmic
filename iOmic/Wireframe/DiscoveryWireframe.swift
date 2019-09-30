@@ -10,14 +10,14 @@ import UIKit
 
 class DiscoveryWireframe: DiscoveryWireframeProtocol {
     private(set) weak var presenter: DiscoveryWireframeOutputProtocol?
-    private(set) weak var view: DiscoveryViewController?
+    private weak var viewController: UIViewController?
 
     static func create() -> UIViewController {
         let storyboard: UIStoryboard = .init(name: "Discovery", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "DiscoveryViewController")
         guard let view = viewController as? DiscoveryViewController else { fatalError("Instance of DiscoveryViewController expected.") }
         let interactor: DiscoveryInteractor = .init()
-        let wireframe: DiscoveryWireframe = .init(view: view)
+        let wireframe: DiscoveryWireframe = .init(viewController: view)
         let presenter: DiscoveryPresenter = .init(view: view, interactor: interactor, wireframe: wireframe)
         view.presenter = presenter
         interactor.presenter = presenter
@@ -27,7 +27,7 @@ class DiscoveryWireframe: DiscoveryWireframeProtocol {
         return navigationController
     }
 
-    private init(view: DiscoveryViewController?) {
-        self.view = view
+    private init(viewController: UIViewController?) {
+        self.viewController = viewController
     }
 }
