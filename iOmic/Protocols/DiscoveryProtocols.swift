@@ -16,10 +16,13 @@ protocol DiscoveryWireframeProtocol: AnyObject {
 
 protocol DiscoveryViewProtocol: AnyObject {
     var presenter: DiscoveryViewOutputProtocol! { get set }
+    func update(source: Source, books: [Book])
+    func add(more books: [Book])
 }
 
 protocol DiscoveryInteractorProtocol: AnyObject {
     var presenter: DiscoveryInteractorOutputProtocol? { get }
+    func fetchBooks(in source: SourceProtocol, where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort)
 }
 
 protocol DiscoveryWireframeOutputProtocol: AnyObject {
@@ -29,9 +32,13 @@ protocol DiscoveryWireframeOutputProtocol: AnyObject {
 protocol DiscoveryViewOutputProtocol: AnyObject {
     func viewDidLoad()
     func didTapSourcesBarButtonItem()
+    func refresh()
+    func loadMore()
 }
 
-protocol DiscoveryInteractorOutputProtocol: AnyObject {}
+protocol DiscoveryInteractorOutputProtocol: AnyObject {
+    func update(books: [Book])
+}
 
 protocol DiscoveryPresenterProtocol: AnyObject {
     var view: DiscoveryViewProtocol? { get }

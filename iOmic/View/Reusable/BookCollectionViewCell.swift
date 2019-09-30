@@ -42,7 +42,7 @@ class BookCollectionViewCell: UICollectionViewCell {
         statusLabel.font = .preferredFont(forTextStyle: .caption2)
     }
 
-    func setup(book: Book, displaySource _: Bool = false) {
+    func setup(book: Book) {
         var options = self.options
         options.append(.requestModifier(book.source.imageDownloadRequestModifier))
         imageView.kf.setImage(with: URL(string: book.thumbnailUrl ?? ""), options: options)

@@ -18,13 +18,30 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
     @IBOutlet private var collectionView: UICollectionView!
     var presenter: DiscoveryViewOutputProtocol!
     private lazy var sourceBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_tune"), style: .plain, target: nil, action: nil)
-    private var books: ArraySection<Source, Book> = .init(model: Source.values[0], elements: [])
+    private lazy var refreshControl: UIRefreshControl = .init()
+    private var source: Source = .dongmanzhijia
+    private var books: [Book] = []
+
+    // MARK: Public instance methods
+
+    func update(source: Source, books: [Book]) {
+        self.source = source
+        navigationItem.title = source.name
+        collectionView.reload(using: .init(source: self.books, target: books)) { self.books = $0 }
+    }
+
+    func add(more books: [Book]) {
+        var newBooks: [Book] = .init(self.books)
+        newBooks.append(contentsOf: books)
+        collectionView.reload(using: .init(source: self.books, target: newBooks)) { self.books = $0 }
+    }
 
     // MARK: - Overrides
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        presenter.viewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -42,6 +59,7 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
     private func setupView() {
         navigationItem.leftBarButtonItem = sourceBarButtonItem
 
+        collectionView.refreshControl = refreshControl
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
         collectionView.registerCell(BookCollectionViewCell.self)
         collectionView.dataSource = self
@@ -54,24 +72,23 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
             .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in self?.presenter.didTapSourcesBarButtonItem() })
             .disposed(by: bag)
+        refreshControl.rx.controlEvent(.valueChanged)
+            .subscribe(onNext: { [weak self] in self?.presenter.refresh() })
+            .disposed(by: bag)
     }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension DiscoveryViewController: UICollectionViewDataSource {
-    func numberOfSections(in _: UICollectionView) -> Int {
-        return 1
-    }
-
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return books.elements.count
+        return books.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.reusableIdentifier, for: indexPath)
         if let cell = cell as? BookCollectionViewCell {
-            cell.setup(book: books.elements[indexPath.item])
+            cell.setup(book: books[indexPath.item])
         }
         return cell
     }
@@ -81,19 +98,25 @@ extension DiscoveryViewController: UICollectionViewDataSource {
 
 extension DiscoveryViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        let resources = indexPaths.map { books.elements[$0.item] }.compactMap { URL(string: $0.thumbnailUrl ?? "") }
-        ImagePrefetcher(resources: resources, options: [.requestModifier(books.model.imageDownloadRequestModifier)]).start()
+        let resources = indexPaths.map { books[$0.item] }.compactMap { URL(string: $0.thumbnailUrl ?? "") }
+        ImagePrefetcher(resources: resources, options: [.requestModifier(source.imageDownloadRequestModifier)]).start()
     }
 
     func collectionView(_: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-        let resources = indexPaths.map { books.elements[$0.item] }.compactMap { URL(string: $0.thumbnailUrl ?? "") }
-        ImagePrefetcher(resources: resources, options: [.requestModifier(books.model.imageDownloadRequestModifier)]).stop()
+        let resources = indexPaths.map { books[$0.item] }.compactMap { URL(string: $0.thumbnailUrl ?? "") }
+        ImagePrefetcher(resources: resources, options: [.requestModifier(source.imageDownloadRequestModifier)]).stop()
     }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension DiscoveryViewController: UICollectionViewDelegateFlowLayout {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y - max(0, scrollView.contentSize.height - scrollView.frame.height) > 20 {
+            presenter.loadMore()
+        }
+    }
+
     func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt _: IndexPath) {
         cell.contentView.layer.cornerRadius = 8.0
         cell.contentView.layer.borderWidth = 1.0
