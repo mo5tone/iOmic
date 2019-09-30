@@ -18,6 +18,10 @@ class TabBarPresenter: TabBarPresenterProtocol {
     }
 }
 
+// MARK: - TabBarWireframeOutputProtocol
+
+extension TabBarPresenter: TabBarWireframeOutputProtocol {}
+
 // MARK: - TabBarViewOutputProtocol
 
 extension TabBarPresenter: TabBarViewOutputProtocol {}

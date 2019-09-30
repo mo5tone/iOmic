@@ -18,6 +18,10 @@ class SourcesPresenter: SourcesPresenterProtocol {
     }
 }
 
+// MARK: - SourcesWireframeOutputProtocol
+
+extension SourcesPresenter: SourcesWireframeOutputProtocol {}
+
 // MARK: - SourcesViewOutputProtocol
 
 extension SourcesPresenter: SourcesViewOutputProtocol {}

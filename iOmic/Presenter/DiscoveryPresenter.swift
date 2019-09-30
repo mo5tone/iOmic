@@ -18,6 +18,10 @@ class DiscoveryPresenter: DiscoveryPresenterProtocol {
     }
 }
 
+// MARK: - DiscoveryWireframeOutputProtocol
+
+extension DiscoveryPresenter: DiscoveryWireframeOutputProtocol {}
+
 // MARK: - DiscoveryViewOutputProtocol
 
 extension DiscoveryPresenter: DiscoveryViewOutputProtocol {}

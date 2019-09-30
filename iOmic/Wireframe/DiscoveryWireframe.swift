@@ -9,23 +9,25 @@
 import UIKit
 
 class DiscoveryWireframe: DiscoveryWireframeProtocol {
-    private let viewController: DiscoveryViewController
+    private(set) weak var presenter: DiscoveryWireframeOutputProtocol?
+    private(set) weak var view: DiscoveryViewController?
 
     static func create() -> UIViewController {
         let storyboard: UIStoryboard = .init(name: "Discovery", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "DiscoveryViewController")
         guard let view = viewController as? DiscoveryViewController else { fatalError("Instance of DiscoveryViewController expected.") }
         let interactor: DiscoveryInteractor = .init()
-        let wireframe: DiscoveryWireframe = .init(viewController: view)
+        let wireframe: DiscoveryWireframe = .init(view: view)
         let presenter: DiscoveryPresenter = .init(view: view, interactor: interactor, wireframe: wireframe)
         view.presenter = presenter
         interactor.presenter = presenter
+        wireframe.presenter = presenter
         let navigationController: UINavigationController = .init(rootViewController: view)
         navigationController.tabBarItem = .init(title: "Discovery", image: #imageLiteral(resourceName: "ic_tabbar_discovery"), tag: 1)
         return navigationController
     }
 
-    private init(viewController: DiscoveryViewController) {
-        self.viewController = viewController
+    private init(view: DiscoveryViewController?) {
+        self.view = view
     }
 }

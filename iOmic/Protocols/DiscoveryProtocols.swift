@@ -9,6 +9,7 @@
 import UIKit
 
 protocol DiscoveryWireframeProtocol: AnyObject {
+    var presenter: DiscoveryWireframeOutputProtocol? { get }
     static func create() -> UIViewController
 }
 
@@ -19,6 +20,8 @@ protocol DiscoveryViewProtocol: AnyObject {
 protocol DiscoveryInteractorProtocol: AnyObject {
     var presenter: DiscoveryInteractorOutputProtocol? { get }
 }
+
+protocol DiscoveryWireframeOutputProtocol: AnyObject {}
 
 protocol DiscoveryViewOutputProtocol: AnyObject {}
 

@@ -9,6 +9,7 @@
 import UIKit
 
 protocol BooksWireframeProtocol: AnyObject {
+    var presenter: BooksWireframeOutputProtocol? { get }
     static func create() -> UIViewController
 }
 
@@ -19,6 +20,8 @@ protocol BooksViewProtocol: AnyObject {
 protocol BooksInteractorProtocol: AnyObject {
     var presenter: BooksInteractorOutputProtocol? { get }
 }
+
+protocol BooksWireframeOutputProtocol: AnyObject {}
 
 protocol BooksViewOutputProtocol: AnyObject {}
 

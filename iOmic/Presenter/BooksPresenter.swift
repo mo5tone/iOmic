@@ -18,6 +18,10 @@ class BooksPresenter: BooksPresenterProtocol {
     }
 }
 
+// MARK: - BooksWireframeOutputProtocol
+
+extension BooksPresenter: BooksWireframeOutputProtocol {}
+
 // MARK: - BooksViewOutputProtocol
 
 extension BooksPresenter: BooksViewOutputProtocol {}

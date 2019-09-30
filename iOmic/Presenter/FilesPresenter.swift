@@ -18,6 +18,10 @@ class FilesPresenter: FilesPresenterProtocol {
     }
 }
 
+// MARK: - FilesWireframeOutputProtocol
+
+extension FilesPresenter: FilesWireframeOutputProtocol {}
+
 // MARK: - FilesViewOutputProtocol
 
 extension FilesPresenter: FilesViewOutputProtocol {}

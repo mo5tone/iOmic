@@ -9,23 +9,25 @@
 import UIKit
 
 class SettingsWireframe: SettingsWireframeProtocol {
-    private let viewController: SettingsViewController
+    private(set) weak var presenter: SettingsWireframeOutputProtocol?
+    private(set) weak var view: SettingsViewController?
 
     static func create() -> UIViewController {
         let storyboard: UIStoryboard = .init(name: "Settings", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "SettingsViewController")
         guard let view = viewController as? SettingsViewController else { fatalError("Instance of SettingsViewController expected.") }
         let interactor: SettingsInteractor = .init()
-        let wireframe: SettingsWireframe = .init(viewController: view)
+        let wireframe: SettingsWireframe = .init(view: view)
         let presenter: SettingsPresenter = .init(view: view, interactor: interactor, wireframe: wireframe)
         view.presenter = presenter
         interactor.presenter = presenter
+        wireframe.presenter = presenter
         let navigationController: UINavigationController = .init(rootViewController: view)
         navigationController.tabBarItem = .init(title: "Files", image: #imageLiteral(resourceName: "ic_tabbar_setting"), tag: 3)
         return navigationController
     }
 
-    private init(viewController: SettingsViewController) {
-        self.viewController = viewController
+    private init(view: SettingsViewController?) {
+        self.view = view
     }
 }

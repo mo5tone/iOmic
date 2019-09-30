@@ -9,6 +9,7 @@
 import UIKit
 
 protocol SourcesWireframeProtocol: AnyObject {
+    var presenter: SourcesWireframeOutputProtocol? { get }
     static func create() -> UIViewController
 }
 
@@ -19,6 +20,8 @@ protocol SourcesViewProtocol: AnyObject {
 protocol SourcesInteractorProtocol: AnyObject {
     var presenter: SourcesInteractorOutputProtocol? { get }
 }
+
+protocol SourcesWireframeOutputProtocol: AnyObject {}
 
 protocol SourcesViewOutputProtocol: AnyObject {}
 

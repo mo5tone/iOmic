@@ -18,6 +18,10 @@ class SettingsPresenter: SettingsPresenterProtocol {
     }
 }
 
+// MARK: - SettingsWireframeOutputProtocol
+
+extension SettingsPresenter: SettingsWireframeOutputProtocol {}
+
 // MARK: - SettingsViewOutputProtocol
 
 extension SettingsPresenter: SettingsViewOutputProtocol {}

@@ -9,6 +9,7 @@
 import UIKit
 
 protocol FilesWireframeProtocol: AnyObject {
+    var presenter: FilesWireframeOutputProtocol? { get }
     static func create() -> UIViewController
 }
 
@@ -19,6 +20,8 @@ protocol FilesViewProtocol: AnyObject {
 protocol FilesInteractorProtocol: AnyObject {
     var presenter: FilesInteractorOutputProtocol? { get }
 }
+
+protocol FilesWireframeOutputProtocol: AnyObject {}
 
 protocol FilesViewOutputProtocol: AnyObject {}
 

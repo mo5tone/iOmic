@@ -9,6 +9,8 @@
 import UIKit
 
 class TabBarWireframe: TabBarWireframeProtocol {
+    private(set) weak var presenter: TabBarWireframeOutputProtocol?
+
     static func create() -> UIViewController {
         let view: TabBarViewController = .init()
         let interactor: TabBarInteractor = .init()
@@ -16,6 +18,7 @@ class TabBarWireframe: TabBarWireframeProtocol {
         let presenter: TabBarPresenter = .init(view: view, interactor: interactor, wireframe: wireframe)
         view.presenter = presenter
         interactor.presenter = presenter
+        wireframe.presenter = presenter
         return view
     }
 }

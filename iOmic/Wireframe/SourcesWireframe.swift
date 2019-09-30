@@ -9,21 +9,23 @@
 import UIKit
 
 class SourcesWireframe: SourcesWireframeProtocol {
-    private let viewController: SourcesViewController
+    private(set) weak var presenter: SourcesWireframeOutputProtocol?
+    private(set) weak var view: SourcesViewController?
 
     static func create() -> UIViewController {
         let storyboard: UIStoryboard = .init(name: "Discovery", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "SourcesViewController")
         guard let view = viewController as? SourcesViewController else { fatalError("Instance of SourcesViewController expected.") }
         let interactor: SourcesInteractor = .init()
-        let wireframe: SourcesWireframe = .init(viewController: view)
+        let wireframe: SourcesWireframe = .init(view: view)
         let presenter: SourcesPresenter = .init(view: view, interactor: interactor, wireframe: wireframe)
         view.presenter = presenter
         interactor.presenter = presenter
+        wireframe.presenter = presenter
         return view
     }
 
-    private init(viewController: SourcesViewController) {
-        self.viewController = viewController
+    private init(view: SourcesViewController) {
+        self.view = view
     }
 }

@@ -9,6 +9,7 @@
 import UIKit
 
 protocol TabBarWireframeProtocol: AnyObject {
+    var presenter: TabBarWireframeOutputProtocol? { get }
     static func create() -> UIViewController
 }
 
@@ -19,6 +20,8 @@ protocol TabBarViewProtocol: AnyObject {
 protocol TabBarInteractorProtocol: AnyObject {
     var presenter: TabBarInteractorOutputProtocol? { get }
 }
+
+protocol TabBarWireframeOutputProtocol: AnyObject {}
 
 protocol TabBarViewOutputProtocol: AnyObject {}
 
