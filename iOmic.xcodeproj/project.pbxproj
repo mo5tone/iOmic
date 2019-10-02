@@ -20,6 +20,7 @@
 		5584B13223116849000D9309 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584B13123116849000D9309 /* Source.swift */; };
 		559302A82312CE750021C170 /* DongManZhiJia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A72312CE750021C170 /* DongManZhiJia.swift */; };
 		559302AA2312CF180021C170 /* ManHuaRen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A92312CF180021C170 /* ManHuaRen.swift */; };
+		559D469D2344A20D0032EFC0 /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D469C2344A20D0032EFC0 /* UIScrollView.swift */; };
 		55BBC2F12340EE6F006B9746 /* SourcesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BBC2EC2340EE6F006B9746 /* SourcesPresenter.swift */; };
 		55BBC2F22340EE6F006B9746 /* SourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BBC2ED2340EE6F006B9746 /* SourcesViewController.swift */; };
 		55BBC2F32340EE6F006B9746 /* SourcesProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BBC2EE2340EE6F006B9746 /* SourcesProtocols.swift */; };
@@ -143,6 +144,7 @@
 		559302A52312C1BF0021C170 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/iOS/ZipArchive.framework; sourceTree = "<group>"; };
 		559302A72312CE750021C170 /* DongManZhiJia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DongManZhiJia.swift; sourceTree = "<group>"; };
 		559302A92312CF180021C170 /* ManHuaRen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManHuaRen.swift; sourceTree = "<group>"; };
+		559D469C2344A20D0032EFC0 /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		55B19F70231AB3A500CFBB02 /* QuickLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLayout.framework; path = Carthage/Build/iOS/QuickLayout.framework; sourceTree = "<group>"; };
 		55B19F72231AB3B600CFBB02 /* SwiftEntryKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftEntryKit.framework; path = Carthage/Build/iOS/SwiftEntryKit.framework; sourceTree = "<group>"; };
 		55BBC2EC2340EE6F006B9746 /* SourcesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesPresenter.swift; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 				9F955C0723309BBD0015069E /* UILabel.swift */,
 				9F811D63233E019F00F5925F /* UICollectionView.swift */,
 				9F811D65233E01DD00F5925F /* UITableView.swift */,
+				559D469C2344A20D0032EFC0 /* UIScrollView.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -881,6 +884,7 @@
 				9F8418FD2317B35300A503BE /* BookCollectionViewCell.swift in Sources */,
 				9F93FEFA234092FE007D6F21 /* BooksWireframe.swift in Sources */,
 				9FA8DEFD23306EF60003E278 /* UIBarButtonItem.swift in Sources */,
+				559D469D2344A20D0032EFC0 /* UIScrollView.swift in Sources */,
 				9F303C512340A066000848F1 /* DiscoveryProtocols.swift in Sources */,
 				9F955C0623308C820015069E /* UIView.swift in Sources */,
 				9F303C602340A3FD000848F1 /* FilesInteractor.swift in Sources */,

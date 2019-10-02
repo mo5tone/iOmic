@@ -18,10 +18,9 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
     @IBOutlet private var collectionView: UICollectionView!
     var presenter: DiscoveryViewOutputProtocol!
     private lazy var sourceBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_tune"), style: .plain, target: nil, action: nil)
+    private lazy var updatedTimeBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_time_outline"), style: .plain, target: nil, action: nil)
     private lazy var searchController: UISearchController = .init(searchResultsController: nil)
     private lazy var refreshControl: UIRefreshControl = .init()
-    private var query: String = ""
-    private var fetchingSort: Source.FetchingSort = .popularity
     private var books: [Book] = []
 
     // MARK: Public instance methods
@@ -57,6 +56,7 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
     private func setupView() {
         navigationItem.leftBarButtonItem = sourceBarButtonItem
         navigationItem.title = "Discovery"
+        navigationItem.rightBarButtonItem = updatedTimeBarButtonItem
 
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -74,31 +74,36 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
     }
 
     private func setupBinding() {
+        let query: BehaviorSubject<String> = .init(value: "")
+        let fetchingSort: BehaviorSubject<Source.FetchingSort> = .init(value: .popularity)
+        fetchingSort.map { $0 == .popularity ? #imageLiteral(resourceName: "ic_time_outline") : #imageLiteral(resourceName: "ic_time") }
+            .bind(to: updatedTimeBarButtonItem.rx.image)
+            .disposed(by: bag)
         sourceBarButtonItem.rx.tap
             .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in self?.presenter.presentSourcesView() })
             .disposed(by: bag)
-        searchController.searchBar.rx.searchButtonClicked
-            .withLatestFrom(searchController.searchBar.rx.text)
-            .subscribe(onNext: { [weak self] in self?.search(where: $0) })
+        updatedTimeBarButtonItem.rx.tap
+            .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
+            .withLatestFrom(fetchingSort)
+            .subscribe(onNext: { fetchingSort.on(.next($0 == .popularity ? .updatedDate : .popularity)) })
+            .disposed(by: bag)
+        searchController.searchBar.rx.text
+            .map { $0 ?? "" }
+            .bind(to: query)
             .disposed(by: bag)
         searchController.searchBar.rx.cancelButtonClicked
-            .subscribe { [weak self] _ in self?.refresh() }
+            .map { _ in "" }
+            .bind(to: query)
             .disposed(by: bag)
-        refreshControl.rx.controlEvent(.valueChanged)
-            .subscribe(onNext: { [weak self] in self?.refresh() })
+        let refresh = Observable.merge([updatedTimeBarButtonItem.rx.tap, searchController.searchBar.rx.searchButtonClicked, searchController.searchBar.rx.cancelButtonClicked, refreshControl.rx.controlEvent(.valueChanged)].map { $0.asObservable() })
+        let loadMore = collectionView.rx.loadMore(when: 100)
+        refresh.withLatestFrom(Observable.combineLatest(query, fetchingSort))
+            .subscribe(onNext: { [weak self] query, fetchingSort in self?.presenter.loadContent(where: query, sortedBy: fetchingSort, refresh: true) })
             .disposed(by: bag)
-    }
-
-    private func refresh() {
-        query = ""
-        fetchingSort = .popularity
-        presenter.loadContent(where: query, sortedBy: fetchingSort, refresh: true)
-    }
-
-    private func search(where text: String?) {
-        query = text ?? ""
-        presenter.loadContent(where: query, sortedBy: fetchingSort, refresh: true)
+        loadMore.withLatestFrom(Observable.combineLatest(query, fetchingSort))
+            .subscribe(onNext: { [weak self] query, fetchingSort in self?.presenter.loadContent(where: query, sortedBy: fetchingSort, refresh: false) })
+            .disposed(by: bag)
     }
 }
 
@@ -138,12 +143,6 @@ extension DiscoveryViewController: UICollectionViewDataSourcePrefetching {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension DiscoveryViewController: UICollectionViewDelegateFlowLayout {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y - max(0, scrollView.contentSize.height - scrollView.frame.height) > 100 {
-            presenter.loadContent(where: query, sortedBy: fetchingSort, refresh: false)
-        }
-    }
-
     func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt _: IndexPath) {
         cell.contentView.layer.cornerRadius = 8.0
         cell.contentView.layer.borderWidth = 1.0
