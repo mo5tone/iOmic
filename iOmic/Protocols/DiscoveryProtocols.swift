@@ -26,18 +26,17 @@ protocol DiscoveryInteractorProtocol: AnyObject {
 }
 
 protocol DiscoveryWireframeOutputProtocol: AnyObject {
-    func update(source: Source)
+    func didSelectSource(_ source: Source)
 }
 
 protocol DiscoveryViewOutputProtocol: AnyObject {
     func viewDidLoad()
-    func didTapSourcesBarButtonItem()
-    func refresh()
-    func loadMore()
+    func presentSourcesViewController()
+    func loadContent(where query: String, sortedBy fetchingSort: Source.FetchingSort, refresh: Bool)
 }
 
 protocol DiscoveryInteractorOutputProtocol: AnyObject {
-    func update(books: [Book])
+    func didFetchBooks(_ books: [Book])
 }
 
 protocol DiscoveryPresenterProtocol: AnyObject {

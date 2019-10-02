@@ -43,6 +43,6 @@ class DiscoveryWireframe: DiscoveryWireframeProtocol {
 
 extension DiscoveryWireframe: SourcesModuleDelegate {
     func didSelectSource(_ source: Source) {
-        presenter?.update(source: source)
+        presenter?.didSelectSource(source)
     }
 }

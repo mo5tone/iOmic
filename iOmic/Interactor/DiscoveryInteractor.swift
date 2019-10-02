@@ -17,7 +17,7 @@ class DiscoveryInteractor: DiscoveryInteractorProtocol {
     func fetchBooks(in source: SourceProtocol, where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort) {
         source.fetchBooks(where: page, query: query, sortedBy: fetchingSort)
             .catchErrorJustReturn([])
-            .subscribe(onSuccess: { [weak self] in self?.presenter?.update(books: $0) })
+            .subscribe(onSuccess: { [weak self] in self?.presenter?.didFetchBooks($0) })
             .disposed(by: bag)
     }
 }

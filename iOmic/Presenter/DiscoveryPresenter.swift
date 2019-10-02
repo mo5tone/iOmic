@@ -14,8 +14,6 @@ class DiscoveryPresenter: DiscoveryPresenterProtocol {
     private(set) var wireframe: DiscoveryWireframeProtocol
     private var source: Source = .dongmanzhijia
     private var page: Int = 0
-    private var query: String = ""
-    private var fetchingSort: Source.FetchingSort = .popularity
 
     // MARK: - Init
 
@@ -24,21 +22,15 @@ class DiscoveryPresenter: DiscoveryPresenterProtocol {
         self.interactor = interactor
         self.wireframe = wireframe
     }
-
-    // MARK: - Private instance methods
-
-    private func load() {
-        interactor.fetchBooks(in: source, where: page, query: query, sortedBy: fetchingSort)
-    }
 }
 
 // MARK: - DiscoveryWireframeOutputProtocol
 
 extension DiscoveryPresenter: DiscoveryWireframeOutputProtocol {
-    func update(source: Source) {
+    func didSelectSource(_ source: Source) {
         guard self.source != source else { return }
         self.source = source
-        refresh()
+        loadContent()
     }
 }
 
@@ -46,30 +38,23 @@ extension DiscoveryPresenter: DiscoveryWireframeOutputProtocol {
 
 extension DiscoveryPresenter: DiscoveryViewOutputProtocol {
     func viewDidLoad() {
-        load()
+        loadContent()
     }
 
-    func didTapSourcesBarButtonItem() {
+    func presentSourcesViewController() {
         wireframe.presentSourcesModule(current: source)
     }
 
-    func refresh() {
-        page = 0
-        query = ""
-        fetchingSort = .popularity
-        load()
-    }
-
-    func loadMore() {
-        page += 1
-        load()
+    func loadContent(where query: String = "", sortedBy fetchingSort: Source.FetchingSort = .popularity, refresh: Bool = true) {
+        page = refresh ? 0 : page + 1
+        interactor.fetchBooks(in: source, where: page, query: query, sortedBy: fetchingSort)
     }
 }
 
 // MARK: - DiscoveryInteractorOutputProtocol
 
 extension DiscoveryPresenter: DiscoveryInteractorOutputProtocol {
-    func update(books: [Book]) {
+    func didFetchBooks(_ books: [Book]) {
         if page > 0 {
             view?.add(more: books)
         } else {

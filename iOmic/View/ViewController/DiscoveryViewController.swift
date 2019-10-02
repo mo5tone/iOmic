@@ -18,8 +18,11 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
     @IBOutlet private var collectionView: UICollectionView!
     var presenter: DiscoveryViewOutputProtocol!
     private lazy var sourceBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_tune"), style: .plain, target: nil, action: nil)
+    private lazy var searchController: UISearchController = .init(searchResultsController: nil)
     private lazy var refreshControl: UIRefreshControl = .init()
     private var source: Source = .dongmanzhijia
+    private var query: String = ""
+    private var fetchingSort: Source.FetchingSort = .popularity
     private var books: [Book] = []
 
     // MARK: Public instance methods
@@ -61,8 +64,14 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
         navigationItem.leftBarButtonItem = sourceBarButtonItem
         navigationItem.title = source.name
 
-        collectionView.collectionViewLayout = UICollectionViewFlowLayout()
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Keyword"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+
         collectionView.refreshControl = refreshControl
+        collectionView.collectionViewLayout = UICollectionViewFlowLayout()
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
         collectionView.registerCell(BookCollectionViewCell.self)
         collectionView.delegate = self
@@ -73,12 +82,36 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
     private func setupBinding() {
         sourceBarButtonItem.rx.tap
             .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in self?.presenter.didTapSourcesBarButtonItem() })
+            .subscribe(onNext: { [weak self] in self?.presenter.presentSourcesViewController() })
+            .disposed(by: bag)
+        searchController.searchBar.rx.searchButtonClicked
+            .withLatestFrom(searchController.searchBar.rx.text)
+            .subscribe(onNext: { [weak self] in self?.search(where: $0) })
+            .disposed(by: bag)
+        searchController.searchBar.rx.cancelButtonClicked
+            .subscribe { [weak self] _ in self?.refresh() }
             .disposed(by: bag)
         refreshControl.rx.controlEvent(.valueChanged)
-            .subscribe(onNext: { [weak self] in self?.presenter.refresh() })
+            .subscribe(onNext: { [weak self] in self?.refresh() })
             .disposed(by: bag)
     }
+
+    private func refresh() {
+        query = ""
+        fetchingSort = .popularity
+        presenter.loadContent(where: query, sortedBy: fetchingSort, refresh: true)
+    }
+
+    private func search(where text: String?) {
+        query = text ?? ""
+        presenter.loadContent(where: query, sortedBy: fetchingSort, refresh: true)
+    }
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension DiscoveryViewController: UISearchResultsUpdating {
+    func updateSearchResults(for _: UISearchController) {}
 }
 
 // MARK: - UICollectionViewDataSource
@@ -104,19 +137,14 @@ extension DiscoveryViewController: UICollectionViewDataSourcePrefetching {
         let resources = indexPaths.map { books[$0.item] }.compactMap { URL(string: $0.thumbnailUrl ?? "") }
         ImagePrefetcher(resources: resources, options: [.requestModifier(source.imageDownloadRequestModifier)]).start()
     }
-
-    func collectionView(_: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-        let resources = indexPaths.map { books[$0.item] }.compactMap { URL(string: $0.thumbnailUrl ?? "") }
-        ImagePrefetcher(resources: resources, options: [.requestModifier(source.imageDownloadRequestModifier)]).stop()
-    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension DiscoveryViewController: UICollectionViewDelegateFlowLayout {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y - max(0, scrollView.contentSize.height - scrollView.frame.height) > 20 {
-            presenter.loadMore()
+        if scrollView.contentOffset.y - max(0, scrollView.contentSize.height - scrollView.frame.height) > 100 {
+            presenter.loadContent(where: query, sortedBy: fetchingSort, refresh: false)
         }
     }
 

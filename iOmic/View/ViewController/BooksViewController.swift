@@ -43,12 +43,13 @@ class BooksViewController: UIViewController, BooksViewProtocol {
         navigationItem.leftBarButtonItem = addBarButtonItem
         navigationItem.titleView = segmentedControl
 
+        collectionView.collectionViewLayout = UICollectionViewFlowLayout()
         collectionView.contentInset = .init(top: 8, left: 8, bottom: 8, right: 8)
         collectionView.registerCell(BookCollectionViewCell.self)
         collectionView.registerSupplementaryView(BookCollectionHeader.self, of: UICollectionView.elementKindSectionHeader)
+        collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
-        collectionView.delegate = self
     }
 }
 
