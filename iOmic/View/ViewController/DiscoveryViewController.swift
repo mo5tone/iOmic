@@ -80,7 +80,7 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
     private func setupBinding() {
         sourceBarButtonItem.rx.tap
             .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in self?.presenter.presentSourcesViewController() })
+            .subscribe(onNext: { [weak self] in self?.presenter.presentSourcesView() })
             .disposed(by: bag)
         searchController.searchBar.rx.searchButtonClicked
             .withLatestFrom(searchController.searchBar.rx.text)

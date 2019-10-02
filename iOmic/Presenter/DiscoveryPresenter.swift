@@ -41,7 +41,7 @@ extension DiscoveryPresenter: DiscoveryViewOutputProtocol {
         loadContent()
     }
 
-    func presentSourcesViewController() {
+    func presentSourcesView() {
         wireframe.presentSourcesModule(current: source)
     }
 

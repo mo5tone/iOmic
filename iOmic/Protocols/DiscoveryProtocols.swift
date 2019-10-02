@@ -31,7 +31,7 @@ protocol DiscoveryWireframeOutputProtocol: AnyObject {
 
 protocol DiscoveryViewOutputProtocol: AnyObject {
     func viewDidLoad()
-    func presentSourcesViewController()
+    func presentSourcesView()
     func loadContent(where query: String, sortedBy fetchingSort: Source.FetchingSort, refresh: Bool)
 }
 
