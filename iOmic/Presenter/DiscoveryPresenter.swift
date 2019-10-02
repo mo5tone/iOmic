@@ -55,10 +55,6 @@ extension DiscoveryPresenter: DiscoveryViewOutputProtocol {
 
 extension DiscoveryPresenter: DiscoveryInteractorOutputProtocol {
     func didFetchBooks(_ books: [Book]) {
-        if page > 0 {
-            view?.add(more: books)
-        } else {
-            view?.update(source: source, books: books)
-        }
+        view?.reload(source: source, more: page > 0, books: books)
     }
 }

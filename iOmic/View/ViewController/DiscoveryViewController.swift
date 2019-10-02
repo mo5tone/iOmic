@@ -26,16 +26,12 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
 
     // MARK: Public instance methods
 
-    func update(source: Source, books: [Book]) {
+    func reload(source: Source, more: Bool, books: [Book]) {
         navigationItem.title = source.name
         refreshControl.endRefreshing()
-        collectionView.reload(using: .init(source: self.books, target: books)) { self.books = $0 }
-    }
-
-    func add(more books: [Book]) {
-        var newBooks: [Book] = .init(self.books)
-        newBooks.append(contentsOf: books)
-        collectionView.reload(using: .init(source: self.books, target: newBooks)) { self.books = $0 }
+        var target = books
+        if more { target.insert(contentsOf: self.books, at: 0) }
+        collectionView.reload(using: .init(source: self.books, target: target)) { self.books = $0 }
     }
 
     // MARK: - Overrides

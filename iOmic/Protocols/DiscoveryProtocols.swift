@@ -16,8 +16,7 @@ protocol DiscoveryWireframeProtocol: AnyObject {
 
 protocol DiscoveryViewProtocol: AnyObject {
     var presenter: DiscoveryViewOutputProtocol! { get set }
-    func update(source: Source, books: [Book])
-    func add(more books: [Book])
+    func reload(source: Source, more: Bool, books: [Book])
 }
 
 protocol DiscoveryInteractorProtocol: AnyObject {
