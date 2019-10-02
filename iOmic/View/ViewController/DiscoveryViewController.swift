@@ -20,7 +20,6 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
     private lazy var sourceBarButtonItem: UIBarButtonItem = .init(image: #imageLiteral(resourceName: "ic_navigationbar_tune"), style: .plain, target: nil, action: nil)
     private lazy var searchController: UISearchController = .init(searchResultsController: nil)
     private lazy var refreshControl: UIRefreshControl = .init()
-    private var source: Source = .dongmanzhijia
     private var query: String = ""
     private var fetchingSort: Source.FetchingSort = .popularity
     private var books: [Book] = []
@@ -28,7 +27,6 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
     // MARK: Public instance methods
 
     func update(source: Source, books: [Book]) {
-        self.source = source
         navigationItem.title = source.name
         refreshControl.endRefreshing()
         collectionView.reload(using: .init(source: self.books, target: books)) { self.books = $0 }
@@ -62,7 +60,7 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
 
     private func setupView() {
         navigationItem.leftBarButtonItem = sourceBarButtonItem
-        navigationItem.title = source.name
+        navigationItem.title = "Discovery"
 
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -134,8 +132,10 @@ extension DiscoveryViewController: UICollectionViewDataSource {
 
 extension DiscoveryViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        let resources = indexPaths.map { books[$0.item] }.compactMap { URL(string: $0.thumbnailUrl ?? "") }
-        ImagePrefetcher(resources: resources, options: [.requestModifier(source.imageDownloadRequestModifier)]).start()
+        let prefetchingItems = indexPaths.map { books[$0.item] }
+        Source.values
+            .map { source in (source, prefetchingItems.filter { $0.source == source }.compactMap { URL(string: $0.thumbnailUrl ?? "") }) }
+            .forEach { source, resources in ImagePrefetcher(resources: resources, options: [.requestModifier(source.imageDownloadRequestModifier)]).start() }
     }
 }
 
