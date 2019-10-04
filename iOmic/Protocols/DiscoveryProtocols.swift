@@ -11,7 +11,8 @@ import UIKit
 protocol DiscoveryWireframeProtocol: AnyObject {
     var presenter: DiscoveryWireframeOutputProtocol? { get }
     static func create() -> UIViewController
-    func presentSourcesModule(current source: Source)
+    func showDetailSourcesView(current source: Source)
+    func showChaptersView(book: Book)
 }
 
 protocol DiscoveryViewProtocol: AnyObject {
@@ -21,7 +22,7 @@ protocol DiscoveryViewProtocol: AnyObject {
 
 protocol DiscoveryInteractorProtocol: AnyObject {
     var presenter: DiscoveryInteractorOutputProtocol? { get }
-    func fetchBooks(in source: SourceProtocol, where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort)
+    func fetch(in source: SourceProtocol, page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort)
 }
 
 protocol DiscoveryWireframeOutputProtocol: AnyObject {
@@ -30,12 +31,13 @@ protocol DiscoveryWireframeOutputProtocol: AnyObject {
 
 protocol DiscoveryViewOutputProtocol: AnyObject {
     func viewDidLoad()
-    func presentSourcesView()
-    func loadContent(where query: String, sortedBy fetchingSort: Source.FetchingSort, refresh: Bool)
+    func showDetailSourcesView()
+    func fetch(where query: String, sortedBy fetchingSort: Source.FetchingSort, refresh: Bool)
+    func showChaptersView(book: Book)
 }
 
 protocol DiscoveryInteractorOutputProtocol: AnyObject {
-    func didFetchBooks(_ books: [Book])
+    func didFetch(books: [Book])
 }
 
 protocol DiscoveryPresenterProtocol: AnyObject {

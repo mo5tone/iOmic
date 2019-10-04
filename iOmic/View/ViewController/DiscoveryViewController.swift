@@ -81,7 +81,7 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
             .disposed(by: bag)
         sourceBarButtonItem.rx.tap
             .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in self?.presenter.presentSourcesView() })
+            .subscribe(onNext: { [weak self] in self?.presenter.showDetailSourcesView() })
             .disposed(by: bag)
         updatedTimeBarButtonItem.rx.tap
             .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
@@ -99,10 +99,10 @@ class DiscoveryViewController: UIViewController, DiscoveryViewProtocol {
         let refresh = Observable.merge([updatedTimeBarButtonItem.rx.tap, searchController.searchBar.rx.searchButtonClicked, searchController.searchBar.rx.cancelButtonClicked, refreshControl.rx.controlEvent(.valueChanged)].map { $0.asObservable() })
         let loadMore = collectionView.rx.loadMore(when: 100)
         refresh.withLatestFrom(Observable.combineLatest(query, fetchingSort))
-            .subscribe(onNext: { [weak self] query, fetchingSort in self?.presenter.loadContent(where: query, sortedBy: fetchingSort, refresh: true) })
+            .subscribe(onNext: { [weak self] query, fetchingSort in self?.presenter.fetch(where: query, sortedBy: fetchingSort, refresh: true) })
             .disposed(by: bag)
         loadMore.withLatestFrom(Observable.combineLatest(query, fetchingSort))
-            .subscribe(onNext: { [weak self] query, fetchingSort in self?.presenter.loadContent(where: query, sortedBy: fetchingSort, refresh: false) })
+            .subscribe(onNext: { [weak self] query, fetchingSort in self?.presenter.fetch(where: query, sortedBy: fetchingSort, refresh: false) })
             .disposed(by: bag)
     }
 }
@@ -143,6 +143,10 @@ extension DiscoveryViewController: UICollectionViewDataSourcePrefetching {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension DiscoveryViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter.showChaptersView(book: books[indexPath.item])
+    }
+
     func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt _: IndexPath) {
         cell.contentView.layer.cornerRadius = 8.0
         cell.contentView.layer.borderWidth = 1.0

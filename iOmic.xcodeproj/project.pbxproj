@@ -21,6 +21,11 @@
 		559302A82312CE750021C170 /* DongManZhiJia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A72312CE750021C170 /* DongManZhiJia.swift */; };
 		559302AA2312CF180021C170 /* ManHuaRen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559302A92312CF180021C170 /* ManHuaRen.swift */; };
 		559D469D2344A20D0032EFC0 /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D469C2344A20D0032EFC0 /* UIScrollView.swift */; };
+		55BB99C6234573CB0002B9EB /* ChaptersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB99C1234573CB0002B9EB /* ChaptersPresenter.swift */; };
+		55BB99C7234573CB0002B9EB /* ChaptersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB99C2234573CB0002B9EB /* ChaptersViewController.swift */; };
+		55BB99C8234573CB0002B9EB /* ChaptersProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB99C3234573CB0002B9EB /* ChaptersProtocols.swift */; };
+		55BB99C9234573CB0002B9EB /* ChaptersInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB99C4234573CB0002B9EB /* ChaptersInteractor.swift */; };
+		55BB99CA234573CB0002B9EB /* ChaptersWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB99C5234573CB0002B9EB /* ChaptersWireframe.swift */; };
 		55BBC2F12340EE6F006B9746 /* SourcesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BBC2EC2340EE6F006B9746 /* SourcesPresenter.swift */; };
 		55BBC2F22340EE6F006B9746 /* SourcesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BBC2ED2340EE6F006B9746 /* SourcesViewController.swift */; };
 		55BBC2F32340EE6F006B9746 /* SourcesProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BBC2EE2340EE6F006B9746 /* SourcesProtocols.swift */; };
@@ -147,6 +152,11 @@
 		559D469C2344A20D0032EFC0 /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		55B19F70231AB3A500CFBB02 /* QuickLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLayout.framework; path = Carthage/Build/iOS/QuickLayout.framework; sourceTree = "<group>"; };
 		55B19F72231AB3B600CFBB02 /* SwiftEntryKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftEntryKit.framework; path = Carthage/Build/iOS/SwiftEntryKit.framework; sourceTree = "<group>"; };
+		55BB99C1234573CB0002B9EB /* ChaptersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersPresenter.swift; sourceTree = "<group>"; };
+		55BB99C2234573CB0002B9EB /* ChaptersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersViewController.swift; sourceTree = "<group>"; };
+		55BB99C3234573CB0002B9EB /* ChaptersProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersProtocols.swift; sourceTree = "<group>"; };
+		55BB99C4234573CB0002B9EB /* ChaptersInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersInteractor.swift; sourceTree = "<group>"; };
+		55BB99C5234573CB0002B9EB /* ChaptersWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersWireframe.swift; sourceTree = "<group>"; };
 		55BBC2EC2340EE6F006B9746 /* SourcesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesPresenter.swift; sourceTree = "<group>"; };
 		55BBC2ED2340EE6F006B9746 /* SourcesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesViewController.swift; sourceTree = "<group>"; };
 		55BBC2EE2340EE6F006B9746 /* SourcesProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesProtocols.swift; sourceTree = "<group>"; };
@@ -443,6 +453,7 @@
 				9F303C582340A3FD000848F1 /* FilesPresenter.swift */,
 				9F303C622340A48C000848F1 /* SettingsPresenter.swift */,
 				55BBC2EC2340EE6F006B9746 /* SourcesPresenter.swift */,
+				55BB99C1234573CB0002B9EB /* ChaptersPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -456,6 +467,7 @@
 				9F303C5B2340A3FD000848F1 /* FilesInteractor.swift */,
 				9F303C652340A48C000848F1 /* SettingsInteractor.swift */,
 				55BBC2EF2340EE6F006B9746 /* SourcesInteractor.swift */,
+				55BB99C4234573CB0002B9EB /* ChaptersInteractor.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -469,6 +481,7 @@
 				9F303C5A2340A3FD000848F1 /* FilesProtocols.swift */,
 				9F303C642340A48C000848F1 /* SettingsProtocols.swift */,
 				55BBC2EE2340EE6F006B9746 /* SourcesProtocols.swift */,
+				55BB99C3234573CB0002B9EB /* ChaptersProtocols.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -526,6 +539,7 @@
 				9F303C5C2340A3FD000848F1 /* FilesWireframe.swift */,
 				9F303C662340A48C000848F1 /* SettingsWireframe.swift */,
 				55BBC2F02340EE6F006B9746 /* SourcesWireframe.swift */,
+				55BB99C5234573CB0002B9EB /* ChaptersWireframe.swift */,
 			);
 			path = Wireframe;
 			sourceTree = "<group>";
@@ -539,6 +553,7 @@
 				9F303C592340A3FD000848F1 /* FilesViewController.swift */,
 				9F303C632340A48C000848F1 /* SettingsViewController.swift */,
 				55BBC2ED2340EE6F006B9746 /* SourcesViewController.swift */,
+				55BB99C2234573CB0002B9EB /* ChaptersViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -880,7 +895,9 @@
 				9F303C6F23419BD4000848F1 /* Int.swift in Sources */,
 				9F303C522340A066000848F1 /* DiscoveryInteractor.swift in Sources */,
 				559302A82312CE750021C170 /* DongManZhiJia.swift in Sources */,
+				55BB99C9234573CB0002B9EB /* ChaptersInteractor.swift in Sources */,
 				9F303C672340A48C000848F1 /* SettingsPresenter.swift in Sources */,
+				55BB99CA234573CB0002B9EB /* ChaptersWireframe.swift in Sources */,
 				9F8418FD2317B35300A503BE /* BookCollectionViewCell.swift in Sources */,
 				9F93FEFA234092FE007D6F21 /* BooksWireframe.swift in Sources */,
 				9FA8DEFD23306EF60003E278 /* UIBarButtonItem.swift in Sources */,
@@ -890,6 +907,7 @@
 				9F303C602340A3FD000848F1 /* FilesInteractor.swift in Sources */,
 				55BBC2F82340EF23006B9746 /* SourceTableViewCell.swift in Sources */,
 				9FE16855234070C200D85E7A /* TabBarWireframe.swift in Sources */,
+				55BB99C7234573CB0002B9EB /* ChaptersViewController.swift in Sources */,
 				9FE16851234070C200D85E7A /* TabBarPresenter.swift in Sources */,
 				555C1CCE2319582900E388D6 /* Reusable.swift in Sources */,
 				9F2F6F6C2333426100E5996A /* WCDB.Database.swift in Sources */,
@@ -900,6 +918,7 @@
 				9F93FEF9234092FE007D6F21 /* BooksInteractor.swift in Sources */,
 				9FC348AD232F471D00310987 /* Uploader.swift in Sources */,
 				9F303C692340A48C000848F1 /* SettingsProtocols.swift in Sources */,
+				55BB99C8234573CB0002B9EB /* ChaptersProtocols.swift in Sources */,
 				9F93FEF6234092FE007D6F21 /* BooksPresenter.swift in Sources */,
 				9F303C612340A3FD000848F1 /* FilesWireframe.swift in Sources */,
 				55342F622310B6BB00FA141B /* AppDelegate.swift in Sources */,
@@ -908,6 +927,7 @@
 				9F303C5D2340A3FD000848F1 /* FilesPresenter.swift in Sources */,
 				55BEAA9C23124F0600A6A41D /* Page.swift in Sources */,
 				55BBC2F32340EE6F006B9746 /* SourcesProtocols.swift in Sources */,
+				55BB99C6234573CB0002B9EB /* ChaptersPresenter.swift in Sources */,
 				55BEAA9A23124EFF00A6A41D /* Chapter.swift in Sources */,
 				9F303C4F2340A066000848F1 /* DiscoveryPresenter.swift in Sources */,
 				55BEAA9823124EF700A6A41D /* Book.swift in Sources */,
@@ -1118,7 +1138,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iOmic/iOmic-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1142,7 +1162,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iOmic/iOmic-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

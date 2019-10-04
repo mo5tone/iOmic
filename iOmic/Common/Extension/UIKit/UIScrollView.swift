@@ -12,11 +12,9 @@ import UIKit
 
 extension Reactive where Base: UIScrollView {
     func loadMore(when limit: CGFloat, isVertical: Bool = true) -> Observable<Void> {
-        return contentOffset.map { [weak scrollView = self.base] _ -> CGFloat in
+        return contentOffset.map { [weak scrollView = self.base] offset -> CGFloat in
             guard let scrollView = scrollView else { return 0 }
-            return isVertical ? scrollView.contentOffset.y - max(0, scrollView.contentSize.height - scrollView.frame.height) : scrollView.contentOffset.x - max(0, scrollView.contentSize.width - scrollView.frame.width)
-        }
-        .filter { $0 > limit }
-        .map { _ in () }
+            return isVertical ? offset.y - max(0, scrollView.contentSize.height - scrollView.frame.height) : offset.x - max(0, scrollView.contentSize.width - scrollView.frame.width)
+        }.filter { $0 > limit }.map { _ in () }
     }
 }

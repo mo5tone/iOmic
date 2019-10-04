@@ -141,7 +141,7 @@ extension DongManZhiJia: SourceProtocol {
                         let prefix = item["title"].stringValue
                         item["data"].arrayValue.forEach { item1 in
                             let chapterId = item1["chapter_id"].intValue
-                            var chapter = Chapter(book: book, url: "/chapter/\(bookId)/\(chapterId).json")
+                            var chapter = Chapter(source: book.source, url: "/chapter/\(bookId)/\(chapterId).json")
                             let chapterTitle = item1["chapter_title"].stringValue
                             chapter.name = "[\(prefix)]\(chapterTitle)"
                             chapter.updateAt = Date(timeIntervalSince1970: item1["updatetime"].doubleValue)
@@ -175,7 +175,7 @@ extension DongManZhiJia: SourceProtocol {
                         let prefix = item["title"].stringValue
                         item["data"].arrayValue.forEach { item1 in
                             let chapterId = item1["chapter_id"].intValue
-                            var chapter = Chapter(book: detail, url: "/chapter/\(bookId)/\(chapterId).json")
+                            var chapter = Chapter(source: book.source, url: "/chapter/\(bookId)/\(chapterId).json")
                             let chapterTitle = item1["chapter_title"].stringValue
                             chapter.name = "[\(prefix)]\(chapterTitle)"
                             chapter.updateAt = Date(timeIntervalSince1970: item1["updatetime"].doubleValue)
@@ -198,7 +198,7 @@ extension DongManZhiJia: SourceProtocol {
                     let json = try JSON(data: data)
                     var pages = [Page]()
                     json["page_url"].arrayValue.enumerated().forEach { offset, element in
-                        var page = Page(chapter: chapter, index: offset)
+                        var page = Page(source: chapter.source, chapter: chapter, index: offset)
                         page.imageUrl = element.string
                         pages.append(page)
                     }

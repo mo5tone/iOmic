@@ -12,7 +12,7 @@ class DiscoveryPresenter: DiscoveryPresenterProtocol {
     private(set) weak var view: DiscoveryViewProtocol?
     private(set) var interactor: DiscoveryInteractorProtocol
     private(set) var wireframe: DiscoveryWireframeProtocol
-    private var source: Source = .dongmanzhijia
+    private var source: Source = Source.values[0]
     private var page: Int = 0
 
     // MARK: - Init
@@ -30,7 +30,7 @@ extension DiscoveryPresenter: DiscoveryWireframeOutputProtocol {
     func didSelectSource(_ source: Source) {
         guard self.source != source else { return }
         self.source = source
-        loadContent()
+        fetch()
     }
 }
 
@@ -38,23 +38,27 @@ extension DiscoveryPresenter: DiscoveryWireframeOutputProtocol {
 
 extension DiscoveryPresenter: DiscoveryViewOutputProtocol {
     func viewDidLoad() {
-        loadContent()
+        fetch()
     }
 
-    func presentSourcesView() {
-        wireframe.presentSourcesModule(current: source)
+    func showDetailSourcesView() {
+        wireframe.showDetailSourcesView(current: source)
     }
 
-    func loadContent(where query: String = "", sortedBy fetchingSort: Source.FetchingSort = .popularity, refresh: Bool = true) {
+    func fetch(where query: String = "", sortedBy fetchingSort: Source.FetchingSort = .popularity, refresh: Bool = true) {
         page = refresh ? 0 : page + 1
-        interactor.fetchBooks(in: source, where: page, query: query, sortedBy: fetchingSort)
+        interactor.fetch(in: source, page: page, query: query, sortedBy: fetchingSort)
+    }
+
+    func showChaptersView(book: Book) {
+        wireframe.showChaptersView(book: book)
     }
 }
 
 // MARK: - DiscoveryInteractorOutputProtocol
 
 extension DiscoveryPresenter: DiscoveryInteractorOutputProtocol {
-    func didFetchBooks(_ books: [Book]) {
+    func didFetch(books: [Book]) {
         view?.reload(source: source, more: page > 0, books: books)
     }
 }

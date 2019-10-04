@@ -13,19 +13,6 @@ import Kingfisher
 import RxSwift
 import WCDBSwift
 
-protocol SourceProtocol {
-    var name: String { get }
-    var version: String { get }
-    var imageDownloadRequestModifier: ImageDownloadRequestModifier { get }
-    var available: Bool { get set }
-
-    func fetchBooks(where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort) -> Single<[Book]>
-    func fetchBook(where book: Book) -> Single<Book>
-    func fetchChapters(where book: Book) -> Single<[Chapter]>
-    func fetchBookAndChapters(where book: Book) -> Single<(Book, [Chapter])>
-    func fetchPages(where chapter: Chapter) -> Single<[Page]>
-}
-
 enum Source: String, ColumnCodable, Differentiable {
     static var values: [Source] = [.dongmanzhijia, .manhuaren]
 
@@ -43,7 +30,7 @@ enum Source: String, ColumnCodable, Differentiable {
     // MARK: - ColumnCodable
 
     static var columnType: ColumnType { return .text }
-    func archivedValue() -> FundamentalValue { return FundamentalValue(rawValue) }
+    func archivedValue() -> FundamentalValue { return .init(rawValue) }
     init?(with value: FundamentalValue) { self.init(rawValue: value.stringValue) }
 
     // MARK: - IdentifiableType
@@ -56,6 +43,19 @@ enum Source: String, ColumnCodable, Differentiable {
     enum FetchingSort {
         case popularity, updatedDate
     }
+}
+
+protocol SourceProtocol {
+    var name: String { get }
+    var version: String { get }
+    var imageDownloadRequestModifier: ImageDownloadRequestModifier { get }
+    var available: Bool { get set }
+
+    func fetchBooks(where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort) -> Single<[Book]>
+    func fetchBook(where book: Book) -> Single<Book>
+    func fetchChapters(where book: Book) -> Single<[Chapter]>
+    func fetchBookAndChapters(where book: Book) -> Single<(Book, [Chapter])>
+    func fetchPages(where chapter: Chapter) -> Single<[Page]>
 }
 
 extension Source: SourceProtocol {

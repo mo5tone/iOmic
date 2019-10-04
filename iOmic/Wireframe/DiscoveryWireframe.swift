@@ -27,9 +27,14 @@ class DiscoveryWireframe: DiscoveryWireframeProtocol {
         return navigationController
     }
 
-    func presentSourcesModule(current source: Source) {
-        let viewController = SourcesWireframe.create(with: source, delegate: self)
-        self.viewController?.present(viewController, animated: true, completion: nil)
+    func showDetailSourcesView(current source: Source) {
+        let sourcesView = SourcesWireframe.create(with: source, delegate: self)
+        viewController?.showDetailViewController(sourcesView, sender: viewController)
+    }
+
+    func showChaptersView(book: Book) {
+        let chaptersView = ChaptersWireframe.create(with: book)
+        viewController?.show(chaptersView, sender: viewController)
     }
 
     // MARK: - Init

@@ -16,7 +16,7 @@ struct Book: Differentiable, TableCodable, ColumnJSONCodable {
 
     typealias DifferenceIdentifier = String
 
-    var differenceIdentifier: Book.DifferenceIdentifier { return identity }
+    var differenceIdentifier: Book.DifferenceIdentifier { return "\(source.rawValue)#\(url)" }
 
     func isContentEqual(to source: Book) -> Bool {
         return thumbnailUrl == source.thumbnailUrl
@@ -26,7 +26,7 @@ struct Book: Differentiable, TableCodable, ColumnJSONCodable {
             && genre == source.genre
             && summary == source.summary
             && serialState == source.serialState
-            && isFavorited == source.isFavorited
+            && isFavorite == source.isFavorite
             && readAt == source.readAt
     }
 
@@ -36,9 +36,11 @@ struct Book: Differentiable, TableCodable, ColumnJSONCodable {
         // swiftlint:disable:next nesting
         typealias Root = Book
         static let objectRelationalMapping = TableBinding(CodingKeys.self)
-        case identity, source, url, thumbnailUrl = "thumbnail_url", title, artist, author, genre, summary, serialState = "serial_state", isFavorited = "is_favorited", readAt = "read_at"
-        static var columnConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
-            return [identity: .init(isPrimary: true, isAutoIncrement: false, onConflict: .replace)]
+        case source, url, thumbnailUrl = "thumbnail_url", title, artist, author, genre, summary, serialState = "serial_state", isFavorite = "is_favorite", readAt = "read_at"
+        static var tableConstraintBindings: [TableConstraintBinding.Name: TableConstraintBinding]? {
+            return [
+                "multiPrimaryBinding": MultiPrimaryBinding(indexesBy: [source, url], onConflict: .replace),
+            ]
         }
     }
 
@@ -52,13 +54,12 @@ struct Book: Differentiable, TableCodable, ColumnJSONCodable {
         // MARK: - ColumnCodable
 
         static var columnType: ColumnType { return .text }
-        func archivedValue() -> FundamentalValue { return FundamentalValue(rawValue) }
+        func archivedValue() -> FundamentalValue { return .init(rawValue) }
         init?(with value: FundamentalValue) { self.init(rawValue: value.stringValue) }
     }
 
     // MARK: - Properties
 
-    let identity: String
     let source: Source
     let url: String
     var thumbnailUrl: String?
@@ -68,7 +69,7 @@ struct Book: Differentiable, TableCodable, ColumnJSONCodable {
     var genre: String?
     var summary: String?
     var serialState: Book.SerialState = .unknown
-    var isFavorited: Bool = false
+    var isFavorite: Bool = false
     var readAt: Date?
 
     // MARK: - Init
@@ -76,6 +77,5 @@ struct Book: Differentiable, TableCodable, ColumnJSONCodable {
     init(source: Source, url: String) {
         self.source = source
         self.url = url
-        identity = "\(source.rawValue)#\(url)"
     }
 }

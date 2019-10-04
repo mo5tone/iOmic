@@ -21,7 +21,7 @@ class SourcesViewController: UIViewController, SourcesViewProtocol {
 
     // MARK: - Public instance methods
 
-    func update(sources: [Source], current source: Source) {
+    func reload(sources: [Source], current source: Source) {
         tableView.reload(using: .init(source: self.sources, target: sources), with: .fade, setData: { self.sources = $0 })
         if let row = self.sources.firstIndex(of: source) {
             tableView.selectRow(at: .init(row: row, section: 0), animated: true, scrollPosition: .middle)

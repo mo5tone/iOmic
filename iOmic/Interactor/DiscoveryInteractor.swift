@@ -14,10 +14,10 @@ class DiscoveryInteractor: DiscoveryInteractorProtocol {
 
     // MARK: - Public instance methods
 
-    func fetchBooks(in source: SourceProtocol, where page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort) {
+    func fetch(in source: SourceProtocol, page: Int, query: String, sortedBy fetchingSort: Source.FetchingSort) {
         source.fetchBooks(where: page, query: query, sortedBy: fetchingSort)
             .catchErrorJustReturn([])
-            .subscribe(onSuccess: { [weak self] in self?.presenter?.didFetchBooks($0) })
+            .subscribe(onSuccess: { [weak self] in self?.presenter?.didFetch(books: $0) })
             .disposed(by: bag)
     }
 }

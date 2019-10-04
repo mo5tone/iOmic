@@ -15,7 +15,7 @@ struct Page: Differentiable, TableCodable, ColumnJSONCodable {
 
     typealias DifferenceIdentifier = String
 
-    var differenceIdentifier: Chapter.DifferenceIdentifier { return identity }
+    var differenceIdentifier: Chapter.DifferenceIdentifier { return "\(source.rawValue)#\(chapterUrl)#\(index)" }
 
     func isContentEqual(to source: Page) -> Bool {
         return url == source.url
@@ -29,26 +29,28 @@ struct Page: Differentiable, TableCodable, ColumnJSONCodable {
         // swiftlint:disable:next nesting
         typealias Root = Page
         static let objectRelationalMapping = TableBinding(CodingKeys.self)
-        case identity, chapter, index = "page_index", url, imageUrl = "image_url", path
-        static var columnConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
-            return [identity: .init(isPrimary: true, isAutoIncrement: false, onConflict: .replace)]
+        case source, chapterUrl = "chapter_url", index = "page_index", url, imageUrl = "image_url", path
+        static var tableConstraintBindings: [TableConstraintBinding.Name: TableConstraintBinding]? {
+            return [
+                "multiPrimaryBinding": MultiPrimaryBinding(indexesBy: [source, chapterUrl, index], onConflict: .replace),
+            ]
         }
     }
 
     // MARK: - Properties
 
-    let identity: String
-    let chapter: Chapter
-    var index: Int
+    let source: Source
+    let chapterUrl: String
+    let index: Int
     var url: String?
     var imageUrl: String?
     var path: String?
 
     // MARK: - Init
 
-    init(chapter: Chapter, index: Int) {
-        self.chapter = chapter
+    init(source: Source, chapter: Chapter, index: Int) {
+        self.source = source
+        chapterUrl = chapter.url
         self.index = index
-        identity = "\(chapter.identity)#\(index)"
     }
 }

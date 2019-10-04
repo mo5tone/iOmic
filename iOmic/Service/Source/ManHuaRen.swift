@@ -170,7 +170,7 @@ extension ManHuaRen: SourceProtocol {
                         guard let array = json[type].array else { return }
                         array.forEach { ele in
                             guard let sectionId = ele["sectionId"].int else { return }
-                            var chapter = Chapter(book: book, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
+                            var chapter = Chapter(source: book.source, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
                             chapter.name = "\(type == "mangaEpisode" ? "[番外] " : "")\(ele["sectionName"].stringValue)\(ele["sectionTitle"].stringValue == "" ? "" : ": \(ele["sectionTitle"].stringValue)")"
                             chapter.updateAt = ele["releaseTime"].string?.convert2Date(dateFormat: "yyyy-MM-dd")
                             chapter.chapterNumber = ele["sectionSort"].double ?? -1
@@ -211,7 +211,7 @@ extension ManHuaRen: SourceProtocol {
                         guard let array = json[type].array else { return }
                         array.forEach { ele in
                             guard let sectionId = ele["sectionId"].int else { return }
-                            var chapter = Chapter(book: detail, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
+                            var chapter = Chapter(source: book.source, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
                             chapter.name = "\(type == "mangaEpisode" ? "[番外] " : "")\(ele["sectionName"].stringValue)\(ele["sectionTitle"].stringValue == "" ? "" : ": \(ele["sectionTitle"].stringValue)")"
                             chapter.updateAt = ele["releaseTime"].string?.convert2Date(dateFormat: "yyyy-MM-dd")
                             chapter.chapterNumber = ele["sectionSort"].double ?? -1
@@ -237,7 +237,7 @@ extension ManHuaRen: SourceProtocol {
                     let array = json["mangaSectionImages"].arrayValue
                     let query = json["query"].stringValue
                     return array.enumerated().compactMap { offset, ele -> Page? in
-                        var page = Page(chapter: chapter, index: offset)
+                        var page = Page(source: chapter.source, chapter: chapter, index: offset)
                         page.imageUrl = "\(host)\(ele.stringValue)\(query)"
                         return page
                     }

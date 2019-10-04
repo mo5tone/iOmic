@@ -21,7 +21,7 @@ protocol SourcesWireframeProtocol: AnyObject {
 
 protocol SourcesViewProtocol: AnyObject {
     var presenter: SourcesViewOutputProtocol! { get set }
-    func update(sources: [Source], current source: Source)
+    func reload(sources: [Source], current source: Source)
 }
 
 protocol SourcesInteractorProtocol: AnyObject {

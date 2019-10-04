@@ -32,7 +32,7 @@ extension SourcesPresenter: SourcesWireframeOutputProtocol {}
 
 extension SourcesPresenter: SourcesViewOutputProtocol {
     func viewDidLoad() {
-        view?.update(sources: interactor.sources, current: source)
+        view?.reload(sources: interactor.sources, current: source)
     }
 
     func didTapDoneBarButtonItem() {

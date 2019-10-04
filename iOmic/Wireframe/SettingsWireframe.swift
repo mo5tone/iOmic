@@ -23,7 +23,7 @@ class SettingsWireframe: SettingsWireframeProtocol {
         interactor.presenter = presenter
         wireframe.presenter = presenter
         let navigationController: UINavigationController = .init(rootViewController: view)
-        navigationController.tabBarItem = .init(title: "Files", image: #imageLiteral(resourceName: "ic_tabbar_setting"), tag: 3)
+        navigationController.tabBarItem = .init(title: "Settings", image: #imageLiteral(resourceName: "ic_tabbar_setting"), tag: 3)
         return navigationController
     }
 
