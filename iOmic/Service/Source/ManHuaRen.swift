@@ -170,7 +170,7 @@ extension ManHuaRen: SourceProtocol {
                         guard let array = json[type].array else { return }
                         array.forEach { ele in
                             guard let sectionId = ele["sectionId"].int else { return }
-                            var chapter = Chapter(source: book.source, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
+                            var chapter = Chapter(book: book, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
                             chapter.name = "\(type == "mangaEpisode" ? "[番外] " : "")\(ele["sectionName"].stringValue)\(ele["sectionTitle"].stringValue == "" ? "" : ": \(ele["sectionTitle"].stringValue)")"
                             chapter.updateAt = ele["releaseTime"].string?.convert2Date(dateFormat: "yyyy-MM-dd")
                             chapter.chapterNumber = ele["sectionSort"].double ?? -1
@@ -192,33 +192,33 @@ extension ManHuaRen: SourceProtocol {
                 case let .success(data):
                     guard let data = data else { throw Whoops.Networking.nilDataReponse(response) }
                     let json = try JSON(data: data)["response"]
-                    var detail = book
-                    detail.title = json["mangaName"].string
+                    var book = book
+                    book.title = json["mangaName"].string
                     if let thumbnailUrl = json["mangaCoverimageUrl"].string, !thumbnailUrl.isEmpty {
-                        detail.thumbnailUrl = thumbnailUrl
+                        book.thumbnailUrl = thumbnailUrl
                     } else if let thumbnailUrl = json["mangaPicimageUrl"].string, !thumbnailUrl.isEmpty {
-                        detail.thumbnailUrl = thumbnailUrl
+                        book.thumbnailUrl = thumbnailUrl
                     } else if let thumbnailUrl = json["shareIcon"].string, !thumbnailUrl.isEmpty {
-                        detail.thumbnailUrl = thumbnailUrl
+                        book.thumbnailUrl = thumbnailUrl
                     }
-                    detail.author = json["mangaAuthors"].arrayValue.compactMap({ $0.string }).joined(separator: ", ")
-                    detail.genre = json["mangaTheme"].string?.replacingOccurrences(of: " ", with: ", ")
-                    detail.serialState = Book.SerialState(mangaIsOver: json["mangaIsOver"].int)
-                    detail.summary = json["mangaIntro"].string
+                    book.author = json["mangaAuthors"].arrayValue.compactMap({ $0.string }).joined(separator: ", ")
+                    book.genre = json["mangaTheme"].string?.replacingOccurrences(of: " ", with: ", ")
+                    book.serialState = Book.SerialState(mangaIsOver: json["mangaIsOver"].int)
+                    book.summary = json["mangaIntro"].string
                     // chapters
                     var chapters: [Chapter] = []
                     ["mangaEpisode", "mangaWords", "mangaRolls"].forEach { type in
                         guard let array = json[type].array else { return }
                         array.forEach { ele in
                             guard let sectionId = ele["sectionId"].int else { return }
-                            var chapter = Chapter(source: book.source, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
+                            var chapter = Chapter(book: book, url: "/v1/manga/getRead?mangaSectionId=\(sectionId)")
                             chapter.name = "\(type == "mangaEpisode" ? "[番外] " : "")\(ele["sectionName"].stringValue)\(ele["sectionTitle"].stringValue == "" ? "" : ": \(ele["sectionTitle"].stringValue)")"
                             chapter.updateAt = ele["releaseTime"].string?.convert2Date(dateFormat: "yyyy-MM-dd")
                             chapter.chapterNumber = ele["sectionSort"].double ?? -1
                             chapters.append(chapter)
                         }
                     }
-                    return (detail, chapters)
+                    return (book, chapters)
                 case let .failure(error):
                     throw error
                 }
@@ -237,7 +237,7 @@ extension ManHuaRen: SourceProtocol {
                     let array = json["mangaSectionImages"].arrayValue
                     let query = json["query"].stringValue
                     return array.enumerated().compactMap { offset, ele -> Page? in
-                        var page = Page(source: chapter.source, chapter: chapter, index: offset)
+                        var page = Page(chapter: chapter, index: offset)
                         page.imageUrl = "\(host)\(ele.stringValue)\(query)"
                         return page
                     }

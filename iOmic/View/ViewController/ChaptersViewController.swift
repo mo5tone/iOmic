@@ -158,7 +158,7 @@ class ChaptersViewController: UIViewController, ChaptersViewProtocol {
                 let topY = 0 - collectionView.contentInset.top
                 var bottomY = collectionView.contentSize.height + collectionView.contentInset.bottom - collectionView.frame.height
                 bottomY = (bottomY + collectionView.contentInset.top > 0) ? bottomY : topY
-                let offsetY = !$0 ? topY : bottomY
+                let offsetY = $0 ? bottomY : topY
                 collectionView.setContentOffset(.init(x: offsetX, y: offsetY), animated: true)
             })
             .disposed(by: bag)

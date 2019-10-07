@@ -51,7 +51,7 @@ class SourcesViewController: UIViewController, SourcesViewProtocol {
     }
 
     private func setupView() {
-        navigationItem.leftBarButtonItem = doneBarButtonItem
+        navigationItem.rightBarButtonItem = doneBarButtonItem
         navigationItem.title = "Sources"
 
         tableView.contentInset = .init(top: 8, left: 0, bottom: 8, right: 0)

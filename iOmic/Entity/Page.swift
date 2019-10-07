@@ -15,7 +15,7 @@ struct Page: Differentiable, TableCodable, ColumnJSONCodable {
 
     typealias DifferenceIdentifier = String
 
-    var differenceIdentifier: Chapter.DifferenceIdentifier { return "\(source.rawValue)#\(chapterUrl)#\(index)" }
+    var differenceIdentifier: Chapter.DifferenceIdentifier { return "\(chapter.differenceIdentifier)#\(index)" }
 
     func isContentEqual(to source: Page) -> Bool {
         return url == source.url
@@ -29,10 +29,12 @@ struct Page: Differentiable, TableCodable, ColumnJSONCodable {
         // swiftlint:disable:next nesting
         typealias Root = Page
         static let objectRelationalMapping = TableBinding(CodingKeys.self)
-        case source, chapterUrl = "chapter_url", index = "page_index", url, imageUrl = "image_url", path
+        case source, chapter, index = "page_index", url, imageUrl = "image_url", path
         static var tableConstraintBindings: [TableConstraintBinding.Name: TableConstraintBinding]? {
+            let chapterForeignKey: ForeignKey = .init(withForeignTable: Chapter.tableName, and: [Chapter.Properties.source, Chapter.Properties.url])
             return [
-                "multiPrimaryBinding": MultiPrimaryBinding(indexesBy: [source, chapterUrl, index], onConflict: .replace),
+                "chapterForeignKey": ForeignKeyBinding([source, chapter], foreignKey: chapterForeignKey.onUpdate(.cascade).onDelete(.cascade)),
+                "multiPrimary": MultiPrimaryBinding(indexesBy: [source, chapter, index], onConflict: .replace),
             ]
         }
     }
@@ -40,7 +42,7 @@ struct Page: Differentiable, TableCodable, ColumnJSONCodable {
     // MARK: - Properties
 
     let source: Source
-    let chapterUrl: String
+    let chapter: String
     let index: Int
     var url: String?
     var imageUrl: String?
@@ -48,9 +50,9 @@ struct Page: Differentiable, TableCodable, ColumnJSONCodable {
 
     // MARK: - Init
 
-    init(source: Source, chapter: Chapter, index: Int) {
-        self.source = source
-        chapterUrl = chapter.url
+    init(chapter: Chapter, index: Int) {
+        source = chapter.source
+        self.chapter = chapter.url
         self.index = index
     }
 }

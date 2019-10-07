@@ -39,7 +39,7 @@ struct Book: Differentiable, TableCodable, ColumnJSONCodable {
         case source, url, thumbnailUrl = "thumbnail_url", title, artist, author, genre, summary, serialState = "serial_state", isFavorite = "is_favorite", readAt = "read_at"
         static var tableConstraintBindings: [TableConstraintBinding.Name: TableConstraintBinding]? {
             return [
-                "multiPrimaryBinding": MultiPrimaryBinding(indexesBy: [source, url], onConflict: .replace),
+                "multiPrimary": MultiPrimaryBinding(indexesBy: [source, url], onConflict: .replace),
             ]
         }
     }

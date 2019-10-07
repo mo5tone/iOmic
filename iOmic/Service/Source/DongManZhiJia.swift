@@ -141,7 +141,7 @@ extension DongManZhiJia: SourceProtocol {
                         let prefix = item["title"].stringValue
                         item["data"].arrayValue.forEach { item1 in
                             let chapterId = item1["chapter_id"].intValue
-                            var chapter = Chapter(source: book.source, url: "/chapter/\(bookId)/\(chapterId).json")
+                            var chapter = Chapter(book: book, url: "/chapter/\(bookId)/\(chapterId).json")
                             let chapterTitle = item1["chapter_title"].stringValue
                             chapter.name = "[\(prefix)]\(chapterTitle)"
                             chapter.updateAt = Date(timeIntervalSince1970: item1["updatetime"].doubleValue)
@@ -162,27 +162,27 @@ extension DongManZhiJia: SourceProtocol {
                 switch response.result {
                 case let .success(data):
                     let json = try JSON(data: data)
-                    var detail = book
-                    detail.title = json["title"].string
-                    detail.thumbnailUrl = json["cover"].string?.fixScheme()
-                    detail.author = json["authors"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                    detail.genre = json["types"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
-                    detail.serialState = Book.SerialState(string: "\(json["status"][0]["tag_id"].intValue)")
-                    detail.summary = json["description"].string
+                    var book = book
+                    book.title = json["title"].string
+                    book.thumbnailUrl = json["cover"].string?.fixScheme()
+                    book.author = json["authors"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    book.genre = json["types"].arrayValue.compactMap { $0["tag_name"].string }.joined(separator: ", ")
+                    book.serialState = Book.SerialState(string: "\(json["status"][0]["tag_id"].intValue)")
+                    book.summary = json["description"].string
                     var chapters: [Chapter] = []
                     let bookId = json["id"].intValue
                     json["chapters"].arrayValue.forEach { item in
                         let prefix = item["title"].stringValue
                         item["data"].arrayValue.forEach { item1 in
                             let chapterId = item1["chapter_id"].intValue
-                            var chapter = Chapter(source: book.source, url: "/chapter/\(bookId)/\(chapterId).json")
+                            var chapter = Chapter(book: book, url: "/chapter/\(bookId)/\(chapterId).json")
                             let chapterTitle = item1["chapter_title"].stringValue
                             chapter.name = "[\(prefix)]\(chapterTitle)"
                             chapter.updateAt = Date(timeIntervalSince1970: item1["updatetime"].doubleValue)
                             chapters.append(chapter)
                         }
                     }
-                    return (detail, chapters)
+                    return (book, chapters)
                 case let .failure(error):
                     throw error
                 }
@@ -198,7 +198,7 @@ extension DongManZhiJia: SourceProtocol {
                     let json = try JSON(data: data)
                     var pages = [Page]()
                     json["page_url"].arrayValue.enumerated().forEach { offset, element in
-                        var page = Page(source: chapter.source, chapter: chapter, index: offset)
+                        var page = Page(chapter: chapter, index: offset)
                         page.imageUrl = element.string
                         pages.append(page)
                     }
