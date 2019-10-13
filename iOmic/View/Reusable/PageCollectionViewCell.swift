@@ -79,7 +79,5 @@ class PageCollectionViewCell: UICollectionViewCell {
 // MARK: - UIScrollViewDelegate
 
 extension PageCollectionViewCell: UIScrollViewDelegate {
-    func viewForZooming(in _: UIScrollView) -> UIView? {
-        return imageView
-    }
+    func viewForZooming(in _: UIScrollView) -> UIView? { return imageView }
 }

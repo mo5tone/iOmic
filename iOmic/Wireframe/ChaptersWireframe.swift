@@ -26,8 +26,8 @@ class ChaptersWireframe: ChaptersWireframeProtocol {
         return view
     }
 
-    func showPagesView(where _: Chapter) {
-        // TODO: - IMPL.
+    func showPagesView(where chapter: Chapter) {
+        viewController?.show(PagesWireframe.create(with: chapter), sender: viewController)
     }
 
     private init(viewController: UIViewController?) {
